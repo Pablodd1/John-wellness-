@@ -11,78 +11,37 @@ interface EvidenceGradeProps {
 export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGradeProps) {
   const [expanded, setExpanded] = useState(!compact);
 
-  // Derive values if product is passed
   const effectiveEvidence = evidence || product?.evidenceData || product?.evidence;
   const hasHumanStudies = product?.hasHumanStudies;
   const humanStudiesNote = product?.humanStudiesNote;
   const potentialSideBenefits = product?.potentialSideBenefits;
   const potentialSideEffects = product?.potentialSideEffects;
-  const medicalDisclaimer = product?.medicalDisclaimer || 'Educational biohacking research only. This platform is NOT a medical doctor. Consult a licensed physician before starting any compound or supplement protocol.';
+  const medicalDisclaimer = product?.medicalDisclaimer || 'Educational research only. Consult a licensed clinician before starting any protocol.';
 
   if (!effectiveEvidence && !product) return null;
 
   if (typeof effectiveEvidence === 'string') {
     return (
-      <div className="mt-2.5 p-3.5 bg-slate-50/90 rounded-2xl border border-slate-200/80 text-xs text-slate-700 space-y-2">
+      <div className="mt-2 p-3 bg-[#faf9f6] rounded-xl border border-[#ebe7df] text-xs text-[#5c5851] space-y-2">
         <div className="flex items-start gap-2">
-          <BookOpen className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
+          <BookOpen className="w-3.5 h-3.5 text-[#6e6960] mt-0.5 flex-shrink-0" />
           <div>
-            <span className="font-semibold block text-slate-800 mb-0.5">Clinical Insight</span>
-            <p className="leading-relaxed text-slate-600">{effectiveEvidence}</p>
+            <span className="font-semibold text-[#181716] block text-xs">Clinical Summary</span>
+            <p className="leading-relaxed mt-0.5">{effectiveEvidence}</p>
           </div>
         </div>
 
-        {/* Human Studies Status */}
         {hasHumanStudies !== undefined && (
-          <div className={`p-2.5 rounded-xl border text-[11px] flex items-start gap-2 ${
-            hasHumanStudies === false 
-              ? 'bg-amber-50/70 border-amber-200 text-amber-900' 
-              : 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
-          }`}>
-            <AlertCircle className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${hasHumanStudies === false ? 'text-amber-600' : 'text-emerald-600'}`} />
-            <div>
-              <span className="font-bold block">
-                {hasHumanStudies === false ? 'No Direct Human Clinical Trials' : 'Human Clinical Studies Available'}
-              </span>
-              {humanStudiesNote && <p className="text-[10px] opacity-90 mt-0.5">{humanStudiesNote}</p>}
-            </div>
+          <div className="p-2 rounded-lg border text-[11px] bg-[#f1f5f2] border-[#dbe5dc] text-[#2b4530]">
+            <span className="font-semibold block">
+              {hasHumanStudies === false ? 'Observational / Preclinical Data' : 'Human Clinical Trials Available'}
+            </span>
+            {humanStudiesNote && <p className="text-[10px] opacity-90 mt-0.5">{humanStudiesNote}</p>}
           </div>
         )}
 
-        {/* Side Benefits & Side Effects */}
-        {(potentialSideBenefits || potentialSideEffects) && (
-          <div className="pt-2 border-t border-slate-200/60 grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-            {potentialSideBenefits && potentialSideBenefits.length > 0 && (
-              <div className="p-2 bg-emerald-50/50 rounded-xl border border-emerald-100/80">
-                <span className="font-bold text-emerald-800 flex items-center gap-1 mb-1">
-                  <PlusCircle className="w-3 h-3 text-emerald-600" /> Potential Side Benefits:
-                </span>
-                <ul className="list-disc list-inside text-emerald-900/80 space-y-0.5 text-[10px]">
-                  {potentialSideBenefits.map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {potentialSideEffects && potentialSideEffects.length > 0 && (
-              <div className="p-2 bg-amber-50/50 rounded-xl border border-amber-100/80">
-                <span className="font-bold text-amber-900 flex items-center gap-1 mb-1">
-                  <AlertTriangle className="w-3 h-3 text-amber-600" /> Potential Side Effects / Precautions:
-                </span>
-                <ul className="list-disc list-inside text-amber-900/80 space-y-0.5 text-[10px]">
-                  {potentialSideEffects.map((e, i) => (
-                    <li key={i}>{e}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Doctor Disclaimer */}
-        <div className="pt-2 border-t border-slate-200/60 flex items-center gap-1.5 text-[10px] text-slate-500 italic">
-          <Stethoscope className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+        <div className="pt-2 border-t border-[#ebe7df] flex items-center gap-1.5 text-[10px] text-[#8a857b] italic">
+          <Stethoscope className="w-3 h-3 text-[#8a857b] flex-shrink-0" />
           <span>{medicalDisclaimer}</span>
         </div>
       </div>
@@ -97,75 +56,56 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
   const doiOrUrl = effectiveEvidence?.doiOrUrl;
   const clinicalRationale = effectiveEvidence?.clinicalRationale || '';
 
-  const gradeBadgeBg = 
-    grade === 'A' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
-    grade === 'B' ? 'bg-slate-100 text-slate-800 border-slate-200' :
-    'bg-amber-50 text-amber-800 border-amber-200';
-
   return (
-    <div className="mt-2.5 bg-slate-50/80 rounded-2xl border border-slate-200/90 overflow-hidden text-xs">
-      {/* Header bar */}
+    <div className="mt-2 bg-[#faf9f6] rounded-xl border border-[#ebe7df] overflow-hidden text-xs">
       <div 
         onClick={() => setExpanded(!expanded)}
-        className="p-3 bg-white hover:bg-slate-50/80 cursor-pointer flex items-center justify-between transition-colors"
+        className="p-2.5 bg-white hover:bg-[#fbfaf8] cursor-pointer flex items-center justify-between transition-colors border-b border-[#ebe7df]"
       >
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="flex items-center gap-1 font-bold text-slate-800">
-            <ShieldCheck className="w-4 h-4 text-slate-600" />
-            Clinical Research Rationale
+          <span className="flex items-center gap-1 font-semibold text-[#181716] text-xs">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#344a37]" />
+            Clinical Evidence
           </span>
-          <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold border uppercase tracking-wider ${gradeBadgeBg}`}>
+          <span className={grade === 'A' ? "badge-clinical" : grade === 'B' ? "badge-warm" : "badge-neutral"}>
             Grade {grade}
           </span>
-          <span className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-100 text-slate-700 border border-slate-200 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-slate-500" />
+          <span className="text-[10px] text-[#6e6960] font-mono">
             {confidenceScore}% Confidence
           </span>
         </div>
 
-        <button className="text-slate-400 hover:text-slate-600 p-1">
-          {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        <button className="text-[#8a857b] hover:text-[#181716] p-0.5">
+          {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
         </button>
       </div>
 
-      {/* Expanded Rationale & Citation details */}
       {expanded && (
-        <div className="p-3.5 bg-slate-50/90 border-t border-slate-200/80 space-y-3">
+        <div className="p-3 bg-[#faf9f6] space-y-2.5">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-              Mechanism & Clinical Rationale
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8a857b] block mb-0.5">
+              Mechanism of Action
             </span>
-            <p className="text-slate-700 font-normal leading-relaxed text-xs">
+            <p className="text-[#5c5851] leading-relaxed text-xs">
               {clinicalRationale}
             </p>
           </div>
 
-          {/* Human Studies Availability Notice */}
           {hasHumanStudies !== undefined && (
-            <div className={`p-2.5 rounded-xl border text-[11px] flex items-start gap-2 ${
-              hasHumanStudies === false 
-                ? 'bg-amber-50/80 border-amber-200/80 text-amber-900' 
-                : 'bg-emerald-50/80 border-emerald-200/80 text-emerald-900'
-            }`}>
-              <AlertCircle className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${hasHumanStudies === false ? 'text-amber-600' : 'text-emerald-600'}`} />
-              <div>
-                <span className="font-bold block text-xs">
-                  {hasHumanStudies === false ? '⚠️ No Conclusive Human Clinical Studies Available' : '✓ Validated in Human Clinical Trials'}
-                </span>
-                {humanStudiesNote && <p className="text-[11px] opacity-90 mt-0.5 leading-normal">{humanStudiesNote}</p>}
-              </div>
+            <div className="p-2 rounded-lg border text-[11px] bg-[#f1f5f2] border-[#dbe5dc] text-[#2b4530]">
+              <span className="font-semibold block">
+                {hasHumanStudies === false ? 'Observational / Preclinical Data' : 'Human Clinical Studies Validated'}
+              </span>
+              {humanStudiesNote && <p className="opacity-90 mt-0.5 leading-normal">{humanStudiesNote}</p>}
             </div>
           )}
 
-          {/* Potential Side Benefits & Potential Side Effects / Precautions */}
           {(potentialSideBenefits || potentialSideEffects) && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
               {potentialSideBenefits && potentialSideBenefits.length > 0 && (
-                <div className="p-2.5 bg-emerald-50/60 rounded-xl border border-emerald-100">
-                  <span className="font-bold text-emerald-800 flex items-center gap-1 mb-1">
-                    <PlusCircle className="w-3.5 h-3.5 text-emerald-600" /> Potential Side Benefits:
-                  </span>
-                  <ul className="list-disc list-inside text-emerald-900/80 space-y-0.5 text-[11px]">
+                <div className="p-2 bg-[#f1f5f2] rounded-lg border border-[#dbe5dc] text-[#2b4530]">
+                  <span className="font-semibold block mb-0.5">Secondary Benefits:</span>
+                  <ul className="list-disc list-inside space-y-0.5 text-[10px]">
                     {potentialSideBenefits.map((b, i) => (
                       <li key={i}>{b}</li>
                     ))}
@@ -174,11 +114,9 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
               )}
 
               {potentialSideEffects && potentialSideEffects.length > 0 && (
-                <div className="p-2.5 bg-amber-50/60 rounded-xl border border-amber-100">
-                  <span className="font-bold text-amber-900 flex items-center gap-1 mb-1">
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-600" /> Potential Side Effects / Precautions:
-                  </span>
-                  <ul className="list-disc list-inside text-amber-900/80 space-y-0.5 text-[11px]">
+                <div className="p-2 bg-[#faf5ee] rounded-lg border border-[#ede1cf] text-[#785328]">
+                  <span className="font-semibold block mb-0.5">Precautions:</span>
+                  <ul className="list-disc list-inside space-y-0.5 text-[10px]">
                     {potentialSideEffects.map((e, i) => (
                       <li key={i}>{e}</li>
                     ))}
@@ -188,11 +126,10 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
             </div>
           )}
 
-          {/* Citation / PubMed Link */}
           {journal && (
-            <div className="pt-2 border-t border-slate-200/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px]">
-              <div className="text-slate-500 font-medium truncate max-w-md">
-                <span className="font-semibold text-slate-800">{journal}</span> ({year}) — <span className="italic">{referenceTitle}</span>
+            <div className="pt-2 border-t border-[#ebe7df] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px]">
+              <div className="text-[#6e6960] truncate max-w-md">
+                <span className="font-semibold text-[#181716]">{journal}</span> ({year}) — <span className="italic">{referenceTitle}</span>
               </div>
 
               {doiOrUrl && (
@@ -200,20 +137,19 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
                   href={doiOrUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 transition-colors flex-shrink-0"
+                  className="inline-flex items-center gap-1 font-medium text-[#181716] hover:underline bg-white px-2 py-0.5 rounded border border-[#ebe7df] transition-colors flex-shrink-0"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <FileText className="w-3 h-3 text-slate-500" />
-                  PubMed Reference
-                  <ExternalLink className="w-3 h-3 text-slate-400" />
+                  <FileText className="w-3 h-3 text-[#6e6960]" />
+                  <span>PubMed</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
                 </a>
               )}
             </div>
           )}
 
-          {/* Medical Disclaimer Banner */}
-          <div className="pt-2 border-t border-slate-200/60 flex items-start gap-1.5 text-[10px] text-slate-500 italic bg-slate-100/60 p-2 rounded-xl">
-            <Stethoscope className="w-3.5 h-3.5 text-slate-400 flex-shrink-0 mt-0.5" />
+          <div className="pt-1.5 flex items-center gap-1 text-[10px] text-[#8a857b] italic">
+            <Stethoscope className="w-3 h-3 text-[#8a857b] flex-shrink-0" />
             <span>{medicalDisclaimer}</span>
           </div>
         </div>

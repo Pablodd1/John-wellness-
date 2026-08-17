@@ -31,6 +31,7 @@ import { format } from 'date-fns';
 import { cn } from '../lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { LogoOptionId, LOGO_OPTIONS } from './BrandLogoSelector';
+import { CuasarLogo } from './CuasarLogo';
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
@@ -469,32 +470,21 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
   };
 
   return (
-    <div className="flex flex-col h-full bg-white border-l border-slate-200 shadow-xl relative">
+    <div className="flex flex-col h-full bg-[#fbfaf8] border-l border-[#ebe7df] shadow-xl relative">
       {/* Header */}
-      <div className="p-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-900 text-white">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-amber-400 shadow-sm p-1.5">
-            <LogoIcon className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-extrabold text-xs leading-tight text-white flex items-center gap-1.5">
-              CuasarX Assistant
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            </h3>
-            <p className="text-[9px] text-indigo-300 font-semibold uppercase tracking-wider">
-              {selectedLogo.subtitle}
-            </p>
-          </div>
+      <div className="p-3.5 border-b border-[#ebe7df] flex items-center justify-between bg-white text-[#181716]">
+        <div className="flex items-center gap-2">
+          <CuasarLogo size="sm" showSubtitle={true} />
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           {/* Prominent Voice HPI Button in Header */}
           <button
             onClick={() => setShowHpiModal(true)}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white text-[11px] font-extrabold shadow-sm transition-all hover:scale-105 active:scale-95"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg btn-ink text-[11px] font-semibold transition-all cursor-pointer"
             title="Record Voice History of Present Illness (HPI) & Symptoms"
           >
-            <Mic className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+            <Mic className="w-3 h-3 text-[#dedad0]" />
             <span>Voice HPI</span>
           </button>
 
@@ -502,8 +492,8 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
             onClick={() => setAutoSpeak(!autoSpeak)}
             title={autoSpeak ? "Voice Auto-Read ON" : "Voice Auto-Read OFF"}
             className={cn(
-              "p-1.5 rounded-xl transition-all text-xs font-semibold flex items-center gap-1",
-              autoSpeak ? "bg-indigo-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
+              "p-1.5 rounded-lg transition-all text-xs font-semibold flex items-center gap-1 cursor-pointer",
+              autoSpeak ? "bg-[#181716] text-white" : "bg-[#faf9f6] border border-[#ebe7df] text-[#5c5851] hover:text-[#181716]"
             )}
           >
             {autoSpeak ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
@@ -511,8 +501,8 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
 
           <button
             onClick={() => setShowVoiceSettings(!showVoiceSettings)}
-            title="Configure Human Voice Settings"
-            className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            title="Configure Voice Settings"
+            className="p-1.5 rounded-lg bg-[#faf9f6] border border-[#ebe7df] hover:bg-[#f4f2ec] text-[#5c5851] transition-colors cursor-pointer"
           >
             <Settings className="w-3.5 h-3.5" />
           </button>
@@ -520,10 +510,10 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
           {onClose && (
             <button
               onClick={onClose}
-              title="Close CuasarX Assistant"
-              className="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white transition-colors"
+              title="Close Assistant"
+              className="p-1.5 rounded-lg text-[#8a857b] hover:text-[#181716] transition-colors cursor-pointer"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-4 h-4" />
             </button>
           )}
         </div>

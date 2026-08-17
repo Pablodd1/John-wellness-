@@ -107,172 +107,164 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
       {/* ======================================================== */}
       {/* 1. HERO HEADER: AOSM SYSTEM & LONGEVITY ADVANTAGE       */}
       {/* ======================================================== */}
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl relative overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="relative z-10 space-y-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-2xl">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="bg-emerald-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                  <Sparkles className="w-3 h-3 fill-slate-950" /> Next-Gen Biological Modeling
-                </span>
-                <span className="text-xs text-indigo-300 font-bold bg-indigo-500/20 px-2.5 py-0.5 rounded-full border border-indigo-500/30">
-                  AOSM Technology
-                </span>
-                <span className="text-xs text-slate-400">
-                  9 Major Organ Systems Calibrated
-                </span>
-              </div>
-
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-                Advanced Organ System Modeling (AOSM)
-              </h1>
-              
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                A precise integration of science, biology, and technology analyzing your unique biological telemetry, mapping the biological age of your 9 major organ systems, and delivering your personalized 90-day longevity roadmap.
-              </p>
+      <div className="bg-white text-[#181716] rounded-2xl p-6 sm:p-7 border border-[#ebe7df] space-y-6">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="badge-clinical">
+                <Sparkles className="w-3 h-3 text-[#344a37]" /> Biological Longevity Engine
+              </span>
+              <span className="badge-neutral font-mono">
+                AOSM Technology
+              </span>
+              <span className="badge-neutral">
+                9 Organ Systems Calibrated
+              </span>
             </div>
 
-            {/* Overall Biological Age Widget */}
-            <div className="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-5 shadow-2xl flex-shrink-0 w-full lg:w-80 space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <div>
-                  <span className="text-[10px] uppercase font-extrabold text-slate-400 block tracking-wider">
-                    Biological System Age
-                  </span>
-                  <div className="flex items-baseline gap-2 mt-0.5">
-                    <span className="text-3xl font-black text-emerald-400">
-                      {executiveReport.overallBiologicalAge}
-                    </span>
-                    <span className="text-xs text-slate-400 font-semibold">
-                      yrs (Chron: {user.age || 42})
-                    </span>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <span className="text-[10px] uppercase font-extrabold text-slate-400 block tracking-wider">
-                    Longevity Delta
-                  </span>
-                  <span className="text-sm font-black text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30 inline-block mt-0.5">
-                    -{executiveReport.longevityAdvantageYears} yrs
-                  </span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/50">
-                  <span className="text-[10px] text-slate-400 block font-semibold">Pace of Aging</span>
-                  <span className="text-base font-black text-cyan-300">
-                    {executiveReport.paceOfAging}x
-                  </span>
-                  <span className="text-[9px] text-slate-400 block">yr / calendar yr</span>
-                </div>
-
-                <div className="bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/50">
-                  <span className="text-[10px] text-slate-400 block font-semibold">System Reserve</span>
-                  <span className="text-base font-black text-indigo-300">
-                    {executiveReport.overallReserveScore}%
-                  </span>
-                  <span className="text-[9px] text-emerald-400 font-semibold block">High Reserve</span>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setReportModalOpen(true)}
-                  className="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md"
-                >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Executive Report</span>
-                </button>
-
-                <button
-                  onClick={() => setEnrollModalOpen(true)}
-                  className="py-2 px-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1 shadow-md"
-                >
-                  <Sparkles className="w-3.5 h-3.5 fill-slate-950" />
-                  <span>AOSM $399</span>
-                </button>
-              </div>
-            </div>
+            <h1 className="text-xl sm:text-2xl font-bold text-[#181716] tracking-tight leading-tight font-serif-title">
+              Advanced Organ System Modeling (AOSM)
+            </h1>
+            
+            <p className="text-xs text-[#5c5851] leading-relaxed">
+              Synthesizes clinical laboratory biomarkers, DNA methylation age, and wearable continuous telemetry to compute the biological age of your 9 core organ systems and map your 90-day longevity roadmap.
+            </p>
           </div>
 
-          {/* 4-Step Journey Interactive Ribbon */}
-          <div className="pt-4 border-t border-slate-800/80">
-            <span className="text-[10px] uppercase font-extrabold text-slate-400 block tracking-wider mb-3">
-              The 4-Step AOSM Concierge Journey
-            </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {[
-                { step: '1', title: 'Enroll & Concierge', desc: 'Private onboarding call & sample kit dispatch', status: 'Completed', icon: PhoneCall },
-                { step: '2', title: 'Complete Testing', desc: 'Sample collection & health questionnaire', status: 'Completed', icon: TestTube },
-                { step: '3', title: 'Personalized Analysis', desc: 'AOSM 9-organ modeling & biological age', status: 'Active (Q3)', icon: Dna },
-                { step: '4', title: 'Begin Longevity Plan', desc: '90-day roadmap execution with clinical team', status: 'In Progress', icon: FileCheck },
-              ].map(st => (
-                <div 
-                  key={st.step}
-                  className="bg-slate-800/40 border border-slate-700/60 rounded-xl p-3 flex items-start gap-3 hover:border-slate-600 transition-colors"
-                >
-                  <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center justify-center font-black text-xs flex-shrink-0">
-                    {st.step}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="font-bold text-xs text-slate-200 truncate">{st.title}</span>
-                    </div>
-                    <p className="text-[11px] text-slate-400 leading-tight mt-0.5">{st.desc}</p>
-                  </div>
+          {/* Biological Age Box */}
+          <div className="bg-[#faf9f6] border border-[#ebe7df] rounded-xl p-4 flex-shrink-0 w-full lg:w-76 space-y-3">
+            <div className="flex items-center justify-between border-b border-[#f4f2ec] pb-2.5">
+              <div>
+                <span className="text-[10px] uppercase font-semibold text-[#8a857b] block tracking-wider">
+                  Biological System Age
+                </span>
+                <div className="flex items-baseline gap-1.5 mt-0.5">
+                  <span className="text-2xl font-bold text-[#181716]">
+                    {executiveReport.overallBiologicalAge}
+                  </span>
+                  <span className="text-xs text-[#8a857b] font-mono">
+                    yrs (Chron: {user.age || 42})
+                  </span>
                 </div>
-              ))}
+              </div>
+
+              <div className="text-right">
+                <span className="text-[10px] uppercase font-semibold text-[#8a857b] block tracking-wider">
+                  Advantage
+                </span>
+                <span className="text-xs font-semibold text-[#2b4530] bg-[#f1f5f2] px-2 py-0.5 rounded border border-[#dbe5dc] inline-block mt-0.5 font-mono">
+                  -{executiveReport.longevityAdvantageYears} yrs
+                </span>
+              </div>
             </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="bg-white p-2 rounded-lg border border-[#ebe7df]">
+                <span className="text-[10px] text-[#8a857b] block font-medium">Pace of Aging</span>
+                <span className="text-sm font-bold text-[#181716]">
+                  {executiveReport.paceOfAging}x
+                </span>
+                <span className="text-[9px] text-[#8a857b] block font-mono">yr / calendar yr</span>
+              </div>
+
+              <div className="bg-white p-2 rounded-lg border border-[#ebe7df]">
+                <span className="text-[10px] text-[#8a857b] block font-medium">System Reserve</span>
+                <span className="text-sm font-bold text-[#2b4530]">
+                  {executiveReport.overallReserveScore}%
+                </span>
+                <span className="text-[9px] text-[#2b4530] font-medium block">Optimal Reserve</span>
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={() => setReportModalOpen(true)}
+                className="flex-1 py-1.5 px-2 btn-ink text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer"
+              >
+                <FileText className="w-3 h-3" />
+                <span>Clinical Report</span>
+              </button>
+
+              <button
+                onClick={() => setEnrollModalOpen(true)}
+                className="py-1.5 px-3 btn-stone text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer"
+              >
+                <span>AOSM $399</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* 4-Step Journey */}
+        <div className="pt-4 border-t border-[#f4f2ec]">
+          <span className="text-[10px] uppercase font-semibold text-[#8a857b] block tracking-wider mb-2.5">
+            The 4-Step AOSM Concierge Journey
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+            {[
+              { step: '1', title: 'Enroll & Dispatch', desc: 'Private onboarding & diagnostic kit dispatch', status: 'Completed', icon: PhoneCall },
+              { step: '2', title: 'Sample Collection', desc: 'Blood draw, epigenetic swab & health questionnaire', status: 'Completed', icon: TestTube },
+              { step: '3', title: 'AOSM Calibration', desc: '9-organ modeling & biomarker computation', status: 'Active', icon: Dna },
+              { step: '4', title: '90-Day Execution', desc: 'Active protocol adherence & clinical check-ins', status: 'In Progress', icon: FileCheck },
+            ].map(st => (
+              <div 
+                key={st.step}
+                className="bg-[#faf9f6] border border-[#ebe7df] rounded-xl p-3 flex items-start gap-2.5"
+              >
+                <div className="w-6 h-6 rounded-md bg-[#181716] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  {st.step}
+                </div>
+                <div className="min-w-0">
+                  <span className="font-semibold text-xs text-[#181716] block truncate">{st.title}</span>
+                  <p className="text-[11px] text-[#6e6960] leading-tight mt-0.5">{st.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* ======================================================== */}
-      {/* 2. SUB-VIEW SELECTOR: ORGAN MAP / 90-DAY ROADMAP / REPORT */}
+      {/* 2. SUB-VIEW SELECTOR                                     */}
       {/* ======================================================== */}
-      <div className="flex flex-wrap gap-2 p-1.5 bg-slate-200/80 rounded-2xl border border-slate-300">
+      <div className="flex flex-wrap gap-1.5 p-1 bg-[#faf9f6] rounded-xl border border-[#ebe7df]">
         <button
           onClick={() => setActiveView('map')}
           className={cn(
-            "flex-1 min-w-[180px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2",
+            "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeView === 'map'
-              ? "bg-[#0f172a] text-white shadow-md"
-              : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              ? "bg-[#181716] text-white"
+              : "text-[#5c5851] hover:text-[#181716] hover:bg-white"
           )}
         >
-          <Dna className="w-4 h-4 text-emerald-400" />
-          <span>9-Organ System Biological Map</span>
+          <Dna className="w-3.5 h-3.5" />
+          <span>9-Organ Biological Map</span>
         </button>
 
         <button
           onClick={() => setActiveView('roadmap')}
           className={cn(
-            "flex-1 min-w-[180px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2",
+            "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeView === 'roadmap'
-              ? "bg-[#0f172a] text-white shadow-md"
-              : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              ? "bg-[#181716] text-white"
+              : "text-[#5c5851] hover:text-[#181716] hover:bg-white"
           )}
         >
-          <Compass className="w-4 h-4 text-indigo-400" />
-          <span>Personalized 90-Day Longevity Roadmap</span>
+          <Compass className="w-3.5 h-3.5" />
+          <span>90-Day Longevity Roadmap</span>
         </button>
 
         <button
           onClick={() => setActiveView('report')}
           className={cn(
-            "flex-1 min-w-[180px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2",
+            "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeView === 'report'
-              ? "bg-[#0f172a] text-white shadow-md"
-              : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              ? "bg-[#181716] text-white"
+              : "text-[#5c5851] hover:text-[#181716] hover:bg-white"
           )}
         >
-          <FileText className="w-4 h-4 text-amber-400" />
-          <span>Executive Healthspan Summary</span>
+          <FileText className="w-3.5 h-3.5" />
+          <span>Executive Healthspan Dossier</span>
         </button>
       </div>
 

@@ -1,65 +1,144 @@
 @import "tailwindcss";
 
 @layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Newsreader', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
   body {
-    background: linear-gradient(135deg, #ebe7f5 0%, #e0daeb 50%, #d5cee2 100%);
-    color: #1e1b2e;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #fbfaf8;
+    color: #181716;
+    font-family: var(--font-sans);
     min-height: 100vh;
+    overflow-x: hidden;
+    letter-spacing: -0.012em;
   }
 }
 
-/* Bryzos Metallic Lavender & Soft Glass Theme */
-.bg-bryzos-canvas {
-  background: linear-gradient(135deg, #eeeaf7 0%, #e3dfea 50%, #dad6e4 100%);
+/* Custom Soft Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fbfaf8;
+}
+::-webkit-scrollbar-thumb {
+  background: #dedad0;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #beb8ab;
 }
 
-.bryzos-card {
-  background: rgba(246, 243, 252, 0.85);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 10px 30px -5px rgba(100, 90, 140, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
-  border-radius: 28px;
+/* Soft Luxury Minimalism Tokens */
+.soft-card {
+  background: #ffffff;
+  border: 1px solid #ebe7df;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(24, 23, 22, 0.02);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.bryzos-card-steel {
-  background: linear-gradient(135deg, #a8a0b7 0%, #8b829d 100%);
+.soft-card:hover {
+  border-color: #dedad0;
+  box-shadow: 0 4px 12px rgba(24, 23, 22, 0.04);
+}
+
+.btn-ink {
+  background-color: #181716;
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 12px 30px -5px rgba(90, 80, 120, 0.2);
-  border-radius: 28px;
+  border: 1px solid #181716;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.15s ease;
 }
 
-.bryzos-card-violet {
-  background: linear-gradient(135deg, #d3c9e9 0%, #beafd9 100%);
-  color: #2a223d;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 10px 28px -4px rgba(110, 90, 150, 0.12);
-  border-radius: 28px;
+.btn-ink:hover {
+  background-color: #2e2c29;
+  border-color: #2e2c29;
 }
 
-/* Coral Gradient Action Button (as seen in CREATE AN ORDER button) */
-.btn-coral {
-  background: linear-gradient(90deg, #ff6b5d 0%, #ff3b75 100%);
-  color: #ffffff;
-  box-shadow: 0 8px 20px -4px rgba(255, 75, 115, 0.45);
-  transition: all 0.2s ease;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+.btn-subtle {
+  background-color: #ffffff;
+  color: #181716;
+  border: 1px solid #dedad0;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.15s ease;
 }
 
-.btn-coral:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 24px -4px rgba(255, 75, 115, 0.55);
+.btn-subtle:hover {
+  background-color: #f6f4ee;
+  border-color: #cbca2;
 }
 
-/* Neon Lime Status Badge (as seen in PAID tag) */
-.badge-lime {
-  background-color: #d2ff00;
-  color: #0f172a;
-  font-weight: 900;
-  letter-spacing: 0.05em;
-  border-radius: 6px;
-  padding: 3px 8px;
+.btn-stone {
+  background-color: #f4f2eb;
+  color: #181716;
+  border: 1px solid #e7e3d8;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.btn-stone:hover {
+  background-color: #eae6dc;
+}
+
+/* Soft, Quiet Badges */
+.badge-clinical {
+  background-color: #f1f5f2;
+  color: #2b4530;
+  border: 1px solid #dbe5dc;
   font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-warm {
+  background-color: #faf5ee;
+  color: #785328;
+  border: 1px solid #ede1cf;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-neutral {
+  background-color: #f5f4ef;
+  color: #5c5851;
+  border: 1px solid #e6e4dc;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-flag {
+  background-color: #fdf2f2;
+  color: #8c3232;
+  border: 1px solid #f5d5d5;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+/* Editorial serif titles when desired */
+.font-serif-title {
+  font-family: var(--font-serif);
 }

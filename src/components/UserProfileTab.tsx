@@ -42,10 +42,10 @@ export function UserProfileTab({ user, onUpdateUser, onNavigateToMarketplace }: 
     <div className="space-y-6">
       {/* Executive User Header Banner */}
       <motion.div 
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-800 space-y-6"
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="bg-white text-[#181716] p-6 sm:p-7 rounded-2xl border border-[#ebe7df] space-y-5"
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
@@ -53,130 +53,125 @@ export function UserProfileTab({ user, onUpdateUser, onNavigateToMarketplace }: 
               <img 
                 src={user.avatar} 
                 alt={user.name} 
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-slate-800 border-2 border-emerald-500/50 p-1 object-cover"
+                className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-[#faf9f6] border border-[#ebe7df] p-1 object-cover"
               />
-              <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-slate-900 flex items-center justify-center text-[10px] font-black text-white">
+              <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#181716] text-white flex items-center justify-center text-[9px] font-bold">
                 ✓
               </span>
             </div>
 
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-extrabold uppercase tracking-wider">
-                  Verified Bio-Profile
+                <span className="badge-clinical">
+                  Verified Member
                 </span>
-                <span className="px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-bold">
+                <span className="badge-neutral">
                   {user.lifestylePersona}
                 </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#181716] flex items-center gap-2 font-serif-title">
                 {user.name}
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+              <p className="text-xs text-[#6e6960] mt-0.5">
                 {user.role} • {user.age} yrs • {user.gender}
               </p>
             </div>
           </div>
 
           {/* Data Completeness Gauge */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 min-w-[220px]"
-          >
-            <div className="flex items-center justify-between text-xs font-bold mb-1.5">
-              <span className="text-slate-300 flex items-center gap-1.5">
-                <Gauge className="w-4 h-4 text-emerald-400" /> Intake Completeness
+          <div className="bg-[#faf9f6] p-3.5 rounded-xl border border-[#ebe7df] min-w-[200px]">
+            <div className="flex items-center justify-between text-xs font-semibold mb-1">
+              <span className="text-[#5c5851] flex items-center gap-1.5">
+                <Gauge className="w-3.5 h-3.5 text-[#344a37]" /> Intake Completeness
               </span>
-              <span className="text-emerald-400 font-extrabold">{user.dataCompleteness}%</span>
+              <span className="text-[#181716] font-bold">{user.dataCompleteness}%</span>
             </div>
-            <div className="w-full h-2.5 bg-slate-700 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[#ebe7df] rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500"
+                className="h-full bg-[#181716] rounded-full transition-all duration-500"
                 style={{ width: `${user.dataCompleteness}%` }}
               />
             </div>
-            <p className="text-[10px] text-slate-400 mt-2">
-              {user.dataCompleteness >= 90 ? 'Full clinical baseline active' : 'Complete missing DEXA / blood panel facts'}
+            <p className="text-[10px] text-[#8a857b] mt-1.5">
+              {user.dataCompleteness >= 90 ? 'Full baseline active' : 'Complete missing DEXA & panels'}
             </p>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Quick Vitals Summary Row with Staggered Entrance Animations */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800 text-xs">
+        {/* Quick Vitals Summary Row */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-[#f4f2ec] text-xs">
           {[
-            { label: 'Readiness Score', value: `${user.readiness.score} / 100`, color: 'text-emerald-400' },
-            { label: 'HRV Baseline', value: `${user.metrics.hrv.current} ms`, color: 'text-indigo-300' },
-            { label: 'Resting Heart Rate', value: `${user.metrics.rhr.current} bpm`, color: 'text-cyan-300' },
-            { label: 'Active Flags', value: `${user.flags.length} items`, color: 'text-amber-300' },
-          ].map((vital, idx) => (
-            <motion.div 
+            { label: 'Readiness Score', value: `${user.readiness.score} / 100`, badge: 'Optimal' },
+            { label: 'HRV Baseline', value: `${user.metrics.hrv.current} ms`, badge: 'Resting' },
+            { label: 'Resting Heart Rate', value: `${user.metrics.rhr.current} bpm`, badge: 'Circadian' },
+            { label: 'Active Flags', value: `${user.flags.length} items`, badge: 'Monitored' },
+          ].map((vital) => (
+            <div 
               key={vital.label}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.1 + idx * 0.06 }}
-              className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50 hover:bg-slate-800/70 transition-colors"
+              className="bg-[#faf9f6] p-3 rounded-xl border border-[#ebe7df]"
             >
-              <span className="text-slate-400 text-[10px] uppercase font-bold block">{vital.label}</span>
-              <span className={cn("text-lg font-black mt-0.5 block", vital.color)}>{vital.value}</span>
-            </motion.div>
+              <span className="text-[#8a857b] text-[10px] uppercase font-semibold block">{vital.label}</span>
+              <div className="flex items-baseline justify-between mt-0.5">
+                <span className="text-base font-bold text-[#181716]">{vital.value}</span>
+                <span className="text-[10px] text-[#5c5851] bg-white px-1.5 py-0.2 rounded border border-[#ebe7df]">{vital.badge}</span>
+              </div>
+            </div>
           ))}
         </div>
       </motion.div>
 
       {/* Primary Sub-Tab Selector Navigation */}
-      <div className="flex flex-wrap gap-2 p-1.5 bg-slate-200/80 rounded-2xl border border-slate-300">
+      <div className="flex flex-wrap gap-1.5 p-1 bg-[#faf9f6] rounded-xl border border-[#ebe7df]">
         <button
           onClick={() => setActiveSubTab('aosm')}
           className={cn(
-            "flex-1 min-w-[200px] px-4 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2",
+            "flex-1 min-w-[180px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'aosm'
-              ? "bg-[#0f172a] text-white shadow-md ring-2 ring-emerald-500/30"
-              : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              ? "bg-[#181716] text-white"
+              : "text-[#5c5851] hover:text-[#181716] hover:bg-white"
           )}
         >
-          <Dna className="w-4 h-4 text-emerald-400" />
-          <span>AOSM 9-Organ Modeling &amp; 90-Day Roadmap</span>
+          <Dna className="w-3.5 h-3.5" />
+          <span>AOSM 9-Organ Longevity &amp; 90-Day Roadmap</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('intake')}
           className={cn(
-            "flex-1 min-w-[180px] px-4 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2",
+            "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'intake'
-              ? "bg-emerald-700 text-white shadow-md"
-              : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              ? "bg-[#181716] text-white"
+              : "text-[#5c5851] hover:text-[#181716] hover:bg-white"
           )}
         >
-          <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>Health &amp; Intake Harvester</span>
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Health Intake Harvester</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('integrations')}
           className={cn(
-            "flex-1 min-w-[180px] px-4 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2",
+            "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'integrations'
-              ? "bg-emerald-700 text-white shadow-md"
-              : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              ? "bg-[#181716] text-white"
+              : "text-[#5c5851] hover:text-[#181716] hover:bg-white"
           )}
         >
-          <Database className="w-4 h-4 text-cyan-300" />
+          <Database className="w-3.5 h-3.5" />
           <span>Integrations &amp; Wearables</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('diagnostic_summary')}
           className={cn(
-            "flex-1 min-w-[180px] px-4 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2",
+            "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'diagnostic_summary'
-              ? "bg-emerald-700 text-white shadow-md"
-              : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              ? "bg-[#181716] text-white"
+              : "text-[#5c5851] hover:text-[#181716] hover:bg-white"
           )}
         >
-          <FileText className="w-4 h-4 text-indigo-300" />
-          <span>Clinical Baseline Facts</span>
+          <FileText className="w-3.5 h-3.5" />
+          <span>Diagnostic Action Plan</span>
         </button>
       </div>
 

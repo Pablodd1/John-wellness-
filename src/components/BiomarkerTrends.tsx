@@ -579,125 +579,98 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
       {/* 1. HEADER & OVERVIEW BAR                                 */}
       {/* ======================================================== */}
       <motion.div 
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-800 space-y-4 relative overflow-hidden"
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="bg-white text-[#181716] p-6 sm:p-7 rounded-2xl border border-[#ebe7df] space-y-4"
       >
-        <div className="absolute right-0 top-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="flex flex-wrap items-center gap-2 mb-1.5">
-              <span className="px-2.5 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
-                <TestTubes className="w-3.5 h-3.5 text-emerald-400" /> Longitudinal Laboratory Engine
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="badge-clinical">
+                <TestTubes className="w-3 h-3 text-[#344a37]" /> Longitudinal Clinical Lab Telemetry
               </span>
-              <span className="px-2.5 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-bold">
-                6-Month Blood Panel Telemetry
+              <span className="badge-neutral font-mono">
+                6-Month Serial Blood Panels
               </span>
-              <span className="px-2.5 py-0.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-[10px] font-bold">
-                Patient: {user.name}
+              <span className="badge-neutral">
+                Member: {user.name}
               </span>
             </div>
 
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">
-              Biomarker Progress &amp; Longitudinal Trends
+            <h2 className="text-xl sm:text-2xl font-bold text-[#181716] tracking-tight flex items-center gap-2 font-serif-title">
+              Biomarker Progress &amp; Serial Lab Tracking
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
-              Track serial changes in clinical blood panels (Vitamin D, hs-CRP inflammatory burden, ApoB lipids, Fasting Insulin) paired with wearable continuous telemetry.
+            <p className="text-xs text-[#5c5851] max-w-3xl leading-relaxed">
+              Longitudinal tracking of clinical blood biomarkers (Vitamin D, hs-CRP inflammatory burden, ApoB atherogenic particles, Fasting Insulin) paired with continuous wearable telemetry.
             </p>
           </div>
 
-          {/* Quick Info Chip */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.35, delay: 0.15 }}
-            className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/80 flex items-center gap-3 self-start lg:self-auto"
-          >
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-              <CheckCircle2 className="w-5 h-5" />
+          {/* Health Score Pill */}
+          <div className="bg-[#faf9f6] px-3.5 py-2.5 rounded-xl border border-[#ebe7df] flex items-center gap-2.5 self-start lg:self-auto">
+            <div className="w-7 h-7 rounded-lg bg-[#f1f5f2] text-[#2b4530] flex items-center justify-center font-bold">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[10px] text-slate-400 uppercase font-bold block">Biomarker Health Score</span>
-              <span className="text-sm font-black text-white">96 / 100 (Optimal Tier)</span>
+              <span className="text-[10px] text-[#8a857b] uppercase font-semibold block">Biomarker Health Score</span>
+              <span className="text-xs font-bold text-[#181716]">96 / 100 (Optimal Tier)</span>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Top Highlight Summary Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800">
-          <motion.div 
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.1 }}
-            className="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors"
-          >
-            <span className="text-[10px] uppercase font-extrabold text-slate-400 tracking-wider flex items-center gap-1">
-              <Droplets className="w-3 h-3 text-emerald-400" /> 25-OH Vitamin D
+        {/* Highlight Summary Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-[#f4f2ec]">
+          <div className="bg-[#faf9f6] p-3 rounded-xl border border-[#ebe7df]">
+            <span className="text-[10px] uppercase font-semibold text-[#8a857b] tracking-wider flex items-center gap-1">
+              <Droplets className="w-3 h-3 text-[#344a37]" /> 25-OH Vitamin D
             </span>
-            <div className="text-xl font-black text-emerald-400 mt-0.5 flex items-baseline gap-1.5">
-              72.8 <span className="text-xs text-slate-400 font-medium">ng/mL</span>
-              <span className="text-[10px] font-bold text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                <ArrowUpRight className="w-3 h-3" /> +113%
+            <div className="text-lg font-bold text-[#181716] mt-0.5 flex items-baseline gap-1">
+              72.8 <span className="text-[11px] text-[#8a857b] font-normal">ng/mL</span>
+              <span className="badge-clinical text-[10px] ml-1">
+                +113%
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 mt-1">Target: 50-80 ng/mL • Optimal</p>
-          </motion.div>
+            <p className="text-[10px] text-[#8a857b] mt-0.5">Target: 50-80 ng/mL • Optimal</p>
+          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.16 }}
-            className="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors"
-          >
-            <span className="text-[10px] uppercase font-extrabold text-slate-400 tracking-wider flex items-center gap-1">
-              <Flame className="w-3 h-3 text-rose-400" /> hs-CRP Inflammation
+          <div className="bg-[#faf9f6] p-3 rounded-xl border border-[#ebe7df]">
+            <span className="text-[10px] uppercase font-semibold text-[#8a857b] tracking-wider flex items-center gap-1">
+              <Flame className="w-3 h-3 text-[#785328]" /> hs-CRP Inflammation
             </span>
-            <div className="text-xl font-black text-rose-400 mt-0.5 flex items-baseline gap-1.5">
-              0.28 <span className="text-xs text-slate-400 font-medium">mg/L</span>
-              <span className="text-[10px] font-bold text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                <ArrowDownRight className="w-3 h-3" /> -88%
+            <div className="text-lg font-bold text-[#181716] mt-0.5 flex items-baseline gap-1">
+              0.28 <span className="text-[11px] text-[#8a857b] font-normal">mg/L</span>
+              <span className="badge-clinical text-[10px] ml-1">
+                -88%
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 mt-1">Target: &lt;0.5 mg/L • Ultra-Low</p>
-          </motion.div>
+            <p className="text-[10px] text-[#8a857b] mt-0.5">Target: &lt;0.5 mg/L • Ultra-Low</p>
+          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.22 }}
-            className="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors"
-          >
-            <span className="text-[10px] uppercase font-extrabold text-slate-400 tracking-wider flex items-center gap-1">
-              <Heart className="w-3 h-3 text-indigo-400" /> Atherogenic ApoB
+          <div className="bg-[#faf9f6] p-3 rounded-xl border border-[#ebe7df]">
+            <span className="text-[10px] uppercase font-semibold text-[#8a857b] tracking-wider flex items-center gap-1">
+              <Heart className="w-3 h-3 text-[#344a37]" /> Atherogenic ApoB
             </span>
-            <div className="text-xl font-black text-indigo-300 mt-0.5 flex items-baseline gap-1.5">
-              68 <span className="text-xs text-slate-400 font-medium">mg/dL</span>
-              <span className="text-[10px] font-bold text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                <ArrowDownRight className="w-3 h-3" /> -35%
+            <div className="text-lg font-bold text-[#181716] mt-0.5 flex items-baseline gap-1">
+              68 <span className="text-[11px] text-[#8a857b] font-normal">mg/dL</span>
+              <span className="badge-clinical text-[10px] ml-1">
+                -35%
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 mt-1">Target: &lt;70 mg/dL • Optimal</p>
-          </motion.div>
+            <p className="text-[10px] text-[#8a857b] mt-0.5">Target: &lt;70 mg/dL • Optimal</p>
+          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.28 }}
-            className="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors"
-          >
-            <span className="text-[10px] uppercase font-extrabold text-slate-400 tracking-wider flex items-center gap-1">
-              <Activity className="w-3 h-3 text-cyan-400" /> Fasting Insulin
+          <div className="bg-[#faf9f6] p-3 rounded-xl border border-[#ebe7df]">
+            <span className="text-[10px] uppercase font-semibold text-[#8a857b] tracking-wider flex items-center gap-1">
+              <Activity className="w-3 h-3 text-[#5c5851]" /> Fasting Insulin
             </span>
-            <div className="text-xl font-black text-cyan-300 mt-0.5 flex items-baseline gap-1.5">
-              3.9 <span className="text-xs text-slate-400 font-medium">uIU/mL</span>
-              <span className="text-[10px] font-bold text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                <ArrowDownRight className="w-3 h-3" /> -50%
+            <div className="text-lg font-bold text-[#181716] mt-0.5 flex items-baseline gap-1">
+              3.9 <span className="text-[11px] text-[#8a857b] font-normal">uIU/mL</span>
+              <span className="badge-clinical text-[10px] ml-1">
+                -50%
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 mt-1">Target: 2.0-5.0 uIU/mL</p>
-          </motion.div>
+            <p className="text-[10px] text-[#8a857b] mt-0.5">Target: 2.0-5.0 uIU/mL</p>
+          </div>
         </div>
       </motion.div>
 
@@ -705,83 +678,78 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
       {/* 2. PRIMARY VIEW SELECTOR TABS                            */}
       {/* ======================================================== */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-2">
-          
-          {/* Biomarker Progress Tab (Featured) */}
+        <div className="flex flex-wrap gap-1.5">
           <button
             onClick={() => setActiveMetricView('blood_panel_progress')}
             className={cn(
-              "px-4 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 border shadow-sm",
+              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'blood_panel_progress'
-                ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-500 shadow-md shadow-emerald-500/10"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-[#181716] text-white"
+                : "bg-white text-[#5c5851] border border-[#ebe7df] hover:bg-[#faf9f6]"
             )}
           >
-            <TestTubes className="w-4 h-4" /> 
-            <span>Biomarker Progress (6-Month Blood Panels)</span>
-            <span className="bg-white/20 text-white text-[10px] px-1.5 py-0.2 rounded font-extrabold ml-1">
-              New
-            </span>
+            <TestTubes className="w-3.5 h-3.5" /> 
+            <span>Serial Blood Panels (6-Month)</span>
           </button>
 
           <button
             onClick={() => setActiveMetricView('hrv_rhr')}
             className={cn(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 border shadow-sm",
+              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'hrv_rhr'
-                ? "bg-[#0f172a] text-emerald-400 border-slate-800"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-[#181716] text-white"
+                : "bg-white text-[#5c5851] border border-[#ebe7df] hover:bg-[#faf9f6]"
             )}
           >
-            <Activity className="w-4 h-4" /> HRV &amp; Resting HR
+            <Activity className="w-3.5 h-3.5" /> HRV &amp; Resting HR
           </button>
 
           <button
             onClick={() => setActiveMetricView('blood_pressure')}
             className={cn(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 border shadow-sm",
+              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'blood_pressure'
-                ? "bg-indigo-600 text-white border-indigo-500"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-[#181716] text-white"
+                : "bg-white text-[#5c5851] border border-[#ebe7df] hover:bg-[#faf9f6]"
             )}
           >
-            <HeartPulse className="w-4 h-4" /> Blood Pressure
+            <HeartPulse className="w-3.5 h-3.5" /> Blood Pressure
           </button>
 
           <button
             onClick={() => setActiveMetricView('glucose')}
             className={cn(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 border shadow-sm",
+              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'glucose'
-                ? "bg-cyan-600 text-white border-cyan-500"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-[#181716] text-white"
+                : "bg-white text-[#5c5851] border border-[#ebe7df] hover:bg-[#faf9f6]"
             )}
           >
-            <Zap className="w-4 h-4" /> Fasting CGM
+            <Zap className="w-3.5 h-3.5" /> Fasting CGM
           </button>
 
           <button
             onClick={() => setActiveMetricView('sleep')}
             className={cn(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 border shadow-sm",
+              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'sleep'
-                ? "bg-purple-600 text-white border-purple-500"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-[#181716] text-white"
+                : "bg-white text-[#5c5851] border border-[#ebe7df] hover:bg-[#faf9f6]"
             )}
           >
-            <Moon className="w-4 h-4" /> Sleep &amp; Recovery
+            <Moon className="w-3.5 h-3.5" /> Sleep Architecture
           </button>
 
           <button
             onClick={() => setActiveMetricView('readiness')}
             className={cn(
-              "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 border shadow-sm",
+              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'readiness'
-                ? "bg-amber-600 text-white border-amber-500"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-[#181716] text-white"
+                : "bg-white text-[#5c5851] border border-[#ebe7df] hover:bg-[#faf9f6]"
             )}
           >
-            <Gauge className="w-4 h-4" /> Daily Readiness
+            <Gauge className="w-3.5 h-3.5" /> Daily Readiness
           </button>
         </div>
 
@@ -835,78 +803,71 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             className="space-y-6"
           >
             {/* DYNAMIC BIOMARKER DEFICIENCY & ONE-CLICK ADD ALL ACTION BANNER */}
-            <motion.div 
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.05 }}
-              className="bg-gradient-to-r from-emerald-950 via-[#0f172a] to-[#1e293b] text-white p-5 sm:p-6 rounded-3xl border border-emerald-500/40 shadow-xl relative overflow-hidden"
-            >
-              <div className="absolute right-0 top-0 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
-
-              <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="bg-[#f5f3ec] text-[#181716] p-5 sm:p-6 rounded-2xl border border-[#e8e4db] space-y-4">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="space-y-2 max-w-2xl">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="bg-emerald-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-slate-950" /> Dynamic Deficiency Protocol Engine
+                    <span className="badge-clinical">
+                      <Sparkles className="w-3 h-3 text-[#344a37]" /> Targeted Clinical Protocol
                     </span>
-                    <span className="text-xs text-emerald-300 font-bold bg-emerald-900/60 px-2.5 py-0.5 rounded-lg border border-emerald-500/30">
+                    <span className="badge-neutral font-mono">
                       {allTargetedSupplements.length} Targeted Bio-Compounds Identified
                     </span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                  <h3 className="text-base sm:text-lg font-bold text-[#181716] tracking-tight">
                     Targeted Regimen Stack Based on Your 6-Month Bloodwork
                   </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    Synthesized from your historical Vitamin D, hs-CRP inflammation, ApoB, and morning cortisol curves. Dynamically loads the optimal clinical dosages into your active regimen cart in one click.
+                  <p className="text-xs text-[#5c5851] leading-relaxed">
+                    Synthesized from your historical Vitamin D, hs-CRP inflammation, ApoB, and morning cortisol curves. Loads optimal dosages into your regimen cart in one click.
                   </p>
                 </div>
 
                 {/* One-Click Add All Action Box */}
-                <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 flex flex-col justify-between gap-3 w-full lg:w-80 flex-shrink-0">
-                  <div className="flex items-baseline justify-between border-b border-white/10 pb-2">
+                <div className="bg-white p-4 rounded-xl border border-[#ebe7df] flex flex-col justify-between gap-2.5 w-full lg:w-76 flex-shrink-0">
+                  <div className="flex items-baseline justify-between border-b border-[#f4f2ec] pb-2">
                     <div>
-                      <span className="text-xs text-slate-300 block">Complete Protocol ({allTargetedSupplements.length} items):</span>
+                      <span className="text-xs text-[#6e6960] block">Complete Protocol ({allTargetedSupplements.length} items):</span>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-black text-emerald-400">${bundleDiscountedPrice}</span>
-                        <span className="text-xs text-slate-400 line-through">${totalBundlePrice.toFixed(2)}</span>
+                        <span className="text-xl font-bold text-[#181716]">${bundleDiscountedPrice}</span>
+                        <span className="text-xs text-[#8a857b] line-through font-mono">${totalBundlePrice.toFixed(2)}</span>
                       </div>
                     </div>
-                    <span className="text-[10px] font-extrabold bg-emerald-500 text-slate-950 px-2 py-0.5 rounded-full">
-                      -15% Stack Save
+                    <span className="text-[10px] font-semibold text-[#2b4530] bg-[#f1f5f2] px-2 py-0.5 rounded">
+                      Save 15%
                     </span>
                   </div>
 
                   <button
                     onClick={handleOneClickAddAll}
                     className={cn(
-                      "w-full py-3 px-4 rounded-xl font-black text-xs shadow-lg transition-all flex items-center justify-center gap-2",
+                      "w-full py-2.5 px-4 rounded-lg font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer",
                       batchAddedSuccess
-                        ? "bg-emerald-500 text-slate-950 font-black shadow-emerald-500/30 scale-[1.02]"
-                        : "bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 hover:shadow-emerald-500/20 active:scale-95"
+                        ? "bg-[#2b4530] text-white"
+                        : "btn-ink"
                     )}
                   >
                     {batchAddedSuccess ? (
                       <>
-                        <Check className="w-4 h-4 text-slate-950 stroke-[3]" />
-                        All {allTargetedSupplements.length} Supplements Added to Cart!
+                        <Check className="w-3.5 h-3.5" />
+                        All {allTargetedSupplements.length} Formulations Added!
                       </>
                     ) : (
                       <>
-                        <PackagePlus className="w-4 h-4 text-slate-950" />
-                        One-Click Add All to Regimen Cart
+                        <PackagePlus className="w-3.5 h-3.5" />
+                        Add All to Regimen Cart
                       </>
                     )}
                   </button>
 
-                  <div className="flex items-center justify-between text-[10px] text-slate-300">
+                  <div className="flex items-center justify-between text-[10px] text-[#8a857b]">
                     <span className="flex items-center gap-1">
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Cold-Chain Laboratory Direct
+                      <ShieldCheck className="w-3 h-3 text-[#344a37]" /> Cold-Chain Direct
                     </span>
                     {onNavigateToTab && (
                       <button 
                         onClick={() => onNavigateToTab('supplements')}
-                        className="text-emerald-400 hover:underline font-bold flex items-center gap-0.5"
+                        className="text-[#181716] hover:underline font-medium flex items-center gap-0.5 cursor-pointer"
                       >
                         View Regimen <ChevronRight className="w-3 h-3" />
                       </button>
@@ -915,34 +876,34 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 </div>
               </div>
 
-              {/* Targeted Supplement Quick Pills Horizontal Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-4 mt-4 border-t border-white/10">
+              {/* Targeted Supplement Quick Pills */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-3 border-t border-[#e8e4db]">
                 {allTargetedSupplements.slice(0, 4).map(s => {
                   const isItemAdded = addedSuppIds.includes(s.id);
                   return (
                     <div 
                       key={s.id}
-                      className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/80 flex items-center justify-between gap-2 text-xs"
+                      className="p-2.5 rounded-lg bg-white border border-[#ebe7df] flex items-center justify-between gap-2 text-xs"
                     >
                       <div className="overflow-hidden">
-                        <span className="font-bold text-white block truncate text-[11px]">{s.name}</span>
-                        <span className="text-[10px] text-emerald-400 font-medium truncate block">{s.targetedDeficiency}</span>
+                        <span className="font-semibold text-[#181716] block truncate text-[11px]">{s.name}</span>
+                        <span className="text-[10px] text-[#6e6960] truncate block">{s.targetedDeficiency}</span>
                       </div>
                       <button
                         onClick={() => handleAddSingleSupplement(s)}
                         className={cn(
-                          "p-1.5 rounded-lg flex-shrink-0 transition-colors font-bold text-[10px] flex items-center gap-1",
-                          isItemAdded ? "bg-emerald-600 text-white" : "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600"
+                          "p-1.5 rounded-md flex-shrink-0 transition-colors text-[10px] font-semibold flex items-center gap-1 cursor-pointer",
+                          isItemAdded ? "bg-[#2b4530] text-white" : "btn-stone"
                         )}
                         title={`Add ${s.name}`}
                       >
-                        {isItemAdded ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5 text-emerald-400" />}
+                        {isItemAdded ? <Check className="w-3 h-3" /> : <ShoppingCart className="w-3 h-3" />}
                       </button>
                     </div>
                   );
                 })}
               </div>
-            </motion.div>
+            </div>
             
             {/* Interactive Biomarker Selector Ribbon */}
             <motion.div 

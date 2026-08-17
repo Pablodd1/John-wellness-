@@ -1,69 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { UserProfile, Product } from '../types';
-import { MOCK_PRODUCTS } from '../data';
+import { UserProfile, Product, BiohackingCard } from '../types';
+import { MOCK_PRODUCTS, BIOHACKING_PROTOCOLS } from '../data';
 import { EvidenceGrade } from './EvidenceGrade';
 import { 
   ShoppingCart, 
   CheckCircle2, 
   Sparkles, 
   Zap, 
-  ShieldAlert, 
   Check, 
-  ArrowRight, 
-  Flame, 
   Clock, 
-  Building2,
-  TrendingUp,
-  Brain,
-  Activity,
-  Star,
-  Truck,
-  Repeat,
-  ShieldCheck,
-  Tag,
-  Gift,
-  BadgePercent,
+  Star, 
+  Truck, 
+  Repeat, 
+  ShieldCheck, 
+  Tag, 
+  Info, 
+  SlidersHorizontal, 
   ChevronRight,
-  Info,
-  SlidersHorizontal,
-  FileCheck,
-  Layers,
-  Sparkle
+  Eye,
+  Plus,
+  Dna,
+  HeartPulse,
+  Activity,
+  X,
+  ArrowRight
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-export function Marketplace({ 
+interface MarketplaceProps {
+  user: UserProfile;
+  initialDepartment?: string;
+  searchQuery?: string;
+  onAddToCart?: (products: Product[]) => void;
+  onBuyNow?: (product: Product) => void;
+  onOpenCart?: () => void;
+}
+
+export function Marketplace({
   user,
   initialDepartment = 'all',
-  onAddToCart
-}: { 
-  user: UserProfile; 
-  initialDepartment?: string;
-  onAddToCart?: (products: Product[]) => void;
-}) {
-  const [purchasedIds, setPurchasedIds] = useState<string[]>([]);
+  searchQuery = '',
+  onAddToCart,
+  onBuyNow,
+  onOpenCart
+}: MarketplaceProps) {
   const [activeDepartment, setActiveDepartment] = useState<string>(initialDepartment);
-  const [autoDeliveryActive, setAutoDeliveryActive] = useState<{ [productId: string]: boolean }>({});
+  const [localSearch, setLocalSearch] = useState<string>(searchQuery);
+  const [sortBy, setSortBy] = useState<'featured' | 'grade' | 'price-asc' | 'price-desc' | 'rating'>('featured');
+  const [riskFilter, setRiskFilter] = useState<'all' | 'low' | 'medium' | 'high'>('all');
+  const [purchasedIds, setPurchasedIds] = useState<string[]>([]);
+  const [activeSubCadence, setActiveSubCadence] = useState<{ [productId: string]: boolean }>({});
+  
+  // Quick View Modal
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+
+  // Bundle Selector
   const [bundleChecked, setBundleChecked] = useState<{ [key: string]: boolean }>({
     'p5': true,
     'p2': true,
     'p4': true
   });
   const [bundlePurchased, setBundlePurchased] = useState(false);
-  const [vitaminStackPurchased, setVitaminStackPurchased] = useState(false);
-  const [aosmModalOpen, setAosmModalOpen] = useState(false);
-  const [aosmPurchased, setAosmPurchased] = useState(false);
+  const [vitaminBundlePurchased, setVitaminBundlePurchased] = useState(false);
 
-  // Sync initial department when prop changes
+  // Live countdown timer
+  const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 28, seconds: 45 });
+
   useEffect(() => {
     if (initialDepartment) {
       setActiveDepartment(initialDepartment);
     }
   }, [initialDepartment]);
 
-  // Live countdown timer for Personal Biohack Special
-  const [timeLeft, setTimeLeft] = useState({ hours: 3, minutes: 42, seconds: 19 });
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -77,26 +89,29 @@ export function Marketplace({
     return () => clearInterval(timer);
   }, []);
 
-  const handleBuy = (productId: string) => {
-    setPurchasedIds(prev => prev.includes(productId) ? prev : [...prev, productId]);
-    const found = MOCK_PRODUCTS.find(p => p.id === productId);
-    if (found && onAddToCart) {
-      onAddToCart([found]);
+  const handleAddToCart = (product: Product, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setPurchasedIds(prev => prev.includes(product.id) ? prev : [...prev, product.id]);
+    if (onAddToCart) {
+      onAddToCart([product]);
     }
   };
 
-  const toggleAutoDelivery = (productId: string, val: boolean) => {
-    setAutoDeliveryActive(prev => ({
-      ...prev,
-      [productId]: val
-    }));
+  const handleQuickBuy = (product: Product, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    handleAddToCart(product);
+    if (onBuyNow) {
+      onBuyNow(product);
+    } else if (onOpenCart) {
+      onOpenCart();
+    }
   };
 
   const executiveBundle: Product = {
     id: 'bundle-exec',
-    name: 'Executive Stress & Cognition 1-Click Power Stack',
+    name: 'Executive Neuro-Vascular Resilience Stack',
     category: 'Executive Stack',
-    description: 'Designed for high-stress executives with zero time: L-Theanine + Alpha-GPC + Bioavailable Magnesium Glycinate + Electrolyte Hydration sticks.',
+    description: 'High-purity L-Theanine, Alpha-GPC, Chelation-Grade Magnesium Glycinate, and Micronutrient Hydration. Calibrated to modulate cortisol response and preserve nocturnal deep sleep architecture.',
     status: 'recommended',
     riskLevel: 'low',
     price: 110.00,
@@ -107,29 +122,25 @@ export function Marketplace({
       journal: 'Neuroscience & Executive Health Quarterly',
       year: 2024,
       doiOrUrl: 'https://pubmed.ncbi.nlm.nih.gov/18296328/',
-      clinicalRationale: 'Simultaneously lowers salivary cortisol AUC by 28% and sustains working memory speed during continuous multi-hour boardroom decision making.'
+      clinicalRationale: 'Attenuates salivary cortisol AUC by 28% while sustaining executive working memory speed.'
     },
-    tailoredReason: 'Synthesized from your Oura sleep restriction (<4.5h) and high stress scores.'
+    tailoredReason: `Calibrated for ${user.name} to counterbalance elevated HRV strain and sleep deficit.`
   };
 
-  const vitaminProducts = MOCK_PRODUCTS.filter(p => 
-    p.id.startsWith('supp-') || 
-    p.name.toLowerCase().includes('vitamin') || 
-    p.name.toLowerCase().includes('omega') || 
-    p.name.toLowerCase().includes('methyl') || 
-    p.name.toLowerCase().includes('coq10') || 
-    p.name.toLowerCase().includes('zinc') ||
-    p.name.toLowerCase().includes('magnesium') ||
-    p.name.toLowerCase().includes('curcumin') ||
-    p.name.toLowerCase().includes('bergamot') ||
-    p.name.toLowerCase().includes('berberine')
-  );
+  const allProducts = MOCK_PRODUCTS;
 
-  const diagnosticProducts = MOCK_PRODUCTS.filter(p => p.category === 'Diagnostics');
-  const clinicalProducts = MOCK_PRODUCTS.filter(p => p.riskLevel === 'high');
+  const filteredProducts = allProducts.filter(p => {
+    if (localSearch.trim()) {
+      const q = localSearch.toLowerCase();
+      const matchName = p.name.toLowerCase().includes(q);
+      const matchDesc = p.description.toLowerCase().includes(q);
+      const matchCat = p.category.toLowerCase().includes(q);
+      const matchReason = p.tailoredReason?.toLowerCase().includes(q);
+      if (!matchName && !matchDesc && !matchCat && !matchReason) return false;
+    }
 
-  // Filter products by department
-  const filteredProducts = MOCK_PRODUCTS.filter(p => {
+    if (riskFilter !== 'all' && p.riskLevel !== riskFilter) return false;
+
     if (activeDepartment === 'all') return true;
     if (activeDepartment === 'vitamins') {
       return (
@@ -139,7 +150,10 @@ export function Marketplace({
         p.name.toLowerCase().includes('methyl') || 
         p.name.toLowerCase().includes('coq10') || 
         p.name.toLowerCase().includes('zinc') ||
-        p.name.toLowerCase().includes('magnesium')
+        p.name.toLowerCase().includes('magnesium') ||
+        p.name.toLowerCase().includes('curcumin') ||
+        p.name.toLowerCase().includes('bergamot') ||
+        p.name.toLowerCase().includes('berberine')
       );
     }
     if (activeDepartment === 'executive') return p.category === 'Executive Stack';
@@ -147,20 +161,41 @@ export function Marketplace({
     if (activeDepartment === 'diagnostics') return p.category === 'Diagnostics';
     if (activeDepartment === 'peptides') return p.category === 'Peptide' || p.riskLevel === 'high';
     return true;
+  }).sort((a, b) => {
+    if (sortBy === 'grade') {
+      const gradeA = a.evidenceData?.grade || 'C';
+      const gradeB = b.evidenceData?.grade || 'C';
+      return gradeA.localeCompare(gradeB);
+    }
+    if (sortBy === 'price-asc') return (a.price || 0) - (b.price || 0);
+    if (sortBy === 'price-desc') return (b.price || 0) - (a.price || 0);
+    if (sortBy === 'rating') return (b.evidenceData?.confidenceScore || 80) - (a.evidenceData?.confidenceScore || 80);
+    return 0;
   });
 
-  // Bundle pricing calculations
+  const vitaminProducts = allProducts.filter(p => 
+    p.id.startsWith('supp-') || 
+    p.name.toLowerCase().includes('vitamin') || 
+    p.name.toLowerCase().includes('omega') || 
+    p.name.toLowerCase().includes('methyl') || 
+    p.name.toLowerCase().includes('coq10') || 
+    p.name.toLowerCase().includes('zinc') ||
+    p.name.toLowerCase().includes('magnesium')
+  );
+
+  const diagnosticProducts = allProducts.filter(p => p.category === 'Diagnostics');
+
   const bundleItems = [
-    { id: 'p5', name: 'Executive Nootropic Peak Stack', price: 65.00 },
-    { id: 'p2', name: 'Magnesium Glycinate (Elemental 400mg)', price: 25.00 },
-    { id: 'p4', name: 'Electrolyte Balance Complex', price: 30.00 },
+    { id: 'p5', product: allProducts.find(p => p.id === 'p5') || allProducts[0], name: 'Executive Nootropic Stack', price: 65.00 },
+    { id: 'p2', product: allProducts.find(p => p.id === 'p2') || allProducts[1], name: 'Magnesium Glycinate (Elemental 400mg)', price: 25.00 },
+    { id: 'p4', product: allProducts.find(p => p.id === 'p4') || allProducts[2], name: 'Electrolyte Balance Complex', price: 30.00 },
   ];
   const totalBundleOriginalPrice = bundleItems.reduce((sum, item) => bundleChecked[item.id] ? sum + item.price : sum, 0);
-  const bundleDiscountPrice = (totalBundleOriginalPrice * 0.85).toFixed(2); // 15% bundle discount
+  const bundleDiscountPrice = (totalBundleOriginalPrice * 0.85).toFixed(2);
 
   const handleAddAllVitamins = () => {
     const keyVitamins = vitaminProducts.slice(0, 5);
-    setVitaminStackPurchased(true);
+    setVitaminBundlePurchased(true);
     setPurchasedIds(prev => [...new Set([...prev, ...keyVitamins.map(v => v.id)])]);
     if (onAddToCart) {
       onAddToCart(keyVitamins);
@@ -168,585 +203,530 @@ export function Marketplace({
   };
 
   return (
-    <div className="space-y-6">
-      
+    <div className="space-y-10 pb-16">
+
       {/* ======================================================== */}
-      {/* 1. PERSONAL BIOHACK WORLD HERO OFFER (Emerald & Slate)   */}
+      {/* 1. SOFT EDITORIAL HERO CURATION                          */}
       {/* ======================================================== */}
-      <div className="bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white rounded-2xl p-4 sm:p-6 shadow-xl border border-slate-800 relative overflow-hidden">
+      <div className="bg-[#f5f3ec] rounded-2xl p-6 sm:p-8 md:p-10 border border-[#e8e4db] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
         
-        {/* Subtle cyber emerald glow */}
-        <div className="absolute right-0 top-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="space-y-3.5 max-w-2xl">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="badge-warm">
+              Curated Protocol
+            </span>
+            <span className="badge-clinical">
+              Tailored for {user.name}
+            </span>
+            <span className="badge-neutral">
+              {user.lifestylePersona}
+            </span>
+          </div>
 
-        <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#181716] leading-tight font-serif-title">
+            Executive Neuro-Vascular &amp; Cellular Recovery Stack
+          </h1>
           
-          {/* Left Column: Deal Info & Personal Header */}
-          <div className="space-y-2.5 max-w-2xl">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 text-[11px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                <Flame className="w-3.5 h-3.5 fill-slate-950" /> Personal Biohack Special
-              </span>
-              <span className="text-xs text-emerald-400 font-extrabold tracking-wide flex items-center gap-1">
-                Personal <span className="text-slate-300 font-normal text-[11px]">Member Stack</span>
-              </span>
-              <span className="text-xs text-slate-300 font-semibold bg-slate-800/90 px-2 py-0.5 rounded border border-slate-700">
-                Tailored for {user.name} ({user.lifestylePersona})
-              </span>
+          <p className="text-xs sm:text-sm text-[#5c5851] leading-relaxed font-normal">
+            A targeted four-pillar regimen formulated to modulate acute sympathetic tone, support restorative deep sleep architecture, and preserve executive cognitive endurance under sustained load.
+          </p>
+
+          <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-[#5c5851]">
+            <div className="flex items-center gap-2 bg-white/80 px-3 py-1.5 rounded-md border border-[#e4e0d4] font-mono text-[11px] font-medium text-[#181716]">
+              <Clock className="w-3.5 h-3.5 text-[#785328]" />
+              <span>Curated window closes in {String(timeLeft.hours).padStart(2, '0')}h : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}s</span>
             </div>
 
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
-              Executive Longevity &amp; Stress Resilience Stack (Save 35%)
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Clinical-grade L-Theanine, Alpha-GPC, Magnesium Glycinate, and Electrolyte replenishment. Auto-suppresses cortisol spikes and stabilizes focus.
+            <div className="flex items-center gap-2">
+              <div className="w-28 bg-[#e8e4db] rounded-full h-1.5 overflow-hidden">
+                <div className="bg-[#181716] h-full rounded-full w-[82%]" />
+              </div>
+              <span className="text-[11px] text-[#6e6960] font-medium">82% Claimed</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Buy Box */}
+        <div className="bg-white p-5 rounded-xl border border-[#ebe7df] shadow-xs w-full lg:w-76 flex-shrink-0 space-y-3">
+          <div className="flex items-baseline justify-between border-b border-[#f4f2ec] pb-2.5">
+            <div>
+              <span className="text-2xl font-bold text-[#181716]">$110.00</span>
+              <span className="text-xs text-[#8a857b] line-through ml-2 font-mono">$170.00</span>
+            </div>
+            <span className="text-[11px] font-semibold text-[#785328] bg-[#faf5ee] px-2 py-0.5 rounded border border-[#ede1cf]">
+              Save 35%
+            </span>
+          </div>
+
+          <div className="text-xs space-y-1.5 text-[#5c5851]">
+            <div className="flex items-center gap-1.5 text-[#2b4530] font-semibold">
+              <Truck className="w-3.5 h-3.5" />
+              <span>Complimentary cold-chain delivery</span>
+            </div>
+            <p className="text-[11px] text-[#6e6960]">
+              Dispatch tomorrow morning for confirmed members.
             </p>
-
-            {/* Countdown & Claimed Bar */}
-            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs">
-              <div className="flex items-center gap-1.5 bg-emerald-950/80 text-emerald-300 px-3 py-1.5 rounded-lg border border-emerald-500/40 font-mono font-bold">
-                <Clock className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Ends in {String(timeLeft.hours).padStart(2, '0')}h : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}s</span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="w-32 bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700">
-                  <div className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full w-[82%]"></div>
-                </div>
-                <span className="text-[11px] text-slate-400 font-bold">82% Claimed</span>
-              </div>
+            <div className="flex items-center gap-1.5 text-[#181716] text-[11px] font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#344a37]" />
+              <span>In stock. Verified 3rd-party purity tested.</span>
             </div>
           </div>
 
-          {/* Right Column: Smart Buy Box Card */}
-          <div className="bg-white text-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xl w-full lg:w-80 flex-shrink-0 space-y-3">
-            <div className="flex items-baseline justify-between border-b border-slate-100 pb-2">
-              <div>
-                <span className="text-2xl font-black text-emerald-600">$110.00</span>
-                <span className="text-xs text-slate-400 line-through ml-2">$170.00</span>
-              </div>
-              <span className="text-[10px] font-extrabold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
-                -35% Member
-              </span>
-            </div>
+          <div className="pt-2 space-y-2">
+            <button
+              onClick={() => handleAddToCart(executiveBundle)}
+              className={cn(
+                "w-full py-2.5 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer",
+                purchasedIds.includes(executiveBundle.id)
+                  ? "bg-[#2b4530] text-white"
+                  : "btn-ink"
+              )}
+            >
+              {purchasedIds.includes(executiveBundle.id) ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Added to Active Regimen</span>
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="w-3.5 h-3.5" />
+                  <span>Add Stack to Cart</span>
+                </>
+              )}
+            </button>
 
-            <div className="text-xs space-y-1.5 text-slate-700">
-              <div className="flex items-center gap-1.5 text-teal-700 font-bold">
-                <Truck className="w-4 h-4 text-teal-600" />
-                <span>Priority Cold-Chain Express Delivery</span>
-              </div>
-              <p className="text-[11px] text-slate-500">
-                Order within <span className="text-emerald-700 font-bold">2 hrs 14 mins</span> for tomorrow dispatch.
-              </p>
-              <div className="flex items-center gap-1 text-emerald-700 font-bold text-xs">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>In Stock. Verified by CuasarX Lab Direct</span>
-              </div>
-            </div>
-
-            <div className="pt-2 space-y-2">
-              <button
-                onClick={() => handleBuy(executiveBundle.id)}
-                className={cn(
-                  "w-full py-2.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2",
-                  purchasedIds.includes(executiveBundle.id)
-                    ? "bg-emerald-600 text-white font-bold shadow-emerald-500/20"
-                    : "bg-slate-900 hover:bg-slate-800 text-white"
-                )}
-              >
-                {purchasedIds.includes(executiveBundle.id) ? (
-                  <>
-                    <Check className="w-4 h-4 text-white" />
-                    Added to Active Regimen!
-                  </>
-                ) : (
-                  <>
-                    <ShoppingCart className="w-4 h-4 text-emerald-400" />
-                    Add to Regimen / Cart
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={() => handleBuy(executiveBundle.id)}
-                className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-md flex items-center justify-center gap-1.5 transition-all"
-              >
-                <Zap className="w-4 h-4 text-emerald-200" />
-                1-Click Instant Order
-              </button>
-            </div>
-
-            <p className="text-[10px] text-slate-500 text-center flex items-center justify-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Secure Clinical Transaction &amp; MD Audited
-            </p>
+            <button
+              onClick={() => handleQuickBuy(executiveBundle)}
+              className="w-full py-2 px-3 rounded-lg text-xs font-semibold btn-stone transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <Zap className="w-3.5 h-3.5 text-[#785328]" />
+              <span>1-Click Instant Order</span>
+            </button>
           </div>
+
+          <p className="text-[10px] text-[#8a857b] text-center flex items-center justify-center gap-1">
+            <ShieldCheck className="w-3 h-3 text-[#344a37]" /> Physician reviewed &amp; cGMP audited
+          </p>
         </div>
       </div>
 
       {/* ======================================================== */}
-      {/* 2. SMART DEPARTMENT FILTER CHIPS (Horizontal Scrollable) */}
+      {/* 2. FOUR QUIET DISCOVERY CARDS                            */}
       {/* ======================================================== */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-        {[
-          { id: 'all', label: 'All Biohack Departments', count: MOCK_PRODUCTS.length },
-          { id: 'vitamins', label: 'Vitamins & Longevity Micronutrients', count: vitaminProducts.length },
-          { id: 'executive', label: '1-Click Executive Stacks', count: 2 },
-          { id: 'supplements', label: 'Supplements & Nootropics', count: 4 },
-          { id: 'diagnostics', label: 'Clinical Blood & DNA Labs', count: diagnosticProducts.length },
-          { id: 'peptides', label: 'Peptides & Rx Approval Gate', count: clinicalProducts.length },
-        ].map(dept => (
-          <button
-            key={dept.id}
-            onClick={() => setActiveDepartment(dept.id)}
-            className={cn(
-              "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border shadow-sm flex items-center gap-1.5 flex-shrink-0",
-              activeDepartment === dept.id
-                ? "bg-[#0f172a] text-emerald-400 border-slate-800 shadow-md ring-2 ring-emerald-500/30"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
-            )}
-          >
-            <span>{dept.label}</span>
-            <span className={cn(
-              "text-[10px] px-1.5 py-0.2 rounded-full font-bold",
-              activeDepartment === dept.id ? "bg-emerald-500 text-slate-950" : "bg-slate-100 text-slate-600"
-            )}>
-              {dept.count}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="soft-card p-4 flex flex-col justify-between space-y-3">
+          <div>
+            <span className="badge-flag mb-2">
+              Biomarker Focus
             </span>
+            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+              ApoB &amp; hs-CRP Modulation
+            </h3>
+            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+              Arterial inflammatory markers show room for optimization. Bergamot &amp; high-EPA Omega-3 recommended.
+            </p>
+          </div>
+          <button
+            onClick={() => setActiveDepartment('vitamins')}
+            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+          >
+            <span>View Cardiovascular Stacks</span>
+            <ChevronRight className="w-3 h-3" />
           </button>
-        ))}
+        </div>
+
+        <div className="soft-card p-4 flex flex-col justify-between space-y-3">
+          <div>
+            <span className="badge-warm mb-2">
+              Refill Notice (4 Days)
+            </span>
+            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+              Magnesium Glycinate 400mg
+            </h3>
+            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+              Estimated supply depletes in 4 days. Auto-refill with Subscribe &amp; Save (15% off).
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              const mg = allProducts.find(p => p.id === 'p2');
+              if (mg) handleAddToCart(mg);
+            }}
+            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+          >
+            <span>1-Click Refill ($21.25)</span>
+            <ChevronRight className="w-3 h-3" />
+          </button>
+        </div>
+
+        <div className="soft-card p-4 flex flex-col justify-between space-y-3">
+          <div>
+            <span className="badge-clinical mb-2">
+              Clinical Protocol
+            </span>
+            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+              5-Pillar Essential Vitamins
+            </h3>
+            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+              Liposomal D3+K2, Methyl-B12, High-EPA Omega-3, Liposomal C &amp; Ubiquinol CoQ10.
+            </p>
+          </div>
+          <button
+            onClick={handleAddAllVitamins}
+            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+          >
+            <span>Add 5-Pillar Bundle ($165)</span>
+            <ChevronRight className="w-3 h-3" />
+          </button>
+        </div>
+
+        <div className="soft-card p-4 flex flex-col justify-between space-y-3">
+          <div>
+            <span className="badge-neutral mb-2">
+              Diagnostic Panel
+            </span>
+            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+              Epigenetic Biological Age Panel
+            </h3>
+            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+              Assesses Horvath DNA methylation clock and 42 cellular senescence markers.
+            </p>
+          </div>
+          <button
+            onClick={() => setActiveDepartment('diagnostics')}
+            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+          >
+            <span>Explore Diagnostic Kits</span>
+            <ChevronRight className="w-3 h-3" />
+          </button>
+        </div>
       </div>
 
       {/* ======================================================== */}
-      {/* 2B. DEDICATED #VITAMINS SHOWCASE & 1-CLICK PROTOCOL     */}
+      {/* 3. SOFT DEPARTMENT FILTER PILLS & CONTROLS TOOLBAR       */}
       {/* ======================================================== */}
-      <div id="vitamins" className="scroll-mt-24">
-        {(activeDepartment === 'all' || activeDepartment === 'vitamins') && (
-          <div className="bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-white rounded-2xl p-5 md:p-6 border border-emerald-500/30 shadow-xl mb-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
-              <div className="space-y-2 max-w-2xl">
-                <div className="flex items-center gap-2">
-                  <span className="bg-emerald-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 fill-slate-950" /> Clinical Micronutrient Standard
-                  </span>
-                  <span className="text-xs text-emerald-300 font-bold">#vitamins Active Channel</span>
-                </div>
-                <h2 className="text-xl md:text-2xl font-black text-white tracking-tight">
-                  Longevity Vitamin &amp; Bio-Active Micronutrient Protocol
-                </h2>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Engineered with micellar liposomal delivery, methylation cofactors (L-5-MTHF, Methyl-B12), and active forms to bypass GI degradation and maximize cellular uptake.
-                </p>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    ✓ Liposomal D3+K2
-                  </span>
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    ✓ Methylated B-Complex
-                  </span>
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    ✓ Pure Liposomal C
-                  </span>
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    ✓ High-EPA Omega-3
-                  </span>
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    ✓ Ubiquinol CoQ10 + PQQ
-                  </span>
-                </div>
-              </div>
+      <div className="bg-white rounded-xl border border-[#ebe7df] p-3 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          
+          {/* Department Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none flex-1">
+            {[
+              { id: 'all', label: 'All Protocols', count: allProducts.length },
+              { id: 'vitamins', label: 'Micronutrients', count: vitaminProducts.length },
+              { id: 'executive', label: 'Executive Stacks', count: 2 },
+              { id: 'supplements', label: 'Nootropics', count: 4 },
+              { id: 'diagnostics', label: 'Lab Panels & DNA', count: diagnosticProducts.length },
+              { id: 'peptides', label: 'Peptides (Rx Gate)', count: 3 },
+            ].map(dept => (
+              <button
+                key={dept.id}
+                onClick={() => setActiveDepartment(dept.id)}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border flex items-center gap-1.5 flex-shrink-0 cursor-pointer",
+                  activeDepartment === dept.id
+                    ? "bg-[#181716] text-white border-[#181716]"
+                    : "bg-[#faf9f6] hover:bg-[#f4f2ec] text-[#5c5851] border-[#ebe7df]"
+                )}
+              >
+                <span>{dept.label}</span>
+                <span className={cn(
+                  "text-[10px] px-1.5 py-0.2 rounded-full font-mono",
+                  activeDepartment === dept.id ? "bg-white/20 text-white" : "bg-[#dedad0] text-[#5c5851]"
+                )}>
+                  {dept.count}
+                </span>
+              </button>
+            ))}
+          </div>
 
-              <div className="bg-slate-900/90 border border-emerald-500/40 p-4 rounded-xl shadow-lg w-full lg:w-72 flex-shrink-0 space-y-3">
-                <div className="flex items-baseline justify-between border-b border-slate-800 pb-2">
-                  <div>
-                    <span className="text-xs text-slate-400 block font-semibold">5-Pillar Vitamin Bundle</span>
-                    <span className="text-xl font-black text-emerald-400">$165.00</span>
-                    <span className="text-xs text-slate-400 line-through ml-2">$215.00</span>
-                  </div>
-                  <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded">
-                    Save 23%
-                  </span>
-                </div>
-                <button
-                  onClick={handleAddAllVitamins}
-                  className={cn(
-                    "w-full py-2.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md",
-                    vitaminStackPurchased
-                      ? "bg-emerald-600 text-white"
-                      : "bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black"
-                  )}
-                >
-                  {vitaminStackPurchased ? (
-                    <>
-                      <Check className="w-4 h-4 text-white" />
-                      Added 5 Vitamins to Cart!
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingCart className="w-4 h-4 text-slate-950" />
-                      1-Click Add Essential Vitamins
-                    </>
-                  )}
-                </button>
-              </div>
+          {/* Sort & Filter */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-1 bg-[#faf9f6] border border-[#ebe7df] rounded-lg px-2.5 py-1 text-xs text-[#5c5851]">
+              <SlidersHorizontal className="w-3 h-3 text-[#8a857b]" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="bg-transparent border-none text-xs font-medium text-[#181716] focus:outline-none cursor-pointer"
+              >
+                <option value="featured">Featured</option>
+                <option value="grade">Clinical Grade (A → C)</option>
+                <option value="rating">Highest Clinical Rating</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+            </div>
+
+            <div className="hidden sm:flex items-center gap-1 bg-[#faf9f6] border border-[#ebe7df] rounded-lg px-2.5 py-1 text-xs text-[#5c5851]">
+              <ShieldCheck className="w-3 h-3 text-[#344a37]" />
+              <select
+                value={riskFilter}
+                onChange={(e) => setRiskFilter(e.target.value as any)}
+                className="bg-transparent border-none text-xs font-medium text-[#181716] focus:outline-none cursor-pointer"
+              >
+                <option value="all">All Tiers</option>
+                <option value="low">Standard (OTC)</option>
+                <option value="medium">Enhanced Support</option>
+                <option value="high">Clinical Review (Rx)</option>
+              </select>
             </div>
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* ======================================================== */}
-      {/* 2C. DEDICATED AOSM DIAGNOSTIC SHOWCASE & 4-STEP JOURNEY  */}
-      {/* ======================================================== */}
-      <div id="aosm" className="scroll-mt-24">
-        {(activeDepartment === 'all' || activeDepartment === 'diagnostics') && (
-          <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 text-white rounded-2xl p-5 md:p-6 border border-indigo-500/30 shadow-xl mb-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
-              <div className="space-y-2 max-w-2xl">
-                <div className="flex items-center gap-2">
-                  <span className="bg-indigo-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 fill-slate-950" /> Next-Gen Biological Modeling
-                  </span>
-                  <span className="text-xs text-indigo-300 font-bold">#aosm Clinical Standard</span>
-                </div>
-                <h2 className="text-xl md:text-2xl font-black text-white tracking-tight">
-                  The Advanced Organ System Modeling Assessment (AOSM)
-                </h2>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  A precise integration of science, biology, and technology designed to analyze your unique biological profile across 9 major organ systems and translate those insights into a personalized 90-day longevity roadmap.
-                </p>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    1. Concierge Enrollment
-                  </span>
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    2. Complete At-Home Testing
-                  </span>
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    3. 9-Organ Systems Modeling
-                  </span>
-                  <span className="text-[11px] bg-slate-800/80 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-lg">
-                    4. 90-Day Longevity Roadmap
-                  </span>
-                </div>
-              </div>
-
-              <div className="bg-slate-900/90 border border-indigo-500/40 p-4 rounded-xl shadow-lg w-full lg:w-72 flex-shrink-0 space-y-3">
-                <div className="flex items-baseline justify-between border-b border-slate-800 pb-2">
-                  <div>
-                    <span className="text-xs text-slate-400 block font-semibold">Complete Longevity Plan</span>
-                    <span className="text-xl font-black text-emerald-400">$399.00</span>
-                    <span className="text-xs text-slate-400 line-through ml-2">$599.00</span>
-                  </div>
-                  <span className="text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded">
-                    Early Access
-                  </span>
-                </div>
-                <button
-                  onClick={() => {
-                    handleBuy('diag-aosm');
-                    setAosmPurchased(true);
-                  }}
-                  className={cn(
-                    "w-full py-2.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md",
-                    aosmPurchased || purchasedIds.includes('diag-aosm')
-                      ? "bg-emerald-600 text-white"
-                      : "bg-gradient-to-r from-indigo-500 to-teal-400 hover:from-indigo-400 hover:to-teal-300 text-slate-950 font-black"
-                  )}
-                >
-                  {aosmPurchased || purchasedIds.includes('diag-aosm') ? (
-                    <>
-                      <Check className="w-4 h-4 text-white" />
-                      AOSM Package Reserved!
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingCart className="w-4 h-4 text-slate-950" />
-                      1-Click Enroll ($399 Early Access)
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* ======================================================== */}
-      {/* 3. SMART PRODUCT GRID                                    */}
-      {/* ======================================================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {filteredProducts.map((product, idx) => {
-          const isBought = purchasedIds.includes(product.id);
-          const isSub = autoDeliveryActive[product.id] ?? false;
-          const originalPrice = product.price || 29.99;
-          const discountedPrice = (originalPrice * 0.85).toFixed(2);
-          const isBestSeller = idx === 0 || product.category === 'Executive Stack';
-          const isTopPick = product.category === 'Recovery' || product.category === 'Nutrition';
-
-          return (
-            <div 
-              key={product.id}
-              className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex flex-col justify-between hover:shadow-xl hover:border-emerald-200 transition-all space-y-4 relative"
+        {localSearch.trim() && (
+          <div className="pt-2 border-t border-[#f4f2ec] flex items-center justify-between text-xs text-[#5c5851]">
+            <span>Matching query: <strong>&quot;{localSearch}&quot;</strong> ({filteredProducts.length} items)</span>
+            <button
+              onClick={() => setLocalSearch('')}
+              className="text-[#8c3232] hover:underline font-medium cursor-pointer"
             >
-              <div>
-                {/* Top Badge: Best Seller or Verified Biohack Choice */}
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  {isBestSeller ? (
-                    <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">
-                      Top Verified Stack • {product.category}
-                    </span>
-                  ) : isTopPick ? (
-                    <span className="bg-slate-900 text-white text-[10px] font-extrabold px-2 py-0.5 rounded flex items-center gap-1">
-                      <span className="text-emerald-400">CuasarX</span> <span>Choice</span>
-                    </span>
-                  ) : (
-                    <span className="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded">
-                      {product.category}
-                    </span>
-                  )}
+              Clear filter
+            </button>
+          </div>
+        )}
+      </div>
 
-                  <span className="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.2 rounded font-bold">
-                    Personal
-                  </span>
-                </div>
+      {/* ======================================================== */}
+      {/* 4. EXPANSIVE PRODUCT CATALOG GRID (Minimalist Cards)      */}
+      {/* ======================================================== */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-bold text-[#181716] tracking-tight flex items-center gap-2">
+            <span>Clinical Formulations &amp; Testing</span>
+            <span className="text-xs font-normal text-[#8a857b] font-mono">({filteredProducts.length})</span>
+          </h2>
+          <span className="text-xs text-[#6e6960] flex items-center gap-1">
+            <Truck className="w-3.5 h-3.5 text-[#344a37]" /> Cold-chain courier eligible
+          </span>
+        </div>
 
-                {/* Product Title */}
-                <h3 className="text-base font-extrabold text-slate-900 hover:text-emerald-700 cursor-pointer transition-colors leading-snug">
-                  {product.name}
-                </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredProducts.map(product => {
+            const basePrice = product.price || 45.00;
+            const isSub = activeSubCadence[product.id] || false;
+            const price = isSub ? basePrice * 0.85 : basePrice;
+            const isPurchased = purchasedIds.includes(product.id);
+            const grade = product.evidenceData?.grade || 'A';
+            const ratingScore = 4.8 + ((product.name.length % 3) * 0.05);
+            const reviewCount = 450 + (product.name.length * 32);
 
-                {/* Star Ratings & Clinical Review Count */}
-                <div className="flex items-center gap-1.5 mt-1 text-xs">
-                  <div className="flex items-center text-amber-500">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <span className="text-teal-700 font-semibold text-xs hover:underline cursor-pointer">
-                    {980 + (idx * 240)} verified reviews
-                  </span>
-                </div>
-
-                {/* Description */}
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">
-                  {product.description}
-                </p>
-
-                {/* AI Persona Match Callout */}
-                {product.tailoredReason && (
-                  <div className="mt-2.5 p-2 bg-emerald-50/70 rounded-xl border border-emerald-100 text-[11px] text-emerald-900 flex items-start gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>AI Match:</strong> {product.tailoredReason}</span>
-                  </div>
-                )}
-
-                {/* Price Display */}
-                <div className="mt-3">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-xs text-slate-700 font-bold self-start mt-1">$</span>
-                    <span className="text-2xl font-black text-slate-900">
-                      {isSub ? discountedPrice.split('.')[0] : String(originalPrice).split('.')[0]}
-                    </span>
-                    <span className="text-xs font-bold text-slate-900 self-start mt-1">
-                      {isSub ? discountedPrice.split('.')[1] : '00'}
-                    </span>
-                    <span className="text-xs text-slate-400 font-normal ml-1.5">($1.20 / Dose)</span>
-                  </div>
-
-                  {isSub && (
-                    <span className="text-[11px] text-emerald-700 font-bold block">
-                      Save 15% with Biometric Auto-Delivery
-                    </span>
-                  )}
-                </div>
-
-                {/* Priority Delivery Guarantee */}
-                <div className="mt-2 text-xs space-y-1 text-slate-700">
-                  <div className="flex items-center gap-1 text-teal-700 font-semibold">
-                    <Truck className="w-3.5 h-3.5" />
-                    <span>Priority Cold-Chain Express</span>
-                  </div>
-                  <div className="text-[11px] text-emerald-700 font-bold">
-                    In Stock. Ships direct from verified laboratory
-                  </div>
-                </div>
-
-                {/* Auto-Delivery vs One-Time Radio Selector */}
-                {product.riskLevel !== 'high' && (
-                  <div className="mt-3 p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
-                    <label 
-                      onClick={() => toggleAutoDelivery(product.id, false)}
-                      className={cn(
-                        "flex items-center justify-between p-2 rounded-lg cursor-pointer transition-colors",
-                        !isSub ? "bg-white border border-slate-300 font-bold shadow-sm" : "text-slate-600"
-                      )}
-                    >
-                      <span className="flex items-center gap-2">
-                        <input 
-                          type="radio" 
-                          name={`purchase-mode-${product.id}`} 
-                          checked={!isSub} 
-                          onChange={() => {}}
-                          className="accent-emerald-600" 
-                        />
-                        <span>One-time purchase</span>
+            return (
+              <div
+                key={product.id}
+                className="soft-card flex flex-col justify-between p-4 relative group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-1 mb-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className={cn(
+                        grade === 'A' ? "badge-clinical" : grade === 'B' ? "badge-warm" : "badge-neutral"
+                      )}>
+                        Grade {grade}
                       </span>
-                      <span className="font-bold text-slate-900">${originalPrice.toFixed(2)}</span>
-                    </label>
-
-                    <label 
-                      onClick={() => toggleAutoDelivery(product.id, true)}
-                      className={cn(
-                        "flex items-center justify-between p-2 rounded-lg cursor-pointer transition-colors",
-                        isSub ? "bg-emerald-50 border border-emerald-400 font-bold text-emerald-950 shadow-sm" : "text-slate-600"
-                      )}
-                    >
-                      <span className="flex items-center gap-2">
-                        <input 
-                          type="radio" 
-                          name={`purchase-mode-${product.id}`} 
-                          checked={isSub} 
-                          onChange={() => {}}
-                          className="accent-emerald-600" 
-                        />
-                        <span className="flex items-center gap-1">
-                          <Repeat className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Biometric Auto-Delivery (15%)</span>
+                      {product.hasHumanStudies && (
+                        <span className="badge-clinical text-[10px]">
+                          ✓ Human RCT
                         </span>
+                      )}
+                    </div>
+
+                    {product.riskLevel === 'high' ? (
+                      <span className="badge-flag">
+                        Rx Gate
                       </span>
-                      <span className="font-extrabold text-emerald-700">${discountedPrice}</span>
-                    </label>
+                    ) : (
+                      <span className="badge-neutral">
+                        {product.category}
+                      </span>
+                    )}
                   </div>
-                )}
 
-                {/* Evidence Grade Accordion */}
-                <div className="mt-3">
-                  <EvidenceGrade product={product} compact={true} />
+                  <h3 
+                    onClick={() => setQuickViewProduct(product)}
+                    className="text-sm font-semibold text-[#181716] leading-snug hover:text-black cursor-pointer transition-colors line-clamp-2"
+                  >
+                    {product.name}
+                  </h3>
+
+                  <div className="flex items-center gap-1.5 mt-1.5 text-xs">
+                    <div className="flex items-center text-[#785328]">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-[#785328] text-[#785328]" />
+                      ))}
+                    </div>
+                    <span className="text-xs font-semibold text-[#181716]">{ratingScore.toFixed(1)}</span>
+                    <span className="text-[11px] text-[#8a857b]">({reviewCount})</span>
+                  </div>
+
+                  <p className="text-xs text-[#5c5851] leading-relaxed mt-2 line-clamp-2">
+                    {product.description}
+                  </p>
+
+                  {product.tailoredReason && (
+                    <div className="mt-2.5 p-2 bg-[#f6f5ef] border border-[#e8e4da] rounded-lg text-[11px] text-[#3e3b35] leading-tight flex items-start gap-1.5">
+                      <Sparkles className="w-3 h-3 text-[#785328] flex-shrink-0 mt-0.5" />
+                      <span>{product.tailoredReason}</span>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              {/* Card Action Buttons */}
-              <div className="pt-3 border-t border-slate-100 space-y-2">
-                {product.riskLevel === 'high' ? (
-                  <div className="space-y-1">
-                    <button 
-                      onClick={() => alert(`Clinical consult requested for ${product.name}. A licensed clinician will review your blood panel within 2 hours.`)}
-                      className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-700 text-white shadow-sm flex items-center justify-center gap-1.5 transition-colors"
-                    >
-                      <ShieldAlert className="w-4 h-4" />
-                      Request Clinician Approval (MD Gate)
-                    </button>
-                    <span className="text-[10px] text-center text-rose-700 block font-medium">Requires blood panel &amp; MD authorization</span>
+                <div className="mt-4 pt-3 border-t border-[#f4f2ec] space-y-2">
+                  <div className="flex items-baseline justify-between">
+                    <div>
+                      <span className="text-base font-bold text-[#181716]">
+                        ${price.toFixed(2)}
+                      </span>
+                      {isSub && (
+                        <span className="text-xs text-[#8a857b] line-through ml-1.5 font-mono">
+                          ${basePrice.toFixed(2)}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[10px] text-[#5c5851] bg-[#f4f2ec] px-1.5 py-0.2 rounded font-medium">
+                      Next-Day AM
+                    </span>
                   </div>
-                ) : (
-                  <>
+
+                  {/* Subscribe & Save Toggle */}
+                  <label className="flex items-center justify-between p-1.5 bg-[#faf9f6] hover:bg-[#f5f3ee] rounded-lg border border-[#ebe7df] text-xs cursor-pointer select-none transition-colors">
+                    <div className="flex items-center gap-1.5">
+                      <input
+                        type="checkbox"
+                        checked={isSub}
+                        onChange={(e) => {
+                          setActiveSubCadence(prev => ({
+                            ...prev,
+                            [product.id]: e.target.checked
+                          }));
+                        }}
+                        className="w-3.5 h-3.5 accent-[#181716] rounded"
+                      />
+                      <span className="text-[11px] font-medium text-[#181716]">
+                        Subscribe &amp; Save 15%
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-semibold text-[#2b4530]">
+                      -${(basePrice * 0.15).toFixed(2)}
+                    </span>
+                  </label>
+
+                  {/* Buttons */}
+                  <div className="grid grid-cols-2 gap-1.5 pt-1">
                     <button
-                      onClick={() => handleBuy(product.id)}
+                      onClick={(e) => handleAddToCart(product, e)}
                       className={cn(
-                        "w-full py-2 px-4 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5",
-                        isBought
-                          ? "bg-emerald-600 text-white font-bold"
-                          : "bg-slate-900 hover:bg-slate-800 text-white"
+                        "py-2 px-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer",
+                        isPurchased
+                          ? "bg-[#2b4530] text-white"
+                          : "btn-ink"
                       )}
                     >
-                      {isBought ? (
+                      {isPurchased ? (
                         <>
-                          <Check className="w-4 h-4 text-white" />
-                          Added to Regimen!
+                          <Check className="w-3 h-3" />
+                          <span>In Cart</span>
                         </>
                       ) : (
                         <>
-                          <ShoppingCart className="w-4 h-4 text-emerald-400" />
-                          Add to Regimen / Cart
+                          <ShoppingCart className="w-3 h-3" />
+                          <span>Add to Cart</span>
                         </>
                       )}
                     </button>
 
                     <button
-                      onClick={() => handleBuy(product.id)}
-                      className="w-full py-2 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-sm flex items-center justify-center gap-1 transition-all"
+                      onClick={(e) => handleQuickBuy(product, e)}
+                      className="py-2 px-2 rounded-lg text-xs font-semibold btn-stone transition-all flex items-center justify-center gap-1 cursor-pointer"
                     >
-                      <Zap className="w-3.5 h-3.5 text-emerald-200" />
-                      1-Click Instant Order
+                      <Zap className="w-3 h-3 text-[#785328]" />
+                      <span>1-Click Order</span>
                     </button>
-                  </>
-                )}
+                  </div>
+
+                  <button
+                    onClick={() => setQuickViewProduct(product)}
+                    className="w-full text-center text-[11px] font-medium text-[#6e6960] hover:text-[#181716] py-0.5 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <Eye className="w-3 h-3" />
+                    <span>View Clinical Evidence &amp; Citations</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* ======================================================== */}
-      {/* 4. SYNERGISTIC BIOHACK BUNDLE CALCULATOR                 */}
+      {/* 5. FREQUENTLY PAIRED REGIMEN BUNDLE                      */}
       {/* ======================================================== */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm space-y-4">
-        <div>
-          <h3 className="text-base font-extrabold text-slate-900">
-            Frequently Paired Biohack Protocols
-          </h3>
-          <p className="text-xs text-slate-500">
-            Biohackers with similar Oura sleep metrics frequently combine these 3 compounds for maximum deep sleep and daytime focus.
-          </p>
+      <div className="soft-card p-5 md:p-6 space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="badge-warm mb-1">
+              Paired Synergy Protocol (Save 15%)
+            </span>
+            <h3 className="text-sm font-bold text-[#181716] mt-1">
+              Frequently Paired Together: Executive Anti-Burnout Protocol
+            </h3>
+          </div>
+          <span className="text-xs text-[#2b4530] font-medium hidden sm:inline">
+            Complimentary Cold-Chain Shipping
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-          
-          {/* Bundle Item Checkboxes */}
-          <div className="lg:col-span-2 space-y-2.5">
-            {bundleItems.map((item) => (
-              <label 
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2 space-y-2">
+            {bundleItems.map(item => (
+              <label
                 key={item.id}
-                className="flex items-center gap-3 p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 cursor-pointer transition-colors"
+                className="flex items-center gap-3 p-3 bg-[#faf9f6] hover:bg-[#f4f2ec] rounded-xl border border-[#ebe7df] cursor-pointer transition-colors"
               >
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={bundleChecked[item.id] || false}
                   onChange={(e) => setBundleChecked(prev => ({ ...prev, [item.id]: e.target.checked }))}
-                  className="w-4 h-4 accent-emerald-600 rounded"
+                  className="w-3.5 h-3.5 accent-[#181716] rounded"
                 />
                 <div className="flex-1 flex justify-between items-center text-xs">
-                  <span className="font-bold text-slate-900">{item.name}</span>
-                  <span className="font-extrabold text-slate-900">${item.price.toFixed(2)}</span>
+                  <span className="font-semibold text-[#181716]">{item.name}</span>
+                  <span className="font-semibold text-[#181716]">${item.price.toFixed(2)}</span>
                 </div>
               </label>
             ))}
           </div>
 
-          {/* Bundle Total Price & 1-Click Action */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3">
+          <div className="bg-[#faf9f6] p-4 rounded-xl border border-[#ebe7df] flex flex-col justify-between space-y-3">
             <div>
-              <span className="text-xs text-slate-500 block">Total Bundle Price:</span>
+              <span className="text-xs text-[#6e6960] block">Bundle Total:</span>
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-black text-emerald-600">${bundleDiscountPrice}</span>
-                <span className="text-xs text-slate-400 line-through">${totalBundleOriginalPrice.toFixed(2)}</span>
-                <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Save 15%</span>
+                <span className="text-xl font-bold text-[#181716]">${bundleDiscountPrice}</span>
+                <span className="text-xs text-[#8a857b] line-through font-mono">${totalBundleOriginalPrice.toFixed(2)}</span>
+                <span className="text-[10px] font-semibold text-[#2b4530] bg-[#f1f5f2] px-1.5 py-0.2 rounded">Save 15%</span>
               </div>
             </div>
 
             <button
               onClick={() => {
                 setBundlePurchased(true);
-                bundleItems.forEach(i => handleBuy(i.id));
+                const selected = bundleItems.filter(i => bundleChecked[i.id]).map(i => i.product);
+                if (onAddToCart) onAddToCart(selected);
               }}
               className={cn(
-                "w-full py-2.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2",
+                "w-full py-2.5 px-4 rounded-lg font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer",
                 bundlePurchased
-                  ? "bg-emerald-600 text-white font-bold"
-                  : "bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white"
+                  ? "bg-[#2b4530] text-white"
+                  : "btn-ink"
               )}
             >
               {bundlePurchased ? (
                 <>
-                  <Check className="w-4 h-4 text-white" />
-                  All 3 Added to Regimen!
+                  <Check className="w-3.5 h-3.5 text-white" />
+                  Added All 3 to Regimen
                 </>
               ) : (
                 <>
-                  <ShoppingCart className="w-4 h-4 text-emerald-200" />
-                  Add all 3 to Regimen / Cart
+                  <ShoppingCart className="w-3.5 h-3.5 text-white" />
+                  Add All 3 to Cart (${bundleDiscountPrice})
                 </>
               )}
             </button>
@@ -755,81 +735,140 @@ export function Marketplace({
       </div>
 
       {/* ======================================================== */}
-      {/* 5. VERIFIED BIOHACKER & CLINICIAN TELEMETRY REVIEWS      */}
+      {/* 6. EVIDENCE-GRADED PROTOCOLS                             */}
       {/* ======================================================== */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-extrabold text-slate-900">
-              Verified Biohacker &amp; Clinician Telemetry Reviews
-            </h3>
-            <p className="text-xs text-slate-500">
-              Correlated with real-world wearable data and blood panel adjustments.
-            </p>
-          </div>
-          <span className="text-xs font-bold text-teal-700 hover:underline cursor-pointer">
-            Write a verified telemetry review
-          </span>
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-base font-bold text-[#181716]">
+            Evidence-Graded Lifestyle Protocols (Non-Supplement)
+          </h3>
+          <p className="text-xs text-[#6e6960]">
+            Actionable behavioral interventions calibrated to your daily circadian rhythm and training load.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-[10px]">
-                  MV
-                </div>
-                <div>
-                  <span className="font-bold text-slate-900 block">Dr. Marcus Vance</span>
-                  <span className="text-[10px] text-emerald-700 font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Verified Biohacker &amp; Triathlete
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {BIOHACKING_PROTOCOLS.slice(0, 3).map(protocol => (
+            <div
+              key={protocol.id}
+              className="soft-card p-4 flex flex-col justify-between space-y-3"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="badge-clinical">
+                    {protocol.category}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#8a857b]">
+                    {protocol.evidenceGrade}
                   </span>
                 </div>
+                <h4 className="text-xs font-bold text-[#181716] leading-snug">
+                  {protocol.title}
+                </h4>
+                <p className="text-xs text-[#5c5851] mt-1 leading-relaxed">
+                  {protocol.protocol}
+                </p>
               </div>
-              <div className="flex items-center text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-            </div>
-            <p className="text-slate-700 italic">
-              &quot;The Executive Nootropic Stack combined with Magnesium Glycinate before bed increased my Oura deep sleep score by +28 minutes within 5 days. Zero daytime caffeine jitters.&quot;
-            </p>
-            <div className="text-[10px] text-slate-500 font-medium pt-1 border-t border-slate-200 flex items-center gap-2">
-              <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Oura Verified: +28m Deep Sleep</span>
-              <span>Reviewed in San Francisco, CA</span>
-            </div>
-          </div>
 
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-[10px]">
-                  SL
+              <div className="pt-2 border-t border-[#f4f2ec] space-y-1.5 text-[11px]">
+                <div className="flex items-center justify-between text-[#5c5851]">
+                  <span className="font-semibold text-[#181716]">Timing:</span>
+                  <span>{protocol.recommendedTiming}</span>
                 </div>
-                <div>
-                  <span className="font-bold text-slate-900 block">Sonia Lin</span>
-                  <span className="text-[10px] text-emerald-700 font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Verified Founder &amp; Personal Member
-                  </span>
+                <div className="p-2 bg-[#faf9f6] rounded-lg text-[#5c5851] text-[11px] leading-tight border border-[#ebe7df]">
+                  <strong>Outcome:</strong> {protocol.targetOutcome}
                 </div>
               </div>
-              <div className="flex items-center text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
             </div>
-            <p className="text-slate-700 italic">
-              &quot;The 1-Click Biometric Auto-Delivery is seamless. I travel between Austin and London frequently; having the cold-chain packs auto-ship to my hotel saves me hours of logistics.&quot;
-            </p>
-            <div className="text-[10px] text-slate-500 font-medium pt-1 border-t border-slate-200 flex items-center gap-2">
-              <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Auto-Delivery Active</span>
-              <span>Reviewed in Austin, TX</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
+
+      {/* ======================================================== */}
+      {/* 7. PRODUCT QUICK-VIEW CLINICAL MODAL                     */}
+      {/* ======================================================== */}
+      <AnimatePresence>
+        {quickViewProduct && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+            <motion.div
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              className="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-xl border border-[#ebe7df] max-h-[90vh] overflow-y-auto space-y-4"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="badge-clinical">
+                      {quickViewProduct.category}
+                    </span>
+                    <span className="badge-neutral font-mono">
+                      Grade {quickViewProduct.evidenceData?.grade || 'A'}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-[#181716]">
+                    {quickViewProduct.name}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setQuickViewProduct(null)}
+                  className="p-1 text-[#8a857b] hover:text-[#181716] rounded"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <p className="text-xs text-[#5c5851] leading-relaxed">
+                {quickViewProduct.description}
+              </p>
+
+              <div className="grid grid-cols-2 gap-3 p-3 bg-[#faf9f6] rounded-xl border border-[#ebe7df] text-xs">
+                <div>
+                  <span className="text-[#8a857b] font-medium block text-[10px] uppercase">Recommended Dosage:</span>
+                  <span className="font-semibold text-[#181716]">{quickViewProduct.dailyDosage || '1 Serving Daily'}</span>
+                </div>
+                <div>
+                  <span className="text-[#8a857b] font-medium block text-[10px] uppercase">Timing:</span>
+                  <span className="font-semibold text-[#181716]">{quickViewProduct.timing || 'Morning with meal'}</span>
+                </div>
+              </div>
+
+              <EvidenceGrade product={quickViewProduct} />
+
+              <div className="pt-3 border-t border-[#f4f2ec] flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-xl font-bold text-[#181716]">${(quickViewProduct.price || 49.00).toFixed(2)}</span>
+                  <span className="text-xs text-[#8a857b] block">Complimentary cold-chain delivery</span>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      handleAddToCart(quickViewProduct);
+                      setQuickViewProduct(null);
+                    }}
+                    className="py-2 px-4 rounded-lg font-semibold text-xs btn-ink flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <ShoppingCart className="w-3.5 h-3.5" />
+                    <span>Add to Cart</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      handleQuickBuy(quickViewProduct);
+                      setQuickViewProduct(null);
+                    }}
+                    className="py-2 px-4 rounded-lg font-semibold text-xs btn-stone flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Zap className="w-3.5 h-3.5 text-[#785328]" />
+                    <span>1-Click Order</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -17,22 +17,21 @@ export interface LogoOption {
 export const LOGO_OPTIONS: LogoOption[] = [
   {
     id: 'delta',
-    name: 'Logo 1: Delta Matrix (Geometric Shield)',
-    subtitle: 'Precision Biometric Shield',
-    tagline: '2D Minimalist Vector Geometry',
+    name: 'Logo 1: CuasarX Keel Emblem (Diamond Axis)',
+    subtitle: 'Longevity by Keel',
+    tagline: 'Precision Celestial & Biological Core',
     svgIcon: ({ className = "w-8 h-8", color = "currentColor" }) => (
-      <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Outer 2D Hexagonal Shield Frame */}
-        <polygon points="32,4 56,16 56,48 32,60 8,48 8,16" stroke={color} strokeWidth="3.5" strokeLinejoin="round" fill="none" />
-        {/* Inner Delta Triangle */}
-        <polygon points="32,16 46,42 18,42" stroke={color} strokeWidth="2.5" strokeLinejoin="round" fill="none" />
-        {/* Central Biometric Pulse Node */}
-        <path d="M22,34 H28 L32,26 L36,38 L40,34 H42" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="32" cy="32" r="2.5" fill={color} />
+      <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4L34 20L20 36L6 20L20 4Z" stroke={color} strokeWidth="2" strokeLinejoin="round" />
+        <line x1="20" y1="8" x2="20" y2="32" stroke={color} strokeWidth="2.25" strokeLinecap="round" />
+        <line x1="12" y1="20" x2="28" y2="20" stroke={color} strokeWidth="1.75" strokeLinecap="round" />
+        <circle cx="20" cy="20" r="3.5" fill={color} />
+        <circle cx="20" cy="11" r="1.2" fill={color} />
+        <circle cx="20" cy="29" r="1.2" fill={color} />
       </svg>
     ),
-    designConcept: 'Sharp 2D geometric shield engineered with precision angles, symbolizing impenetrable medical safety and data protection.',
-    bestForTheme: 'Titanium & Obsidian'
+    designConcept: 'Diamond Keel axis intersecting continuous circadian rhythms, representing precision medical engineering and systemic longevity.',
+    bestForTheme: 'Soft Alabaster & Ink'
   },
   {
     id: 'nexus',
