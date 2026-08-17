@@ -20,13 +20,23 @@ export const THEMES: {
   description: string;
 }[] = [
   {
+    id: 'smart_marketplace',
+    name: 'Smart Marketplace & Personal Biohack',
+    tagline: 'Custom E-Commerce & 1-Click Biometric Subscriptions',
+    previewBg: 'bg-[#0f172a] border-emerald-500',
+    previewCard: 'bg-white text-slate-900 border-slate-200',
+    accentColor: 'bg-emerald-600 text-white',
+    badge: 'Personal Biohack',
+    description: 'High-performance bespoke e-commerce layout with midnight slate navigation (#0f172a), bio-emerald instant checkout, and responsive mobile bottom dock.'
+  },
+  {
     id: 'titanium',
     name: 'Titanium Precision',
     tagline: 'Modern Executive Light',
     previewBg: 'bg-slate-100 border-slate-200',
     previewCard: 'bg-white text-slate-900 border-slate-200',
     accentColor: 'bg-indigo-600',
-    badge: 'Default Clean',
+    badge: 'Clean Light',
     description: 'Ultra-crisp light canvas with slate-900 typography, indigo focus rings, and high contrast data tables.'
   },
   {

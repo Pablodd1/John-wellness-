@@ -60,7 +60,7 @@ export const LOGO_OPTIONS: LogoOption[] = [
   {
     id: 'waveform',
     name: 'Logo 3: Cuasar Waveform (Executive Sine Emblem)',
-    subtitle: 'Real-Time Telemetry Sine Wave',
+    subtitle: 'Circadian Waveform Core',
     tagline: '2D High-Contrast Executive Emblem',
     svgIcon: ({ className = "w-8 h-8", color = "currentColor" }) => (
       <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">

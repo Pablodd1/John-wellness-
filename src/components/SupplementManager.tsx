@@ -176,10 +176,8 @@ export function SupplementManager({
                       </div>
                     )}
 
-                    {/* Evidence Grade & Clinical Rationale Component */}
-                    {product.evidenceData && (
-                      <EvidenceGrade evidence={product.evidenceData} compact={true} />
-                    )}
+                    {/* Evidence Grade, Human Studies & Clinical Rationale Component */}
+                    <EvidenceGrade product={product} compact={true} />
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-slate-100">
@@ -344,14 +342,7 @@ export function SupplementManager({
                   <h4 className="text-lg font-bold text-slate-900 mb-1">{prod.name}</h4>
                   <p className="text-xs text-slate-600 mb-3">{prod.description}</p>
 
-                  {prod.evidenceData ? (
-                    <EvidenceGrade evidence={prod.evidenceData} compact={false} />
-                  ) : (
-                    <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100 text-xs text-slate-700 mb-4 space-y-1">
-                      <div><strong>Evidence Summary:</strong> {prod.evidence || 'Established clinical baseline.'}</div>
-                      <div><strong>Dosage Rule:</strong> {prod.dailyDosage || 'Standard guidance applies.'}</div>
-                    </div>
-                  )}
+                  <EvidenceGrade product={prod} compact={false} />
                 </div>
 
                 {prod.riskLevel === 'high' ? (

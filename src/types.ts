@@ -1,6 +1,6 @@
 export type ReadinessStatus = 'optimal' | 'good' | 'warning' | 'low';
 
-export type ThemeMode = 'titanium' | 'obsidian' | 'nordic' | 'solar';
+export type ThemeMode = 'smart_marketplace' | 'titanium' | 'obsidian' | 'nordic' | 'solar';
 
 export type EvidenceData = {
   confidenceScore: number; // e.g. 94%
@@ -28,6 +28,11 @@ export type Product = {
   dailyDosage?: string;
   timing?: string;
   tailoredReason?: string; // Why this specific product matches ChatGPT/Gemini history or bio-persona
+  hasHumanStudies?: boolean;
+  humanStudiesNote?: string;
+  potentialSideBenefits?: string[];
+  potentialSideEffects?: string[];
+  medicalDisclaimer?: string;
 };
 
 export type BiohackingCard = {
@@ -67,6 +72,57 @@ export type PeerMatch = {
   onlineStatus: 'active' | 'away' | 'in_session';
 };
 
+export type BaselineDiagnostics = {
+  dexa?: {
+    bodyFatPercent: number;
+    leanMassKg: number;
+    visceralFatGrams: number;
+    boneDensityZScore: number;
+  };
+  bloodwork?: {
+    apoB: number; // mg/dL
+    hsCRP: number; // mg/L
+    fastingGlucose: number; // mg/dL
+    hba1c: number; // %
+    fastingInsulin: number; // uIU/mL
+    vitaminD: number; // ng/mL
+    testosteroneFree: number; // pg/mL
+    cortisolAM: number; // mcg/dL
+    altAst: string; // e.g. "22 / 24 U/L"
+    tsh: number; // uIU/mL
+  };
+  diagnostics?: {
+    ekgFindings: string;
+    vo2Max: number; // mL/kg/min
+    rmrKcal: number; // kcal/day
+  };
+  anthropometrics?: {
+    weightKg: number;
+    heightCm: number;
+    rhrBpm: number;
+    hrvMs: number;
+    sleepEfficiencyPercent: number;
+  };
+  medicalHistory?: {
+    chronicConditions: string[];
+    medicationsPeptides: string[];
+    familyHistory: string[];
+    allergies: string[];
+  };
+  sportsProfile?: {
+    primaryDiscipline: string;
+    weeklyHours: number;
+    zone2WeeklyHours: number;
+    activeInjuries: string[];
+  };
+  psychologicalProfile?: {
+    perceivedStressScore: number; // 1-10
+    burnoutIndex: 'Low' | 'Moderate' | 'Severe';
+    cognitiveFatigueScore: number; // 1-10
+    sleepOnsetRumination: boolean;
+  };
+};
+
 export type UserProfile = {
   id: string;
   name: string;
@@ -76,6 +132,7 @@ export type UserProfile = {
   gender: string;
   lifestylePersona: 'High-Stress Executive / Zero-Time' | 'Peak Endurance Athlete' | 'Biohacking Enthusiast' | 'Recreational Maintenance';
   dataCompleteness: number;
+  baselineDiagnostics?: BaselineDiagnostics;
   readiness: {
     score: number;
     status: ReadinessStatus;
@@ -146,4 +203,69 @@ export type ExtractedFact = {
   confidence: number;
   source: 'voice' | 'text' | 'form' | 'wearable' | 'document';
   verified: boolean;
+};
+
+export type OrganSystemId = 
+  | 'cardiovascular'
+  | 'metabolic'
+  | 'immune'
+  | 'neurocognitive'
+  | 'hepatic'
+  | 'renal'
+  | 'musculoskeletal'
+  | 'endocrine'
+  | 'pulmonary';
+
+export type OrganSystemHealth = {
+  id: OrganSystemId;
+  name: string;
+  category: string;
+  biologicalAge: number;
+  chronologicalAgeDelta: number; // e.g. -5.8 means 5.8 years younger
+  biologicalReservePercent: number; // 0-100%
+  status: 'optimal' | 'resilient' | 'accelerated_aging' | 'high_strain';
+  primaryBiomarkers: {
+    name: string;
+    value: string;
+    reference: string;
+    impact: 'positive' | 'neutral' | 'strained';
+  }[];
+  agingVelocity: 'slowing' | 'stable' | 'accelerated';
+  clinicalSummary: string;
+  priorityAction: string;
+  targetIntervention: string;
+};
+
+export type LongevityRoadmapPhase = {
+  phaseNumber: 1 | 2 | 3;
+  daysRange: string; // e.g. 'Days 1-30'
+  title: string;
+  focusArea: string;
+  status: 'completed' | 'in_progress' | 'upcoming';
+  interventions: {
+    id: string;
+    category: 'Biochemical' | 'Circadian' | 'Training' | 'Diagnostic' | 'Lifestyle';
+    title: string;
+    description: string;
+    completed: boolean;
+    frequency: string;
+  }[];
+  keyMilestone: string;
+};
+
+export type ExecutiveHealthspanReport = {
+  overallBiologicalAge: number;
+  chronologicalAge: number;
+  longevityAdvantageYears: number;
+  paceOfAging: number; // e.g. 0.82 biological years per chronological year
+  overallReserveScore: number;
+  topOpportunities: {
+    system: string;
+    priority: 'High' | 'Medium' | 'Routine';
+    observation: string;
+    actionableProtocol: string;
+  }[];
+  systemBreakdown: OrganSystemHealth[];
+  generatedAt: string;
+  physicianReviewStatus: 'Reviewed & Signed' | 'Pending Verification';
 };

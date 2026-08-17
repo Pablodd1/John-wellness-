@@ -14,33 +14,74 @@ import {
   Square, 
   Sparkles, 
   Radio, 
-  Check 
+  Check,
+  X,
+  Stethoscope,
+  FileText,
+  Clock,
+  RotateCcw,
+  AlertTriangle,
+  HeartPulse,
+  Brain,
+  Zap,
+  CheckCircle2,
+  Trash2
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '../lib/utils';
+import { motion, AnimatePresence } from 'motion/react';
+import { LogoOptionId, LOGO_OPTIONS } from './BrandLogoSelector';
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: 'm1',
     sender: 'phi',
-    text: 'Good morning, JohnMatrix operator! Your sleep duration was lower than baseline (4.2 hrs) and resting heart rate spiked by 4 bpm. I adjusted your workout to active recovery. How do your legs and energy feel right now?',
+    text: 'Good morning, operator! Your wearable telemetry flagged a shortened sleep window (4.2 hrs) and elevated resting HR (+4 bpm). I have queued active recovery protocols. You can tap the "Voice HPI" button above to dictate any active symptoms, acute pains, travel, or life events for clinical analysis.',
     timestamp: new Date().toISOString(),
   }
 ];
 
-import { LogoOptionId, LOGO_OPTIONS } from './BrandLogoSelector';
+const HPI_SAMPLE_PROMPTS = [
+  {
+    label: "Fatigue & Sleep Crash",
+    text: "Experiencing acute 3 PM cognitive brain fog, low motivation, and 4.2 hours of fragmented sleep following a cross-country red-eye flight."
+  },
+  {
+    label: "Joint / Tendon Soreness",
+    text: "Mild acute soreness and localized inflammation in left patellar tendon following heavy eccentric leg press yesterday. No swelling, pain is 4/10."
+  },
+  {
+    label: "High Stress & Palpitations",
+    text: "Elevated perceived work stress (8/10), increased caffeine intake (400mg), and feeling heart palpitations before bed with high resting HR."
+  },
+  {
+    label: "Post-Meal Bloating",
+    text: "Experiencing post-prandial lethargy, mild epigastric bloating, and glycemic instability about 45 minutes after high-glycemic lunch."
+  }
+];
 
 interface PhiChatProps {
   user: UserProfile;
   incomingEvaluation?: { text: string; senderName: string } | null;
   activeLogoId?: LogoOptionId;
+  onClose?: () => void;
 }
 
-export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: PhiChatProps) {
+export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onClose }: PhiChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [speakingMsgId, setSpeakingMsgId] = useState<string | null>(null);
+
+  // Voice HPI state
+  const [showHpiModal, setShowHpiModal] = useState(false);
+  const [hpiListening, setHpiListening] = useState(false);
+  const [hpiTranscript, setHpiTranscript] = useState('');
+  const [hpiCategory, setHpiCategory] = useState<'symptoms_fatigue' | 'injury_pain' | 'stress_sleep' | 'metabolic_gi' | 'general_life'>('symptoms_fatigue');
+  const [hpiSeverity, setHpiSeverity] = useState<number>(6);
+  const [hpiDuration, setHpiDuration] = useState<number>(0);
+  const hpiTimerRef = useRef<any>(null);
+  const hpiRecognitionRef = useRef<any>(null);
 
   const selectedLogo = LOGO_OPTIONS.find(l => l.id === activeLogoId) || LOGO_OPTIONS[0];
   const LogoIcon = selectedLogo.svgIcon;
@@ -136,6 +177,20 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Clean up HPI timer and recognition on unmount
+  useEffect(() => {
+    return () => {
+      if (hpiTimerRef.current) clearInterval(hpiTimerRef.current);
+      if (hpiRecognitionRef.current) {
+        try {
+          hpiRecognitionRef.current.stop();
+        } catch (e) {
+          // ignore
+        }
+      }
+    };
+  }, []);
+
   // Speak text using human-realistic Web Speech API settings
   const speakText = (text: string, msgId: string) => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
@@ -168,7 +223,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
     window.speechSynthesis.speak(utterance);
   };
 
-  // Toggle Speech-to-Text Microphone input
+  // Toggle standard input speech-to-text
   const toggleSpeechRecognition = () => {
     if (typeof window === 'undefined') return;
 
@@ -201,6 +256,160 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
     recognition.start();
   };
 
+  // Start dedicated HPI Voice Recording
+  const startHpiRecording = () => {
+    if (typeof window === 'undefined') return;
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert('Speech recognition is not supported in this browser. You can type or select one of the guided clinical prompts below.');
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        setHpiListening(true);
+        setHpiDuration(0);
+        hpiTimerRef.current = setInterval(() => {
+          setHpiDuration(prev => prev + 1);
+        }, 1000);
+      };
+
+      recognition.onresult = (event: any) => {
+        let currentTranscript = '';
+        for (let i = 0; i < event.results.length; i++) {
+          currentTranscript += event.results[i][0].transcript + ' ';
+        }
+        setHpiTranscript(currentTranscript.trim());
+      };
+
+      recognition.onerror = (e: any) => {
+        console.warn('HPI recognition error', e);
+        stopHpiRecording();
+      };
+
+      recognition.onend = () => {
+        setHpiListening(false);
+        if (hpiTimerRef.current) clearInterval(hpiTimerRef.current);
+      };
+
+      hpiRecognitionRef.current = recognition;
+      recognition.start();
+    } catch (e) {
+      console.error(e);
+      setHpiListening(false);
+    }
+  };
+
+  // Stop dedicated HPI Voice Recording
+  const stopHpiRecording = () => {
+    if (hpiRecognitionRef.current) {
+      try {
+        hpiRecognitionRef.current.stop();
+      } catch (e) {
+        // ignore
+      }
+    }
+    setHpiListening(false);
+    if (hpiTimerRef.current) clearInterval(hpiTimerRef.current);
+  };
+
+  // Reset HPI form
+  const handleResetHpi = () => {
+    stopHpiRecording();
+    setHpiTranscript('');
+    setHpiDuration(0);
+  };
+
+  // Submit Voice HPI to Chat & Clinical Engine
+  const handleSubmitHpi = () => {
+    if (!hpiTranscript.trim()) return;
+
+    stopHpiRecording();
+    const recordedText = hpiTranscript.trim();
+    const categoryLabels: Record<string, string> = {
+      symptoms_fatigue: 'Fatigue, Sleep & Energy Dynamics',
+      injury_pain: 'Musculoskeletal & Injury Soreness',
+      stress_sleep: 'Psychological Stress & Insomnia',
+      metabolic_gi: 'Metabolic & GI / Post-Prandial Event',
+      general_life: 'General Life Event & Workload Shock'
+    };
+
+    const formattedUserMsg: ChatMessage = {
+      id: `hpi-user-${Date.now()}`,
+      sender: 'user',
+      text: `🎙️ [VOICE HPI & LIFE EVENT INTAKE]\n• Category: ${categoryLabels[hpiCategory] || 'Clinical HPI'}\n• Severity Score: ${hpiSeverity}/10\n• Patient Voice Transcript: "${recordedText}"`,
+      timestamp: new Date().toISOString()
+    };
+
+    setMessages(prev => [...prev, formattedUserMsg]);
+    setShowHpiModal(false);
+    setHpiTranscript('');
+    setHpiDuration(0);
+
+    // AI Clinical Reasoning based on HPI data & user telemetry
+    setTimeout(() => {
+      let hpiAiResponse = `[CuasarX Clinical HPI Analysis & Protocol Calibration]\n\n`;
+      const lower = recordedText.toLowerCase();
+
+      // Clinical Case 1: Musculoskeletal / Tendon / Joint Injury
+      if (lower.includes('tendon') || lower.includes('knee') || lower.includes('joint') || lower.includes('shoulder') || lower.includes('pain') || lower.includes('injury') || hpiCategory === 'injury_pain') {
+        const userRhr = user.metrics?.rhr?.current || user.baselineDiagnostics?.anthropometrics?.rhrBpm || 52;
+        hpiAiResponse += `1. CLINICAL IMPRESSION: Acute mechanical strain / localized inflammatory signal (Severity: ${hpiSeverity}/10).\n\n`;
+        hpiAiResponse += `2. TELEMETRY & WEARABLE CORRELATION:\n• Your current resting HR (${userRhr} bpm) suggests stable systemic tone, but local connective tissue requires metabolic rest.\n\n`;
+        hpiAiResponse += `3. TARGETED PROTOCOL ADJUSTMENT:\n• Training: Auto-suppress heavy eccentric loading for 48h. Replace with isometrics & Zone 2 cycling (130-140 bpm).\n• Nutritional Support: Add Tart Cherry Extract (480mg) + Curcumin Phytosome (500mg) to reduce inflammatory cytokines without blunting systemic adaptation.\n• Peptide Status: If discomfort exceeds 72 hours, an ADM review for localized BPC-157 / TB-500 protocol authorization can be generated.`;
+      } 
+      // Clinical Case 2: Fatigue, Red-Eye, Sleep Deprivation, Jet Lag
+      else if (lower.includes('sleep') || lower.includes('flight') || lower.includes('fatigue') || lower.includes('crash') || lower.includes('fog') || hpiCategory === 'symptoms_fatigue') {
+        hpiAiResponse += `1. CLINICAL IMPRESSION: Circadian desynchronization & acute central nervous system (CNS) fatigue (Severity: ${hpiSeverity}/10).\n\n`;
+        hpiAiResponse += `2. TELEMETRY & WEARABLE CORRELATION:\n• Matches your Oura wearable data (4.2 hours recorded sleep, +4 bpm RHR spike).\n• Autonomic balance is sympathetically shifted.\n\n`;
+        hpiAiResponse += `3. TARGETED PROTOCOL ADJUSTMENT:\n• Sleep Hygiene: 400mg Magnesium L-Threonate + 3g Glycine 45 min before bed.\n• Circadian Reset: 15 min outdoor 10,000+ lux light exposure immediately; cut off caffeine intake past 1:00 PM.\n• Readiness Shield: Shift afternoon resistance session to a 20-minute sauna protocol (85°C) to upregulate heat shock proteins.`;
+      }
+      // Clinical Case 3: High Stress, Caffeine, Palpitations
+      else if (lower.includes('stress') || lower.includes('heart') || lower.includes('caffeine') || lower.includes('palpitations') || hpiCategory === 'stress_sleep') {
+        hpiAiResponse += `1. CLINICAL IMPRESSION: Sympathetic adrenergic overdrive & acute catecholamine elevation (Severity: ${hpiSeverity}/10).\n\n`;
+        hpiAiResponse += `2. TELEMETRY & WEARABLE CORRELATION:\n• Elevated stress score (8/10) with elevated cortisol AUC.\n\n`;
+        hpiAiResponse += `3. TARGETED PROTOCOL ADJUSTMENT:\n• Acute Intervention: 200mg L-Theanine + 300mg KSM-66 Ashwagandha for GABAergic calming.\n• Fluid Balance: 500ml water with sodium/potassium electrolytes.\n• Safety Guardrail: If resting palpitations persist above 100 bpm at rest, initiate 911 / Medical Protocol.`;
+      }
+      // Clinical Case 4: Post-Prandial GI, Glucose, Bloating
+      else if (lower.includes('bloat') || lower.includes('meal') || lower.includes('glucose') || lower.includes('food') || hpiCategory === 'metabolic_gi') {
+        hpiAiResponse += `1. CLINICAL IMPRESSION: Post-prandial glycemic excursion & digestive enzyme mismatch (Severity: ${hpiSeverity}/10).\n\n`;
+        hpiAiResponse += `2. TELEMETRY & WEARABLE CORRELATION:\n• CGM spike expected; insulin sensitivity is reduced during poor sleep states.\n\n`;
+        hpiAiResponse += `3. TARGETED PROTOCOL ADJUSTMENT:\n• Immediate: 15-minute Zone 1 brisk walking to clear excess glycemic load into GLUT4 receptors.\n• Preventive: 500mg Berberine HCl before your next carbohydrate-dense meal.`;
+      }
+      // Clinical Case 5: General Life Event
+      else {
+        hpiAiResponse += `1. CLINICAL IMPRESSION: Life event / situational stressor logged in your health diary (Severity: ${hpiSeverity}/10).\n\n`;
+        hpiAiResponse += `2. TELEMETRY INTEGRATION:\n• Extracted facts synchronized to your lifestyle profile (${user.lifestylePersona}).\n\n`;
+        hpiAiResponse += `3. PROTOCOL GUIDANCE:\n• I have calibrated your recovery algorithm and queued targeted adaptogens in your daily regimen.`;
+      }
+
+      const botMsgId = `hpi-ai-${Date.now()}`;
+      const botMsg: ChatMessage = {
+        id: botMsgId,
+        sender: 'phi',
+        text: hpiAiResponse,
+        timestamp: new Date().toISOString(),
+        action: {
+          type: 'recommendation',
+          payload: { productId: 'bundle-exec' }
+        }
+      };
+
+      setMessages(prev => [...prev, botMsg]);
+
+      if (autoSpeak) {
+        speakText(hpiAiResponse, botMsgId);
+      }
+    }, 900);
+  };
+
   const handleSend = (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!input.trim()) return;
@@ -223,8 +432,8 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
 
       const lower = userText.toLowerCase();
 
-      if (lower.includes('peptide') || lower.includes('bpc') || lower.includes('dose') || lower.includes('injection')) {
-        phiResponseText = "I cannot provide direct peptide injection dosages without clinical oversight. I can show you published clinical trials or route your request to a licensed physician.";
+      if (lower.includes('peptide') || lower.includes('bpc') || lower.includes('dose') || lower.includes('injection') || lower.includes('tb-500')) {
+        phiResponseText = "⚠️ MEDICAL DISCLAIMER: I am an AI assistant, NOT a medical doctor. \n\n• Human Clinical Studies Status: Most research peptides (like BPC-157 or TB-500) lack large-scale double-blind human RCTs and rely on preclinical rodent/cell models.\n• Potential Side Benefits: Soft-tissue collagen support, local angiogenesis, mucosal lining repair.\n• Potential Side Effects / Precautions: Injection site irritation, blood pressure spikes, unknown long-term human pharmacokinetics.\n\nHigh-risk compound administration requires direct supervision from a licensed physician.";
         phiAction = {
           type: 'safety_block',
           payload: { category: 'clinical_escalation' }
@@ -232,7 +441,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
       } else if (lower.includes('why') || lower.includes('workout') || lower.includes('training')) {
         phiResponseText = "Your Oura telemetry recorded 4.2 hours of sleep and an elevated resting HR. Training hard today spikes cortisol and delays connective tissue recovery.";
       } else if (lower.includes('recommend') || lower.includes('buy') || lower.includes('supplements')) {
-        phiResponseText = "Based on your high executive stress score (8/10), I recommend our 1-Click Executive Bundle featuring L-Theanine and Alpha-GPC.";
+        phiResponseText = "Based on your high executive stress score (8/10), I recommend our 1-Click Executive Stack (L-Theanine + Alpha-GPC + Magnesium).\n\n• Human Studies: Validated in double-blind RCTs.\n• Potential Side Benefits: Sustained alpha-wave cognitive focus, reduced cortisol AUC.\n• Potential Side Effects: Mild dreaming or drowsiness if taken late.\n\nNote: I am an AI assistant, not a doctor. Consult your physician before changing your stack.";
         phiAction = {
           type: 'recommendation',
           payload: { productId: 'bundle-exec' }
@@ -262,41 +471,61 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
   return (
     <div className="flex flex-col h-full bg-white border-l border-slate-200 shadow-xl relative">
       {/* Header */}
-      <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-900 text-white">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-amber-400 shadow-sm p-1.5">
-            <LogoIcon className="w-6 h-6" />
+      <div className="p-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-900 text-white">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-amber-400 shadow-sm p-1.5">
+            <LogoIcon className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-extrabold text-sm leading-tight text-white flex items-center gap-1.5">
+            <h3 className="font-extrabold text-xs leading-tight text-white flex items-center gap-1.5">
               CuasarX Assistant
               <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
             </h3>
-            <p className="text-[10px] text-indigo-300 font-semibold uppercase tracking-wider">
+            <p className="text-[9px] text-indigo-300 font-semibold uppercase tracking-wider">
               {selectedLogo.subtitle}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-1">
+          {/* Prominent Voice HPI Button in Header */}
+          <button
+            onClick={() => setShowHpiModal(true)}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white text-[11px] font-extrabold shadow-sm transition-all hover:scale-105 active:scale-95"
+            title="Record Voice History of Present Illness (HPI) & Symptoms"
+          >
+            <Mic className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+            <span>Voice HPI</span>
+          </button>
+
           <button
             onClick={() => setAutoSpeak(!autoSpeak)}
             title={autoSpeak ? "Voice Auto-Read ON" : "Voice Auto-Read OFF"}
             className={cn(
-              "p-2 rounded-xl transition-all text-xs font-semibold flex items-center gap-1",
+              "p-1.5 rounded-xl transition-all text-xs font-semibold flex items-center gap-1",
               autoSpeak ? "bg-indigo-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
             )}
           >
-            {autoSpeak ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            {autoSpeak ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
           </button>
 
           <button
             onClick={() => setShowVoiceSettings(!showVoiceSettings)}
             title="Configure Human Voice Settings"
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
           >
-            <Settings className="w-4 h-4" />
+            <Settings className="w-3.5 h-3.5" />
           </button>
+
+          {onClose && (
+            <button
+              onClick={onClose}
+              title="Close CuasarX Assistant"
+              className="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white transition-colors"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -366,17 +595,221 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
         </div>
       )}
 
+      {/* Dedicated Voice HPI Capture Overlay / Drawer */}
+      <AnimatePresence>
+        {showHpiModal && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute inset-0 z-50 bg-slate-950/95 backdrop-blur-md text-white flex flex-col p-4 overflow-y-auto"
+          >
+            {/* HPI Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-600 to-indigo-600 flex items-center justify-center text-white shadow-lg">
+                  <Stethoscope className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-sm text-white flex items-center gap-1.5">
+                    Voice HPI &amp; Symptom Intake
+                    <span className="text-[10px] bg-rose-500/20 text-rose-300 font-bold px-2 py-0.5 rounded-full border border-rose-500/30">Clinical</span>
+                  </h4>
+                  <p className="text-[10px] text-slate-400">Speak symptoms, life events, fatigue, or pains directly</p>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => { stopHpiRecording(); setShowHpiModal(false); }}
+                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Category Selector Pills */}
+            <div className="mt-3 space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Intake Category</label>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  { id: 'symptoms_fatigue', label: '⚡ Fatigue & Sleep', icon: Zap },
+                  { id: 'injury_pain', label: '🦵 Joint & Tendon Pain', icon: HeartPulse },
+                  { id: 'stress_sleep', label: '🧠 Stress & Insomnia', icon: Brain },
+                  { id: 'metabolic_gi', label: '🍽️ GI & Glycemic', icon: Activity },
+                  { id: 'general_life', label: '🌍 Travel & Life Event', icon: FileText },
+                ].map(cat => {
+                  const Icon = cat.icon;
+                  const active = hpiCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => setHpiCategory(cat.id as any)}
+                      className={cn(
+                        "px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all border",
+                        active 
+                          ? "bg-indigo-600 text-white border-indigo-400 shadow-sm" 
+                          : "bg-slate-900 text-slate-400 border-slate-800 hover:text-slate-200"
+                      )}
+                    >
+                      <Icon className="w-3 h-3" />
+                      <span>{cat.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Severity Rating Slider */}
+            <div className="mt-3 p-2.5 bg-slate-900/80 rounded-xl border border-slate-800">
+              <div className="flex justify-between items-center text-[11px] text-slate-300 mb-1">
+                <span className="font-semibold flex items-center gap-1 text-slate-400">
+                  <Activity className="w-3.5 h-3.5 text-rose-400" /> Subjective Severity / Discomfort:
+                </span>
+                <span className={cn(
+                  "font-black px-2 py-0.5 rounded text-xs",
+                  hpiSeverity >= 7 ? "bg-rose-500/20 text-rose-400" : hpiSeverity >= 4 ? "bg-amber-500/20 text-amber-300" : "bg-emerald-500/20 text-emerald-300"
+                )}>
+                  {hpiSeverity} / 10 ({hpiSeverity >= 8 ? "Acute" : hpiSeverity >= 5 ? "Moderate" : "Mild"})
+                </span>
+              </div>
+              <input
+                type="range"
+                min={1}
+                max={10}
+                value={hpiSeverity}
+                onChange={(e) => setHpiSeverity(parseInt(e.target.value))}
+                className="w-full accent-rose-500 h-1.5 bg-slate-800 rounded-lg"
+              />
+            </div>
+
+            {/* Live Audio Visualizer & Dictation Hub */}
+            <div className="mt-3 flex-1 flex flex-col justify-between space-y-3">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 flex-1 flex flex-col">
+                <div className="flex items-center justify-between border-b border-slate-800/80 pb-2 mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className={cn(
+                      "w-2.5 h-2.5 rounded-full",
+                      hpiListening ? "bg-rose-500 animate-ping" : "bg-slate-600"
+                    )} />
+                    <span className="text-[11px] font-bold text-slate-300">
+                      {hpiListening ? `Recording Audio (${hpiDuration}s)...` : "Live Transcript"}
+                    </span>
+                  </div>
+
+                  {hpiTranscript && (
+                    <button 
+                      onClick={handleResetHpi}
+                      className="text-[10px] text-slate-400 hover:text-rose-400 flex items-center gap-1 font-semibold"
+                    >
+                      <Trash2 className="w-3 h-3" /> Clear
+                    </button>
+                  )}
+                </div>
+
+                {/* Animated Waveform when listening */}
+                {hpiListening && (
+                  <div className="h-10 flex items-center justify-center gap-1.5 my-1 bg-slate-950/60 rounded-xl px-4 border border-rose-500/20">
+                    {[16, 28, 12, 36, 20, 32, 14, 26, 38, 18, 30, 22].map((height, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ height: [height * 0.4, height, height * 0.4] }}
+                        transition={{ repeat: Infinity, duration: 0.6 + (i % 4) * 0.15, ease: "easeInOut" }}
+                        className="w-1 bg-gradient-to-t from-rose-500 to-amber-400 rounded-full"
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Transcript Text Area / Editable Input */}
+                <textarea
+                  value={hpiTranscript}
+                  onChange={(e) => setHpiTranscript(e.target.value)}
+                  placeholder={hpiListening ? "Listening... Speak your symptoms, when they started, and what makes it better or worse..." : "Tap the red microphone below to speak, or select a sample clinical scenario..."}
+                  className="w-full flex-1 bg-transparent text-slate-200 placeholder-slate-500 text-xs resize-none focus:outline-none leading-relaxed p-1"
+                  rows={4}
+                />
+              </div>
+
+              {/* Guided One-Tap Scenario Chips */}
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-400" /> Quick Scenario Templates:
+                </span>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {HPI_SAMPLE_PROMPTS.map((sample, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setHpiTranscript(sample.text);
+                        if (sample.label.includes('Fatigue')) setHpiCategory('symptoms_fatigue');
+                        if (sample.label.includes('Joint')) setHpiCategory('injury_pain');
+                        if (sample.label.includes('Stress')) setHpiCategory('stress_sleep');
+                        if (sample.label.includes('Meal')) setHpiCategory('metabolic_gi');
+                      }}
+                      className="text-left p-2 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 rounded-xl transition-all group"
+                    >
+                      <div className="text-[11px] font-bold text-slate-200 group-hover:text-indigo-300 flex items-center justify-between">
+                        <span>{sample.label}</span>
+                        <CheckCircle2 className="w-3 h-3 text-slate-600 group-hover:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <p className="text-[9px] text-slate-400 line-clamp-1 mt-0.5">{sample.text}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Main Microphone Button & Submit Actions */}
+              <div className="pt-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={hpiListening ? stopHpiRecording : startHpiRecording}
+                  className={cn(
+                    "flex-1 py-3 px-4 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-lg",
+                    hpiListening 
+                      ? "bg-rose-600 text-white animate-pulse shadow-rose-600/30" 
+                      : "bg-gradient-to-r from-rose-600 via-pink-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white shadow-indigo-600/20"
+                  )}
+                >
+                  {hpiListening ? (
+                    <>
+                      <MicOff className="w-4 h-4 text-white" />
+                      <span>Stop Recording ({hpiDuration}s)</span>
+                    </>
+                  ) : (
+                    <>
+                      <Mic className="w-4 h-4 text-amber-300" />
+                      <span>{hpiTranscript ? "Resume Voice Dictation" : "Start Voice HPI Intake"}</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  disabled={!hpiTranscript.trim()}
+                  onClick={handleSubmitHpi}
+                  className="py-3 px-4 rounded-xl font-extrabold text-xs bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-30 disabled:bg-slate-800 transition-all flex items-center gap-1.5 shadow-md"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Analyze HPI</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50">
         {messages.map((msg) => {
           const isBot = msg.sender === 'phi';
           const isSpeaking = speakingMsgId === msg.id;
+          const isHpiIntake = msg.text.includes('[VOICE HPI');
 
           return (
             <div 
               key={msg.id} 
               className={cn(
-                "flex flex-col max-w-[88%]", 
+                "flex flex-col max-w-[90%]", 
                 isBot ? "mr-auto items-start" : "ml-auto items-end"
               )}
             >
@@ -384,9 +817,19 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
                 "px-4 py-3 rounded-2xl text-xs leading-relaxed relative group shadow-sm transition-all",
                 isBot 
                   ? "bg-white text-slate-900 border border-slate-200/80 rounded-tl-sm" 
-                  : "bg-slate-900 text-white rounded-tr-sm"
+                  : isHpiIntake
+                    ? "bg-gradient-to-r from-slate-900 to-indigo-950 text-white border border-indigo-500/40 rounded-tr-sm"
+                    : "bg-slate-900 text-white rounded-tr-sm"
               )}>
-                {msg.text}
+                {/* Visual badge for Voice HPI intake notes */}
+                {isHpiIntake && (
+                  <div className="flex items-center gap-1.5 mb-1.5 pb-1.5 border-b border-indigo-500/30 text-amber-300 font-extrabold text-[10px] tracking-wider uppercase">
+                    <Stethoscope className="w-3.5 h-3.5 text-rose-400" />
+                    <span>Clinical Voice Intake</span>
+                  </div>
+                )}
+
+                <div className="whitespace-pre-wrap">{msg.text}</div>
 
                 {/* Speak button on Bot messages */}
                 {isBot && (
@@ -454,16 +897,30 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
-      <div className="p-4 border-t border-slate-200 bg-white">
+      {/* Input Area with dedicated HPI Action Bar */}
+      <div className="p-3.5 border-t border-slate-200 bg-white space-y-2">
+        {/* Quick Launch Pill for Voice HPI */}
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => setShowHpiModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200 text-[10px] font-bold transition-all"
+          >
+            <Mic className="w-3 h-3 text-rose-600" />
+            <span>Voice HPI &amp; Symptom Intake</span>
+            <span className="text-[9px] px-1.5 py-0.2 bg-indigo-600 text-white rounded-full">Dictate</span>
+          </button>
+
+          <span className="text-[10px] text-slate-400 font-medium">Wearable: Oura Synced</span>
+        </div>
+
         <form onSubmit={handleSend} className="relative flex items-center">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={isListening ? "Listening to your voice..." : "Ask CuasarX Assistant..."}
+            placeholder={isListening ? "Listening to your voice..." : "Ask health questions or protocol advice..."}
             className={cn(
-              "w-full pl-4 pr-24 py-3 border rounded-2xl text-xs focus:outline-none transition-all",
+              "w-full pl-3.5 pr-24 py-2.5 border rounded-2xl text-xs focus:outline-none transition-all",
               isListening 
                 ? "border-rose-500 bg-rose-50/50 text-rose-900 placeholder-rose-400 font-medium"
                 : "border-slate-200 bg-slate-50 focus:border-indigo-500"
@@ -474,23 +931,23 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta' }: Ph
             <button 
               type="button" 
               onClick={toggleSpeechRecognition}
-              title={isListening ? "Stop Microphone" : "Voice Input (Speech-to-Text)"}
+              title={isListening ? "Stop Microphone" : "Quick Voice-to-Text"}
               className={cn(
-                "p-2 transition-all rounded-xl",
+                "p-1.5 transition-all rounded-xl",
                 isListening 
                   ? "bg-rose-600 text-white animate-bounce" 
                   : "text-slate-400 hover:text-indigo-600 hover:bg-slate-100"
               )}
             >
-              {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+              {isListening ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
             </button>
 
             <button 
               type="submit" 
               disabled={!input.trim()}
-              className="p-2 bg-indigo-600 text-white rounded-xl disabled:opacity-40 disabled:bg-slate-300 transition-colors shadow-sm"
+              className="p-1.5 bg-indigo-600 text-white rounded-xl disabled:opacity-40 disabled:bg-slate-300 transition-colors shadow-sm"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-3.5 h-3.5" />
             </button>
           </div>
         </form>
