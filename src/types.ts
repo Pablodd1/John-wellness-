@@ -269,3 +269,81 @@ export type ExecutiveHealthspanReport = {
   generatedAt: string;
   physicianReviewStatus: 'Reviewed & Signed' | 'Pending Verification';
 };
+
+// ========================================================
+// CONSENT & COMPLIANCE
+// ========================================================
+
+export type ConsentPurposeId =
+  | 'telehealth'
+  | 'ai_processing'
+  | 'wearable_sync'
+  | 'research_deidentified'
+  | 'community_sharing'
+  | 'marketing';
+
+export type ConsentMethod = 'electronic-signature' | 'check-action';
+
+export type ConsentRecord = {
+  purpose: ConsentPurposeId;
+  granted: boolean;
+  grantedAt: string | null;
+  withdrawnAt: string | null;
+  policyVersion: string;
+  method: ConsentMethod | null;
+};
+
+export type ConsentSubject = ConsentPurposeId | 'policy' | 'hipaa_authorization' | 'data_rights';
+
+export type ConsentAuditAction =
+  | 'granted'
+  | 'withdrawn'
+  | 'policy_acknowledged'
+  | 'authorization_signed'
+  | 'authorization_revoked'
+  | 'exported'
+  | 'deletion_requested'
+  | 'visit_completed';
+
+export type ConsentAuditEvent = {
+  id: string;
+  ts: string;
+  subject: ConsentSubject;
+  action: ConsentAuditAction;
+  detail: string;
+};
+
+export type HipaaAuthorization = {
+  id: string;
+  signedName: string;
+  signedAt: string;
+  recipient: string;
+  informationScope: string[];
+  purpose: string;
+  expiresOn: string; // ISO date
+  policyVersion: string;
+};
+
+export type ConsentState = {
+  records: Record<ConsentPurposeId, ConsentRecord>;
+  audit: ConsentAuditEvent[];
+  hipaaAuthorization: HipaaAuthorization | null;
+  doNotSellOrShare: boolean;
+  policyAcknowledgedVersion: string | null;
+  acknowledgedName: string | null;
+  policyAcknowledgedAt: string | null;
+  deletionRequestedAt: string | null;
+};
+
+// ========================================================
+// TELEMEDICINE
+// ========================================================
+
+export type TelemedicineMode = 'patient' | 'clinician';
+
+export type TelemedicinePhase =
+  | 'consent'     // telehealth informed consent not yet on file
+  | 'waiting'     // device check / waiting room
+  | 'connecting'  // simulated handshake
+  | 'incall'
+  | 'ended';      // post-visit summary
