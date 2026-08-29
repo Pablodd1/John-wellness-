@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { SYNTHETIC_USERS, MOCK_PRODUCTS } from './data';
-import { UserProfile, Product } from './types';
+import { UserProfile, Product, TelemedicineMode } from './types';
 import { Marketplace } from './components/Marketplace';
 import { SupplementManager } from './components/SupplementManager';
 import { BiomarkerTrends } from './components/BiomarkerTrends';
@@ -17,6 +17,11 @@ import { OperatorDashboard } from './components/OperatorDashboard';
 import { PhiChat } from './components/PhiChat';
 import { CartDrawer, CartItem } from './components/CartDrawer';
 import { CuasarLogo } from './components/CuasarLogo';
+import { ConsentCenter } from './components/ConsentCenter';
+import { TelemedicineVisit } from './components/TelemedicineVisit';
+import { FirstRunConsent } from './components/FirstRunConsent';
+import { PerformanceResearch } from './components/PerformanceResearch';
+import { ConsentProvider } from './lib/consent';
 import { 
   ShoppingBag, 
   ShoppingCart, 
@@ -40,18 +45,33 @@ import {
   Repeat, 
   Dna, 
   CheckCircle2, 
-  AlertTriangle, 
+  AlertTriangle,
   Truck,
   PhoneCall,
+  Video,
+  FlaskConical,
   ArrowRight
 } from 'lucide-react';
 import { cn } from './lib/utils';
 
 export default function App() {
+  return (
+    <ConsentProvider>
+      <AppInner />
+    </ConsentProvider>
+  );
+}
+
+function AppInner() {
   const [activeUser, setActiveUser] = useState<UserProfile>(SYNTHETIC_USERS[0]);
-  const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'community' | 'admin' | 'operator'>('marketplace');
+  const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'research' | 'community' | 'consent' | 'admin' | 'operator'>('marketplace');
   const [marketplaceDepartment, setMarketplaceDepartment] = useState<string>('all');
   const [incomingEvaluation, setIncomingEvaluation] = useState<{ text: string; senderName: string } | null>(null);
+  const [videoVisit, setVideoVisit] = useState<{ mode: TelemedicineMode; patient: UserProfile } | null>(null);
+
+  const openVideoVisit = (mode: TelemedicineMode, patient: UserProfile) => {
+    setVideoVisit({ mode, patient });
+  };
   
   // Drawers & Modals
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -108,8 +128,12 @@ export default function App() {
         setActiveTab('trends');
       } else if (hash === '#profile' || hash === '#dna' || hash === '#labs') {
         setActiveTab('profile');
+      } else if (hash === '#research' || hash === '#performance') {
+        setActiveTab('research');
       } else if (hash === '#community') {
         setActiveTab('community');
+      } else if (hash === '#privacy' || hash === '#consent') {
+        setActiveTab('consent');
       } else if (hash === '#admin') {
         setActiveTab('admin');
       } else if (hash === '#operator') {
@@ -214,7 +238,13 @@ export default function App() {
           <span className="text-[#5c5851]">
             Active Persona: <strong className="text-[#181716] font-semibold">{activeUser.name}</strong>
           </span>
-          <button 
+          <button
+            onClick={() => openVideoVisit('patient', activeUser)}
+            className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer inline-flex items-center gap-1"
+          >
+            <Video className="w-3 h-3" aria-hidden="true" /> Video Visit
+          </button>
+          <button
             onClick={() => setChatOpen(true)}
             className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
           >
@@ -434,16 +464,30 @@ export default function App() {
               <span>Daily Regimens</span>
             </button>
 
-            <button 
+            <button
               onClick={() => setActiveTab('trends')}
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
-                activeTab === 'trends' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
+                activeTab === 'trends'
+                  ? "bg-[#181716] text-white font-semibold shadow-xs"
                   : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
               )}
             >
               <span>Lab Telemetry</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('research')}
+              aria-current={activeTab === 'research' ? 'page' : undefined}
+              className={cn(
+                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
+                activeTab === 'research'
+                  ? "bg-[#181716] text-white font-semibold shadow-xs"
+                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+              )}
+            >
+              <FlaskConical className="w-3 h-3" aria-hidden="true" />
+              <span>Research Base</span>
             </button>
 
             <button 
@@ -458,16 +502,30 @@ export default function App() {
               <span>Organ Longevity (AOSM)</span>
             </button>
 
-            <button 
+            <button
               onClick={() => setActiveTab('community')}
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
-                activeTab === 'community' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
+                activeTab === 'community'
+                  ? "bg-[#181716] text-white font-semibold shadow-xs"
                   : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
               )}
             >
               <span>Peer Network</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('consent')}
+              aria-current={activeTab === 'consent' ? 'page' : undefined}
+              className={cn(
+                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
+                activeTab === 'consent'
+                  ? "bg-[#181716] text-white font-semibold shadow-xs"
+                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+              )}
+            >
+              <Shield className="w-3 h-3" aria-hidden="true" />
+              <span>Privacy &amp; Consent</span>
             </button>
 
             <button 
@@ -555,8 +613,10 @@ export default function App() {
                       { tab: 'marketplace', dept: 'vitamins', label: 'Micronutrients (#vitamins)' },
                       { tab: 'supplements', dept: undefined, label: 'Daily Regimens & Auto-Refills' },
                       { tab: 'trends', dept: undefined, label: 'Biomarker Telemetry' },
+                      { tab: 'research', dept: undefined, label: 'Performance Research Base' },
                       { tab: 'profile', dept: undefined, label: 'Organ Health (AOSM) & DNA' },
                       { tab: 'community', dept: undefined, label: 'Peer Network' },
+                      { tab: 'consent', dept: undefined, label: 'Privacy & Consent' },
                       { tab: 'admin', dept: undefined, label: 'Physician Clinical Monitor' },
                       { tab: 'operator', dept: undefined, label: 'Telemetry Health' },
                     ].map(item => {
@@ -579,6 +639,15 @@ export default function App() {
                       );
                     })}
                   </div>
+                </div>
+
+                <div className="pt-3 border-t border-[#f4f2ec] space-y-2">
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); openVideoVisit('patient', activeUser); }}
+                    className="w-full py-2 bg-[#344a37] hover:bg-[#2a3b2d] text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Video className="w-3.5 h-3.5" aria-hidden="true" /> Start Video Visit
+                  </button>
                 </div>
 
                 <div className="pt-3 border-t border-[#f4f2ec]">
@@ -626,12 +695,13 @@ export default function App() {
         )}
         {activeTab === 'supplements' && <SupplementManager user={activeUser} onAddToCart={handleAddProductsToCart} />}
         {activeTab === 'trends' && (
-          <BiomarkerTrends 
-            user={activeUser} 
+          <BiomarkerTrends
+            user={activeUser}
             onAddToCart={handleAddProductsToCart}
             onNavigateToTab={(tab) => setActiveTab(tab)}
           />
         )}
+        {activeTab === 'research' && <PerformanceResearch />}
         {activeTab === 'profile' && (
           <UserProfileTab 
             user={activeUser} 
@@ -643,7 +713,19 @@ export default function App() {
           />
         )}
         {activeTab === 'community' && <CommunityConnect user={activeUser} onEvaluateWithAi={handleEvaluateGroupMessage} />}
-        {activeTab === 'admin' && <AdminPatientMonitor currentUser={activeUser} />}
+        {activeTab === 'consent' && (
+          <ConsentCenter
+            user={activeUser}
+            onStartVideoVisit={() => openVideoVisit('patient', activeUser)}
+          />
+        )}
+        {activeTab === 'admin' && (
+          <AdminPatientMonitor
+            currentUser={activeUser}
+            onStartVisit={(patient) => openVideoVisit('clinician', patient)}
+            onNavigateToConsent={() => setActiveTab('consent')}
+          />
+        )}
         {activeTab === 'operator' && <OperatorDashboard activeUser={activeUser} />}
       </main>
 
@@ -762,6 +844,22 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* ======================================================== */}
+      {/* 10. TELEMEDICINE VIDEO VISIT OVERLAY                      */}
+      {/* ======================================================== */}
+      {videoVisit && (
+        <TelemedicineVisit
+          mode={videoVisit.mode}
+          patient={videoVisit.patient}
+          onClose={() => setVideoVisit(null)}
+        />
+      )}
+
+      {/* ======================================================== */}
+      {/* 11. FIRST-RUN PRIVACY & CONSENT GATE                      */}
+      {/* ======================================================== */}
+      <FirstRunConsent />
 
       {/* ======================================================== */}
       {/* 9. MOBILE BOTTOM NAVIGATION DOCK                         */}
