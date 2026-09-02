@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         properties: {
           exp: Math.floor(Date.now() / 1000) + 2 * 60 * 60, // room dies after 2 hours
-          enable_recording: 'never',
+          enable_recording: false,
           enable_chat: true,
           eject_at_room_exp: true,
         },
