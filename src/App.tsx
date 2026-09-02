@@ -21,7 +21,10 @@ import { ConsentCenter } from './components/ConsentCenter';
 import { TelemedicineVisit } from './components/TelemedicineVisit';
 import { FirstRunConsent } from './components/FirstRunConsent';
 import { PerformanceResearch } from './components/PerformanceResearch';
+import { AuthGate } from './components/AuthGate';
+import { AuthProvider, useAuth } from './lib/auth';
 import { ConsentProvider } from './lib/consent';
+import { fetchCatalog } from './lib/dataService';
 import { 
   ShoppingBag, 
   ShoppingCart, 
@@ -50,20 +53,36 @@ import {
   PhoneCall,
   Video,
   FlaskConical,
+  Database,
   ArrowRight
 } from 'lucide-react';
 import { cn } from './lib/utils';
 
 export default function App() {
   return (
-    <ConsentProvider>
-      <AppInner />
-    </ConsentProvider>
+    <AuthProvider>
+      <ConsentProvider>
+        <AppInner />
+      </ConsentProvider>
+    </AuthProvider>
   );
 }
 
 function AppInner() {
+  const { user: authUser, signOut, dbReady, loading: authLoading, saveProfile } = useAuth();
+  const authEmail = authUser?.email ?? null;
+  const [catalogSource, setCatalogSource] = useState<'database' | 'demo' | 'checking'>('checking');
   const [activeUser, setActiveUser] = useState<UserProfile>(SYNTHETIC_USERS[0]);
+
+  // Catalog connectivity check (products are seeded to match the bundled demo
+  // data, so this drives the honest "connected" indicator rather than content).
+  useEffect(() => {
+    let cancelled = false;
+    fetchCatalog().then(({ source }) => {
+      if (!cancelled) setCatalogSource(source);
+    });
+    return () => { cancelled = true; };
+  }, []);
   const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'research' | 'community' | 'consent' | 'admin' | 'operator'>('marketplace');
   const [marketplaceDepartment, setMarketplaceDepartment] = useState<string>('all');
   const [incomingEvaluation, setIncomingEvaluation] = useState<{ text: string; senderName: string } | null>(null);
@@ -161,6 +180,13 @@ function AppInner() {
       ...prev,
       ...updatedFields
     }));
+    // Persist the clinical intake to the signed-in user's profile row.
+    if (authUser && updatedFields.baselineDiagnostics) {
+      saveProfile({
+        baseline_diagnostics: updatedFields.baselineDiagnostics as unknown as Record<string, unknown>,
+        ...(updatedFields.name ? { name: updatedFields.name } : {}),
+      });
+    }
   };
 
   const handleEvaluateGroupMessage = (text: string, senderName: string) => {
@@ -211,6 +237,18 @@ function AppInner() {
     return sum + (price * item.quantity);
   }, 0);
 
+  // Auth gate: when the database is configured, a signed-in identity is required.
+  if (dbReady && authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#fbfaf8] text-xs text-[#6e6960]">
+        Checking your session…
+      </div>
+    );
+  }
+  if (dbReady && !authUser) {
+    return <AuthGate />;
+  }
+
   const searchSuggestions = MOCK_PRODUCTS.filter(p => {
     if (!searchQuery.trim()) return false;
     const q = searchQuery.toLowerCase();
@@ -235,9 +273,36 @@ function AppInner() {
         </div>
 
         <div className="flex items-center gap-4 flex-shrink-0">
-          <span className="text-[#5c5851]">
-            Active Persona: <strong className="text-[#181716] font-semibold">{activeUser.name}</strong>
+          <span
+            className={cn(
+              'hidden xl:inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[10px] font-bold',
+              catalogSource === 'database' && 'bg-[#f1f5f2] text-[#2b4530] border-[#dbe5dc]',
+              catalogSource === 'demo' && 'bg-[#faf5ee] text-[#785328] border-[#ede1cf]',
+              catalogSource === 'checking' && 'bg-[#f5f4ef] text-[#5c5851] border-[#e6e4dc]'
+            )}
+            role="status"
+          >
+            <Database className="w-3 h-3" aria-hidden="true" />
+            {catalogSource === 'database' ? 'Database connected' : catalogSource === 'demo' ? 'Demo data' : 'Checking…'}
           </span>
+          {authUser ? (
+            <span className="text-[#5c5851] flex items-center gap-2">
+              <span className="hidden sm:inline" title={authEmail ?? undefined}>
+                <strong className="text-[#181716] font-semibold">{activeUser.name}</strong>
+                <span className="text-[10px] text-[#8a857b]"> · {authEmail}</span>
+              </span>
+              <button
+                onClick={() => signOut()}
+                className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+              >
+                Sign out
+              </button>
+            </span>
+          ) : (
+            <span className="text-[#5c5851]">
+              Active Persona: <strong className="text-[#181716] font-semibold">{activeUser.name}</strong>
+            </span>
+          )}
           <button
             onClick={() => openVideoVisit('patient', activeUser)}
             className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer inline-flex items-center gap-1"
