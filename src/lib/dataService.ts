@@ -1,0 +1,108 @@
+import { supabase, isSupabaseConfigured } from './supabase';
+import { MOCK_PRODUCTS } from '../data';
+import { Product } from '../types';
+import type { CartItem } from '../components/CartDrawer';
+
+/**
+ * Data layer: talks to Supabase when configured and falls back to the bundled
+ * mock data when the database is unreachable, so the demo never hard-fails.
+ * Every fallback is flagged so the UI can label it honestly.
+ */
+
+export type OrderResult = {
+  ok: boolean;
+  persisted: boolean;
+  orderNumber: string;
+  error?: string;
+};
+
+export async function fetchCatalog(): Promise<{ products: Product[]; source: 'database' | 'demo' }> {
+  if (!isSupabaseConfigured || !supabase) return { products: MOCK_PRODUCTS, source: 'demo' };
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('id, name, category, price, description, dosage, timing, evidence_grade, tailored_reason');
+    if (error || !data || data.length === 0) throw new Error(error?.message ?? 'empty catalog');
+
+    const products: Product[] = data.map((row) => {
+      const mock = MOCK_PRODUCTS.find((m) => m.id === row.id);
+      return {
+        ...(mock ?? {} as Product),
+        id: row.id,
+        name: row.name,
+        category: mock?.category ?? (row.category as Product['category']),
+        description: row.description ?? mock?.description ?? '',
+        status: mock?.status ?? 'recommended',
+        riskLevel: mock?.riskLevel ?? 'low',
+        price: Number(row.price),
+        dailyDosage: row.dosage ?? mock?.dailyDosage,
+        timing: row.timing ?? mock?.timing,
+        tailoredReason: row.tailored_reason ?? mock?.tailoredReason,
+        evidenceData: mock?.evidenceData,
+      };
+    });
+    return { products, source: 'database' };
+  } catch {
+    return { products: MOCK_PRODUCTS, source: 'demo' };
+  }
+}
+
+export async function createOrder(
+  userId: string,
+  email: string | null,
+  items: CartItem[],
+  totals: { subtotal: number; discount: number; tax: number; shipping: number; total: number },
+  shippingAddress: Record<string, string>
+): Promise<OrderResult> {
+  // Simulated payment — this MVP runs without Stripe. The order record marks
+  // payment as test_simulated so nothing pretends money moved.
+  const localNumber = `CX-${Math.floor(100000 + Math.random() * 900000)}`;
+  if (!isSupabaseConfigured || !supabase) {
+    return { ok: true, persisted: false, orderNumber: localNumber, error: 'Database not configured — order kept in this browser only.' };
+  }
+  try {
+    const payload = {
+      user_id: userId,
+      items: items.map((item) => ({
+        product_id: item.product.id,
+        name: item.product.name,
+        unit_price: item.product.price ?? 0,
+        quantity: item.quantity,
+        is_subscription: item.isSubscription,
+        frequency_days: Number(item.frequency),
+      })),
+      subtotal: totals.subtotal,
+      discount: totals.discount,
+      tax: totals.tax,
+      shipping: totals.shipping,
+      total: totals.total,
+      payment_status: 'test_simulated',
+      fulfillment_status: 'processing',
+      shipping_address: { ...shippingAddress, email },
+    };
+    const { data, error } = await supabase
+      .from('orders')
+      .insert(payload)
+      .select('order_number')
+      .single();
+    if (error) throw new Error(error.message);
+    return { ok: true, persisted: true, orderNumber: data.order_number };
+  } catch (err) {
+    return { ok: true, persisted: false, orderNumber: localNumber, error: `Order could not be saved: ${err instanceof Error ? err.message : 'unknown error'}` };
+  }
+}
+
+export async function fetchMyOrders(userId: string): Promise<Record<string, unknown>[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(20);
+    return error ? [] : data ?? [];
+  } catch {
+    return [];
+  }
+}

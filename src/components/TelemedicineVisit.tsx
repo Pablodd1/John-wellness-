@@ -49,6 +49,11 @@ export function TelemedicineVisit({
   const [cameraStatus, setCameraStatus] = useState<'checking' | 'ready' | 'denied' | 'unsupported'>('checking');
   const [micStatus, setMicStatus] = useState<'checking' | 'ready' | 'denied' | 'unsupported'>('checking');
   const [remoteSupportsStream, setRemoteSupportsStream] = useState(false);
+  const [dailyState, setDailyState] = useState<'off' | 'loading' | 'active' | 'failed'>('off');
+  const [dailyRoomUrl, setDailyRoomUrl] = useState<string | null>(null);
+  const dailyFrameRef = useRef<{ destroy: () => void; leave: () => void } | null>(null);
+  const dailyContainerRef = useRef<HTMLDivElement>(null);
+  const dailyScriptPromiseRef = useRef<Promise<unknown> | null>(null);
 
   const [consentChecked, setConsentChecked] = useState(false);
   const [signature, setSignature] = useState(mode === 'patient' ? patient.name : '');
@@ -90,14 +95,106 @@ export function TelemedicineVisit({
   };
 
   const handleEndCall = () => {
+    if (dailyFrameRef.current) {
+      try { dailyFrameRef.current.destroy(); } catch { /* already gone */ }
+      dailyFrameRef.current = null;
+    }
     stopAllMedia();
     recordAudit(
       'visit_completed',
-      `Telemedicine visit (${mode}-initiated) with ${remoteName} ended after ${formatDuration(secondsElapsed)}. Telehealth consent v${PRIVACY_POLICY_VERSION} was on file. No visit notes recorded in demo.`,
+      `Telemedicine visit (${mode}-initiated) with ${remoteName} ended after ${formatDuration(secondsElapsed)}${dailyState === 'active' ? ' — live video via Daily.co' : ' — local simulated session'}. Telehealth consent v${PRIVACY_POLICY_VERSION} was on file. No visit notes recorded in demo.`,
       'telehealth'
     );
+    setDailyState('off');
+    setDailyRoomUrl(null);
     setPhase('ended');
   };
+
+  // Load daily-js from the CDN once per session.
+  type DailyFrame = { destroy: () => void; leave: () => void; join: (opts: { url: string }) => Promise<unknown>; on: (event: string, handler: () => void) => void };
+  type DailyIframeApi = { createFrame: (container: HTMLElement, options?: Record<string, unknown>) => DailyFrame };
+  const loadDailyScript = (): Promise<DailyIframeApi | null> => {
+    if (dailyScriptPromiseRef.current) return dailyScriptPromiseRef.current as Promise<DailyIframeApi | null>;
+    dailyScriptPromiseRef.current = new Promise<DailyIframeApi | null>((resolve, reject) => {
+      const win = window as unknown as { DailyIframe?: DailyIframeApi };
+      if (win.DailyIframe) { resolve(win.DailyIframe); return; }
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@daily-co/daily-js';
+      script.onload = () => resolve((window as unknown as { DailyIframe?: DailyIframeApi }).DailyIframe ?? null);
+      script.onerror = () => reject(new Error('daily-js failed to load'));
+      document.head.appendChild(script);
+    });
+    return dailyScriptPromiseRef.current as Promise<DailyIframeApi | null>;
+  };
+
+  // Join: ask the server for a real Daily.co room. If the server function is
+  // configured, join it for live video; otherwise fall back to the local
+  // simulated session so the flow always completes.
+  const handleJoin = async () => {
+    setPhase('connecting');
+    try {
+      const res = await fetch('/api/daily-room', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.roomUrl) {
+          setDailyRoomUrl(data.roomUrl);
+          setDailyState('loading');
+          return;
+        }
+      }
+      // 404/501/anything else → simulated session
+    } catch {
+      // server unreachable → simulated session
+    }
+    // Simulated handshake proceeds via the existing connecting → incall timer.
+  };
+
+  // Mount the Daily call frame once the room URL exists.
+  useEffect(() => {
+    if (!dailyRoomUrl || dailyState !== 'loading') return;
+    let cancelled = false;
+
+    loadDailyScript()
+      .then((DailyIframe) => {
+        if (cancelled || !dailyContainerRef.current || !DailyIframe) {
+          if (!DailyIframe) setDailyState('failed');
+          return;
+        }
+        // The Daily frame manages its own camera/mic — release ours.
+        localStreamRef.current?.getTracks().forEach((track) => { track.stop(); });
+        localStreamRef.current = null;
+
+        const frame = DailyIframe.createFrame(dailyContainerRef.current, {
+          iframeStyle: { width: '100%', height: '100%', border: '0', borderRadius: '16px' },
+          showLeaveButton: false,
+          userName: mode === 'clinician' ? 'Clinician (this device)' : (patient.name || 'Patient'),
+        });
+        dailyFrameRef.current = frame;
+        frame.on('joined-meeting', () => {
+          if (!cancelled) { setDailyState('active'); setPhase('incall'); }
+        });
+        frame.on('left-meeting', () => {
+          if (!cancelled && dailyFrameRef.current) handleEndCall();
+        });
+        frame.on('error', () => { if (!cancelled) setDailyState('failed'); });
+        return frame.join({ url: dailyRoomUrl });
+      })
+      .catch(() => { if (!cancelled) setDailyState('failed'); });
+
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dailyRoomUrl, dailyState]);
+
+  // Fall back to the simulated session when Daily isn't available.
+  useEffect(() => {
+    if (dailyState === 'failed' && phase === 'connecting') {
+      // the connecting → incall timer (2.2s) is already running and will fire
+    }
+  }, [dailyState, phase]);
 
   useDialogBehavior({
     containerRef,
@@ -355,7 +452,10 @@ export function TelemedicineVisit({
               <span className="text-[11px] text-white/60 block truncate">
                 {phaseStatus[phase]}
                 {phase === 'incall' && <> • {formatDuration(secondsElapsed)}</>}
-                {' • Local demo session — no network transmission'}
+                {' • '}
+                {dailyState === 'active'
+                  ? 'Live video via Daily.co — consent on file, not recorded'
+                  : 'Local demo session — no network transmission'}
               </span>
             </div>
           </div>
@@ -529,7 +629,7 @@ export function TelemedicineVisit({
                   Leave
                 </button>
                 <button
-                  onClick={() => setPhase('connecting')}
+                  onClick={handleJoin}
                   className="px-5 py-2.5 rounded-full bg-[#4a6850] hover:bg-[#54765c] text-white text-xs font-bold inline-flex items-center gap-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
                 >
                   <Video className="w-4 h-4" aria-hidden="true" /> Join visit
@@ -542,6 +642,14 @@ export function TelemedicineVisit({
           {inCall && (
             <div className="h-full p-3 sm:p-5">
               <div className="relative h-full max-w-5xl mx-auto rounded-2xl overflow-hidden bg-[#141b17] border border-white/10 shadow-2xl">
+                {/* Live Daily.co video when a real room was created */}
+                {dailyRoomUrl && dailyState !== 'failed' && (
+                  <div ref={dailyContainerRef} className="absolute inset-0" aria-label="Live video call frame" />
+                )}
+
+                {/* Simulated session markup (hidden while Daily is active) */}
+                {!(dailyRoomUrl && dailyState !== 'failed') && (
+                  <>
                 {/* Main slot: shared screen > simulated remote */}
                 <video
                   ref={remoteVideoRef}
@@ -589,6 +697,8 @@ export function TelemedicineVisit({
                   )}
                   <span className="absolute bottom-1 left-1.5 text-[9px] font-bold text-white/80">You</span>
                 </div>
+                  </>
+                )}
               </div>
             </div>
           )}
@@ -622,9 +732,12 @@ export function TelemedicineVisit({
           )}
         </div>
 
-        {/* Controls (visible during connecting / in call) */}
+        {/* Controls (visible during connecting / in call). The Daily frame
+            manages its own mic/cam, so device controls are hidden in that mode. */}
         {inCall && (
           <footer className="flex items-center justify-center gap-2.5 sm:gap-3.5 px-4 py-4 border-t border-white/10">
+            {dailyState !== 'active' && (
+              <>
             <button
               type="button"
               onClick={toggleMic}
@@ -658,6 +771,11 @@ export function TelemedicineVisit({
             >
               <MonitorUp className="w-5 h-5" aria-hidden="true" />
             </button>
+              </>
+            )}
+            {dailyState === 'loading' && (
+              <span className="text-[11px] text-white/60">Connecting to live video room…</span>
+            )}
 
             <button
               type="button"
