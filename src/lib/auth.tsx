@@ -9,6 +9,7 @@ export type AppProfile = {
   email: string | null;
   lifestyle_persona: string | null;
   baseline_diagnostics: Record<string, unknown> | null;
+  goals: string[] | null;
 };
 
 interface AuthContextValue {

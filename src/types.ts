@@ -158,6 +158,7 @@ export type UserProfile = {
     hydration: { target: number; current: number };
   };
   inventory: Product[];
+  goals?: string[];
   biohackingProtocols?: BiohackingCard[];
   checkInHistory?: DailyCheckInLog[];
   flags: string[];
@@ -280,7 +281,8 @@ export type ConsentPurposeId =
   | 'wearable_sync'
   | 'research_deidentified'
   | 'community_sharing'
-  | 'marketing';
+  | 'marketing'
+  | 'behavioral_analytics';
 
 export type ConsentMethod = 'electronic-signature' | 'check-action';
 

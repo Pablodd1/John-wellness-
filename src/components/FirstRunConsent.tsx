@@ -17,12 +17,14 @@ export function FirstRunConsent() {
   const [signature, setSignature] = useState('');
   const [aiChoice, setAiChoice] = useState<boolean | null>(null);
   const [marketingChoice, setMarketingChoice] = useState<boolean | null>(null);
+  const [analyticsChoice, setAnalyticsChoice] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   if (!needsPolicyReview && state.policyAcknowledgedVersion) return null;
 
   const aiInfo = CONSENT_PURPOSES.find(p => p.id === 'ai_processing')!;
   const marketingInfo = CONSENT_PURPOSES.find(p => p.id === 'marketing')!;
+  const analyticsInfo = CONSENT_PURPOSES.find(p => p.id === 'behavioral_analytics')!;
 
   const canSubmit = privacyAck && termsAck && signature.trim().length >= 2;
 
@@ -39,6 +41,7 @@ export function FirstRunConsent() {
     acknowledgePolicy(signature.trim());
     if (aiChoice) grant('ai_processing');
     if (marketingChoice) grant('marketing');
+    if (analyticsChoice) grant('behavioral_analytics');
   };
 
   const optionalToggle = (label: string, info: typeof aiInfo, value: boolean | null, setter: (v: boolean) => void) => (
@@ -134,6 +137,7 @@ export function FirstRunConsent() {
           <div className="space-y-2">
             <span className="text-xs font-bold text-[#181716] block">Choose now or later — both are fine:</span>
             {optionalToggle('AI Clinical Analysis', aiInfo, aiChoice, setAiChoice)}
+            {optionalToggle('Product Analytics', analyticsInfo, analyticsChoice, setAnalyticsChoice)}
             {optionalToggle('Product & Marketing Communications', marketingInfo, marketingChoice, setMarketingChoice)}
           </div>
 

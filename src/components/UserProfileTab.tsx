@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { UserProfile } from '../types';
+import { UserProfile, Product } from '../types';
 import { IntakeOnboarding } from './IntakeOnboarding';
 import { IntegrationCenter } from './IntegrationCenter';
 import { OrganSystemModeling } from './OrganSystemModeling';
+import { OrdersAndGoals } from './OrdersAndGoals';
 import { 
   User, 
   Sparkles, 
@@ -30,12 +31,13 @@ import { cn } from '../lib/utils';
 interface UserProfileTabProps {
   user: UserProfile;
   onUpdateUser: (updatedFields: Partial<UserProfile>) => void;
+  onAddToCart?: (products: Product[]) => void;
   onNavigateToMarketplace?: () => void;
 }
 
 type ProfileSubTab = 'aosm' | 'intake' | 'integrations' | 'diagnostic_summary';
 
-export function UserProfileTab({ user, onUpdateUser, onNavigateToMarketplace }: UserProfileTabProps) {
+export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMarketplace }: UserProfileTabProps) {
   const [activeSubTab, setActiveSubTab] = useState<ProfileSubTab>('aosm');
 
   return (
@@ -119,6 +121,9 @@ export function UserProfileTab({ user, onUpdateUser, onNavigateToMarketplace }: 
           ))}
         </div>
       </motion.div>
+
+      {/* Orders, reorder & goals — real data from the signed-in account */}
+      <OrdersAndGoals user={user} onUpdateUser={onUpdateUser} onAddToCart={onAddToCart ?? (() => {})} />
 
       {/* Primary Sub-Tab Selector Navigation */}
       <div className="flex flex-wrap gap-1.5 p-1 bg-[#faf9f6] rounded-xl border border-[#ebe7df]">

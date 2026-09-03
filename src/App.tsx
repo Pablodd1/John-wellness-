@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { SYNTHETIC_USERS, MOCK_PRODUCTS } from './data';
 import { UserProfile, Product, TelemedicineMode } from './types';
@@ -13,7 +13,9 @@ import { BiomarkerTrends } from './components/BiomarkerTrends';
 import { UserProfileTab } from './components/UserProfileTab';
 import { CommunityConnect } from './components/CommunityConnect';
 import { AdminPatientMonitor } from './components/AdminPatientMonitor';
-import { OperatorDashboard } from './components/OperatorDashboard';
+import { InsightsDashboard } from './components/InsightsDashboard';
+import { FeedbackButton } from './components/FeedbackButton';
+import { IntentBanner } from './components/IntentBanner';
 import { PhiChat } from './components/PhiChat';
 import { CartDrawer, CartItem } from './components/CartDrawer';
 import { CuasarLogo } from './components/CuasarLogo';
@@ -23,8 +25,9 @@ import { FirstRunConsent } from './components/FirstRunConsent';
 import { PerformanceResearch } from './components/PerformanceResearch';
 import { AuthGate } from './components/AuthGate';
 import { AuthProvider, useAuth } from './lib/auth';
-import { ConsentProvider } from './lib/consent';
+import { ConsentProvider, useConsent } from './lib/consent';
 import { fetchCatalog } from './lib/dataService';
+import { createTracker, configureTracker, setPage as setTrackerPage } from './lib/analytics';
 import { 
   ShoppingBag, 
   ShoppingCart, 
@@ -70,19 +73,15 @@ export default function App() {
 
 function AppInner() {
   const { user: authUser, signOut, dbReady, loading: authLoading, saveProfile } = useAuth();
+  const { isGranted } = useConsent();
+  const tracker = useRef(createTracker());
+  const [coachNudge, setCoachNudge] = useState(false);
   const authEmail = authUser?.email ?? null;
   const [catalogSource, setCatalogSource] = useState<'database' | 'demo' | 'checking'>('checking');
   const [activeUser, setActiveUser] = useState<UserProfile>(SYNTHETIC_USERS[0]);
 
   // Catalog connectivity check (products are seeded to match the bundled demo
   // data, so this drives the honest "connected" indicator rather than content).
-  useEffect(() => {
-    let cancelled = false;
-    fetchCatalog().then(({ source }) => {
-      if (!cancelled) setCatalogSource(source);
-    });
-    return () => { cancelled = true; };
-  }, []);
   const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'research' | 'community' | 'consent' | 'admin' | 'operator'>('marketplace');
   const [marketplaceDepartment, setMarketplaceDepartment] = useState<string>('all');
   const [incomingEvaluation, setIncomingEvaluation] = useState<{ text: string; senderName: string } | null>(null);
@@ -165,6 +164,41 @@ function AppInner() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
+  // Catalog connectivity check (products are seeded to match the bundled demo
+  // data, so this drives the honest "connected" indicator rather than content).
+  useEffect(() => {
+    let cancelled = false;
+    fetchCatalog().then(({ source }) => {
+      if (!cancelled) setCatalogSource(source);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  // First-party analytics: only records when behavioral_analytics consent is on.
+  useEffect(() => {
+    configureTracker({ granted: isGranted('behavioral_analytics'), userId: authUser?.id ?? null });
+  }, [isGranted, authUser?.id]);
+
+  // Page-view tracking on tab change.
+  useEffect(() => {
+    setTrackerPage(activeTab);
+    tracker.current.track('page_view', { tab: activeTab }, activeTab);
+  }, [activeTab]);
+
+  // Proactive coach nudge: exit intent toward the browser chrome, once per
+  // session, only while the assistant is closed.
+  useEffect(() => {
+    const onExitIntent = (e: MouseEvent) => {
+      if (e.clientY > 8 || chatOpen) return;
+      if (sessionStorage.getItem('cx_coach_nudged')) return;
+      sessionStorage.setItem('cx_coach_nudged', '1');
+      setCoachNudge(true);
+      window.setTimeout(() => setCoachNudge(false), 12000);
+    };
+    document.addEventListener('mouseout', onExitIntent);
+    return () => document.removeEventListener('mouseout', onExitIntent);
+  }, [chatOpen]);
+
   const navigateToVitamins = () => {
     window.location.hash = 'vitamins';
     setActiveTab('marketplace');
@@ -180,10 +214,11 @@ function AppInner() {
       ...prev,
       ...updatedFields
     }));
-    // Persist the clinical intake to the signed-in user's profile row.
-    if (authUser && updatedFields.baselineDiagnostics) {
+    // Persist the clinical intake / goals to the signed-in user's profile row.
+    if (authUser && (updatedFields.baselineDiagnostics || updatedFields.goals)) {
       saveProfile({
-        baseline_diagnostics: updatedFields.baselineDiagnostics as unknown as Record<string, unknown>,
+        ...(updatedFields.baselineDiagnostics ? { baseline_diagnostics: updatedFields.baselineDiagnostics as unknown as Record<string, unknown> } : {}),
+        ...(updatedFields.goals ? { goals: updatedFields.goals } : {}),
         ...(updatedFields.name ? { name: updatedFields.name } : {}),
       });
     }
@@ -195,6 +230,7 @@ function AppInner() {
   };
 
   const handleAddProductsToCart = (products: Product[]) => {
+    tracker.current.track('add_to_cart', { products: products.map(p => p.id) });
     setCartItems(prev => {
       const next = [...prev];
       products.forEach(p => {
@@ -614,7 +650,7 @@ function AppInner() {
                   : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
               )}
             >
-              <span>Telemetry</span>
+              <span>Insights</span>
             </button>
           </div>
 
@@ -638,6 +674,9 @@ function AppInner() {
           </div>
         </div>
       </header>
+
+      {/* Intent banner — rule-based, consent-gated personalization signal */}
+      <IntentBanner />
 
       {/* ======================================================== */}
       {/* 3. MOBILE MENU DRAWER                                    */}
@@ -768,9 +807,10 @@ function AppInner() {
         )}
         {activeTab === 'research' && <PerformanceResearch />}
         {activeTab === 'profile' && (
-          <UserProfileTab 
-            user={activeUser} 
-            onUpdateUser={handleUpdateUserData} 
+          <UserProfileTab
+            user={activeUser}
+            onUpdateUser={handleUpdateUserData}
+            onAddToCart={handleAddProductsToCart}
             onNavigateToMarketplace={() => {
               setActiveTab('marketplace');
               setMarketplaceDepartment('diagnostics');
@@ -791,7 +831,7 @@ function AppInner() {
             onNavigateToConsent={() => setActiveTab('consent')}
           />
         )}
-        {activeTab === 'operator' && <OperatorDashboard activeUser={activeUser} />}
+        {activeTab === 'operator' && <InsightsDashboard />}
       </main>
 
       {/* ======================================================== */}
@@ -818,10 +858,15 @@ function AppInner() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
             onClick={() => setChatOpen(true)}
-            className="hidden md:flex fixed right-6 bottom-6 z-40 bg-[#181716] hover:bg-[#2e2c29] text-white px-4 py-2.5 rounded-full shadow-lg items-center gap-2 text-xs font-semibold transition-all cursor-pointer"
+            className={cn(
+              'hidden md:flex fixed right-6 bottom-6 z-40 text-white px-4 py-2.5 rounded-full shadow-lg items-center gap-2 text-xs font-semibold transition-all cursor-pointer',
+              coachNudge
+                ? 'bg-[#344a37] hover:bg-[#2a3b2d] ring-2 ring-[#344a37] ring-offset-2 animate-pulse'
+                : 'bg-[#181716] hover:bg-[#2e2c29]'
+            )}
           >
-            <Mic className="w-3.5 h-3.5 text-[#dedad0]" />
-            <span>CuasarX AI</span>
+            <Mic className={cn('w-3.5 h-3.5', coachNudge ? 'text-white' : 'text-[#dedad0]')} aria-hidden="true" />
+            <span>{coachNudge ? 'Dr. Vee has a suggestion — chat now' : 'CuasarX AI'}</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -925,6 +970,12 @@ function AppInner() {
       {/* 11. FIRST-RUN PRIVACY & CONSENT GATE                      */}
       {/* ======================================================== */}
       <FirstRunConsent />
+
+      {/* ======================================================== */}
+      {/* 12. TESTER FEEDBACK BUTTON (bottom-left, never overlaps   */}
+      {/*     the AI orb in the bottom-right)                       */}
+      {/* ======================================================== */}
+      <FeedbackButton page={activeTab} />
 
       {/* ======================================================== */}
       {/* 9. MOBILE BOTTOM NAVIGATION DOCK                         */}

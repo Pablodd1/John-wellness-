@@ -27,6 +27,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { computeMatch } from '../lib/matchScore';
 
 interface MarketplaceProps {
   user: UserProfile;
@@ -129,6 +130,17 @@ export function Marketplace({
 
   const allProducts = MOCK_PRODUCTS;
 
+  // Transparent per-product match score (see lib/matchScore.ts — deterministic
+  // rules over the signed-in user's persona, goals, intake data, and regimen).
+  const matchScores = React.useMemo(() => {
+    const map: { [productId: string]: ReturnType<typeof computeMatch> } = {};
+    for (const p of allProducts) {
+      map[p.id] = computeMatch(p, user);
+    }
+    return map;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.id, user.goals, JSON.stringify(user.baselineDiagnostics), JSON.stringify(user.inventory.map(i => i.id))]);
+
   const filteredProducts = allProducts.filter(p => {
     if (localSearch.trim()) {
       const q = localSearch.toLowerCase();
@@ -170,7 +182,8 @@ export function Marketplace({
     if (sortBy === 'price-asc') return (a.price || 0) - (b.price || 0);
     if (sortBy === 'price-desc') return (b.price || 0) - (a.price || 0);
     if (sortBy === 'rating') return (b.evidenceData?.confidenceScore || 80) - (a.evidenceData?.confidenceScore || 80);
-    return 0;
+    // 'featured' = personalized: highest transparent match score first
+    return (matchScores[b.id]?.score ?? 0) - (matchScores[a.id]?.score ?? 0);
   });
 
   const vitaminProducts = allProducts.filter(p => 
@@ -506,8 +519,7 @@ export function Marketplace({
             const price = isSub ? basePrice * 0.85 : basePrice;
             const isPurchased = purchasedIds.includes(product.id);
             const grade = product.evidenceData?.grade || 'A';
-            const ratingScore = 4.8 + ((product.name.length % 3) * 0.05);
-            const reviewCount = 450 + (product.name.length * 32);
+            const match = matchScores[product.id] ?? { score: 50, reasons: [] as string[] };
 
             return (
               <div
@@ -547,14 +559,21 @@ export function Marketplace({
                     {product.name}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 mt-1.5 text-xs">
-                    <div className="flex items-center text-[#785328]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 fill-[#785328] text-[#785328]" />
-                      ))}
-                    </div>
-                    <span className="text-xs font-semibold text-[#181716]">{ratingScore.toFixed(1)}</span>
-                    <span className="text-[11px] text-[#8a857b]">({reviewCount})</span>
+                  <div className="flex items-center gap-1.5 mt-1.5">
+                    {match.score >= 70 ? (
+                      <span
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#f1f5f2] border border-[#dbe5dc] text-[10px] font-bold text-[#2b4530]"
+                        title={match.reasons.join(' • ') || 'Rule-based match for your profile'}
+                      >
+                        <Sparkles className="w-3 h-3 text-[#344a37]" aria-hidden="true" />
+                        {match.score}% match
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-[#8a857b] px-1.5 py-0.5">{match.score}% match</span>
+                    )}
+                    {match.reasons[0] && (
+                      <span className="text-[10px] text-[#6e6960] truncate">— {match.reasons[0]}</span>
+                    )}
                   </div>
 
                   <p className="text-xs text-[#5c5851] leading-relaxed mt-2 line-clamp-2">

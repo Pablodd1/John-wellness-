@@ -106,3 +106,70 @@ export async function fetchMyOrders(userId: string): Promise<Record<string, unkn
     return [];
   }
 }
+
+// ---------------- Tester feedback ----------------
+
+export async function submitFeedback(input: {
+  name: string;
+  email?: string;
+  rating?: number;
+  message: string;
+  page?: string;
+  userId?: string | null;
+}): Promise<{ ok: boolean; persisted: boolean; error?: string }> {
+  if (!isSupabaseConfigured || !supabase) {
+    return { ok: true, persisted: false, error: 'Database not configured — feedback kept locally only.' };
+  }
+  try {
+    const { error } = await supabase.from('feedback').insert({
+      name: input.name.trim(),
+      email: input.email?.trim() || null,
+      rating: input.rating ?? null,
+      message: input.message.trim(),
+      page: input.page ?? null,
+      user_id: input.userId ?? null,
+    });
+    if (error) throw new Error(error.message);
+    return { ok: true, persisted: true };
+  } catch (err) {
+    return { ok: false, persisted: false, error: err instanceof Error ? err.message : 'Unknown error' };
+  }
+}
+
+export async function fetchFeedback(): Promise<Record<string, unknown>[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('feedback')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(50);
+    return error ? [] : data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+// ---------------- Insights (tester analytics) ----------------
+
+export type InsightEvent = {
+  session_id: string;
+  user_id: string | null;
+  event_name: string;
+  page: string | null;
+  created_at: string;
+};
+
+export async function fetchRecentEvents(): Promise<InsightEvent[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('app_events')
+      .select('session_id, user_id, event_name, page, created_at')
+      .order('created_at', { ascending: false })
+      .limit(500);
+    return error ? [] : (data as InsightEvent[]) ?? [];
+  } catch {
+    return [];
+  }
+}

@@ -75,6 +75,14 @@ export const CONSENT_PURPOSES: ConsentPurposeInfo[] = [
     optional: true,
   },
   {
+    id: 'behavioral_analytics',
+    title: 'Product Analytics (How You Use the App)',
+    summary: 'Records in-app events — pages viewed, searches, cart actions, visit starts — under an anonymous session ID, so the team can see how testers use the platform and improve it.',
+    dataUsed: ['Pages & tabs you open', 'Search terms & clicks', 'Cart/checkout steps', 'An anonymous session ID'],
+    offConsequence: 'Your interactions are not recorded and your sessions won\'t appear in the team\'s insights dashboard. Nothing else changes.',
+    optional: true,
+  },
+  {
     id: 'marketing',
     title: 'Product & Marketing Communications',
     summary: 'Sends offers, newsletters, and product recommendations based on your profile. Service messages (order status, clinician notes) are always sent regardless.',
@@ -87,7 +95,7 @@ export const CONSENT_PURPOSES: ConsentPurposeInfo[] = [
 const STORAGE_KEY = 'cx_consent_state_v1';
 const MAX_AUDIT_EVENTS = 200;
 
-const PURPOSE_IDS: ConsentPurposeId[] = ['telehealth', 'ai_processing', 'wearable_sync', 'research_deidentified', 'community_sharing', 'marketing'];
+const PURPOSE_IDS: ConsentPurposeId[] = ['telehealth', 'ai_processing', 'wearable_sync', 'research_deidentified', 'community_sharing', 'marketing', 'behavioral_analytics'];
 
 function makeId(): string {
   return typeof crypto !== 'undefined' && 'randomUUID' in crypto

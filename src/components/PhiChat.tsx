@@ -33,7 +33,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { LogoOptionId, LOGO_OPTIONS } from './BrandLogoSelector';
 import { CuasarLogo } from './CuasarLogo';
 import { useConsent } from '../lib/consent';
-import { ShieldCheck, ChevronDown, ChevronUp } from 'lucide-react';
+import { MOCK_PRODUCTS } from '../data';
+import { ShieldCheck, ChevronDown, ChevronUp, Radio as RadioIcon } from 'lucide-react';
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
@@ -419,9 +420,44 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
     }, 900);
   };
 
-  const handleSend = (e?: React.FormEvent) => {
+  const [liveAiAvailable, setLiveAiAvailable] = useState<boolean | null>(null); // null = unknown until first attempt
+  const [coachTyping, setCoachTyping] = useState(false);
+
+  const fallbackResponse = (userText: string): { text: string; action?: ChatMessage['action'] } => {
+    let phiResponseText = "I have logged that in your daily telemetry.";
+    let phiAction: ChatMessage['action'] = undefined;
+    const lower = userText.toLowerCase();
+
+    if (lower.includes('peptide') || lower.includes('bpc') || lower.includes('dose') || lower.includes('injection') || lower.includes('tb-500')) {
+      phiResponseText = "⚠️ MEDICAL DISCLAIMER: I am an AI assistant, NOT a medical doctor. \n\n• Human Clinical Studies Status: Most research peptides (like BPC-157 or TB-500) lack large-scale double-blind human RCTs and rely on preclinical rodent/cell models.\n• Potential Side Benefits: Soft-tissue collagen support, local angiogenesis, mucosal lining repair.\n• Potential Side Effects / Precautions: Injection site irritation, blood pressure spikes, unknown long-term human pharmacokinetics.\n\nHigh-risk compound administration requires direct supervision from a licensed physician.";
+      phiAction = { type: 'safety_block', payload: { category: 'clinical_escalation' } };
+    } else if (lower.includes('recommend') || lower.includes('buy') || lower.includes('supplements')) {
+      phiResponseText = "Based on your profile, a sensible starting point is the Executive Stack (L-Theanine + Alpha-GPC + Magnesium).\n\n• Human Studies: Validated in double-blind RCTs.\n• Potential Side Benefits: Sustained alpha-wave cognitive focus, reduced cortisol AUC.\n• Potential Side Effects: Mild dreaming or drowsiness if taken late.\n\nNote: I am an AI assistant, not a doctor. Consult your physician before changing your stack.";
+      phiAction = { type: 'recommendation', payload: { productId: 'bundle-exec' } };
+    } else if (lower.includes('sauna') || lower.includes('heat')) {
+      phiResponseText = "For maximum Heat Shock Protein upregulation, complete 30-40 minutes at 85°C in the evening, followed by 10 minutes ambient cooling.";
+    }
+    return { text: phiResponseText, action: phiAction };
+  };
+
+  const deliverBotMessage = (text: string, action?: ChatMessage['action']) => {
+    const botMsgId = Date.now().toString() + 'cuasarx';
+    const botMsg: ChatMessage = {
+      id: botMsgId,
+      sender: 'phi',
+      text,
+      timestamp: new Date().toISOString(),
+      action
+    };
+    setMessages(prev => [...prev, botMsg]);
+    if (autoSpeak) {
+      speakText(text, botMsgId);
+    }
+  };
+
+  const handleSend = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || coachTyping) return;
 
     const userText = input.trim();
     const userMsg: ChatMessage = {
@@ -433,48 +469,52 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
 
     setMessages(prev => [...prev, userMsg]);
     setInput('');
+    setCoachTyping(true);
 
-    // Simulate CuasarX Assistant response
+    // Try the live Gemini coach first; fall back to the offline rule-based
+    // replies when the server function isn't configured or errors.
+    try {
+      const catalog = MOCK_PRODUCTS.slice(0, 12).map(p => ({
+        name: p.name,
+        category: p.category,
+        price: p.price ?? 0,
+        dosage: p.dailyDosage,
+        reason: p.tailoredReason,
+      }));
+      const res = await fetch('/api/coach', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userText,
+          context: {
+            profileSummary: `${user.name}, ${user.age}, ${user.lifestylePersona}. Readiness ${user.readiness.score}/100. Sleep ${user.metrics.sleep.current}h, HRV ${user.metrics.hrv.current}ms, RHR ${user.metrics.rhr.current}bpm.`,
+            goals: Array.isArray(user.goals) ? user.goals : [],
+            topProducts: catalog,
+          },
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setLiveAiAvailable(true);
+        setCoachTyping(false);
+        deliverBotMessage(data.reply);
+        return;
+      }
+      setLiveAiAvailable(false);
+    } catch {
+      setLiveAiAvailable(false);
+    }
+
+    // Offline fallback (with the honest notice about which mode is running)
     setTimeout(() => {
-      let phiResponseText = "I have logged that in your daily telemetry.";
-      let phiAction: ChatMessage['action'] = undefined;
-
-      const lower = userText.toLowerCase();
-
-      if (lower.includes('peptide') || lower.includes('bpc') || lower.includes('dose') || lower.includes('injection') || lower.includes('tb-500')) {
-        phiResponseText = "⚠️ MEDICAL DISCLAIMER: I am an AI assistant, NOT a medical doctor. \n\n• Human Clinical Studies Status: Most research peptides (like BPC-157 or TB-500) lack large-scale double-blind human RCTs and rely on preclinical rodent/cell models.\n• Potential Side Benefits: Soft-tissue collagen support, local angiogenesis, mucosal lining repair.\n• Potential Side Effects / Precautions: Injection site irritation, blood pressure spikes, unknown long-term human pharmacokinetics.\n\nHigh-risk compound administration requires direct supervision from a licensed physician.";
-        phiAction = {
-          type: 'safety_block',
-          payload: { category: 'clinical_escalation' }
-        };
-      } else if (lower.includes('why') || lower.includes('workout') || lower.includes('training')) {
-        phiResponseText = "Your Oura telemetry recorded 4.2 hours of sleep and an elevated resting HR. Training hard today spikes cortisol and delays connective tissue recovery.";
-      } else if (lower.includes('recommend') || lower.includes('buy') || lower.includes('supplements')) {
-        phiResponseText = "Based on your high executive stress score (8/10), I recommend our 1-Click Executive Stack (L-Theanine + Alpha-GPC + Magnesium).\n\n• Human Studies: Validated in double-blind RCTs.\n• Potential Side Benefits: Sustained alpha-wave cognitive focus, reduced cortisol AUC.\n• Potential Side Effects: Mild dreaming or drowsiness if taken late.\n\nNote: I am an AI assistant, not a doctor. Consult your physician before changing your stack.";
-        phiAction = {
-          type: 'recommendation',
-          payload: { productId: 'bundle-exec' }
-        };
-      } else if (lower.includes('sauna') || lower.includes('heat')) {
-        phiResponseText = "For maximum Heat Shock Protein upregulation, complete 30-40 minutes at 85°C in the evening, followed by 10 minutes ambient cooling.";
-      }
-
-      const botMsgId = Date.now().toString() + 'cuasarx';
-      const botMsg: ChatMessage = {
-        id: botMsgId,
-        sender: 'phi',
-        text: phiResponseText,
-        timestamp: new Date().toISOString(),
-        action: phiAction
-      };
-
-      setMessages(prev => [...prev, botMsg]);
-
-      // Auto read if enabled
-      if (autoSpeak) {
-        speakText(phiResponseText, botMsgId);
-      }
-    }, 900);
+      const { text, action } = fallbackResponse(userText);
+      setCoachTyping(false);
+      const suffix = liveAiAvailable === false
+        ? '\n\n_(Offline mode — the live AI service isn\'t configured on this deployment, so this reply came from built-in rules.)_'
+        : '';
+      deliverBotMessage(text + suffix, action);
+    }, 700);
   };
 
   return (
@@ -946,6 +986,14 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
             </div>
           );
         })}
+        {coachTyping && (
+          <div className="mr-auto flex flex-col items-start" role="status" aria-live="polite">
+            <div className="px-4 py-3 rounded-2xl text-xs bg-white text-slate-500 border border-slate-200/80 rounded-tl-sm shadow-sm inline-flex items-center gap-2">
+              <RadioIcon className="w-3 h-3 animate-pulse text-indigo-600" aria-hidden="true" />
+              Dr. Vee is thinking…
+            </div>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -963,6 +1011,8 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
           </button>
 
           <span className="text-[10px] text-slate-400 font-medium">
+            {liveAiAvailable === true ? 'Coach: live AI' : liveAiAvailable === false ? 'Coach: offline rules' : 'Coach: auto'}
+            {' • '}
             {wearableSynced ? 'Wearable sync: enabled (demo)' : 'Wearable sync: off — enable in Privacy & Consent'}
           </span>
         </div>

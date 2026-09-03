@@ -24,6 +24,7 @@ import { cn } from '../lib/utils';
 import { useDialogBehavior } from '../lib/useDialog';
 import { useAuth } from '../lib/auth';
 import { createOrder } from '../lib/dataService';
+import { createTracker } from '../lib/analytics';
 
 export interface CartItem {
   product: Product;
@@ -65,6 +66,7 @@ export function CartDrawer({
   user,
 }: CartDrawerProps) {
   const { user: authUser } = useAuth();
+  const tracker = useRef(createTracker());
   const [promoCode, setPromoCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState<number>(0);
   const [promoMessage, setPromoMessage] = useState<string | null>(null);
@@ -140,7 +142,10 @@ export function CartDrawer({
     e.preventDefault();
     const err = validateAddress();
     setAddressError(err);
-    if (!err) setStep('payment');
+    if (!err) {
+      tracker.current.track('checkout_step', { step: 'address_complete' }, 'checkout');
+      setStep('payment');
+    }
   };
 
   const handlePlaceOrder = async () => {
@@ -161,6 +166,7 @@ export function CartDrawer({
       { subtotal, discount: discountAmount, tax: estimatedTax, shipping: shippingCost, total: grandTotal },
       address
     );
+    tracker.current.track('order_placed', { total: grandTotal, persisted: result.persisted, items: cartItems.length }, 'checkout');
     setOrderConfirmed({
       orderNumber: result.orderNumber,
       persisted: result.persisted,
