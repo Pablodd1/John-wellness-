@@ -20,6 +20,7 @@ interface AuthContextValue {
   dbReady: boolean;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (email: string, password: string, name: string) => Promise<{ error: string | null; needsConfirmation: boolean }>;
+  signInAsGuest: () => Promise<{ error: string | null; mode: 'anonymous' | 'shared' | null }>;
   signOut: () => Promise<void>;
   ensureProfile: (name?: string) => Promise<AppProfile | null>;
   saveProfile: (fields: Partial<AppProfile>) => Promise<boolean>;
@@ -56,6 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!isSupabaseConfigured || !supabase || !session?.user) return null;
     const userId = session.user.id;
     const email = session.user.email ?? null;
+    const isAnon = (session.user as User & { is_anonymous?: boolean }).is_anonymous === true;
 
     const { data: existing } = await supabase
       .from('profiles')
@@ -69,7 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return existing as AppProfile;
     }
 
-    const fallbackName = name?.trim() || email?.split('@')[0] || 'New Member';
+    const fallbackName = name?.trim() || (isAnon ? 'Guest Tester' : email?.split('@')[0] || 'New Member');
     const { data: created, error } = await supabase
       .from('profiles')
       .insert({ user_id: userId, name: fallbackName, email })
@@ -119,6 +121,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error: null, needsConfirmation };
   }, []);
 
+  // MVP skip-login: anonymous session if the project allows it (per-tester
+  // isolation), otherwise a shared guest account so the button always works.
+  const signInAsGuest = useCallback(async () => {
+    if (!isSupabaseConfigured || !supabase) return { error: 'Database is not configured in this build.', mode: null };
+    const anon = await supabase.auth.signInAnonymously();
+    if (!anon.error) return { error: null, mode: 'anonymous' as const };
+    const shared = await supabase.auth.signInWithPassword({
+      email: 'guest@cuasarx.dev',
+      password: 'GuestOnly-MVP-2026!',
+    });
+    if (!shared.error) return { error: null, mode: 'shared' as const };
+    return { error: shared.error.message, mode: null };
+  }, []);
+
   const signOut = useCallback(async () => {
     await supabase?.auth.signOut();
   }, []);
@@ -131,10 +147,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     dbReady: isSupabaseConfigured,
     signIn,
     signUp,
+    signInAsGuest,
     signOut,
     ensureProfile,
     saveProfile,
-  }), [session, profile, loading, signIn, signUp, signOut, ensureProfile, saveProfile]);
+  }), [session, profile, loading, signIn, signUp, signInAsGuest, signOut, ensureProfile, saveProfile]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

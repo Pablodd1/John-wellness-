@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../lib/auth';
-import { LogIn, UserPlus, Mail, Lock, User as UserIcon, Database, ShieldCheck } from 'lucide-react';
+import { LogIn, UserPlus, Mail, Lock, User as UserIcon, Database, ShieldCheck, Zap } from 'lucide-react';
 
 /**
  * Sign-in / sign-up gate shown when the database is configured but no user is
@@ -8,7 +8,7 @@ import { LogIn, UserPlus, Mail, Lock, User as UserIcon, Database, ShieldCheck } 
  * demo mode — the gate is only rendered when a real identity is possible.
  */
 export function AuthGate() {
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, signInAsGuest } = useAuth();
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,6 +16,16 @@ export function AuthGate() {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  const handleGuest = async () => {
+    setError(null);
+    setNotice(null);
+    setBusy(true);
+    const { error: err, mode } = await signInAsGuest();
+    setBusy(false);
+    if (err) setError(`Guest sign-in failed: ${err}. You can still use the email form — or enable "Anonymous sign-ins" in Supabase → Authentication → Sign In / Up for per-tester isolation.`);
+    else if (mode === 'shared') setNotice('Entered shared guest mode: orders and data are visible to everyone using guest mode in this MVP.');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,6 +142,15 @@ export function AuthGate() {
               : <><UserPlus className="w-4 h-4" aria-hidden="true" /> {busy ? 'Creating…' : 'Create account'}</>}
           </button>
         </form>
+
+        <button
+          onClick={handleGuest}
+          disabled={busy}
+          className="w-full py-3 rounded-xl bg-[#344a37] hover:bg-[#2a3b2d] text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2"
+        >
+          <Zap className="w-4 h-4" aria-hidden="true" />
+          {busy ? 'Entering…' : 'Skip — enter as guest tester (1 click)'}
+        </button>
 
         <button
           type="button"
