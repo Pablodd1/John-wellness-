@@ -40,7 +40,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: 'm1',
     sender: 'phi',
-    text: `Hi! I'm your clinical assistant. Heads-up for honesty: this demo has no live AI service — my replies are pre-written. You control whether your health data may be used for AI analysis at all (Privacy & Consent). Tap the "Voice HPI" button above to dictate symptoms for a structured intake, or type a question below.`,
+    text: `Hi! I'm your clinical assistant. I answer with live AI when the service is configured, and fall back to built-in guidance when it isn't — the label below the chat always tells you which mode is active. Your AI analysis consent controls everything. Tap "Voice HPI" to dictate symptoms for a structured intake, or type a question below.`,
     timestamp: new Date().toISOString(),
   }
 ];
