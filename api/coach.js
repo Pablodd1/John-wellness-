@@ -13,7 +13,7 @@
  * wellness/education assistant, never to prescribe, and to escalate emergencies.
  */
 
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-flash-latest';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

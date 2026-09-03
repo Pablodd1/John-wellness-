@@ -10,7 +10,7 @@
  * honest "live AI not configured" state instead of pretending.
  */
 
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-flash-latest';
 
 const SYSTEM_PROMPT = [
   'You are a sports-science research assistant for a wellness platform.',
