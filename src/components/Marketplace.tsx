@@ -33,7 +33,7 @@ interface MarketplaceProps {
   user: UserProfile;
   initialDepartment?: string;
   searchQuery?: string;
-  onAddToCart?: (products: Product[]) => void;
+  onAddToCart?: (products: Product[], opts?: { isSubscription?: boolean }) => void;
   onBuyNow?: (product: Product) => void;
   onOpenCart?: () => void;
 }
@@ -94,7 +94,8 @@ export function Marketplace({
     if (e) e.stopPropagation();
     setPurchasedIds(prev => prev.includes(product.id) ? prev : [...prev, product.id]);
     if (onAddToCart) {
-      onAddToCart([product]);
+      // The card's Subscribe & Save toggle is real: it now carries through to the cart.
+      onAddToCart([product], { isSubscription: activeSubCadence[product.id] || false });
     }
   };
 
@@ -853,6 +854,24 @@ export function Marketplace({
               </div>
 
               <EvidenceGrade product={quickViewProduct} />
+
+              <div className="p-3 rounded-xl border border-[#ebe7df] bg-[#faf9f6] flex items-center justify-between gap-3">
+                <span className="text-[11px] font-semibold text-[#181716] flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#344a37]" aria-hidden="true" /> Lab report (Certificate of Analysis)
+                </span>
+                {quickViewProduct.coaUrl ? (
+                  <a
+                    href={quickViewProduct.coaUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[11px] font-bold text-[#344a37] hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded"
+                  >
+                    View COA
+                  </a>
+                ) : (
+                  <span className="text-[10px] text-[#6e6960]">Available on request</span>
+                )}
+              </div>
 
               <div className="pt-3 border-t border-[#f4f2ec] flex items-center justify-between gap-3">
                 <div>

@@ -10,6 +10,7 @@ export type AppProfile = {
   lifestyle_persona: string | null;
   baseline_diagnostics: Record<string, unknown> | null;
   goals: string[] | null;
+  loyalty_points: number | null;
 };
 
 interface AuthContextValue {
@@ -24,6 +25,7 @@ interface AuthContextValue {
   signOut: () => Promise<void>;
   ensureProfile: (name?: string) => Promise<AppProfile | null>;
   saveProfile: (fields: Partial<AppProfile>) => Promise<boolean>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -107,6 +109,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return true;
   }, [session]);
 
+  /** Re-read the profile row (e.g. after loyalty points change server-side). */
+  const refreshProfile = useCallback(async () => {
+    if (!isSupabaseConfigured || !supabase || !session?.user) return;
+    const { data } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', session.user.id)
+      .maybeSingle();
+    if (data) setProfile(data as AppProfile);
+  }, [session]);
+
   const signIn = useCallback(async (email: string, password: string) => {
     if (!isSupabaseConfigured || !supabase) return { error: 'Database is not configured in this build.' };
     const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -151,7 +164,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signOut,
     ensureProfile,
     saveProfile,
-  }), [session, profile, loading, signIn, signUp, signInAsGuest, signOut, ensureProfile, saveProfile]);
+    refreshProfile,
+  }), [session, profile, loading, signIn, signUp, signInAsGuest, signOut, ensureProfile, saveProfile, refreshProfile]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

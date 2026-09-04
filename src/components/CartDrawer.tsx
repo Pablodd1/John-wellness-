@@ -53,6 +53,9 @@ type OrderConfirmation = {
   address: string;
   total: string;
   itemsCount: number;
+  pointsEarned: number;
+  pointsRedeemed: number;
+  subscriptionsStarted: number;
 };
 
 export function CartDrawer({
@@ -65,7 +68,7 @@ export function CartDrawer({
   onClearCart,
   user,
 }: CartDrawerProps) {
-  const { user: authUser } = useAuth();
+  const { user: authUser, profile, refreshProfile } = useAuth();
   const tracker = useRef(createTracker());
   const [promoCode, setPromoCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState<number>(0);
@@ -75,6 +78,10 @@ export function CartDrawer({
   const [step, setStep] = useState<CheckoutStep>('cart');
   const [placing, setPlacing] = useState(false);
   const [orderConfirmed, setOrderConfirmed] = useState<OrderConfirmation | null>(null);
+  const [redeemPoints, setRedeemPoints] = useState(false);
+
+  // Loyalty: 100 pts = $5 off. Usable in blocks of 100 (balance filled in below).
+  const pointsBalance = profile?.loyalty_points ?? 0;
 
   // Address form
   const [fullName, setFullName] = useState(user.name);
@@ -107,7 +114,10 @@ export function CartDrawer({
   const shippingCost = freeShipping ? 0 : 9.99;
   const discountAmount = subtotal * appliedDiscount;
   const estimatedTax = (subtotal - discountAmount) * 0.0825;
-  const grandTotal = Math.max(0, subtotal - discountAmount + shippingCost + estimatedTax);
+  const grandTotalPreLoyalty = Math.max(0, subtotal - discountAmount + shippingCost + estimatedTax);
+  const maxLoyaltyDiscount = Math.min(Math.floor(pointsBalance / 100) * 5, Math.floor(grandTotalPreLoyalty * 0.5));
+  const loyaltyDiscount = redeemPoints && maxLoyaltyDiscount >= 5 ? maxLoyaltyDiscount : 0;
+  const grandTotal = Math.max(0, grandTotalPreLoyalty - loyaltyDiscount);
   const itemsCount = cartItems.reduce((acc, i) => acc + i.quantity, 0);
 
   const handleApplyPromo = (e: React.FormEvent) => {
@@ -163,10 +173,11 @@ export function CartDrawer({
       authUser.id,
       authUser.email ?? null,
       cartItems,
-      { subtotal, discount: discountAmount, tax: estimatedTax, shipping: shippingCost, total: grandTotal },
+      { subtotal, discount: discountAmount, tax: estimatedTax, shipping: shippingCost, total: grandTotal, loyaltyDiscount },
       address
     );
-    tracker.current.track('order_placed', { total: grandTotal, persisted: result.persisted, items: cartItems.length }, 'checkout');
+    tracker.current.track('order_placed', { total: grandTotal, persisted: result.persisted, items: cartItems.length, loyaltyRedeemed: loyaltyDiscount > 0 }, 'checkout');
+    void refreshProfile();
     setOrderConfirmed({
       orderNumber: result.orderNumber,
       persisted: result.persisted,
@@ -174,6 +185,9 @@ export function CartDrawer({
       address: `${address.street}${address.apt ? `, ${address.apt}` : ''}, ${address.city}, ${address.state} ${address.zip}`,
       total: grandTotal.toFixed(2),
       itemsCount,
+      pointsEarned: result.pointsEarned ?? 0,
+      pointsRedeemed: result.pointsRedeemed ?? 0,
+      subscriptionsStarted: cartItems.filter((i) => i.isSubscription).length,
     });
     setPlacing(false);
     onClearCart();
@@ -342,6 +356,24 @@ export function CartDrawer({
                     )}
                     <div className="flex justify-between"><span>Shipping</span><span>{shippingCost === 0 ? <strong className="text-[#2b4530]">Free</strong> : `$${shippingCost.toFixed(2)}`}</span></div>
                     <div className="flex justify-between"><span>Estimated tax</span><span>${estimatedTax.toFixed(2)}</span></div>
+
+                    {pointsBalance >= 100 && maxLoyaltyDiscount >= 5 ? (
+                      <label className="flex items-center justify-between gap-2 p-2 mt-1 rounded-lg border border-[#dbe5dc] bg-[#f1f5f2] cursor-pointer">
+                        <span className="text-[11px] font-bold text-[#2b4530] flex items-center gap-1.5">
+                          <input
+                            type="checkbox"
+                            checked={redeemPoints}
+                            onChange={(e) => setRedeemPoints(e.target.checked)}
+                            className="accent-[#344a37] w-3.5 h-3.5"
+                          />
+                          Redeem {Math.min(pointsBalance, Math.ceil(maxLoyaltyDiscount / 5) * 100)} loyalty pts
+                        </span>
+                        <span className="text-[11px] font-bold text-[#2b4530]">−${maxLoyaltyDiscount.toFixed(2)}</span>
+                      </label>
+                    ) : (
+                      <p className="text-[10px] text-[#6e6960] mt-1">Earn 1 loyalty point per $1 — 100 pts = $5 off a future order.</p>
+                    )}
+
                     <div className="flex justify-between text-sm font-bold text-[#181716] pt-2 border-t border-[#ebe7df]">
                       <span>Total (simulated)</span><span className="text-base">${grandTotal.toFixed(2)}</span>
                     </div>
@@ -644,6 +676,18 @@ export function CartDrawer({
                     {orderConfirmed.persisted ? 'Yes — visible on your account' : 'No — demo mode only'}
                   </span>
                 </div>
+                <div className="flex justify-between pt-1 border-t border-[#ebe7df]">
+                  <span className="text-[#6e6960]">Loyalty points:</span>
+                  <span className="font-semibold text-[#2b4530]">
+                    {orderConfirmed.pointsRedeemed > 0 ? `−${orderConfirmed.pointsRedeemed} redeemed • ` : ''}+{orderConfirmed.pointsEarned} earned
+                  </span>
+                </div>
+                {orderConfirmed.subscriptionsStarted > 0 && (
+                  <div className="flex justify-between">
+                    <span className="text-[#6e6960]">Auto-deliveries started:</span>
+                    <span className="font-semibold text-[#181716]">{orderConfirmed.subscriptionsStarted} — manage them in Profile</span>
+                  </div>
+                )}
               </div>
 
               {orderConfirmed.notice && (

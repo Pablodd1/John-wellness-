@@ -5,6 +5,7 @@ import { IntakeOnboarding } from './IntakeOnboarding';
 import { IntegrationCenter } from './IntegrationCenter';
 import { OrganSystemModeling } from './OrganSystemModeling';
 import { OrdersAndGoals } from './OrdersAndGoals';
+import { SubscriptionsPanel } from './SubscriptionsPanel';
 import { 
   User, 
   Sparkles, 
@@ -124,6 +125,9 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
 
       {/* Orders, reorder & goals — real data from the signed-in account */}
       <OrdersAndGoals user={user} onUpdateUser={onUpdateUser} onAddToCart={onAddToCart ?? (() => {})} />
+
+      {/* Retention commerce: manage auto-deliveries */}
+      <SubscriptionsPanel user={user} onAddToCart={onAddToCart ?? (() => {})} products={user.inventory} />
 
       {/* Primary Sub-Tab Selector Navigation */}
       <div className="flex flex-wrap gap-1.5 p-1 bg-[#faf9f6] rounded-xl border border-[#ebe7df]">

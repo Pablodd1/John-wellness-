@@ -229,8 +229,8 @@ function AppInner() {
     setChatOpen(true);
   };
 
-  const handleAddProductsToCart = (products: Product[]) => {
-    tracker.current.track('add_to_cart', { products: products.map(p => p.id) });
+  const handleAddProductsToCart = (products: Product[], opts?: { isSubscription?: boolean }) => {
+    tracker.current.track('add_to_cart', { products: products.map(p => p.id), subscription: opts?.isSubscription ?? false });
     setCartItems(prev => {
       const next = [...prev];
       products.forEach(p => {
@@ -241,7 +241,7 @@ function AppInner() {
           next.push({
             product: p,
             quantity: 1,
-            isSubscription: false,
+            isSubscription: opts?.isSubscription ?? false,
             frequency: '30'
           });
         }

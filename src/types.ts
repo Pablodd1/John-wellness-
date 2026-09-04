@@ -28,6 +28,7 @@ export type Product = {
   dailyDosage?: string;
   timing?: string;
   tailoredReason?: string; // Why this specific product matches ChatGPT/Gemini history or bio-persona
+  coaUrl?: string; // Certificate of Analysis (lab report) — shown when present
   hasHumanStudies?: boolean;
   humanStudiesNote?: string;
   potentialSideBenefits?: string[];

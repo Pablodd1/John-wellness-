@@ -32,7 +32,7 @@ export function OrdersAndGoals({
   onUpdateUser: (fields: Partial<UserProfile>) => void;
   onAddToCart: (products: Product[]) => void;
 }) {
-  const { user: authUser } = useAuth();
+  const { user: authUser, profile: authProfile } = useAuth();
   const [orders, setOrders] = useState<OrderRow[] | null>(null);
   const [reordered, setReordered] = useState<string | null>(null);
 
@@ -154,6 +154,10 @@ export function OrdersAndGoals({
             {user.goals.length} goal{user.goals.length > 1 ? 's' : ''} active — marketplace sorting is personalized.
           </p>
         )}
+        <p className="text-[10px] text-[#5c5851] p-2 rounded-lg bg-[#faf5ee] border border-[#ede1cf]">
+          <span className="font-bold text-[#785328]">Loyalty balance: {(authProfile?.loyalty_points ?? 0).toLocaleString()} pts</span>
+          {' '}— earn 1 pt per $1; redeem 100 pts for $5 off at checkout.
+        </p>
       </section>
     </div>
   );
