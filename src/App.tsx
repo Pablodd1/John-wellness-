@@ -28,6 +28,8 @@ import { AuthProvider, useAuth } from './lib/auth';
 import { ConsentProvider, useConsent } from './lib/consent';
 import { fetchCatalog } from './lib/dataService';
 import { createTracker, configureTracker, setPage as setTrackerPage } from './lib/analytics';
+import { installGlobalErrorHandlers, configureErrorReporter } from './lib/errorMonitor';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { 
   ShoppingBag, 
   ShoppingCart, 
@@ -63,11 +65,13 @@ import { cn } from './lib/utils';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ConsentProvider>
-        <AppInner />
-      </ConsentProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <ConsentProvider>
+          <AppInner />
+        </ConsentProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
@@ -178,6 +182,16 @@ function AppInner() {
   useEffect(() => {
     configureTracker({ granted: isGranted('behavioral_analytics'), userId: authUser?.id ?? null });
   }, [isGranted, authUser?.id]);
+
+  // Error monitoring: global crash handlers + identity context. Errors are
+  // operationally necessary telemetry (no health data) and are not consent-gated.
+  useEffect(() => {
+    const remove = installGlobalErrorHandlers();
+    return remove;
+  }, []);
+  useEffect(() => {
+    configureErrorReporter({ id: authUser?.id ?? null, email: authUser?.email ?? null });
+  }, [authUser?.id, authUser?.email]);
 
   // Page-view tracking on tab change.
   useEffect(() => {

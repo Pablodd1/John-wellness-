@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../lib/auth';
-import { fetchRecentEvents, fetchFeedback, fetchMyOrders, InsightEvent } from '../lib/dataService';
+import { fetchRecentEvents, fetchFeedback, fetchMyOrders, fetchRecentErrors, InsightEvent, ErrorRow } from '../lib/dataService';
 import { format, formatDistanceToNowStrict } from 'date-fns';
 import {
   BarChart3,
@@ -12,6 +12,9 @@ import {
   Star,
   MousePointerClick,
   Database,
+  ShieldAlert,
+  Sparkles,
+  X,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -54,21 +57,40 @@ export function InsightsDashboard() {
   const { user } = useAuth();
   const [events, setEvents] = useState<InsightEvent[]>([]);
   const [feedback, setFeedback] = useState<FeedbackRow[]>([]);
+  const [errors, setErrors] = useState<ErrorRow[]>([]);
   const [orderCount, setOrderCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshedAt, setRefreshedAt] = useState<Date | null>(null);
+  const [explainState, setExplainState] = useState<Record<string, { loading: boolean; text?: string; error?: boolean }>>({});
 
   const load = async () => {
     setLoading(true);
-    const [ev, fb] = await Promise.all([fetchRecentEvents(), fetchFeedback()]);
+    const [ev, fb, errs] = await Promise.all([fetchRecentEvents(), fetchFeedback(), fetchRecentErrors()]);
     setEvents(ev);
     setFeedback(fb as FeedbackRow[]);
+    setErrors(errs);
     if (user) {
       const orders = await fetchMyOrders(user.id);
       setOrderCount(orders.length);
     }
     setRefreshedAt(new Date());
     setLoading(false);
+  };
+
+  const explainError = async (row: ErrorRow) => {
+    setExplainState((prev) => ({ ...prev, [row.id]: { loading: true } }));
+    try {
+      const res = await fetch('/api/explain-error', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: row.message, stack: row.stack, component: row.component, url: row.url }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      const data = await res.json();
+      setExplainState((prev) => ({ ...prev, [row.id]: { loading: false, text: data.explanation ?? 'No explanation returned.' } }));
+    } catch {
+      setExplainState((prev) => ({ ...prev, [row.id]: { loading: false, error: true } }));
+    }
   };
 
   useEffect(() => {
@@ -255,6 +277,72 @@ export function InsightsDashboard() {
           )}
         </section>
       </div>
+
+      {/* Health: error monitoring */}
+      <section aria-labelledby="health-heading" className="bg-white p-5 rounded-2xl border border-[#ebe7df] shadow-sm space-y-3">
+        <h2 id="health-heading" className="text-sm font-bold text-[#181716] flex items-center gap-2">
+          <ShieldAlert className={cn('w-4 h-4', errors.length > 0 ? 'text-[#8c3232]' : 'text-[#344a37]')} aria-hidden="true" />
+          Platform Health — Errors
+          <span className={cn('badge-neutral', errors.length > 0 && 'badge-flag')}>{errors.length} recent</span>
+        </h2>
+        {errors.length === 0 ? (
+          <p className="text-xs text-[#6e6960] p-4 bg-[#faf9f6] rounded-xl border border-[#ebe7df]">
+            No errors captured. Client crashes, unhandled rejections, and render failures land here automatically with
+            stack traces and the affected session.
+          </p>
+        ) : (
+          <ul className="space-y-2 max-h-96 overflow-y-auto pr-1">
+            {errors.map((err) => {
+              const state = explainState[err.id];
+              return (
+                <li key={err.id} className="p-3.5 bg-[#faf9f6] rounded-xl border border-[#ebe7df] space-y-2">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <span className={cn(
+                      'px-1.5 py-0.5 rounded text-[9px] font-bold uppercase border',
+                      err.kind === 'boundary' ? 'bg-[#fdf2f2] text-[#8c3232] border-[#f5d5d5]'
+                        : err.kind === 'server' ? 'bg-[#faf5ee] text-[#785328] border-[#ede1cf]'
+                        : 'bg-[#f5f4ef] text-[#5c5851] border-[#e6e4dc]'
+                    )}>
+                      {err.kind}
+                    </span>
+                    <span className="text-[10px] text-[#6e6960] font-mono">
+                      {format(new Date(err.created_at), 'MMM d HH:mm:ss')} • {formatDistanceToNowStrict(new Date(err.created_at))} ago • {err.session_id.slice(0, 12)}
+                    </span>
+                  </div>
+                  <p className="text-xs font-semibold text-[#181716] break-words">{err.message}</p>
+                  {err.stack && (
+                    <details className="text-[10px] text-[#6e6960]">
+                      <summary className="cursor-pointer font-bold hover:text-[#181716] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded">Stack trace</summary>
+                      <pre className="mt-1 whitespace-pre-wrap break-words max-h-40 overflow-y-auto bg-white border border-[#ebe7df] rounded-lg p-2">{err.stack}</pre>
+                    </details>
+                  )}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                      onClick={() => explainError(err)}
+                      disabled={state?.loading}
+                      className="btn-stone px-2.5 py-1 text-[10px] inline-flex items-center gap-1.5 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                    >
+                      <Sparkles className="w-3 h-3 text-[#785328]" aria-hidden="true" />
+                      {state?.loading ? 'Analyzing…' : 'Explain & suggest fix (AI)'}
+                    </button>
+                  </div>
+                  {state?.text && (
+                    <div className="p-3 bg-[#f1f5f2] border border-[#dbe5dc] rounded-xl text-[11px] text-[#181716] leading-relaxed flex items-start gap-2">
+                      <Sparkles className="w-3.5 h-3.5 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" />
+                      <span className="whitespace-pre-wrap">{state.text}</span>
+                    </div>
+                  )}
+                  {state?.error && (
+                    <p role="alert" className="text-[10px] text-[#8c3232] font-bold">
+                      AI explanation unavailable (service not configured or upstream error).
+                    </p>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
 
       {/* Feedback queue */}
       <section aria-labelledby="feedback-heading" className="bg-white p-5 rounded-2xl border border-[#ebe7df] shadow-sm">

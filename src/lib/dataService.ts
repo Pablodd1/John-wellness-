@@ -248,3 +248,30 @@ export async function fetchRecentEvents(): Promise<InsightEvent[]> {
     return [];
   }
 }
+
+// ---------------- Error monitoring (Health) ----------------
+
+export type ErrorRow = {
+  id: string;
+  session_id: string;
+  kind: 'client' | 'server' | 'boundary';
+  message: string;
+  stack: string | null;
+  url: string | null;
+  component: string | null;
+  created_at: string;
+};
+
+export async function fetchRecentErrors(): Promise<ErrorRow[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('app_errors')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(100);
+    return error ? [] : (data as ErrorRow[]) ?? [];
+  } catch {
+    return [];
+  }
+}
