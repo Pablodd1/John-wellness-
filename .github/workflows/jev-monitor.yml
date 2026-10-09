@@ -1,0 +1,30 @@
+name: Jev Error Monitor
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ vars.BASE_URL }}
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL }}
+      ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run Jev audit
+        run: node scripts/jev-audit.mjs
+      - name: Report on failure
+        if: failure()
+        run: echo "Jev audit found alertable findings (or the audit crashed). See the log above."
