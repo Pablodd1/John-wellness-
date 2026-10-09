@@ -78,7 +78,7 @@ export function OperatorDashboard({ activeUser }: { activeUser: UserProfile }) {
           <div className="p-4 bg-[#faf9f6] rounded-xl border border-[#ebe7df] space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-[#181716] flex items-center gap-1.5">
-                <Cpu className="w-3.5 h-3.5 text-[#344a37]" /> Clinical Assistant LLM
+                <Cpu className="w-3.5 h-3.5 text-[#344a37]" /> Wellness Assistant AI
               </span>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${isAiConfigured ? 'bg-[#e2f0e4] text-[#2b4530]' : 'bg-[#f4f2ec] text-[#785328]'}`}>
                 {isAiConfigured ? 'LIVE API KEY' : 'SIMULATED AI'}

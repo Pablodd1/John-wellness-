@@ -193,7 +193,7 @@ function AppInner() {
     configureErrorReporter({ id: authUser?.id ?? null, email: authUser?.email ?? null });
   }, [authUser?.id, authUser?.email]);
 
-  // Dr. Vee voice receptionist: feed REAL profile data to VoiceLayer, expose
+  // Quasar Keel voice receptionist: feed REAL profile data to VoiceLayer, expose
   // the catalog, and log voice intents as behavioral events (consent-gated by
   // the tracker — no transcripts, intents only).
   useEffect(() => {
@@ -430,7 +430,7 @@ function AppInner() {
             onClick={() => setChatOpen(true)}
             className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
           >
-            Clinical Assistant
+            Wellness Assistant
           </button>
         </div>
       </div>
@@ -947,7 +947,7 @@ function AppInner() {
             )}
           >
             <Mic className={cn('w-3.5 h-3.5', coachNudge ? 'text-white' : 'text-[#dedad0]')} aria-hidden="true" />
-            <span>{coachNudge ? 'Dr. Vee has a suggestion — chat now' : 'CuasarX AI'}</span>
+            <span>{coachNudge ? 'Quasar Keel has a suggestion — chat now' : 'CuasarX AI'}</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -1087,7 +1087,7 @@ function AppInner() {
         <button 
           onClick={() => setChatOpen(true)}
           className="flex flex-col items-center justify-center -mt-4 bg-[#181716] text-white w-10 h-10 rounded-full shadow-md active:scale-95 transition-transform"
-          title="Clinical Assistant"
+          title="Wellness Assistant"
         >
           <Mic className="w-4 h-4" />
         </button>

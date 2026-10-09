@@ -31,8 +31,8 @@ export interface GroupMessage {
 const INITIAL_GROUP_MESSAGES: GroupMessage[] = [
   {
     id: 'g1',
-    senderName: 'Dr. Elena Rostova',
-    senderRole: 'Clinical Neurobiologist & Longevity Lead',
+    senderName: 'Elena Rostova (Wellness Coach)',
+    senderRole: 'Wellness Coach & Longevity Lead',
     avatar: 'https://images.unsplash.com/photo-1594824813566-7885a3977341?w=150&auto=format&fit=crop&q=80',
     text: 'Community Question: Is anyone combining the Norwegian 4x4 interval protocol with red-light bio-photomodulation immediately post-session? Looking at mitochondrial biogenesis markers.',
     timestamp: new Date(Date.now() - 3600000 * 2.5).toISOString(),
@@ -101,8 +101,8 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
     setTimeout(() => {
       const peerReply: GroupMessage = {
         id: `msg-reply-${Date.now()}`,
-        senderName: 'Dr. Elena Rostova',
-        senderRole: 'Clinical Neurobiologist',
+        senderName: 'Elena Rostova (Wellness Coach)',
+        senderRole: 'Wellness Coach',
         avatar: 'https://images.unsplash.com/photo-1594824813566-7885a3977341?w=150&auto=format&fit=crop&q=80',
         text: `Great point @${user.name.split(' ')[0]}! That aligns with recent clinical literature on parasympathetic nervous system recovery. Let's run this through CuasarX Assistant for a personalized safety check.`,
         timestamp: new Date().toISOString(),

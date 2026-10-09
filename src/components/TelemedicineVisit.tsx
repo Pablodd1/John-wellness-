@@ -70,10 +70,10 @@ export function TelemedicineVisit({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const inCall = phase === 'connecting' || phase === 'incall';
-  const remoteName = mode === 'clinician' ? patient.name : 'Dr. A. Rostova';
+  const remoteName = mode === 'clinician' ? patient.name : 'Quasar Keel Care Advisor';
   const remoteSubtitle = mode === 'clinician'
     ? 'Patient — simulated remote participant (demo)'
-    : 'Clinical Neurobiologist — simulated remote participant (demo)';
+    : 'Wellness Advisor — simulated remote participant (demo)';
 
   const stopShare = () => {
     shareStreamRef.current?.getTracks().forEach(track => track.stop());

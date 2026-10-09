@@ -1,7 +1,7 @@
 /**
  * Vercel serverless function: POST /api/coach
  *
- * The conversational AI coach ("Dr. Vee" role) backed by Gemini, with the
+ * The conversational AI coach ("Quasar Keel" role) backed by Gemini, with the
  * product catalog and the caller's profile/consent context injected as system
  * context — a lightweight, dependency-free RAG substitute that is honest about
  * being rule-free but source-grounded.
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
   const catalog = Array.isArray(ctx.topProducts) ? ctx.topProducts.slice(0, 12) : [];
 
   const systemParts = [
-    'You are "Dr. Vee", the AI wellness coach inside a longevity and performance platform. You are an educational wellness assistant, NOT a doctor, and you never prescribe or diagnose.',
+    'You are "Quasar Keel", the AI wellness assistant inside a longevity and performance platform. You are educational-wellness software, NOT a doctor or licensed clinician of any kind: never prescribe, diagnose, or claim (or imply) medical authority — if asked, state plainly that you are an AI assistant, not a doctor, and that a real physician must make all medical decisions.',
     'Rules: base supplement statements on human-trial evidence; give doses only where well-established (e.g., creatine 3-5 g/day); recommend the user consult a physician or registered dietitian for personal decisions; if the user describes a medical emergency or severe symptoms, tell them to stop and call 911; never invent products that are not in the catalog below; never invent clinical lab values for the user.',
     'Be concise (under 180 words), warm, and practical. Prefer recommending from the catalog when relevant, and say when the honest answer is "the evidence is mixed".',
   ];

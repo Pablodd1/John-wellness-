@@ -40,7 +40,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: 'm1',
     sender: 'phi',
-    text: `Hi! I'm your clinical assistant. I answer with live AI when the service is configured, and fall back to built-in guidance when it isn't — the label below the chat always tells you which mode is active. Your AI analysis consent controls everything. Tap "Voice HPI" to dictate symptoms for a structured intake, or type a question below.`,
+    text: `Hi! I'm your wellness assistant. I answer with live AI when the service is configured, and fall back to built-in guidance when it isn't — the label below the chat always tells you which mode is active. Your AI analysis consent controls everything. Tap "Voice HPI" to dictate symptoms for a structured intake, or type a question below.`,
     timestamp: new Date().toISOString(),
   }
 ];
@@ -112,7 +112,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
 
       // Generate CuasarX evaluation
       setTimeout(() => {
-        let aiEvaluationResponse = `[CuasarX Clinical Evaluation for ${user.name}]\n\nAnalysis of ${incomingEvaluation.senderName}'s insight:\n`;
+        let aiEvaluationResponse = `[QuasarX Wellness Evaluation for ${user.name}]\n\nAnalysis of ${incomingEvaluation.senderName}'s insight:\n`;
         
         const lower = incomingEvaluation.text.toLowerCase();
         if (lower.includes('4x4') || lower.includes('red-light') || lower.includes('mitochondrial')) {
@@ -365,7 +365,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
 
     // AI Clinical Reasoning based on HPI data & user telemetry
     setTimeout(() => {
-      let hpiAiResponse = `[CuasarX Clinical HPI Analysis & Protocol Calibration]\n\n`;
+      let hpiAiResponse = `[QuasarX Voice Intake Summary & General Guidance]\n\n`;
       const lower = recordedText.toLowerCase();
 
       // Clinical Case 1: Musculoskeletal / Tendon / Joint Injury
@@ -917,7 +917,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                 {isHpiIntake && (
                   <div className="flex items-center gap-1.5 mb-1.5 pb-1.5 border-b border-indigo-500/30 text-amber-300 font-extrabold text-[10px] tracking-wider uppercase">
                     <Stethoscope className="w-3.5 h-3.5 text-rose-400" />
-                    <span>Clinical Voice Intake</span>
+                    <span>Voice Symptom Intake</span>
                   </div>
                 )}
 
@@ -990,7 +990,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
           <div className="mr-auto flex flex-col items-start" role="status" aria-live="polite">
             <div className="px-4 py-3 rounded-2xl text-xs bg-white text-slate-500 border border-slate-200/80 rounded-tl-sm shadow-sm inline-flex items-center gap-2">
               <RadioIcon className="w-3 h-3 animate-pulse text-indigo-600" aria-hidden="true" />
-              Dr. Vee is thinking…
+              Quasar Keel is thinking…
             </div>
           </div>
         )}
