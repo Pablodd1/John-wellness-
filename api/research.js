@@ -21,7 +21,7 @@ const SYSTEM_PROMPT = [
   'End with a one-line reminder that this is educational, not medical advice, and that competitive athletes must check the WADA Prohibited List.',
 ].join(' ');
 
-import { requireUser, unauthorized } from './_auth';
+import { requireUser, unauthorized } from '../lib/api-auth.mjs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

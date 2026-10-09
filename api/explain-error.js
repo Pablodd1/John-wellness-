@@ -8,7 +8,7 @@
 
 const MODEL = 'gemini-flash-latest';
 
-import { requireUser, unauthorized } from './_auth';
+import { requireUser, unauthorized } from '../lib/api-auth.mjs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

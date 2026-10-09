@@ -6,7 +6,7 @@
  * tier rooms expire after the default; we set a 2-hour expiry, no recording.
  */
 
-import { requireUser, unauthorized } from './_auth';
+import { requireUser, unauthorized } from '../lib/api-auth.mjs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
