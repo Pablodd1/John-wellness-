@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../lib/auth';
-import { fetchRecentEvents, fetchFeedback, fetchMyOrders, fetchRecentErrors, InsightEvent, ErrorRow } from '../lib/dataService';
+import { fetchRecentEvents, fetchFeedback, fetchMyOrders, fetchRecentErrors, authFetch, InsightEvent, ErrorRow } from '../lib/dataService';
 import { format, formatDistanceToNowStrict } from 'date-fns';
 import {
   BarChart3,
@@ -80,7 +80,7 @@ export function InsightsDashboard() {
   const explainError = async (row: ErrorRow) => {
     setExplainState((prev) => ({ ...prev, [row.id]: { loading: true } }));
     try {
-      const res = await fetch('/api/explain-error', {
+      const res = await authFetch('/api/explain-error', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: row.message, stack: row.stack, component: row.component, url: row.url }),

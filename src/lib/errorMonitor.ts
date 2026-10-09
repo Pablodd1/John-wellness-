@@ -56,7 +56,8 @@ function persist(input: {
       kind: input.kind,
       message: input.message.slice(0, 500),
       stack: input.stack?.slice(0, 4000) ?? null,
-      url: input.url ?? (typeof window !== 'undefined' ? window.location.href : null),
+      // strip query + hash: URLs can carry auth tokens (e.g. magic-link #access_token)
+      url: (input.url ?? (typeof window !== 'undefined' ? window.location.href : null) ?? '').split('#')[0].split('?')[0] || null,
       component: input.component ?? null,
       extra: input.extra ?? {},
     })
@@ -72,7 +73,7 @@ function persist(input: {
         title: input.kind === 'boundary' ? 'React crash' : 'Client error',
         message: input.message,
         stack: input.stack?.slice(0, 800),
-        url: typeof window !== 'undefined' ? window.location.href : undefined,
+        url: (typeof window !== 'undefined' ? window.location.href : '').split('#')[0].split('?')[0] || undefined,
         sessionId: getSessionId(),
       }),
     }).catch(() => undefined);

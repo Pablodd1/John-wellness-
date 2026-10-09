@@ -9,6 +9,7 @@ import {
   AthleteLevel,
 } from '../data/researchBase';
 import { useConsent } from '../lib/consent';
+import { authFetch } from '../lib/dataService';
 import { formatDistanceToNowStrict } from 'date-fns';
 import {
   FlaskConical,
@@ -138,7 +139,7 @@ export function PerformanceResearch() {
     if (!briefPrompt.trim() || briefState === 'loading') return;
     setBriefState('loading');
     try {
-      const response = await fetch('/api/research', {
+      const response = await authFetch('/api/research', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: briefPrompt.trim() }),

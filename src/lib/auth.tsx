@@ -135,17 +135,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   // MVP skip-login: anonymous session if the project allows it (per-tester
-  // isolation), otherwise a shared guest account so the button always works.
+  // isolation), otherwise the server-side shared guest account. No guest
+  // credentials exist in the client bundle — /api/guest holds them.
   const signInAsGuest = useCallback(async () => {
     if (!isSupabaseConfigured || !supabase) return { error: 'Database is not configured in this build.', mode: null };
     const anon = await supabase.auth.signInAnonymously();
     if (!anon.error) return { error: null, mode: 'anonymous' as const };
-    const shared = await supabase.auth.signInWithPassword({
-      email: 'guest@cuasarx.dev',
-      password: 'GuestOnly-MVP-2026!',
-    });
-    if (!shared.error) return { error: null, mode: 'shared' as const };
-    return { error: shared.error.message, mode: null };
+    try {
+      const res = await fetch('/api/guest', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data?.session?.access_token) {
+        const set = await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        });
+        if (!set.error) return { error: null, mode: 'shared' as const };
+        return { error: set.error.message, mode: null };
+      }
+      if (res.status === 501) {
+        return {
+          error: 'Guest mode is not configured on this deployment. Enable "Anonymous sign-ins" in Supabase → Authentication → Sign In / Up (per-tester isolation), or add GUEST_LOGIN_EMAIL/GUEST_LOGIN_PASSWORD in Vercel.',
+          mode: null,
+        };
+      }
+      return { error: data?.error ?? 'Guest sign-in failed.', mode: null };
+    } catch {
+      return { error: 'Guest sign-in is unavailable right now.', mode: null };
+    }
   }, []);
 
   const signOut = useCallback(async () => {

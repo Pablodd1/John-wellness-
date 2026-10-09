@@ -32,10 +32,10 @@ export default async function handler(req, res) {
     return;
   }
 
-  // Always 200/204 so the client-side capture path never treats alerting
-  // as a failure worth reporting (which would loop).
-  res.status(204).end();
-
+  // Await deliveries BEFORE ending the response: serverless functions can be
+  // frozen right after the response, which would silently drop alerts.
+  // Still always 200/204 so the client capture path never treats alerting as
+  // a failure worth reporting (which would loop).
   try {
     const title = String(req.body?.title ?? 'App alert').slice(0, 120);
     if (rateLimited(title)) return;
@@ -78,4 +78,5 @@ export default async function handler(req, res) {
   } catch {
     // alerting must never throw
   }
+  res.status(204).end();
 }

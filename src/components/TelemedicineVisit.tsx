@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TelemedicineMode, TelemedicinePhase, UserProfile } from '../types';
 import { PRIVACY_POLICY_VERSION, useConsent } from '../lib/consent';
+import { authFetch } from '../lib/dataService';
 import { useDialogBehavior } from '../lib/useDialog';
 import {
   Video,
@@ -133,7 +134,7 @@ export function TelemedicineVisit({
   const handleJoin = async () => {
     setPhase('connecting');
     try {
-      const res = await fetch('/api/daily-room', {
+      const res = await authFetch('/api/daily-room', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: '{}',

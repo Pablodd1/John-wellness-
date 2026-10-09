@@ -21,12 +21,17 @@ const SYSTEM_PROMPT = [
   'End with a one-line reminder that this is educational, not medical advice, and that competitive athletes must check the WADA Prohibited List.',
 ].join(' ');
 
+import { requireUser, unauthorized } from './_auth';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     res.status(405).json({ error: 'METHOD_NOT_ALLOWED' });
     return;
   }
+
+  const user = await requireUser(req);
+  if (!user) { unauthorized(res); return; }
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {

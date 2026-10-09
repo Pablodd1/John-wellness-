@@ -40,9 +40,14 @@
           try {
             var consent = JSON.parse(localStorage.getItem('cx_consent_state_v1') || '{}');
             if (!(consent.records && consent.records.ai_processing && consent.records.ai_processing.granted)) return null;
+            var headers = { 'Content-Type': 'application/json' };
+            try {
+              var st = JSON.parse(localStorage.getItem('sb-brqqyxpnqwuktyqmoycp-auth-token') || 'null');
+              if (st && st.access_token) headers['Authorization'] = 'Bearer ' + st.access_token;
+            } catch (e) {}
             var res = await fetch('/api/coach', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              headers: headers,
               body: JSON.stringify({ message: question, context: window.__CUASARX_COACH_CTX || {} })
             });
             if (!res.ok) return null;

@@ -6,12 +6,17 @@
  * tier rooms expire after the default; we set a 2-hour expiry, no recording.
  */
 
+import { requireUser, unauthorized } from './_auth';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     res.status(405).json({ error: 'METHOD_NOT_ALLOWED' });
     return;
   }
+
+  const user = await requireUser(req);
+  if (!user) { unauthorized(res); return; }
 
   const apiKey = process.env.DAILY_API_KEY;
   if (!apiKey) {

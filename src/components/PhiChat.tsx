@@ -33,6 +33,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { LogoOptionId, LOGO_OPTIONS } from './BrandLogoSelector';
 import { CuasarLogo } from './CuasarLogo';
 import { useConsent } from '../lib/consent';
+import { authFetch } from '../lib/dataService';
 import { MOCK_PRODUCTS } from '../data';
 import { ShieldCheck, ChevronDown, ChevronUp, Radio as RadioIcon } from 'lucide-react';
 
@@ -481,7 +482,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
         dosage: p.dailyDosage,
         reason: p.tailoredReason,
       }));
-      const res = await fetch('/api/coach', {
+      const res = await authFetch('/api/coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

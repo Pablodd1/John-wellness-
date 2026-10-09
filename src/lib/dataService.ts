@@ -275,3 +275,19 @@ export async function fetchRecentErrors(): Promise<ErrorRow[]> {
     return [];
   }
 }
+
+/** fetch() with the caller's Supabase JWT attached — for gated /api routes. */
+export async function authFetch(url: string, init: RequestInit = {}): Promise<Response> {
+  let token: string | null = null;
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const { data } = await supabase.auth.getSession();
+      token = data.session?.access_token ?? null;
+    } catch {
+      token = null;
+    }
+  }
+  const headers = new Headers(init.headers || {});
+  if (token) headers.set('Authorization', `Bearer ${token}`);
+  return fetch(url, { ...init, headers });
+}
