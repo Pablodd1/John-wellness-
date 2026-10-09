@@ -76,7 +76,7 @@ export default function App() {
 }
 
 function AppInner() {
-  const { user: authUser, signOut, dbReady, loading: authLoading, saveProfile } = useAuth();
+  const { user: authUser, profile: authProfile, signOut, dbReady, loading: authLoading, saveProfile } = useAuth();
   const { isGranted } = useConsent();
   const tracker = useRef(createTracker());
   const [coachNudge, setCoachNudge] = useState(false);
@@ -192,6 +192,73 @@ function AppInner() {
   useEffect(() => {
     configureErrorReporter({ id: authUser?.id ?? null, email: authUser?.email ?? null });
   }, [authUser?.id, authUser?.email]);
+
+  // Dr. Vee voice receptionist: feed REAL profile data to VoiceLayer, expose
+  // the catalog, and log voice intents as behavioral events (consent-gated by
+  // the tracker — no transcripts, intents only).
+  useEffect(() => {
+    const w = window as unknown as {
+      __CUASARX_CATALOG?: unknown[];
+      __CUASARX_COACH_CTX?: unknown;
+      VoiceLayer?: { setSignals?: (s: unknown) => void };
+    };
+    const catalog = MOCK_PRODUCTS.slice(0, 12).map((p) => ({
+      id: p.id,
+      name: { en: p.name },
+      for: [] as string[],
+      approved: p.riskLevel !== 'high',
+      rx: p.riskLevel === 'high',
+      price: p.price != null ? `$${p.price.toFixed(0)}` : undefined,
+      provider: 'your clinician',
+    }));
+    w.__CUASARX_CATALOG = catalog;
+    w.__CUASARX_COACH_CTX = {
+      profileSummary: `${activeUser.name}, ${activeUser.age}, ${activeUser.lifestylePersona}. Readiness ${activeUser.readiness.score}/100. Sleep ${activeUser.metrics.sleep.current}h, HRV ${activeUser.metrics.hrv.current}ms, RHR ${activeUser.metrics.rhr.current}bpm.`,
+      goals: Array.isArray(activeUser.goals) ? activeUser.goals : [],
+      topProducts: catalog.map((c) => ({ name: String((c.name as { en: string }).en), category: '', price: 0 })),
+    };
+
+    const H = 3600e3;
+    const now = Date.now();
+    const m = activeUser.metrics;
+    const setVl = () => {
+      try {
+        w.VoiceLayer?.setSignals?.({
+          name: activeUser.name.split(' ')[0],
+          metrics: {
+            readiness: { value: activeUser.readiness.score, unit: '', label: { en: 'Readiness' }, at: now, source: 'CuasarX' },
+            sleep_hours: { value: m.sleep.current, prev: m.sleep.trend[m.sleep.trend.length - 2] ?? m.sleep.current, unit: 'h', label: { en: 'sleep' }, at: now - H, source: 'CuasarX (demo data)' },
+            hrv: { value: m.hrv.current, prev: m.hrv.trend[m.hrv.trend.length - 2] ?? m.hrv.current, unit: 'ms', label: { en: 'HRV' }, at: now - H, source: 'CuasarX (demo data)' },
+            resting_hr: { value: m.rhr.current, unit: 'bpm', label: { en: 'resting HR' }, at: now - H, source: 'CuasarX (demo data)' },
+          },
+          tasks: [],
+          goals: Array.isArray(activeUser.goals) ? activeUser.goals.join(', ') : '',
+          loyalty_points: authProfile?.loyalty_points ?? 0,
+        });
+      } catch { /* VoiceLayer not loaded yet */ }
+    };
+    setVl();
+    const t = window.setTimeout(setVl, 1800); // again after the deferred script mounts
+    return () => window.clearTimeout(t);
+  }, [activeUser, authProfile]);
+
+  // Voice intent analytics: 'voicelayer:command' events → behavioral log.
+  useEffect(() => {
+    const onCmd = (e: Event) => {
+      const detail = (e as CustomEvent).detail ?? {};
+      tracker.current.track('voice_intent', { intent: detail.intent, language: detail.language }, activeTab);
+    };
+    const onComp = (e: Event) => {
+      const detail = (e as CustomEvent).detail ?? {};
+      tracker.current.track('voice_companion', { type: detail.type }, activeTab);
+    };
+    window.addEventListener('voicelayer:command', onCmd);
+    window.addEventListener('voicelayer:companion', onComp);
+    return () => {
+      window.removeEventListener('voicelayer:command', onCmd);
+      window.removeEventListener('voicelayer:companion', onComp);
+    };
+  }, [activeTab]);
 
   // Page-view tracking on tab change.
   useEffect(() => {

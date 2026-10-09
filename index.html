@@ -12,5 +12,46 @@
   <body class="bg-[#fbfaf8] text-[#1a1917] antialiased selection:bg-[#1a1917] selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!--
+      Dr. Vee — voice receptionist (VoiceLayer, generic drop-in; site data is
+      fed by the app via VoiceLayer.setSignals, advice via the aiAnswer hook
+      which is gated by the user's AI-processing consent).
+      Hide: minimize to the edge tab, "Turn off voice help", or ?voicelayer=off.
+      Voice interactions are logged as intent events only when Product
+      Analytics consent is on (see Privacy & Consent).
+    -->
+    <link rel="stylesheet" href="/voicelayer/voicelayer.css">
+    <script>
+      window.VoiceLayerConfig = {
+        mode: 'glass',
+        language: 'auto',
+        bubble: false,
+        glass: { dock: 'top', height: 0.36, blur: 12, tint: 0.18, hue: 150, lite: 'auto' },
+        companion: {
+          preset: 'wellness',
+          name: 'Dr. Vee',
+          demo: false,
+          signalsUrl: null,
+          signals: null,            // set live by the app: window.VoiceLayer.setSignals(...)
+          catalog: window.__CUASARX_CATALOG || []
+        },
+        aiAnswer: async function (question, ctx) {
+          try {
+            var consent = JSON.parse(localStorage.getItem('cx_consent_state_v1') || '{}');
+            if (!(consent.records && consent.records.ai_processing && consent.records.ai_processing.granted)) return null;
+            var res = await fetch('/api/coach', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: question, context: window.__CUASARX_COACH_CTX || {} })
+            });
+            if (!res.ok) return null;
+            var data = await res.json();
+            return data && data.reply ? { text: data.reply } : null;
+          } catch (e) { return null; }
+        }
+      };
+    </script>
+    <script src="/voicelayer/voicelayer.js" defer></script>
   </body>
 </html>
