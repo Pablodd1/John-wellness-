@@ -42,7 +42,7 @@
             if (!(consent.records && consent.records.ai_processing && consent.records.ai_processing.granted)) return null;
             var headers = { 'Content-Type': 'application/json' };
             try {
-              var st = JSON.parse(localStorage.getItem('sb-brqqyxpnqwuktyqmoycp-auth-token') || 'null');
+              var st = JSON.parse(localStorage.getItem('sb-aklpnzhpetinlmkteifp-auth-token') || 'null');
               if (st && st.access_token) headers['Authorization'] = 'Bearer ' + st.access_token;
             } catch (e) {}
             var res = await fetch('/api/coach', {

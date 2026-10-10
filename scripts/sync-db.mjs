@@ -16,7 +16,7 @@ import pg from 'pg';
 import { MOCK_PRODUCTS } from '../src/data';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REF = 'brqqyxpnqwuktyqmoycp';
+const REF = process.env.SUPABASE_PROJECT_REF || 'aklpnzhpetinlmkteifp';
 const PASSWORD = process.env.SUPABASE_DB_PASSWORD;
 
 if (!PASSWORD) {
