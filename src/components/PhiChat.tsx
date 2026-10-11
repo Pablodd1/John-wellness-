@@ -1052,10 +1052,11 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
 
             <button
               type="submit"
+              aria-label="Send message"
               disabled={!input.trim() || !aiConsented}
               className="p-1.5 bg-indigo-600 text-white rounded-xl disabled:opacity-40 disabled:bg-slate-300 transition-colors shadow-sm"
             >
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
         </form>
