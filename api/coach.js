@@ -73,7 +73,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: systemParts.join(' ') }] },
           contents: [{ role: 'user', parts: [{ text: message }] }],
-          generationConfig: { temperature: 0.6, maxOutputTokens: 400 },
+          generationConfig: { temperature: 0.6, maxOutputTokens: 1500, thinkingConfig: { thinkingBudget: 0 } },
         }),
       }
     );
