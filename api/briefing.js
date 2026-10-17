@@ -74,7 +74,7 @@ export default async function handler(req, res) {
       { headers: authHeaders }
     ).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
-    const [weather, events, meds, subs, profileArr] = await Promise.all([weatherP, eventsP, medsP, subsP, profileP]);
+    const [weather, events, medsRaw, subs, profileArr] = await Promise.all([weatherP, eventsP, medsP, subsP, profileP]);
 
     let weatherOut = null;
     if (weather?.current) {
@@ -94,7 +94,7 @@ export default async function handler(req, res) {
       .filter((e) => new Date(e.starts_at).getTime() <= in24h)
       .map((e) => ({ time: e.starts_at, title: e.title, location: e.location ?? null, kind: e.kind }));
 
-    const meds = (meds ?? []).map((m) => ({
+    const meds = (medsRaw ?? []).map((m) => ({
       name: m.name, dose: m.dose, time: (m.time_of_day || '08:00').slice(0, 5), daysLeft: m.days_left,
     }));
 
