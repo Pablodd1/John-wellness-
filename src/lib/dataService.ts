@@ -2,6 +2,7 @@ import { supabase, isSupabaseConfigured } from './supabase';
 import { MOCK_PRODUCTS } from '../data';
 import { Product } from '../types';
 import type { CartItem } from '../components/CartDrawer';
+import { format } from 'date-fns';
 
 /**
  * Data layer: talks to Supabase when configured and falls back to the bundled
@@ -290,4 +291,81 @@ export async function authFetch(url: string, init: RequestInit = {}): Promise<Re
   const headers = new Headers(init.headers || {});
   if (token) headers.set('Authorization', `Bearer ${token}`);
   return fetch(url, { ...init, headers });
+}
+
+// ---------------- Daily briefing (voice receptionist + Today panel) ----------------
+
+export type Briefing = {
+  name: string | null;
+  loyaltyPoints: number;
+  weather: { tempC: number; highC: number; lowC: number; rainProb: number; description: string } | null;
+  calendar: { time: string; title: string; location: string | null; kind: string }[];
+  meds: { name: string; dose: string; time: string; daysLeft: number }[];
+  reorderSoon: { name: string; due: string }[];
+  generatedAt: string;
+};
+
+export async function fetchBriefing(lat?: number, lon?: number): Promise<Briefing | null> {
+  try {
+    const q = lat != null && lon != null ? `?lat=${lat}&lon=${lon}` : '';
+    const res = await authFetch(`/api/briefing${q}`);
+    if (!res.ok) return null;
+    return (await res.json()) as Briefing;
+  } catch {
+    return null;
+  }
+}
+
+/** Composes the spoken/visual daily briefing sentence from the structured data. */
+export function composeBriefingText(b: Briefing, firstName: string): string {
+  const parts: string[] = [];
+  const hour = new Date().getHours();
+  parts.push(hour < 12 ? `Good morning, ${firstName}.` : hour < 18 ? `Good afternoon, ${firstName}.` : `Good evening, ${firstName}.`);
+
+  if (b.weather) {
+    const rain = b.weather.rainProb >= 40 ? ` Rain chance later is ${b.weather.rainProb}% — take a jacket.` : ' No rain expected.';
+    parts.push(`Right now it's ${b.weather.tempC}° with ${b.weather.description} (high ${b.weather.highC}°, low ${b.weather.lowC}°).${rain}`);
+  }
+
+  if (b.calendar.length > 0) {
+    const list = b.calendar.slice(0, 2).map((e) => {
+      const t = new Date(e.time);
+      const sameDay = t.toDateString() === new Date().toDateString();
+      const when = sameDay ? format(t, 'HH:mm') : `${format(t, 'EEE HH:mm')}`;
+      return `${e.title} at ${when}${e.location ? ` (${e.location})` : ''}`;
+    }).join('; ');
+    parts.push(`You have ${b.calendar.length <= 2 ? `${b.calendar.length}` : b.calendar.length} upcoming ${b.calendar.length === 1 ? 'event' : 'events'} in the next day: ${list}.`);
+  } else {
+    parts.push('Your calendar is clear for the next 24 hours.');
+  }
+
+  // Meds due within the next 90 minutes (or the next one scheduled today)
+  const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+  const dueNow = b.meds.filter((m) => {
+    const [h, min] = m.time.split(':').map(Number);
+    const medMin = h * 60 + min;
+    return Math.abs(medMin - nowMin) <= 90;
+  });
+  if (dueNow.length > 0) {
+    parts.push(`Time to take: ${dueNow.map((m) => `${m.name} — ${m.dose}`).join('; ')}.`);
+  } else if (b.meds.length > 0) {
+    const next = [...b.meds].sort((a, c) => a.time.localeCompare(c.time)).find((m) => {
+      const [h] = m.time.split(':').map(Number);
+      return h >= hour;
+    });
+    if (next) parts.push(`Next on your schedule: ${next.name} at ${next.time}.`);
+  }
+
+  const low = b.meds.filter((m) => m.daysLeft <= 7);
+  if (low.length > 0) {
+    parts.push(`Running low: ${low.map((m) => `${m.name} (${m.daysLeft} days left)`).join(', ')}.`);
+  }
+
+  if (b.reorderSoon.length > 0) {
+    parts.push(`${b.reorderSoon[0].name} auto-delivery arrives ${format(new Date(b.reorderSoon[0].due + 'T12:00:00'), 'EEEE')} — say "add ${b.reorderSoon[0].name} to cart" if you want it sooner.`);
+  }
+
+  if (b.loyaltyPoints > 0) parts.push(`You have ${b.loyaltyPoints} loyalty points.`);
+
+  return parts.join(' ');
 }

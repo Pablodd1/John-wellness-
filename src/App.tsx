@@ -26,7 +26,7 @@ import { PerformanceResearch } from './components/PerformanceResearch';
 import { AuthGate } from './components/AuthGate';
 import { AuthProvider, useAuth } from './lib/auth';
 import { ConsentProvider, useConsent } from './lib/consent';
-import { fetchCatalog } from './lib/dataService';
+import { fetchCatalog, fetchBriefing, composeBriefingText } from './lib/dataService';
 import { createTracker, configureTracker, setPage as setTrackerPage } from './lib/analytics';
 import { installGlobalErrorHandlers, configureErrorReporter } from './lib/errorMonitor';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -265,6 +265,36 @@ function AppInner() {
     setTrackerPage(activeTab);
     tracker.current.track('page_view', { tab: activeTab }, activeTab);
   }, [activeTab]);
+
+  // Daily briefing: when the voice receptionist wakes, speak the live briefing —
+  // greeting, weather (real, via Open-Meteo), today's calendar, meds due now,
+  // reorder nudges. Spoken once per wake; the last full briefing wins.
+  const speakBriefing = useRef(0);
+  useEffect(() => {
+    const onAwake = async () => {
+      if (speakBriefing.current && Date.now() - speakBriefing.current < 120000) return;
+      speakBriefing.current = Date.now();
+      const vl = (window as unknown as { VoiceLayer?: { say?: (t: string) => void } }).VoiceLayer;
+      if (!vl?.say) return;
+      let coords: { lat?: number; lon?: number } = {};
+      try {
+        const perm = await navigator.permissions?.query({ name: 'geolocation' as PermissionName });
+        if (perm?.state === 'granted') {
+          const pos = await new Promise<GeolocationPosition>((res, rej) => {
+            navigator.geolocation.getCurrentPosition(res, rej, { timeout: 4000 });
+          });
+          coords = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        }
+      } catch { /* fall back to Miami */ }
+      const b = await fetchBriefing(coords.lat, coords.lon);
+      if (!b) return;
+      const first = activeUser.name.split(' ')[0];
+      const text = composeBriefingText(b, first);
+      setTimeout(() => { try { vl.say(text); } catch { /* panel closed mid-say */ } }, 4500); // let the greeting finish first
+    };
+    window.addEventListener('voicelayer:glass', onAwake);
+    return () => window.removeEventListener('voicelayer:glass', onAwake);
+  }, [activeUser.name]);
 
   // Proactive coach nudge: exit intent toward the browser chrome, once per
   // session, only while the assistant is closed.

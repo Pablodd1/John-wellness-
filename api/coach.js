@@ -27,11 +27,14 @@ export default async function handler(req, res) {
   const user = await requireUser(req);
   if (!user) { unauthorized(res); return; }
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
+  const deepseekKey = process.env.DEEPSEEK_API_KEY || '';
+  const xaiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY || '';
+  const geminiKey = process.env.GEMINI_API_KEY || '';
+
+  if (!deepseekKey && !xaiKey && !geminiKey) {
     res.status(501).json({
       error: 'LIVE_AI_NOT_CONFIGURED',
-      message: 'Set GEMINI_API_KEY as a server-side environment variable to enable the live coach.',
+      message: 'Set DEEPSEEK_API_KEY, XAI_API_KEY, or GEMINI_API_KEY as a server-side environment variable to enable the live coach.',
     });
     return;
   }
@@ -64,14 +67,56 @@ export default async function handler(req, res) {
     );
   }
 
+  const systemPrompt = systemParts.join(' ');
+
   try {
+    // Priority 1: DeepSeek V3.2 Fast ($0.07-$0.14/1M) or xAI Grok-3-Mini-Fast
+    if (deepseekKey || xaiKey) {
+      const useDeepSeek = Boolean(deepseekKey);
+      const url = useDeepSeek ? 'https://api.deepseek.com/v1/chat/completions' : 'https://api.x.ai/v1/chat/completions';
+      const key = useDeepSeek ? deepseekKey : xaiKey;
+      const modelName = useDeepSeek ? 'deepseek-chat' : 'grok-3-mini-fast';
+
+      const fastRes = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${key}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: modelName,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: message },
+          ],
+          temperature: 0.5,
+          max_tokens: 450,
+        }),
+      });
+
+      if (fastRes.ok) {
+        const fastData = await fastRes.json();
+        const fastReply = (fastData?.choices?.[0]?.message?.content || '').replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+        if (fastReply) {
+          res.status(200).json({ reply: fastReply, provider: modelName });
+          return;
+        }
+      }
+    }
+
+    // Priority 2: Gemini Flash Fallback
+    if (!geminiKey) {
+      res.status(502).json({ error: 'AI_UPSTREAM_ERROR' });
+      return;
+    }
+
     const upstream = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(geminiKey)}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemParts.join(' ') }] },
+          systemInstruction: { parts: [{ text: systemPrompt }] },
           contents: [{ role: 'user', parts: [{ text: message }] }],
           generationConfig: { temperature: 0.6, maxOutputTokens: 1500, thinkingConfig: { thinkingBudget: 0 } },
         }),
@@ -94,7 +139,7 @@ export default async function handler(req, res) {
       res.status(502).json({ error: 'AI_EMPTY_RESPONSE' });
       return;
     }
-    res.status(200).json({ reply });
+    res.status(200).json({ reply, provider: MODEL });
   } catch {
     res.status(502).json({ error: 'AI_UPSTREAM_ERROR' });
   }
