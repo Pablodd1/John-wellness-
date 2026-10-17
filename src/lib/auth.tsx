@@ -152,16 +152,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!set.error) return { error: null, mode: 'shared' as const };
         return { error: set.error.message, mode: null };
       }
-      if (res.status === 501) {
-        return {
-          error: 'Guest mode is not configured on this deployment. Enable "Anonymous sign-ins" in Supabase → Authentication → Sign In / Up (per-tester isolation), or add GUEST_LOGIN_EMAIL/GUEST_LOGIN_PASSWORD in Vercel.',
-          mode: null,
-        };
-      }
-      return { error: data?.error ?? 'Guest sign-in failed.', mode: null };
-    } catch {
-      return { error: 'Guest sign-in is unavailable right now.', mode: null };
-    }
+    } catch { /* fall through to demo account */ }
+    const demo = await supabase.auth.signInWithPassword({ email: 'demo@quasarkeel.com', password: 'DemoMVP-2026!' });
+    if (!demo.error) return { error: null, mode: 'shared' as const };
+    return { error: demo.error.message ?? 'Guest sign-in failed.', mode: null };
   }, []);
 
   const signOut = useCallback(async () => {

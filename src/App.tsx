@@ -200,7 +200,16 @@ function AppInner() {
     const w = window as unknown as {
       __CUASARX_CATALOG?: unknown[];
       __CUASARX_COACH_CTX?: unknown;
-      VoiceLayer?: { setSignals?: (s: unknown) => void };
+      VoiceLayer?: {
+        setSignals?: (s: unknown) => void;
+        setCart?: (c: unknown) => void;
+        setInventory?: (items: unknown[]) => void;
+        setWeather?: (w: unknown) => void;
+        setCalendar?: (c: unknown[]) => void;
+        setToTake?: (t: unknown[]) => void;
+        setToBuy?: (b: unknown[]) => void;
+        briefing?: unknown;
+      };
     };
     const catalog = MOCK_PRODUCTS.slice(0, 12).map((p) => ({
       id: p.id,
@@ -221,8 +230,78 @@ function AppInner() {
     const H = 3600e3;
     const now = Date.now();
     const m = activeUser.metrics;
-    const setVl = () => {
+
+    // Derive pending to take & pending to buy from user's active inventory + cart
+    const invToTake = activeUser.inventory.slice(0, 4).map((p) => ({
+      name: p.name,
+      dose: p.dailyDosage || '1 serving',
+      time: p.timing || 'Today',
+      taken: false,
+    }));
+    const invLow = activeUser.inventory
+      .filter((p) => p.daysRemaining !== undefined && p.daysRemaining <= 7)
+      .map((p) => ({
+        name: p.name,
+        daysRemaining: p.daysRemaining,
+        price: p.price ? `$${p.price.toFixed(0)}` : undefined,
+        status: 'low',
+      }));
+
+    let latestBriefing: Awaited<ReturnType<typeof fetchBriefing>> = null;
+
+    const applyToVoiceLayer = () => {
       try {
+        const calEvents = latestBriefing?.calendar?.length
+          ? latestBriefing.calendar.map((e) => {
+              const dt = new Date(e.time);
+              const hh = String(dt.getHours()).padStart(2, '0');
+              const mm = String(dt.getMinutes()).padStart(2, '0');
+              return { title: e.title, time: `${hh}:${mm}`, location: e.location || '', kind: e.kind };
+            })
+          : [
+              { title: 'Weekly review — Keel Performance', time: '15:00', location: 'Zoom' },
+              { title: 'Zone 2 ride — 60 min', time: '18:30', location: 'Key Biscayne loop' },
+              { title: 'Dr. Chen follow-up (labs review)', time: '09:00', location: 'Telehealth' },
+            ];
+
+        const medsToTake = latestBriefing?.meds?.length
+          ? latestBriefing.meds.map((med) => ({
+              name: med.name,
+              dose: med.dose,
+              time: med.time,
+              taken: false,
+            }))
+          : invToTake;
+
+        const medsLow = latestBriefing?.meds?.length
+          ? latestBriefing.meds
+              .filter((med) => med.daysLeft <= 7)
+              .map((med) => ({ name: med.name, daysRemaining: med.daysLeft, status: 'low' }))
+          : invLow;
+
+        const reorders = (latestBriefing?.reorderSoon ?? []).map((r) => ({
+          name: r.name,
+          reason: `auto-delivery ${r.due}`,
+          status: 'refill',
+        }));
+
+        const mergedToBuy = [...medsLow];
+        for (const r of reorders) {
+          if (!mergedToBuy.some((x) => x.name.toLowerCase().includes(r.name.toLowerCase().split(' ')[0]))) {
+            mergedToBuy.push(r as any);
+          }
+        }
+
+        const weatherPayload = latestBriefing?.weather
+          ? {
+              tempC: latestBriefing.weather.tempC,
+              tempF: Math.round((latestBriefing.weather.tempC * 9) / 5 + 32),
+              raining: latestBriefing.weather.rainProb >= 50 || /rain|drizzle|shower|storm/i.test(latestBriefing.weather.description),
+              dry: latestBriefing.weather.rainProb < 40 && !/rain|drizzle|shower|storm/i.test(latestBriefing.weather.description),
+              condition: { en: latestBriefing.weather.description, es: latestBriefing.weather.description },
+            }
+          : undefined;
+
         w.VoiceLayer?.setSignals?.({
           name: activeUser.name.split(' ')[0],
           metrics: {
@@ -231,16 +310,81 @@ function AppInner() {
             hrv: { value: m.hrv.current, prev: m.hrv.trend[m.hrv.trend.length - 2] ?? m.hrv.current, unit: 'ms', label: { en: 'HRV' }, at: now - H, source: 'CuasarX (demo data)' },
             resting_hr: { value: m.rhr.current, unit: 'bpm', label: { en: 'resting HR' }, at: now - H, source: 'CuasarX (demo data)' },
           },
+          calendar: calEvents,
+          toTake: medsToTake,
+          toBuy: mergedToBuy,
+          ...(weatherPayload ? { weather: weatherPayload } : {}),
           tasks: [],
           goals: Array.isArray(activeUser.goals) ? activeUser.goals.join(', ') : '',
-          loyalty_points: authProfile?.loyalty_points ?? 0,
+          loyalty_points: authProfile?.loyalty_points ?? 320,
         });
+
+        w.VoiceLayer?.setInventory?.(
+          MOCK_PRODUCTS.map((p) => ({
+            id: p.id,
+            name: p.name,
+            price: p.price ? `$${p.price.toFixed(2)}` : '$49.00',
+            value: p.price || 49,
+            category: p.category,
+            description: p.description,
+            inStock: true,
+          }))
+        );
       } catch { /* VoiceLayer not loaded yet */ }
     };
-    setVl();
-    const t = window.setTimeout(setVl, 1800); // again after the deferred script mounts
+
+    applyToVoiceLayer();
+    // Whenever a user signs in (e.g., Guest Mode demo@quasarkeel.com), ensure the VoiceLayer assistant is visible and rescans the authenticated dashboard
+    if (authUser) {
+      try {
+        (w.VoiceLayer as any)?.show?.();
+        (w.VoiceLayer as any)?.rescan?.();
+      } catch { /* ignore */ }
+    }
+    fetchBriefing().then((b) => {
+      if (b) {
+        latestBriefing = b;
+        applyToVoiceLayer();
+      }
+    });
+    const t = window.setTimeout(() => {
+      applyToVoiceLayer();
+      if (authUser) {
+        try {
+          (w.VoiceLayer as any)?.rescan?.();
+        } catch { /* ignore */ }
+      }
+    }, 1500);
     return () => window.clearTimeout(t);
-  }, [activeUser, authProfile]);
+  }, [activeUser, authProfile, authUser]);
+
+  // Keep VoiceLayer cart state synchronized with React cartItems
+  useEffect(() => {
+    const w = window as unknown as { VoiceLayer?: { setCart?: (c: unknown) => void } };
+    const count = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    const totalVal = cartItems.reduce((sum, item) => {
+      const base = item.product.price || 49.0;
+      const price = item.isSubscription ? base * 0.85 : base;
+      return sum + price * item.quantity;
+    }, 0);
+    const syncCart = () => {
+      try {
+        w.VoiceLayer?.setCart?.({
+          count,
+          total: `$${totalVal.toFixed(0)}`,
+          items: cartItems.map((i) => ({
+            id: i.product.id,
+            name: i.product.name,
+            qty: i.quantity,
+            price: `$${(i.product.price || 49).toFixed(0)}`,
+          })),
+        });
+      } catch { /* ignore */ }
+    };
+    syncCart();
+    const t = window.setTimeout(syncCart, 1600);
+    return () => window.clearTimeout(t);
+  }, [cartItems]);
 
   // Voice intent analytics: 'voicelayer:command' events → behavioral log.
   useEffect(() => {
@@ -266,15 +410,17 @@ function AppInner() {
     tracker.current.track('page_view', { tab: activeTab }, activeTab);
   }, [activeTab]);
 
-  // Daily briefing: when the voice receptionist wakes, speak the live briefing —
-  // greeting, weather (real, via Open-Meteo), today's calendar, meds due now,
-  // reorder nudges. Spoken once per wake; the last full briefing wins.
+  // Daily briefing: when the voice receptionist wakes, refresh live briefing signals.
+  // If VoiceLayer has the built-in Briefing engine (vl.briefing), Companion.begin()
+  // speaks the full briefing natively without interruption.
   const speakBriefing = useRef(0);
   useEffect(() => {
-    const onAwake = async () => {
+    const onAwake = async (e: Event) => {
+      const state = (e as CustomEvent).detail?.state;
+      if (state && state !== 'awake') return;
       if (speakBriefing.current && Date.now() - speakBriefing.current < 120000) return;
       speakBriefing.current = Date.now();
-      const vl = (window as unknown as { VoiceLayer?: { say?: (t: string) => void } }).VoiceLayer;
+      const vl = (window as unknown as { VoiceLayer?: { say?: (t: string) => void; briefing?: unknown } }).VoiceLayer;
       if (!vl?.say) return;
       let coords: { lat?: number; lon?: number } = {};
       try {
@@ -287,10 +433,10 @@ function AppInner() {
         }
       } catch { /* fall back to Miami */ }
       const b = await fetchBriefing(coords.lat, coords.lon);
-      if (!b) return;
+      if (!b || vl.briefing) return;
       const first = activeUser.name.split(' ')[0];
       const text = composeBriefingText(b, first);
-      setTimeout(() => { try { vl.say(text); } catch { /* panel closed mid-say */ } }, 4500); // let the greeting finish first
+      setTimeout(() => { try { vl.say?.(text); } catch { /* panel closed mid-say */ } }, 4500);
     };
     window.addEventListener('voicelayer:glass', onAwake);
     return () => window.removeEventListener('voicelayer:glass', onAwake);
@@ -455,6 +601,13 @@ function AppInner() {
             className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer inline-flex items-center gap-1"
           >
             <Video className="w-3 h-3" aria-hidden="true" /> Video Visit
+          </button>
+          <button
+            data-voicelayer-open="1"
+            onClick={() => (window as unknown as { VoiceLayer?: { show?: () => void } }).VoiceLayer?.show?.()}
+            className="text-[10px] text-[#2b4530] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+          >
+            Voice Assistant
           </button>
           <button
             onClick={() => setChatOpen(true)}
@@ -743,7 +896,7 @@ function AppInner() {
             <button 
               onClick={() => setActiveTab('admin')}
               className={cn(
-                "hidden xl:flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
+                "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
                 activeTab === 'admin' 
                   ? "bg-[#181716] text-white font-semibold shadow-xs" 
                   : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
@@ -755,7 +908,7 @@ function AppInner() {
             <button 
               onClick={() => setActiveTab('operator')}
               className={cn(
-                "hidden 2xl:flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
+                "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
                 activeTab === 'operator' 
                   ? "bg-[#181716] text-white font-semibold shadow-xs" 
                   : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"

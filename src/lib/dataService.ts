@@ -305,15 +305,88 @@ export type Briefing = {
   generatedAt: string;
 };
 
+const DEMO_WEATHER_TEXT: Record<number, string> = {
+  0: 'clear sky', 1: 'mostly clear', 2: 'partly cloudy', 3: 'overcast',
+  45: 'foggy', 48: 'foggy', 51: 'light drizzle', 53: 'drizzle', 55: 'heavy drizzle',
+  61: 'light rain', 63: 'rain', 65: 'heavy rain', 71: 'light snow', 73: 'snow', 75: 'heavy snow',
+  80: 'rain showers', 81: 'rain showers', 82: 'heavy rain showers', 95: 'thunderstorms',
+  96: 'thunderstorms with hail', 99: 'severe thunderstorms',
+};
+
+function defaultDemoBriefing(): Pick<Briefing, 'calendar' | 'meds' | 'reorderSoon'> {
+  const today3pm = new Date(); today3pm.setHours(15, 0, 0, 0);
+  const today6pm = new Date(); today6pm.setHours(18, 30, 0, 0);
+  const tmr9am = new Date(Date.now() + 864e5); tmr9am.setHours(9, 0, 0, 0);
+  const due4 = new Date(Date.now() + 4 * 864e5).toISOString().slice(0, 10);
+  const due6 = new Date(Date.now() + 6 * 864e5).toISOString().slice(0, 10);
+  return {
+    calendar: [
+      { time: today3pm.toISOString(), title: 'Weekly review — Keel Performance', location: 'Zoom', kind: 'meeting' },
+      { time: today6pm.toISOString(), title: 'Zone 2 ride — 60 min', location: 'Key Biscayne loop', kind: 'training' },
+      { time: tmr9am.toISOString(), title: 'Dr. Chen follow-up (labs review)', location: 'Telehealth', kind: 'appointment' },
+    ],
+    meds: [
+      { name: 'Vitamin D3 5000 IU + K2', dose: '1 softgel', time: '08:00', daysLeft: 12 },
+      { name: 'Creatine Monohydrate', dose: '5g', time: '08:00', daysLeft: 45 },
+      { name: 'Omega-3 High-EPA 2000mg', dose: '2 softgels', time: '13:00', daysLeft: 4 },
+      { name: 'Magnesium Glycinate 400mg', dose: '400mg', time: '21:30', daysLeft: 6 },
+    ],
+    reorderSoon: [
+      { name: 'Magnesium Glycinate (Elemental 400mg)', due: due4 },
+      { name: 'High-EPA Triglyceride Omega-3', due: due6 },
+    ],
+  };
+}
+
 export async function fetchBriefing(lat?: number, lon?: number): Promise<Briefing | null> {
+  const demo = defaultDemoBriefing();
   try {
     const q = lat != null && lon != null ? `?lat=${lat}&lon=${lon}` : '';
     const res = await authFetch(`/api/briefing${q}`);
-    if (!res.ok) return null;
-    return (await res.json()) as Briefing;
-  } catch {
-    return null;
-  }
+    const ct = res.headers.get('content-type') || '';
+    if (res.ok && ct.includes('application/json')) {
+      const data = (await res.json()) as Briefing;
+      return {
+        ...data,
+        calendar: data.calendar?.length ? data.calendar : demo.calendar,
+        meds: data.meds?.length ? data.meds : demo.meds,
+        reorderSoon: data.reorderSoon?.length ? data.reorderSoon : demo.reorderSoon,
+      };
+    }
+  } catch { /* fall through to client-side Open-Meteo + demo schedule */ }
+
+  const la = lat ?? 25.7617;
+  const lo = lon ?? -80.1918;
+  let weather: Briefing['weather'] = { tempC: 26, highC: 28, lowC: 22, rainProb: 10, description: 'sunny and dry' };
+  try {
+    const wRes = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}` +
+      `&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=1&timezone=auto`
+    );
+    if (wRes.ok) {
+      const wData = await wRes.json();
+      if (wData?.current) {
+        const code = Number(wData.current.weather_code ?? 0);
+        weather = {
+          tempC: Math.round(wData.current.temperature_2m),
+          highC: Math.round(wData.daily?.temperature_2m_max?.[0] ?? wData.current.temperature_2m),
+          lowC: Math.round(wData.daily?.temperature_2m_min?.[0] ?? wData.current.temperature_2m),
+          rainProb: wData.daily?.precipitation_probability_max?.[0] ?? 0,
+          description: DEMO_WEATHER_TEXT[code] ?? 'clear sky',
+        };
+      }
+    }
+  } catch { /* keep deterministic sunny & dry fallback */ }
+
+  return {
+    name: null,
+    loyaltyPoints: 320,
+    weather,
+    calendar: demo.calendar,
+    meds: demo.meds,
+    reorderSoon: demo.reorderSoon,
+    generatedAt: new Date().toISOString(),
+  };
 }
 
 /** Composes the spoken/visual daily briefing sentence from the structured data. */

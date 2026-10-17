@@ -57,7 +57,7 @@ export function AuthGate() {
   const field = 'w-full pl-9 pr-3 py-2.5 rounded-xl text-xs bg-[#fbfaf8] border border-[#e5e1d7] focus:outline-none focus:ring-2 focus:ring-[#181716] focus:bg-white';
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-start justify-center p-4 pt-[38vh] pb-12">
       <div className="bg-white rounded-3xl border border-[#ebe7df] shadow-sm p-6 sm:p-8 w-full max-w-md space-y-5">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-[#f1f5f2] rounded-xl border border-[#dbe5dc]">

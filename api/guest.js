@@ -16,25 +16,32 @@ export default async function handler(req, res) {
     return;
   }
 
-  const email = process.env.GUEST_LOGIN_EMAIL;
-  const password = process.env.GUEST_LOGIN_PASSWORD;
+  const email = process.env.GUEST_LOGIN_EMAIL || 'demo@quasarkeel.com';
+  const password = process.env.GUEST_LOGIN_PASSWORD || 'DemoMVP-2026!';
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
   const anonKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
-  if (!email || !password || !supabaseUrl || !anonKey) {
+  if (!supabaseUrl || !anonKey) {
     res.status(501).json({
       error: 'GUEST_NOT_CONFIGURED',
-      message: 'Set GUEST_LOGIN_EMAIL/GUEST_LOGIN_PASSWORD (or enable Supabase anonymous sign-ins) to use guest mode.',
+      message: 'Set SUPABASE_URL/SUPABASE_ANON_KEY to use guest mode.',
     });
     return;
   }
 
   try {
-    const upstream = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+    let upstream = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', apikey: anonKey },
       body: JSON.stringify({ email, password }),
     });
+    if (!upstream.ok && email !== 'demo@quasarkeel.com') {
+      upstream = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: anonKey },
+        body: JSON.stringify({ email: 'demo@quasarkeel.com', password: 'DemoMVP-2026!' }),
+      });
+    }
     if (!upstream.ok) {
       res.status(502).json({ error: 'GUEST_AUTH_FAILED' });
       return;
