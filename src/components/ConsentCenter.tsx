@@ -441,7 +441,7 @@ export function ConsentCenter({
 
       <p className="text-[11px] text-[#6e6960] px-1 flex items-start gap-1.5">
         <EyeOff className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" aria-hidden="true" />
-        Demo note: consent records, signatures, and this audit log are stored only in your browser (localStorage) — nothing is sent to a server. The production architecture would persist them server-side in a tamper-evident table.
+        Demo note: your consent choices, signatures and this history are saved only in this browser for now — nothing is sent anywhere. In the full version they are stored securely on our servers.
       </p>
 
       {authModalOpen && (

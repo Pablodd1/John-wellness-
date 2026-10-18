@@ -23,7 +23,7 @@ export function AuthGate() {
     setBusy(true);
     const { error: err, mode } = await signInAsGuest();
     setBusy(false);
-    if (err) setError(`Guest sign-in failed: ${err}. You can still use the email form — or enable "Anonymous sign-ins" in Supabase → Authentication → Sign In / Up for per-tester isolation.`);
+    if (err) setError(`Guest mode is not open yet — please use the email form above to create your account.`);
     else if (mode === 'shared') setNotice('Entered shared guest mode: orders and data are visible to everyone using guest mode in this MVP.');
   };
 
@@ -46,7 +46,7 @@ export function AuthGate() {
         if (err) {
           setError(err);
         } else if (needsConfirmation) {
-          setNotice('Account created — check your email for a confirmation link, then sign in here. (You can turn off "Confirm email" in Supabase → Authentication → Providers during testing.)');
+          setNotice('Account created — check your email for a confirmation link, then sign in here.');
         }
       }
     } finally {
@@ -162,7 +162,7 @@ export function AuthGate() {
 
         <p className="text-[10px] text-[#6e6960] flex items-start gap-1.5 p-2.5 rounded-lg bg-[#faf9f6] border border-[#ebe7df]">
           <Database className="w-3 h-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
-          <span>Test MVP: passwords are verified by Supabase Auth over an encrypted connection, and every table is locked so you can only ever read and write your own rows.</span>
+          <span>Your account is protected: information is sent over an encrypted connection, and each member can only ever see their own information.</span>
         </p>
       </div>
     </div>

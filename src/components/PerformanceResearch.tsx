@@ -202,8 +202,8 @@ export function PerformanceResearch() {
           <div>
             <h2 id="ai-brief-heading" className="text-sm font-bold text-[#181716]">Live AI Research Brief</h2>
             <p className="text-[11px] text-[#5c5851] mt-0.5 leading-relaxed max-w-2xl">
-              Ask a question and a server-side Gemini model with Google Search grounding will summarize the current
-              human-trial literature. The API key lives on the server — never in your browser.
+              Ask a question and a secure AI service (with live web search) will summarize the current
+              human-trial literature for you. Your questions are processed safely on our servers — never in your browser.
             </p>
           </div>
         </div>
