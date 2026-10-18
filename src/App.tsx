@@ -556,7 +556,7 @@ function AppInner() {
             label: 'Open Lab Telemetry & Biomarkers',
             phrases: ['open lab telemetry', 'show lab telemetry', 'show my bloodwork', 'open biomarkers'],
             handler: () => {
-              setActiveTab('labs');
+              setActiveTab('trends');
               return `Opened Lab Telemetry for ${activeUser.name}: ${profileDetails.biomarkers}.`;
             },
           },
@@ -566,7 +566,7 @@ function AppInner() {
             label: 'Open Biohacking & Recovery Protocols',
             phrases: ['open biohacking', 'show biohacking protocols', 'open recovery protocols'],
             handler: () => {
-              setActiveTab('biohacking');
+              setActiveTab('profile');
               return `Opened Biohacking & Recovery Protocols for ${activeUser.name}.`;
             },
           },
@@ -576,7 +576,7 @@ function AppInner() {
             label: 'Open Daily Supplement Regimen',
             phrases: ['open regimen', 'show my daily regimen', 'open my stack'],
             handler: () => {
-              setActiveTab('regimen');
+              setActiveTab('supplements');
               return `Opened Daily Regimen for ${activeUser.name}.`;
             },
           },
@@ -606,8 +606,8 @@ function AppInner() {
             label: 'Switch Active Athlete / Client Persona',
             phrases: ['switch athlete', 'switch user', 'switch persona', 'next athlete'],
             handler: () => {
-              const idx = MOCK_USERS.findIndex((u) => u.id === activeUser.id);
-              const next = MOCK_USERS[(idx + 1) % MOCK_USERS.length];
+              const idx = SYNTHETIC_USERS.findIndex((u) => u.id === activeUser.id);
+              const next = SYNTHETIC_USERS[(idx + 1) % SYNTHETIC_USERS.length];
               setActiveUser(next);
               return `Switched active profile to ${next.name} (${next.role}) with isolated VoiceLayer memory.`;
             },
