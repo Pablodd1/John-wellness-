@@ -88,6 +88,7 @@ export type BaselineDiagnostics = {
     fastingInsulin: number; // uIU/mL
     vitaminD: number; // ng/mL
     testosteroneFree: number; // pg/mL
+    testosteroneTotal?: number; // ng/dL
     cortisolAM: number; // mcg/dL
     altAst: string; // e.g. "22 / 24 U/L"
     tsh: number; // uIU/mL

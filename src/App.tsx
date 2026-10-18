@@ -107,6 +107,9 @@ function AppInner() {
   const [searchCategory, setSearchCategory] = useState<string>('All');
   const [searchFocused, setSearchFocused] = useState<boolean>(false);
 
+  // Real device readings (health_readings) — override demo metrics for AI layers
+  const [realMetrics, setRealMetrics] = useState<Record<string, { value: number; unit: string; deltaPct: number }> | null>(null);
+
   // Cart
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
@@ -648,7 +651,6 @@ function AppInner() {
   // If VoiceLayer has the built-in Briefing engine (vl.briefing), Companion.begin()
   // speaks the full briefing natively without interruption.
   const speakBriefing = useRef(0);
-  const [realMetrics, setRealMetrics] = useState<Record<string, { value: number; unit: string; deltaPct: number }> | null>(null);
   useEffect(() => {
     const onAwake = async (e: Event) => {
       const state = (e as CustomEvent).detail?.state;

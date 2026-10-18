@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { UserProfile, Product } from '../types';
 import { useAuth } from '../lib/auth';
-import { fetchMyOrders } from '../lib/dataService';
+import { fetchMyOrders, fetchMyReadings, fetchMyMedications, fetchMyCalendar, downloadMedicalSummary, HealthReading } from '../lib/dataService';
+import { computeHealthSummary, buildMedicalSummaryHtml } from '../lib/healthSummary';
 import { GOAL_OPTIONS } from '../lib/matchScore';
 import { MOCK_PRODUCTS } from '../data';
 import { format } from 'date-fns';
-import { ShoppingBag, RefreshCw, Target, PackageOpen, Check } from 'lucide-react';
+import { ShoppingBag, RefreshCw, Target, PackageOpen, Check, Activity, FileDown } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 type OrderRow = {
@@ -34,6 +35,9 @@ export function OrdersAndGoals({
 }) {
   const { user: authUser, profile: authProfile } = useAuth();
   const [orders, setOrders] = useState<OrderRow[] | null>(null);
+  const [readings, setReadings] = useState<HealthReading[] | null>(null);
+  const [medsList, setMedsList] = useState<{ name: string; dose: string; time: string; days_left: number }[]>([]);
+  const [upcoming, setUpcoming] = useState<{ time: string; title: string; location: string | null }[]>([]);
   const [reordered, setReordered] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,11 +46,37 @@ export function OrdersAndGoals({
       fetchMyOrders(authUser.id).then((rows) => {
         if (!cancelled) setOrders(rows as OrderRow[]);
       });
+      fetchMyReadings().then((rows) => {
+        if (!cancelled) setReadings(rows as HealthReading[]);
+      });
+      fetchMyMedications().then(setMedsList);
+      fetchMyCalendar().then(setUpcoming);
     } else if (!cancelled) {
       setOrders([]);
+      setReadings([]);
     }
     return () => { cancelled = true; };
   }, [authUser]);
+
+
+  const healthSummary = useMemo(
+    () => (readings ? computeHealthSummary(readings as HealthReading[]) : null),
+    [readings]
+  );
+  const medsForExport = medsList.map((m) => ({ name: m.name, dose: m.dose, time: m.time, daysLeft: m.days_left }));
+  const downloadSummary = () => {
+    if (!healthSummary || healthSummary.length === 0) return;
+    const html = buildMedicalSummaryHtml({
+      patientName: authProfile?.name ?? authUser?.email ?? 'Patient',
+      generatedAt: new Date(),
+      summary: healthSummary,
+      medications: medsForExport,
+      goals: Array.isArray(user.goals) ? user.goals : [],
+      calendar: upcoming,
+      loyaltyPoints: authProfile?.loyalty_points ?? 0,
+    });
+    downloadMedicalSummary(html);
+  };
 
   const toggleGoal = (goal: string) => {
     const current = Array.isArray(user.goals) ? user.goals : [];
@@ -116,6 +146,57 @@ export function OrdersAndGoals({
               </li>
             ))}
           </ul>
+        )}
+      </section>
+
+      {/* Health data — researchable + exportable */}
+      <section aria-labelledby="healthdata-heading" className="bg-white p-5 rounded-2xl border border-[#ebe7df] shadow-sm space-y-3 lg:col-span-2">
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <h2 id="healthdata-heading" className="text-sm font-bold text-[#181716] flex items-center gap-2">
+            <Activity className="w-4 h-4 text-[#344a37]" aria-hidden="true" /> My Health Data
+          </h2>
+          <button
+            onClick={downloadSummary}
+            disabled={!healthSummary || healthSummary.length === 0}
+            className="px-3 py-1.5 text-[11px] font-bold rounded-lg border border-[#344a37] bg-white text-[#344a37] hover:bg-[#f1f5f2] transition-colors inline-flex items-center gap-1.5 disabled:opacity-40 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+          >
+            <FileDown className="w-3.5 h-3.5" aria-hidden="true" /> Download medical lifestyle summary
+          </button>
+        </div>
+        {healthSummary && healthSummary.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px] font-sans" aria-label="Health readings summary (last 60 days)">
+              <thead>
+                <tr className="text-left text-[#5c5851]">
+                  <th className="py-1.5 pr-3 font-bold">Metric</th>
+                  <th className="py-1.5 pr-3 font-bold">Latest</th>
+                  <th className="py-1.5 pr-3 font-bold">7-day avg</th>
+                  <th className="py-1.5 pr-3 font-bold">30-day avg</th>
+                  <th className="py-1.5 pr-3 font-bold">Trend</th>
+                  <th className="py-1.5 font-bold">Reference</th>
+                </tr>
+              </thead>
+              <tbody>
+                {healthSummary.map((m) => (
+                  <tr key={m.metric} className="border-t border-[#f4f2ec]">
+                    <td className="py-1.5 pr-3 font-bold text-[#181716]">{m.label}</td>
+                    <td className="py-1.5 pr-3">{m.latest} {m.unit}</td>
+                    <td className="py-1.5 pr-3">{m.avg7} {m.unit}</td>
+                    <td className="py-1.5 pr-3">{m.avg30} {m.unit}</td>
+                    <td className={cn('py-1.5 font-semibold', m.improving === true ? 'text-[#166534]' : m.improving === false ? 'text-[#b91c1c]' : 'text-[#5c5851]')}>
+                      {m.improving === null ? '—' : m.deltaPct > 0 ? `▲ +${Math.abs(m.deltaPct)}%` : m.deltaPct < 0 ? `▼ ${m.deltaPct}%` : 'stable'}
+                    </td>
+                    <td className="py-1.5 text-[#6e6960]">{m.target ?? '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="text-[10px] text-[#6e6960] mt-2">Research your own connected-device data (last 60 days). Trend compares the last 7 days against the prior 30. This same data powers the voice receptionist and the AI coach — and exports into the medical lifestyle summary.</p>
+          </div>
+        ) : (
+          <p className="text-xs text-[#5c5851] p-4 bg-[#faf9f6] rounded-xl border border-[#ebe7df]">
+            {readings === null ? 'Loading your readings…' : 'No device readings on file yet. Once your wearable syncs (demo data for this account is seeded), the summary table and export appear here.'}
+          </p>
         )}
       </section>
 

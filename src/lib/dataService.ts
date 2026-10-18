@@ -442,3 +442,71 @@ export function composeBriefingText(b: Briefing, firstName: string): string {
 
   return parts.join(' ');
 }
+
+// ---------------- Health readings (researchable device data) ----------------
+
+export type HealthReading = {
+  metric: string;
+  value: number;
+  unit: string;
+  source: string;
+  recorded_at: string;
+};
+
+export async function fetchMyReadings(): Promise<HealthReading[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('health_readings')
+      .select('metric, value, unit, source, recorded_at')
+      .order('recorded_at', { ascending: false })
+      .limit(1500);
+    return error ? [] : (data as HealthReading[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchMyMedications(): Promise<{ name: string; dose: string; time: string; days_left: number }[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('user_medications')
+      .select('name, dose, time_of_day, days_left')
+      .eq('active', true)
+      .order('time_of_day');
+    if (error || !data) return [];
+    return data.map((m) => ({ name: m.name, dose: m.dose, time: (m.time_of_day || '08:00').slice(0, 5), days_left: m.days_left }));
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchMyCalendar(): Promise<{ time: string; title: string; location: string | null }[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('calendar_events')
+      .select('title, starts_at, location')
+      .gte('starts_at', new Date().toISOString())
+      .order('starts_at', { ascending: true })
+      .limit(6);
+    if (error || !data) return [];
+    return data.map((e) => ({ time: e.starts_at, title: e.title, location: e.location }));
+  } catch {
+    return [];
+  }
+}
+
+/** Downloads a self-contained HTML file (open in any browser → print/save as PDF). */
+export function downloadMedicalSummary(html: string) {
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `CuasarX-Medical-Lifestyle-Summary-${new Date().toISOString().slice(0, 10)}.html`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
