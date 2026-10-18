@@ -1,0 +1,43 @@
+{
+  "protocol": "voicelayer-symbiosis",
+  "version": "1.0.0-symbiosis",
+  "voiceLayerVersion": "0.7.0",
+  "integrationCase": "Case 1 — CuasarX Longevity By Keel (John-wellness-)",
+  "appName": "CuasarX Longevity By Keel",
+  "repositories": {
+    "hostApp": "https://github.com/Pablodd1/John-wellness-",
+    "voiceLayerEngine": "https://github.com/Pablodd1/Comandvoice"
+  },
+  "docs": {
+    "llmsTxt": "/llms.txt",
+    "developerCollaborationNotes": "/DEVELOPER_COLLABORATION_NOTES.md"
+  },
+  "cloudEndpoints": {
+    "voiceConfig": "/api/voice/config",
+    "voiceHealth": "/api/voice/health",
+    "voiceWeather": "/api/voice/weather",
+    "voiceSpeak": "/api/voice/speak",
+    "voiceAsk": "/api/voice/ask",
+    "coachAi": "/api/coach",
+    "briefingData": "/api/briefing",
+    "guestAuth": "/api/guest"
+  },
+  "capabilities": {
+    "multiUserIsolation": true,
+    "biometricsBriefing": true,
+    "primaryClinicalCalendar": true,
+    "secondWorkTrainingTravelCalendar": true,
+    "pendingToTake": true,
+    "pendingToBuy": true,
+    "liveDomAbsorption": true,
+    "customHostActions": [
+      "open_organ_longevity",
+      "open_lab_telemetry",
+      "open_biohacking",
+      "open_regimen",
+      "open_marketplace",
+      "open_ai_coach",
+      "switch_athlete_persona"
+    ]
+  }
+}

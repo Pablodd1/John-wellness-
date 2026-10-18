@@ -539,6 +539,81 @@ function AppInner() {
           loyalty_points: authProfile?.loyalty_points ?? 320,
         };
 
+        const customActions = [
+          {
+            id: 'open_organ_longevity',
+            name: 'open_organ_longevity',
+            label: 'Open Organ Longevity (AOSM)',
+            phrases: ['open organ longevity', 'show organ longevity', 'go to organ longevity', 'show biological age model'],
+            handler: () => {
+              setActiveTab('organ-longevity');
+              return `Opened Organ Longevity (AOSM) for ${activeUser.name} — overall biological age ${execReport.overallBiologicalAge} years.`;
+            },
+          },
+          {
+            id: 'open_lab_telemetry',
+            name: 'open_lab_telemetry',
+            label: 'Open Lab Telemetry & Biomarkers',
+            phrases: ['open lab telemetry', 'show lab telemetry', 'show my bloodwork', 'open biomarkers'],
+            handler: () => {
+              setActiveTab('labs');
+              return `Opened Lab Telemetry for ${activeUser.name}: ${profileDetails.biomarkers}.`;
+            },
+          },
+          {
+            id: 'open_biohacking',
+            name: 'open_biohacking',
+            label: 'Open Biohacking & Recovery Protocols',
+            phrases: ['open biohacking', 'show biohacking protocols', 'open recovery protocols'],
+            handler: () => {
+              setActiveTab('biohacking');
+              return `Opened Biohacking & Recovery Protocols for ${activeUser.name}.`;
+            },
+          },
+          {
+            id: 'open_regimen',
+            name: 'open_regimen',
+            label: 'Open Daily Supplement Regimen',
+            phrases: ['open regimen', 'show my daily regimen', 'open my stack'],
+            handler: () => {
+              setActiveTab('regimen');
+              return `Opened Daily Regimen for ${activeUser.name}.`;
+            },
+          },
+          {
+            id: 'open_marketplace',
+            name: 'open_marketplace',
+            label: 'Open Longevity Marketplace',
+            phrases: ['open marketplace', 'go to marketplace', 'browse supplements'],
+            handler: () => {
+              setActiveTab('marketplace');
+              return 'Opened the CuasarX Longevity Marketplace.';
+            },
+          },
+          {
+            id: 'open_ai_coach',
+            name: 'open_ai_coach',
+            label: 'Open CuasarX AI Longevity Coach Drawer',
+            phrases: ['open coach drawer', 'open clinical coach', 'open chat panel'],
+            handler: () => {
+              setChatOpen(true);
+              return 'Opened the CuasarX Clinical AI Coach panel.';
+            },
+          },
+          {
+            id: 'switch_athlete_persona',
+            name: 'switch_athlete_persona',
+            label: 'Switch Active Athlete / Client Persona',
+            phrases: ['switch athlete', 'switch user', 'switch persona', 'next athlete'],
+            handler: () => {
+              const idx = MOCK_USERS.findIndex((u) => u.id === activeUser.id);
+              const next = MOCK_USERS[(idx + 1) % MOCK_USERS.length];
+              setActiveUser(next);
+              return `Switched active profile to ${next.name} (${next.role}) with isolated VoiceLayer memory.`;
+            },
+          },
+        ];
+
         // Universal Symbiotic Manifest (discoverable by VoiceLayer & any AI agent / developer)
         const symbiosisSpec = {
           appName: 'CuasarX Longevity By Keel',
@@ -553,6 +628,7 @@ function AppInner() {
           inventory: inventoryPayload,
           knowledge: knowledgePayload,
           signals: signalsPayload,
+          actions: customActions,
         };
 
         w.__VOICELAYER_SYMBIOSIS__ = symbiosisSpec;
