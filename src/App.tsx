@@ -546,7 +546,7 @@ function AppInner() {
             label: 'Open Organ Longevity (AOSM)',
             phrases: ['open organ longevity', 'show organ longevity', 'go to organ longevity', 'show biological age model'],
             handler: () => {
-              setActiveTab('organ-longevity');
+              setActiveTab('profile');
               return `Opened Organ Longevity (AOSM) for ${activeUser.name} — overall biological age ${execReport.overallBiologicalAge} years.`;
             },
           },
