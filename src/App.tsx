@@ -184,6 +184,38 @@ function AppInner() {
     configureTracker({ granted: isGranted('behavioral_analytics'), userId: authUser?.id ?? null });
   }, [isGranted, authUser?.id]);
 
+  // Real device readings → override the demo metrics for the AI layers.
+  useEffect(() => {
+    if (!authUser) return;
+    let cancelled = false;
+    import('./lib/dataService').then(({ fetchMyReadings }) =>
+      fetchMyReadings().then((rows) => {
+        if (cancelled || !rows.length) return;
+        const map: Record<string, { value: number; unit: string; deltaPct: number }> = {};
+        const byMetric = new Map<string, typeof rows>();
+        rows.forEach((r) => {
+          if (!byMetric.has(r.metric)) byMetric.set(r.metric, []);
+          byMetric.get(r.metric)!.push(r);
+        });
+        const now = Date.now();
+        for (const [metric, rs] of byMetric) {
+          const recent = rs.filter((r) => now - new Date(r.recorded_at).getTime() <= 7 * 864e5);
+          const prior = rs.filter((r) => {
+            const t = new Date(r.recorded_at).getTime();
+            return t > now - 37 * 864e5 && t <= now - 30 * 864e5;
+          });
+          if (!recent.length) continue;
+          const avg = (list: typeof rows) => list.reduce((a, r) => a + r.value, 0) / list.length;
+          const value = Math.round(avg(recent) * 10) / 10;
+          const deltaPct = prior.length ? Math.round(((value - avg(prior)) / avg(prior)) * 1000) / 10 : 0;
+          map[metric] = { value, unit: rs[0].unit, deltaPct };
+        }
+        if (!cancelled) setRealMetrics(map);
+      }).catch(() => {})
+    );
+    return () => { cancelled = true; };
+  }, [authUser]);
+
   // Error monitoring: global crash handlers + identity context. Errors are
   // operationally necessary telemetry (no health data) and are not consent-gated.
   useEffect(() => {
@@ -201,16 +233,20 @@ function AppInner() {
     const w = window as unknown as {
       __CUASARX_CATALOG?: unknown[];
       __CUASARX_COACH_CTX?: unknown;
+      __VOICELAYER_SYMBIOSIS__?: unknown;
       VoiceLayer?: {
         setSignals?: (s: unknown) => void;
         setProfile?: (p: unknown) => void;
+        setUser?: (id: string, p: unknown) => void;
         setKnowledge?: (k: unknown[]) => void;
         setCart?: (c: unknown) => void;
         setInventory?: (items: unknown[]) => void;
         setWeather?: (w: unknown) => void;
         setCalendar?: (c: unknown[]) => void;
+        setWorkCalendar?: (c: unknown[]) => void;
         setToTake?: (t: unknown[]) => void;
         setToBuy?: (b: unknown[]) => void;
+        symbiosis?: { handshake?: (spec: unknown) => unknown };
         briefing?: unknown;
       };
     };
@@ -248,6 +284,7 @@ function AppInner() {
     const nut = activeUser.nutrition;
     const tp = activeUser.trainingPlan;
     const profileDetails = {
+      id: activeUser.id,
       name: activeUser.name,
       age: activeUser.age,
       gender: activeUser.gender,
@@ -356,18 +393,39 @@ function AppInner() {
 
     const applyToVoiceLayer = () => {
       try {
-        const calEvents = latestBriefing?.calendar?.length
+        const allServerCal = latestBriefing?.calendar?.length
           ? latestBriefing.calendar.map((e) => {
               const dt = new Date(e.time);
               const hh = String(dt.getHours()).padStart(2, '0');
               const mm = String(dt.getMinutes()).padStart(2, '0');
               return { title: e.title, time: `${hh}:${mm}`, location: e.location || '', kind: e.kind };
             })
+          : [];
+
+        // Calendar 1 (Primary Clinical & Appointments Calendar)
+        const calEvents = allServerCal.filter((e) => e.kind === 'medical' || e.kind === 'appointment').length
+          ? allServerCal.filter((e) => e.kind === 'medical' || e.kind === 'appointment')
           : [
-              { title: 'Weekly review — Keel Performance', time: '15:00', location: 'Zoom' },
-              { title: 'Zone 2 ride — 60 min', time: '18:30', location: 'Key Biscayne loop' },
-              { title: 'Dr. Chen follow-up (labs review)', time: '09:00', location: 'Telehealth' },
+              { title: 'Dr. Chen follow-up (labs & ApoB review)', time: '09:00', location: 'Telehealth', kind: 'medical' },
+              { title: 'AOSM Organ Reserve & DEXA Check-in', time: '11:30', location: 'Keel Longevity Clinic', kind: 'medical' },
             ];
+
+        // Calendar 2 (Work Meetings, Training Sessions & Business Trips / Travel Calendar)
+        const workCalEvents = [
+          { title: 'Weekly review — Keel Performance Board', time: '15:00', location: 'Zoom', kind: 'work' },
+          {
+            title: `${tp?.type || 'Zone 2 Active Recovery Ride'} — ${tp?.duration || 45} min (${tp?.intensity || 'Moderate'})`,
+            time: '18:30',
+            location: 'Key Biscayne loop',
+            kind: 'training',
+          },
+          {
+            title: 'NYC Longevity Summit Flight & Circadian Jet-Lag Protocol',
+            time: 'Tomorrow 07:30',
+            location: 'MIA → JFK',
+            kind: 'trip',
+          },
+        ];
 
         const medsToTake = latestBriefing?.meds?.length
           ? latestBriefing.meds.map((med) => ({
@@ -407,14 +465,15 @@ function AppInner() {
             }
           : undefined;
 
-        w.VoiceLayer?.setProfile?.({
+        const profilePayload = {
+          id: activeUser.id,
           name: activeUser.name,
           goals: Array.isArray(activeUser.goals) ? activeUser.goals : [],
           summary: (w.__CUASARX_COACH_CTX as any)?.profileSummary,
           ...profileDetails,
-        });
+        };
 
-        w.VoiceLayer?.setKnowledge?.([
+        const knowledgePayload = [
           {
             heading: 'CuasarX Longevity By Keel Platform Overview',
             text: 'CuasarX Longevity By Keel is a clinical longevity marketplace, daily supplement regimen manager, organ system biological age modeling (AOSM) platform, longitudinal lab telemetry tracker, and bio-intelligence optimization portal.',
@@ -432,6 +491,10 @@ function AppInner() {
             text: `Active daily stack for ${activeUser.name}: ${activeUser.inventory.map((p) => `${p.name} (${p.dailyDosage || '1 serving'}, ${p.timing || 'daily'}, ${p.daysRemaining ?? 14} days remaining)`).join('; ')}.`,
           },
           {
+            heading: 'Work Calendar, Training Schedule & Upcoming Trips',
+            text: `Primary clinical calendar for ${activeUser.name}: ${calEvents.map((c) => `${c.title} at ${c.time} (${c.location})`).join('; ')}. Work, training & travel calendar: ${workCalEvents.map((c) => `${c.title} at ${c.time} (${c.location}) [${c.kind}]`).join('; ')}.`,
+          },
+          {
             heading: 'Biohacking & Recovery Protocols',
             text: profileDetails.biohackingProtocols.map((b) => `${b.title} (${b.category}): ${b.protocol} — ${b.targetOutcome}`).join(' | '),
           },
@@ -439,36 +502,68 @@ function AppInner() {
             heading: 'Telemedicine, Cold-Chain Shipping & Privacy Consent',
             text: 'CuasarX offers same-day clinician video consultations (Medical Review, Dietitian, Mental Health), temperature-controlled cold-chain shipping for peptides and NAD+ precursors, and granular HIPAA-aligned Privacy & Consent controls.',
           },
-        ]);
+        ];
 
-        w.VoiceLayer?.setSignals?.({
+        const inventoryPayload = MOCK_PRODUCTS.map((p) => ({
+          id: p.id,
+          name: p.name,
+          price: p.price ? `$${p.price.toFixed(2)}` : '$49.00',
+          value: p.price || 49,
+          category: p.category,
+          description: p.description,
+          inStock: true,
+        }));
+
+        const signalsPayload = {
           name: activeUser.name.split(' ')[0],
           metrics: {
             readiness: { value: activeUser.readiness.score, unit: '', label: { en: 'Readiness' }, at: now, source: 'CuasarX' },
-            sleep_hours: { value: m.sleep.current, prev: m.sleep.trend[m.sleep.trend.length - 2] ?? m.sleep.current, unit: 'h', label: { en: 'sleep' }, at: now - H, source: 'CuasarX (demo data)' },
-            hrv: { value: m.hrv.current, prev: m.hrv.trend[m.hrv.trend.length - 2] ?? m.hrv.current, unit: 'ms', label: { en: 'HRV' }, at: now - H, source: 'CuasarX (demo data)' },
-            resting_hr: { value: m.rhr.current, unit: 'bpm', label: { en: 'resting HR' }, at: now - H, source: 'CuasarX (demo data)' },
+            sleep_hours: { value: realMetrics?.sleep_hours?.value ?? m.sleep.current, prev: m.sleep.trend[m.sleep.trend.length - 2] ?? m.sleep.current, unit: 'h', label: { en: 'sleep' }, at: now - H, source: realMetrics?.sleep_hours ? 'health_readings (your device)' : 'CuasarX (demo data)' },
+            hrv: { value: realMetrics?.hrv_ms?.value ?? m.hrv.current, prev: m.hrv.trend[m.hrv.trend.length - 2] ?? m.hrv.current, unit: 'ms', label: { en: 'HRV' }, at: now - H, source: realMetrics?.hrv_ms ? 'health_readings (your device)' : 'CuasarX (demo data)' },
+            resting_hr: { value: realMetrics?.resting_hr?.value ?? m.rhr.current, unit: 'bpm', label: { en: 'resting HR' }, at: now - H, source: realMetrics?.resting_hr ? 'health_readings (your device)' : 'CuasarX (demo data)' },
+            ...(realMetrics?.systolic && realMetrics?.diastolic ? {
+              systolic: { value: realMetrics.systolic.value, unit: 'mmHg', label: { en: 'systolic BP' }, at: now - H, source: 'health_readings (your device)' },
+              diastolic: { value: realMetrics.diastolic.value, unit: 'mmHg', label: { en: 'diastolic BP' }, at: now - H, source: 'health_readings (your device)' },
+            } : {}),
           },
           calendar: calEvents,
+          workCalendar: workCalEvents,
           toTake: medsToTake,
           toBuy: mergedToBuy,
           ...(weatherPayload ? { weather: weatherPayload } : {}),
           tasks: [],
           goals: Array.isArray(activeUser.goals) ? activeUser.goals.join(', ') : '',
           loyalty_points: authProfile?.loyalty_points ?? 320,
-        });
+        };
 
-        w.VoiceLayer?.setInventory?.(
-          MOCK_PRODUCTS.map((p) => ({
-            id: p.id,
-            name: p.name,
-            price: p.price ? `$${p.price.toFixed(2)}` : '$49.00',
-            value: p.price || 49,
-            category: p.category,
-            description: p.description,
-            inStock: true,
-          }))
-        );
+        // Universal Symbiotic Manifest (discoverable by VoiceLayer & any AI agent / developer)
+        const symbiosisSpec = {
+          appName: 'CuasarX Longevity By Keel',
+          repo: 'John-wellness-',
+          userId: activeUser.id,
+          profile: profilePayload,
+          calendar: calEvents,
+          workCalendar: workCalEvents,
+          toTake: medsToTake,
+          toBuy: mergedToBuy,
+          ...(weatherPayload ? { weather: weatherPayload } : {}),
+          inventory: inventoryPayload,
+          knowledge: knowledgePayload,
+          signals: signalsPayload,
+        };
+
+        w.__VOICELAYER_SYMBIOSIS__ = symbiosisSpec;
+
+        if (w.VoiceLayer?.symbiosis?.handshake) {
+          w.VoiceLayer.symbiosis.handshake(symbiosisSpec);
+        } else {
+          if (w.VoiceLayer?.setUser) w.VoiceLayer.setUser(activeUser.id, profilePayload);
+          else w.VoiceLayer?.setProfile?.(profilePayload);
+          w.VoiceLayer?.setKnowledge?.(knowledgePayload);
+          w.VoiceLayer?.setSignals?.(signalsPayload);
+          w.VoiceLayer?.setWorkCalendar?.(workCalEvents);
+          w.VoiceLayer?.setInventory?.(inventoryPayload);
+        }
       } catch { /* VoiceLayer not loaded yet */ }
     };
 
@@ -495,7 +590,7 @@ function AppInner() {
       }
     }, 1500);
     return () => window.clearTimeout(t);
-  }, [activeUser, authProfile, authUser, activeTab]);
+  }, [activeUser, authProfile, authUser, activeTab, realMetrics]);
 
   // Keep VoiceLayer cart state synchronized with React cartItems
   useEffect(() => {
@@ -553,6 +648,7 @@ function AppInner() {
   // If VoiceLayer has the built-in Briefing engine (vl.briefing), Companion.begin()
   // speaks the full briefing natively without interruption.
   const speakBriefing = useRef(0);
+  const [realMetrics, setRealMetrics] = useState<Record<string, { value: number; unit: string; deltaPct: number }> | null>(null);
   useEffect(() => {
     const onAwake = async (e: Event) => {
       const state = (e as CustomEvent).detail?.state;

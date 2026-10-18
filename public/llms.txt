@@ -1,0 +1,55 @@
+# CuasarX Longevity By Keel (`John-wellness-`) — Symbiotic VoiceLayer Host Manifest
+
+> Clinical longevity marketplace, daily supplement regimen manager, organ system biological age modeling (AOSM), longitudinal lab telemetry tracker, and bio-intelligence optimization portal, powered by **VoiceLayer (`Comandvoice` v0.6.0-vnext)** as its live voice & conversational operating layer.
+
+## 1. Symbiotic Architecture Overview (Repo-to-Repo & AI-to-AI Contract)
+
+This application implements the **VoiceLayer Universal Symbiotic Protocol (`1.0.0-symbiosis`)**, allowing the VoiceLayer widget (`public/voicelayer/voicelayer.js`) and any collaborating developer or AI coding agent to establish a zero-loss, bidirectional loop between the host web app and the voice assistant.
+
+At runtime, [`src/App.tsx`](src/App.tsx) publishes `window.__VOICELAYER_SYMBIOSIS__` and invokes `window.VoiceLayer.symbiosis.handshake({...})` whenever the active user, athlete/client persona, tab, or cart changes.
+
+### What VoiceLayer Absorbs Automatically on This Site:
+1. **Multi-User / Multi-Persona Identity & Biometrics (`userId` + `profile`)**:
+   - Supports multiple athletes/executives (`John Wellness`, `Elena Vance`, `Marcus Sterling`, `David Chen`, `Sophia Alverez`) with isolated per-user learning and behavior memory (`localStorage["voicelayer.profile.v1:<userId>"]`).
+   - Biometrics: Readiness Score (`/100`), Sleep (`h`), HRV (`ms`), Resting Heart Rate (`bpm`), Overall Biological Age vs. Chronological Age, AOSM Organ Systems (`Cardiovascular`, `Metabolic`, `Neurological`, `Musculoskeletal`, `Hepatic`, `Immune`), Longitudinal Lab Biomarkers (`ApoB`, `hs-CRP`, `Fasting Glucose`, `HbA1c`, `Vitamin D`, `VO2 Max`, `DEXA`), Nutrition Macros (`kcal`, `protein`, `carbs`, `fat`, `hydration`), and Biohacking Protocols.
+2. **Calendar 1 — Primary Clinical & Appointments Calendar (`calendar`)**:
+   - Medical consultations, lab reviews, and clinic check-ins (e.g., *Dr. Chen follow-up (labs & ApoB review) at 09:00 (Telehealth)*, *AOSM Organ Reserve & DEXA Check-in at 11:30*).
+3. **Calendar 2 — Work, Training & Travel Calendar (`workCalendar`)**:
+   - Executive work meetings (*Weekly review — Keel Performance Board at 15:00*), daily training sessions (*Zone 2 Active Recovery Ride — 45 min at 18:30*), and upcoming business trips/flights (*NYC Longevity Summit Flight & Circadian Jet-Lag Protocol — Tomorrow 07:30, MIA → JFK*).
+4. **Pending to Take (`toTake`) & Pending to Buy (`toBuy`)**:
+   - Daily supplement doses pending today (`toTake`) and low-supply refills (`daysRemaining <= 7`) + scheduled auto-deliveries (`toBuy`).
+5. **Live Marketplace Catalog (`inventory`) & Shopping Cart (`cart`)**:
+   - All `MOCK_PRODUCTS` and live cart state (`count`, `total`, `items`).
+6. **Live DOM & Semantic Q&A (`knowledge` + DOM Scanner)**:
+   - Automatic scanning of all visible headings, React/Tailwind cards, buttons, links, form inputs, and structured domain knowledge.
+
+## 2. Quick Diagnostic Commands (Browser Console or Playwright)
+
+```js
+// Inspect full symbiotic connection status:
+window.VoiceLayer.symbiosis.status()
+
+// Read the developer/AI integration guide:
+window.VoiceLayer.symbiosis.guide()
+
+// Inspect the full executive daily briefing (Weather + Biometrics + Primary Calendar + Work/Training/Trips Calendar + Pending to Take + Pending to Buy):
+window.VoiceLayer.briefing.fullText
+
+// Switch active user/athlete with isolated memory:
+window.VoiceLayer.setUser('u2', { name: 'Elena Vance', role: 'Endurance Triathlete' })
+```
+
+## 3. Voice Commands Supported Out-of-the-Box
+
+- **Executive Summary & Pending Everything:**
+  - *"Give me my daily briefing"* / *"What is pending today?"* / *"Summary of everything pending"*
+- **Primary Clinical Calendar:**
+  - *"What is on my calendar today?"* / *"What appointments do I have?"*
+- **Second Calendar (Work Meetings, Training & Trips):**
+  - *"What is on my work calendar?"* / *"Check my second calendar"* / *"What meetings or trips do I have?"*
+- **Pending to Take & Pending to Buy:**
+  - *"What is pending to take today?"* / *"What is pending to buy?"*
+- **Personal Biometrics, Labs & Organ Longevity Q&A:**
+  - *"What is my readiness score?"* / *"What is my biological age?"* / *"How is my sleep and HRV?"* / *"What are my lab biomarkers?"* / *"What is my training plan today?"*
+- **Full Site Navigation & Clicking:**
+  - *"Click Regimen"* / *"Click Organ Longevity"* / *"Click Lab Telemetry"* / *"Click Biohacking"* / *"Click Marketplace"*

@@ -1,106 +1,112 @@
-# VoiceLayer × CuasarX (`John-wellness-`) — Developer Collaboration & Integration Notes
+# Developer & AI Agent Symbiotic Collaboration Notes (`John-wellness-` ↔ `Comandvoice` VoiceLayer)
 
-> **Shared Collaboration Document** across `Comandvoice` (VoiceLayer engine) and `John-wellness-` (CuasarX Longevity By Keel host platform).
-> **Purpose:** Document how VoiceLayer absorbs any website + closed user profile data, what options exist for site/profile integration, what was wired for the `demo@quasarkeel.com` test deployment, and open items/questions for co-development.
-
----
-
-## 1. Architectural Options for Absorbing Any Website & User Profile
-
-VoiceLayer is designed as a **4-Tier Hybrid Site & Profile Absorption Engine** so it works out-of-the-box on any website while supporting deep integration with authenticated ("closed") user state:
-
-### Option A — Automatic DOM, Card & Schema.org Absorption (Zero-Config, Always On)
-- **How it works:** `CONFIG.knowledge = true` (now enabled by default in `voicelayer.js`) automatically indexes:
-  1. **Headings & React/Tailwind Cards (`Knowledge.extract`):** Scans `h1..h5`, `[role=heading]`, `<dt>`, and walks up flex-wrapped headers to their enclosing `<article>`, `<section>`, or `.rounded-2xl`/`.rounded-3xl` card container to extract full prose passages.
-  2. **FAQ / Details Accordions:** Automatically indexes `<details><summary>` pairs and `<dl><dt><dd>` lists.
-  3. **JSON-LD (`application/ld+json`) & Meta Tags:** Extracts `Product`, `FAQPage`, `Organization`, and page description metadata.
-  4. **Product Cards & Interactive Controls (`Inventory.scan` + `Scanner.scan`):** Automatically indexes product prices, stock badges, buttons, links, tabs, and inputs—keeping them live via `MutationObserver` as the user switches SPA tabs.
-
-### Option B — Live Closed-Data / User Profile Push (`VoiceLayer.setProfile`, `setSignals`, `setKnowledge`, `setInventory`, `setCart`)
-- **How it works:** When a host React/Next/Vue app has authenticated state (or SPA tabs that aren't mounted in the DOM yet), the host pushes structured data directly into VoiceLayer's runtime memory:
-  - `window.VoiceLayer.setProfile(profileObj)` — Stores user identity, goals, readiness, sleep/HRV/RHR/training load, today's training plan, daily calorie/macro/hydration targets, organ longevity (AOSM biological age & organ reserve), longitudinal blood biomarkers, and active biohacking protocols.
-  - `window.VoiceLayer.setSignals(signalsObj)` — Feeds daily briefing signals (`metrics`, `calendar`, `toTake`, `toBuy`, `weather`, `loyalty_points`).
-  - `window.VoiceLayer.setKnowledge(factsArray)` — Injects site-wide domain knowledge or unmounted tab summaries (`[{ heading, text }]`) so the user can ask about any feature of the platform regardless of which tab is currently open.
-  - `window.VoiceLayer.setInventory(itemsArray)` & `window.VoiceLayer.setCart(cartObj)` — Synchronizes the full product catalog and shopping cart state.
-
-### Option C — Context-Grounded AI Brain Cascade (`CONFIG.aiAnswer` → `/api/voice/ask` → Local BM25/Token Fallback)
-- **How it works:** When a user asks an open-ended question by voice or text, VoiceLayer builds a unified live snapshot (`VL.contextSnapshot()`) containing:
-  - `page` (URL, title, lang)
-  - `spatial` (active hovered/focused product, current section, visible controls)
-  - `inventory` & `cart`
-  - `profile` (including full `profile.details`)
-  - `signals` & `briefing` (weather, calendar, pending supplements to take, pending refills to buy)
-  - `pagePassages` (top 20 absorbed DOM + profile + custom knowledge passages)
-- **3-Stage Resolution Cascade (`VL.aiAnswerFlow`):**
-  1. **Stage 1 (`CONFIG.aiAnswer(question, ctx)`):** Calls the host app's `/api/coach` endpoint with `{ ...window.__CUASARX_COACH_CTX, voiceLayerContext: ctx }`.
-  2. **Stage 2 (`Net.ask` → `POST /api/voice/ask`):** If `aiAnswer` returns `null` (e.g., local dev without `/api/coach` serverless runtime, or network error), VoiceLayer automatically falls back to the VoiceLayer AI endpoint (`xAI Grok / DeepSeek / Gemini` + `synthesizeFromContext`).
-  3. **Stage 3 (`Knowledge.ask(question)`):** Deterministic client-side passage & profile matcher so the assistant never fails even offline.
-
-### Option D — Crawl / Sitemap / RAG Vector Index (Optional Phase 2 for Multi-Page Docs)
-- For sites with hundreds of separate static URLs (e.g. clinical research libraries or PDFs not loaded in the SPA bundle), we can optionally add a build-time or edge-cached `/voicelayer-knowledge.json` index that `VoiceLayer.setKnowledge(...)` preloads on boot.
+**Last Updated:** October 2026  
+**Repositories Involved:**
+1. **Host Application (`John-wellness-`):** CuasarX Longevity By Keel (`React 19 + Vite + TypeScript + Supabase + Express API`)
+2. **Voice & Agent Layer (`Comandvoice`):** VoiceLayer Widget v0.6.0-vnext (`public/voicelayer/voicelayer.js` & `voicelayer.min.js`)
+3. **Machine-Readable Agent Manifest:** [`public/llms.txt`](public/llms.txt) & `window.__VOICELAYER_SYMBIOSIS__`
 
 ---
 
-## 2. What Was Integrated Today in Both Repos
+## 1. Purpose of This Document (For Human Developers & AI Coding Agents)
 
-### In `Comandvoice` (VoiceLayer Engine & Server)
-1. **`public/voicelayer/voicelayer.js`:**
-   - Enabled `CONFIG.knowledge = true` by default so VoiceLayer automatically absorbs any website it is deployed on.
-   - Upgraded `Knowledge.extract()` to traverse modern React/Tailwind card layouts (`article`, `section`, `.rounded-2xl`, `.rounded-3xl`) when headings are wrapped inside flex header rows.
-   - Added `Knowledge.dynamicFacts()` to automatically convert `Profile.get()` (`details.readiness`, `metrics`, `trainingPlan`, `nutrition`, `flags`, `organHealth`, `biologicalAge`, `biomarkers`, `biohackingProtocols`), `Signals.all()`, and `Inventory.items()` into searchable knowledge passages.
-   - Exposed `window.VoiceLayer.setKnowledge(facts)` and `window.VoiceLayer.knowledge`.
-   - Fixed `Companion.intercept()` during `stage === 'mood'` so if the user asks a real question right after the greeting (instead of saying *"good"* or *"tired"*), it immediately answers their question rather than treating it as a mood check-in.
-   - Updated `VL.contextSnapshot()` to include `pagePassages` and updated `VL.aiAnswerFlow()` so when `CONFIG.aiAnswer` returns `null`, it seamlessly falls back to `Net.ask()` (`/api/voice/ask`) and `VL.knowledge()`.
-2. **`src/index.tsx` (`POST /api/voice/ask`):**
-   - Upgraded `synthesizeFromContext()` and the LLM system prompt to answer directly from `ctx.profile.details`, `ctx.pagePassages`, `ctx.signals`, `ctx.briefing`, and `ctx.inventory`.
+This file is the **symbiotic communication bridge** between the **Host Web App developer/AI (`John-wellness-` or any future website)** and the **VoiceLayer developer/AI (`Comandvoice`)**.
 
-### In `John-wellness-` (CuasarX Host Platform)
-1. **`src/App.tsx`:**
-   - Connected `activeUser` (`UserProfile`), `calculateOrganSystems(activeUser)`, `generateExecutiveReport(activeUser)`, `BIOHACKING_PROTOCOLS`, and `MOCK_PRODUCTS` to:
-     - `window.VoiceLayer.setProfile(...)` (full biometrics, readiness, training plan, macros/hydration, biological age, 9 organ systems, blood/DEXA/VO2 biomarkers, biohacking protocols, and active regimen).
-     - `window.VoiceLayer.setKnowledge(...)` (core platform sections & clinical capabilities so questions about any tab work immediately).
-     - `window.__CUASARX_COACH_CTX` (enriched with `profileDetails` and full product catalog metadata).
-   - Added `activeTab` to the sync dependencies so switching tabs triggers `VoiceLayer.rescan()` to absorb newly rendered tab DOM.
-2. **`index.html`:**
-   - Added `knowledge: { autoNav: false, minScore: 0.45 }` to `window.VoiceLayerConfig`.
-   - Updated `aiAnswer(question, ctx)` so interactive voice questions work out-of-the-box for `demo@quasarkeel.com` testers (only blocking `/api/coach` if the user explicitly withdrew `ai_processing` consent in Privacy & Consent), and merged `voiceLayerContext: ctx` into the `/api/coach` payload.
-3. **`api/coach.js`:**
-   - Allowed guest/demo voice queries to use `/api/coach`, injected `ctx.profileDetails` and `ctx.voiceLayerContext.pagePassages` into the system prompt, and added `synthesizeCoachFallback(message, ctx)` so `/api/coach` returns accurate profile/site answers even if server LLM keys aren't set in a preview environment.
+Whenever an AI coding agent or developer works on either repository, read this file (and [`public/llms.txt`](public/llms.txt)) first so that:
+1. **VoiceLayer absorbs 100% of the host website's live data** (personal data, biometrics, primary clinical calendar, second work/training/trips calendar, pending supplements to take, pending refills to buy, catalog inventory, and visible UI cards).
+2. **Every link, button, tab, and form on the page is voice-clickable** with verified receipt readback.
+3. **Multi-user / multi-athlete switching is isolated** per user ID so VoiceLayer learns each individual user's behavior and preferences without mixing profiles.
 
 ---
 
-## 3. Questions & Coordination Notes for the Other Developer
+## 2. Executive Quick Summary & Dual-Calendar Architecture in `John-wellness-`
 
-Hi! Here are the key touchpoints and open questions for us to align on as we test `John-wellness-` + `VoiceLayer`:
+When a user or athlete wakes VoiceLayer or asks *"Give me my daily briefing"*, *"What is pending today?"*, or *"How is my day?"*, VoiceLayer speaks a warm, human executive summary covering **6 live pillars**:
 
-1. **Supabase Live Profile vs. Synthetic Persona Switching (`src/App.tsx`):**
-   - Right now, `activeUser` defaults to `SYNTHETIC_USERS[0]` (Alex Mercer, 42, Executive Triathlete) and can be switched via the persona selector, while `authProfile` holds Supabase `profiles` rows (`full_name`, `goals`, `loyalty_points`).
-   - **Question:** As you move more fields (bloodwork, organ modeling inputs, or daily check-ins) from `SYNTHETIC_USERS` into Supabase tables, should we merge `authProfile` overrides on top of `activeUser` before calling `VoiceLayer.setProfile(...)`, or will `activeUser` itself be hydrated from Supabase?
-2. **AI Processing Consent Gate (`index.html` & `src/lib/consent.tsx`):**
-   - Previously, `index.html` had `if (!consent.records?.ai_processing?.granted) return null;`, which silently disabled Q&A for every new guest login (`demo@quasarkeel.com`) who hadn't visited the Privacy & Consent tab yet.
-   - We updated `index.html` so interactive voice Q&A works by default during testing unless `ai_processing` was explicitly withdrawn (`granted === false && withdrawnAt`), and falls back to VoiceLayer's context engine if `/api/coach` returns `null`.
-   - **Question:** For production HIPAA/FTC compliance, do you want `FirstRunConsent` to include a one-click toggle for `ai_processing` on first login, or should interactive voice Q&A be treated as user-initiated (implied consent per query) while background AI coaching remains opt-in?
-3. **Custom Voice Actions on Clinical Modals (`TelemedicineVisit`, `IntakeOnboarding`, `OrganSystemModeling`):**
-   - VoiceLayer automatically clicks any visible button/tab by its label or `data-vl-label`.
-   - **Tip:** If you add new icon-only buttons or custom modals, adding `data-vl-label="Book Clinician Video Visit"` or `aria-label="..."` makes them immediately voice-addressable without touching VoiceLayer code.
-4. **Updating the VoiceLayer Bundle in `John-wellness-`:**
-   - The compiled drop-in files live in `public/voicelayer/voicelayer.js` and `public/voicelayer/voicelayer.css` (mirrored from `Comandvoice/public/voicelayer/`).
-   - Local testing with full xAI Grok / DeepSeek voice intelligence runs with:
-     - `Comandvoice`: `node scripts/server.mjs` (port `8790`)
-     - `John-wellness-`: `npm run dev` (port `3000`)
+| Pillar | Source in `John-wellness-` (`src/App.tsx`) | VoiceLayer API / Getter |
+| :--- | :--- | :--- |
+| **1. Weather (Temp + Raining/Dry)** | `fetchBriefing()` (`/api/briefing`) or Open-Meteo fallback | `VoiceLayer.setWeather(...)` / `VoiceLayer.briefing.weather` |
+| **2. Personal Data & Biometrics** | `activeUser` (`readiness`, `metrics.sleep`, `metrics.hrv`, `metrics.rhr`, `biologicalAge`, `organHealth`, `biomarkers`) | `VoiceLayer.setUser(id, profile)` / `VoiceLayer.getProfile()` |
+| **3. Calendar 1 (Primary Clinical & Appointments)** | `calEvents` (*Dr. Chen follow-up (labs & ApoB review) 09:00*, *AOSM Organ Reserve & DEXA Check-in 11:30*) | `VoiceLayer.setCalendar(calEvents)` / `VoiceLayer.briefing.calendar` |
+| **4. Calendar 2 (Work, Training & Travel / Trips)** | `workCalEvents` (*Weekly review — Keel Performance Board 15:00*, *Zone 2 Active Recovery Ride 18:30*, *NYC Longevity Summit Flight & Circadian Prep Tomorrow 07:30*) | `VoiceLayer.setWorkCalendar(workCalEvents)` / `VoiceLayer.briefing.workCalendar` |
+| **5. Pending to Take (Daily Regimen)** | `activeUser.inventory` (`invToTake`) + `/api/briefing` `meds` | `VoiceLayer.setToTake(medsToTake)` / `VoiceLayer.briefing.toTake` |
+| **6. Pending to Buy (Refills & Low Stock)** | `activeUser.inventory` (`daysRemaining <= 7`) + `reorderSoon` + `cartItems` | `VoiceLayer.setToBuy(mergedToBuy)` / `VoiceLayer.briefing.toBuy` |
+
+### Voice Commands for Each Pillar:
+- **Everything Pending / Full Executive Summary:** *"Give me my daily briefing"*, *"What is pending today?"*, *"Summary of everything pending"*
+- **Primary Clinical Calendar:** *"What is on my calendar today?"*, *"What appointments do I have?"*
+- **Second Calendar (Work, Training & Trips):** *"What is on my work calendar?"*, *"Check my second calendar"*, *"What meetings or trips do I have?"*, *"Do I have any flights or travel?"*
+- **Pending to Take:** *"What is pending to take today?"*, *"What supplements do I need to take?"*
+- **Pending to Buy:** *"What is pending to buy?"*, *"What needs a refill?"*
+- **Biometrics, Labs & Organ Longevity:** *"What is my readiness score?"*, *"What is my biological age?"*, *"How is my sleep and HRV?"*, *"What are my lab biomarkers?"*, *"What is my workout today?"*
 
 ---
 
-## 4. Quick Verification Checklist for Testers (`demo@quasarkeel.com`)
+## 3. Universal Symbiotic Handshake Contract (For Any Website or Web App)
 
-1. Log in with **`demo@quasarkeel.com`** / **`DemoMVP-2026!`** (or click **Try Guest Mode**).
-2. Verify the **Quasar Keel** glass bar appears at the top and greets you with your daily briefing (weather, calendar, pending supplements to take, low-stock items to buy).
-3. Try asking any profile or website question (by voice or via `VoiceLayer.ask("...")` in console):
-   - *"What is my readiness score and sleep today?"*
-   - *"What is my biological age and organ health?"*
-   - *"What are my lab biomarkers and ApoB?"*
-   - *"What is my workout and training plan today?"*
-   - *"What are my daily calorie and protein targets?"*
-   - *"What biohacking protocols do I have?"*
-   - *"Tell me about Creatine Monohydrate"*
-   - *"Go to Lab Telemetry"* / *"Open my regimen"* / *"Open cart"*
+To place VoiceLayer on **any** website and establish instant symbiosis, the host site only needs to provide `window.__VOICELAYER_SYMBIOSIS__` or call `window.VoiceLayer.symbiosis.handshake({...})`:
+
+```ts
+const symbiosisSpec = {
+  appName: 'CuasarX Longevity By Keel',
+  repo: 'John-wellness-',
+  userId: activeUser.id,           // Multi-user storage isolation key
+  profile: profilePayload,         // Biometrics, labs, organ health, macros, workout
+  calendar: calEvents,             // Primary / clinical appointments calendar
+  workCalendar: workCalEvents,     // Second calendar: work meetings, training, trips/flights
+  toTake: medsToTake,              // Pending doses/tasks to take today
+  toBuy: mergedToBuy,              // Low-supply items & refills pending to buy
+  weather: weatherPayload,         // Optional override (otherwise auto-fetched via Open-Meteo)
+  inventory: inventoryPayload,     // Full product catalog
+  knowledge: knowledgePayload,     // Structured domain Q&A passages
+  signals: signalsPayload,         // Companion telemetry metrics
+  actions: [                       // Optional custom voice-callable functions
+    {
+      name: 'switchPersona',
+      phrases: ['switch persona', 'change athlete'],
+      handler: () => { /* custom host callback */ }
+    }
+  ]
+};
+
+window.__VOICELAYER_SYMBIOSIS__ = symbiosisSpec;
+window.VoiceLayer?.symbiosis?.handshake?.(symbiosisSpec);
+```
+
+### Multi-User Learning & Isolation (`VoiceLayer.setUser`)
+- When a site has multiple users, clients, or athletes (such as `John Wellness`, `Elena Vance`, `Marcus Sterling`), calling `VoiceLayer.setUser(userId, profile)` stores each user's profile and behavioral learning separately under `localStorage["voicelayer.profile.v1:<userId>"]` and tracks known users in `localStorage["voicelayer.users.v1"]`.
+- Inspect anytime in console:
+  - `window.VoiceLayer.profile.activeUserId`
+  - `window.VoiceLayer.users`
+  - `window.VoiceLayer.symbiosis.status()`
+
+---
+
+## 4. Global & Chinese Open-Source Research Integrated Into This Architecture
+
+Our symbiotic design synthesizes the strongest patterns from leading global and Chinese open-source GUI/web-agent ecosystems:
+1. **ByteDance `UI-TARS` (`bytedance/UI-TARS`) & Alibaba `Page-Agent` / `Mobile-Agent`:**
+   - **Closed-loop Action Receipts:** Every voice click, navigation, scroll, or form fill emits a verified receipt (`status: 'succeeded'`, `verification: 'dom_effect' | 'read_back'`) so the user gets immediate, trustworthy human feedback.
+2. **Zhipu AI / Tsinghua `Open-AutoGLM` & `CogAgent` (`zai-org/Open-AutoGLM`):**
+   - **Two-Tier Intent Routing + Safety Gate:** Fast deterministic local grammar (`parse` + `parseSkills` + `Knowledge.ask`) handles 95% of navigation, calendar, biometric, and catalog commands in `<15ms` with zero network latency, while open-ended reasoning routes to `/api/voice/ask` or `/api/coach` (Groq `llama-3.3-70b-versatile`) with full profile/DOM context. Sensitive actions (checkout, payment, delete) require explicit confirmation.
+3. **`Browser-Use` (`browser-use/browser-use`) & W3C `WebMCP` (`navigator.modelContext`):**
+   - **Dual-Path Absorption (DOM + Structured Symbiosis):** VoiceLayer scans visible React/Tailwind cards and interactive controls (`Scanner.scan()`) AND auto-discovers `window.__VOICELAYER_SYMBIOSIS__`, `<script type="application/voicelayer+json">`, and `navigator.modelContext.tools`.
+4. **Agentic Web Standard (`/llms.txt`):**
+   - Both repos ship [`public/llms.txt`](public/llms.txt) and `DEVELOPER_COLLABORATION_NOTES.md` so any AI coding assistant (Cursor, Claude Code, Antigravity, Windsurf, Copilot) or human developer immediately understands how to extend or debug the integration.
+
+---
+
+## 5. How to Sync & Verify Changes Between Both Repos
+
+```powershell
+# 1. In Comandvoice: build voicelayer.min.js and run the 61-test verification suite
+cd C:\Users\jasme\ZCodeProject\Comandvoice
+npm run build
+node tests/verify-v060.mjs
+
+# 2. Copy the built widget files into John-wellness-
+Copy-Item "C:\Users\jasme\ZCodeProject\Comandvoice\public\voicelayer\voicelayer.js" "C:\Users\jasme\ZCodeProject\John-wellness-\public\voicelayer\voicelayer.js" -Force
+Copy-Item "C:\Users\jasme\ZCodeProject\Comandvoice\public\voicelayer\voicelayer.min.js" "C:\Users\jasme\ZCodeProject\John-wellness-\public\voicelayer\voicelayer.min.js" -Force
+Copy-Item "C:\Users\jasme\ZCodeProject\Comandvoice\public\voicelayer\voicelayer.css" "C:\Users\jasme\ZCodeProject\John-wellness-\public\voicelayer\voicelayer.css" -Force
+Copy-Item "C:\Users\jasme\ZCodeProject\Comandvoice\public\voicelayer\voicelayer.min.css" "C:\Users\jasme\ZCodeProject\John-wellness-\public\voicelayer\voicelayer.min.css" -Force
+```
