@@ -29,6 +29,7 @@
         offsetY: 84,
         language: 'auto',
         bubble: false,
+        knowledge: { autoNav: false, minScore: 0.45 },
         glass: { dock: 'top', height: 0.36, blur: 12, tint: 0.18, hue: 150, lite: 'auto' },
         companion: {
           preset: 'wellness',
@@ -41,20 +42,23 @@
         aiAnswer: async function (question, ctx) {
           try {
             var consent = JSON.parse(localStorage.getItem('cx_consent_state_v1') || '{}');
-            if (!(consent.records && consent.records.ai_processing && consent.records.ai_processing.granted)) return null;
+            var aiRec = consent && consent.records && consent.records.ai_processing;
+            // Only block if the user explicitly withdrew AI processing consent; otherwise allow interactive voice questions and fall back to VoiceLayer /api/voice/ask + absorbed site knowledge
+            if (aiRec && aiRec.granted === false && aiRec.withdrawnAt) return null;
             var headers = { 'Content-Type': 'application/json' };
             try {
               var st = JSON.parse(localStorage.getItem('sb-aklpnzhpetinlmkteifp-auth-token') || 'null');
               if (st && st.access_token) headers['Authorization'] = 'Bearer ' + st.access_token;
             } catch (e) {}
+            var mergedCtx = Object.assign({}, window.__CUASARX_COACH_CTX || {}, { voiceLayerContext: ctx || {} });
             var res = await fetch('/api/coach', {
               method: 'POST',
               headers: headers,
-              body: JSON.stringify({ message: question, context: window.__CUASARX_COACH_CTX || {} })
+              body: JSON.stringify({ message: question, context: mergedCtx })
             });
             if (!res.ok) return null;
             var data = await res.json();
-            return data && data.reply ? { text: data.reply } : null;
+            return data && data.reply ? { text: data.reply, action: data.action || null } : null;
           } catch (e) { return null; }
         }
       };

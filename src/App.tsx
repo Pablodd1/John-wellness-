@@ -5,8 +5,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { SYNTHETIC_USERS, MOCK_PRODUCTS } from './data';
+import { SYNTHETIC_USERS, MOCK_PRODUCTS, BIOHACKING_PROTOCOLS } from './data';
 import { UserProfile, Product, TelemedicineMode } from './types';
+import { calculateOrganSystems, generateExecutiveReport } from './utils/organModeling';
 import { Marketplace } from './components/Marketplace';
 import { SupplementManager } from './components/SupplementManager';
 import { BiomarkerTrends } from './components/BiomarkerTrends';
@@ -202,6 +203,8 @@ function AppInner() {
       __CUASARX_COACH_CTX?: unknown;
       VoiceLayer?: {
         setSignals?: (s: unknown) => void;
+        setProfile?: (p: unknown) => void;
+        setKnowledge?: (k: unknown[]) => void;
         setCart?: (c: unknown) => void;
         setInventory?: (items: unknown[]) => void;
         setWeather?: (w: unknown) => void;
@@ -221,10 +224,112 @@ function AppInner() {
       provider: 'your clinician',
     }));
     w.__CUASARX_CATALOG = catalog;
+
+    const organSystems = calculateOrganSystems(activeUser);
+    const execReport = generateExecutiveReport(activeUser);
+    const blood = activeUser.baselineDiagnostics?.bloodwork;
+    const dexa = activeUser.baselineDiagnostics?.dexa;
+    const diag = activeUser.baselineDiagnostics?.diagnostics;
+    const biomarkerSummary = [
+      blood?.apoB != null ? `ApoB ${blood.apoB} mg/dL` : null,
+      blood?.hsCRP != null ? `hs-CRP ${blood.hsCRP} mg/L` : null,
+      blood?.fastingGlucose != null ? `Fasting Glucose ${blood.fastingGlucose} mg/dL` : null,
+      blood?.hba1c != null ? `HbA1c ${blood.hba1c}%` : null,
+      blood?.fastingInsulin != null ? `Fasting Insulin ${blood.fastingInsulin} uIU/mL` : null,
+      blood?.vitaminD != null ? `Vitamin D ${blood.vitaminD} ng/mL` : null,
+      blood?.testosteroneTotal != null ? `Total Testosterone ${blood.testosteroneTotal} ng/dL` : null,
+      blood?.cortisolAM != null ? `AM Cortisol ${blood.cortisolAM} ug/dL` : null,
+      diag?.vo2Max != null ? `VO2 Max ${diag.vo2Max} mL/kg/min` : null,
+      dexa?.bodyFatPercent != null ? `DEXA Body Fat ${dexa.bodyFatPercent}%` : null,
+      dexa?.leanMassKg != null ? `Lean Mass ${dexa.leanMassKg} kg` : null,
+      dexa?.visceralFatGrams != null ? `Visceral Fat ${dexa.visceralFatGrams}g` : null,
+    ].filter(Boolean).join(', ');
+
+    const nut = activeUser.nutrition;
+    const tp = activeUser.trainingPlan;
+    const profileDetails = {
+      name: activeUser.name,
+      age: activeUser.age,
+      gender: activeUser.gender,
+      role: activeUser.role,
+      lifestylePersona: activeUser.lifestylePersona,
+      dataCompleteness: activeUser.dataCompleteness,
+      loyaltyPoints: authProfile?.loyalty_points ?? 320,
+      readiness: {
+        score: activeUser.readiness.score,
+        status: activeUser.readiness.status,
+        message: activeUser.readiness.message,
+        recommendation: activeUser.readiness.message,
+      },
+      metrics: {
+        sleep: { current: activeUser.metrics.sleep.current, baseline: 8.0, trend: activeUser.metrics.sleep.trend },
+        hrv: { current: activeUser.metrics.hrv.current, baseline: activeUser.metrics.hrv.trend[0] ?? 65, trend: activeUser.metrics.hrv.trend },
+        rhr: { current: activeUser.metrics.rhr.current, trend: activeUser.metrics.rhr.trend },
+        trainingLoad: { current: activeUser.metrics.trainingLoad },
+      },
+      trainingPlan: {
+        type: tp?.type || 'Zone 2 Endurance',
+        duration: tp?.duration || 45,
+        intensity: tp?.intensity || 'Moderate',
+        reason: tp?.reason || '',
+        todaysWorkout: `${tp?.type || 'Zone 2 Endurance'} (${tp?.duration || 45} min)`,
+        recommendedIntensity: tp?.intensity || 'Moderate',
+        adjustmentReason: tp?.reason || '',
+      },
+      nutrition: {
+        calories: nut?.calories,
+        protein: nut?.protein,
+        carbs: nut?.carbs,
+        fat: nut?.fat,
+        hydration: nut?.hydration,
+        dailyCalorieTarget: nut?.calories?.target ?? 2600,
+        macros: {
+          proteinGrams: nut?.protein?.target ?? 180,
+          carbsGrams: nut?.carbs?.target ?? 250,
+          fatGrams: nut?.fat?.target ?? 80,
+        },
+        hydrationLiters: nut?.hydration?.target ?? 3.5,
+        electrolyteNeeds: `${nut?.hydration?.current ?? 2.4}L logged today of ${nut?.hydration?.target ?? 3.5}L target`,
+      },
+      flags: activeUser.flags,
+      biologicalAge: execReport.overallBiologicalAge,
+      organHealth: organSystems.map((o) => ({
+        name: o.name,
+        biologicalAge: o.biologicalAge,
+        chronologicalAgeDelta: o.chronologicalAgeDelta,
+        biologicalReservePercent: o.biologicalReservePercent,
+        status: o.status,
+        clinicalSummary: o.clinicalSummary,
+        priorityAction: o.priorityAction,
+      })),
+      biomarkers: biomarkerSummary || 'ApoB 62 mg/dL, hs-CRP 0.4 mg/L, Fasting Glucose 86 mg/dL, HbA1c 5.0%, Vitamin D 58 ng/mL, VO2 Max 54.2 mL/kg/min',
+      biohackingProtocols: (activeUser.biohackingProtocols?.length ? activeUser.biohackingProtocols : BIOHACKING_PROTOCOLS.slice(0, 5)).map((b) => ({
+        title: b.title,
+        category: b.category,
+        protocol: b.protocol,
+        recommendedTiming: b.recommendedTiming,
+        targetOutcome: b.targetOutcome,
+      })),
+      activeRegimen: activeUser.inventory.map((p) => ({
+        name: p.name,
+        dosage: p.dailyDosage || '1 serving',
+        timing: p.timing || 'Daily',
+        daysRemaining: p.daysRemaining,
+        category: p.category,
+      })),
+    };
+
     w.__CUASARX_COACH_CTX = {
-      profileSummary: `${activeUser.name}, ${activeUser.age}, ${activeUser.lifestylePersona}. Readiness ${activeUser.readiness.score}/100. Sleep ${activeUser.metrics.sleep.current}h, HRV ${activeUser.metrics.hrv.current}ms, RHR ${activeUser.metrics.rhr.current}bpm.`,
+      profileSummary: `${activeUser.name}, age ${activeUser.age}, ${activeUser.role} (${activeUser.lifestylePersona}). Overall biological age ${execReport.overallBiologicalAge} (chronological ${activeUser.age}). Readiness ${activeUser.readiness.score}/100 (${activeUser.readiness.status}): ${activeUser.readiness.message} Sleep ${activeUser.metrics.sleep.current}h, HRV ${activeUser.metrics.hrv.current}ms, RHR ${activeUser.metrics.rhr.current}bpm, Training Load ${activeUser.metrics.trainingLoad}. Today's workout: ${profileDetails.trainingPlan.todaysWorkout} (${profileDetails.trainingPlan.recommendedIntensity}) — ${profileDetails.trainingPlan.adjustmentReason}. Nutrition target: ${profileDetails.nutrition.dailyCalorieTarget} kcal (${profileDetails.nutrition.macros.proteinGrams}g protein, ${profileDetails.nutrition.macros.carbsGrams}g carbs, ${profileDetails.nutrition.macros.fatGrams}g fat, ${profileDetails.nutrition.hydrationLiters}L hydration). Labs: ${profileDetails.biomarkers}.`,
+      profileDetails,
       goals: Array.isArray(activeUser.goals) ? activeUser.goals : [],
-      topProducts: catalog.map((c) => ({ name: String((c.name as { en: string }).en), category: '', price: 0 })),
+      topProducts: MOCK_PRODUCTS.map((p) => ({
+        name: p.name,
+        category: p.category,
+        price: p.price || 49,
+        dosage: p.dailyDosage,
+        reason: p.tailoredReason || p.description,
+      })),
     };
 
     const H = 3600e3;
@@ -302,6 +407,40 @@ function AppInner() {
             }
           : undefined;
 
+        w.VoiceLayer?.setProfile?.({
+          name: activeUser.name,
+          goals: Array.isArray(activeUser.goals) ? activeUser.goals : [],
+          summary: (w.__CUASARX_COACH_CTX as any)?.profileSummary,
+          ...profileDetails,
+        });
+
+        w.VoiceLayer?.setKnowledge?.([
+          {
+            heading: 'CuasarX Longevity By Keel Platform Overview',
+            text: 'CuasarX Longevity By Keel is a clinical longevity marketplace, daily supplement regimen manager, organ system biological age modeling (AOSM) platform, longitudinal lab telemetry tracker, and bio-intelligence optimization portal.',
+          },
+          {
+            heading: 'Organ Longevity & Biological Age Modeling (AOSM)',
+            text: `Overall biological age for ${activeUser.name} is ${execReport.overallBiologicalAge} years vs chronological age ${activeUser.age}. Organ systems modeled: ${organSystems.map((o) => `${o.name} (bio-age ${o.biologicalAge}, ${o.biologicalReservePercent}% reserve, ${o.status})`).join('; ')}.`,
+          },
+          {
+            heading: 'Lab Telemetry & Longitudinal Blood Biomarkers',
+            text: `Recorded biomarkers for ${activeUser.name}: ${profileDetails.biomarkers}. Tracked longitudinally across 6-month blood draws alongside DEXA body composition and VO2 Max diagnostics.`,
+          },
+          {
+            heading: 'Active Supplement Regimen & Refill Status',
+            text: `Active daily stack for ${activeUser.name}: ${activeUser.inventory.map((p) => `${p.name} (${p.dailyDosage || '1 serving'}, ${p.timing || 'daily'}, ${p.daysRemaining ?? 14} days remaining)`).join('; ')}.`,
+          },
+          {
+            heading: 'Biohacking & Recovery Protocols',
+            text: profileDetails.biohackingProtocols.map((b) => `${b.title} (${b.category}): ${b.protocol} — ${b.targetOutcome}`).join(' | '),
+          },
+          {
+            heading: 'Telemedicine, Cold-Chain Shipping & Privacy Consent',
+            text: 'CuasarX offers same-day clinician video consultations (Medical Review, Dietitian, Mental Health), temperature-controlled cold-chain shipping for peptides and NAD+ precursors, and granular HIPAA-aligned Privacy & Consent controls.',
+          },
+        ]);
+
         w.VoiceLayer?.setSignals?.({
           name: activeUser.name.split(' ')[0],
           metrics: {
@@ -334,7 +473,7 @@ function AppInner() {
     };
 
     applyToVoiceLayer();
-    // Whenever a user signs in (e.g., Guest Mode demo@quasarkeel.com), ensure the VoiceLayer assistant is visible and rescans the authenticated dashboard
+    // Whenever a user signs in (e.g., Guest Mode demo@quasarkeel.com) or switches tabs, ensure the VoiceLayer assistant is visible and rescans the authenticated dashboard
     if (authUser) {
       try {
         (w.VoiceLayer as any)?.show?.();
@@ -356,7 +495,7 @@ function AppInner() {
       }
     }, 1500);
     return () => window.clearTimeout(t);
-  }, [activeUser, authProfile, authUser]);
+  }, [activeUser, authProfile, authUser, activeTab]);
 
   // Keep VoiceLayer cart state synchronized with React cartItems
   useEffect(() => {
