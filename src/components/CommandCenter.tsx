@@ -56,7 +56,8 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
     id: uid(), role: 'assist',
     text: `Ask me anything, ${userName.split(' ')[0]} — your calendar, medications, orders, readings, the catalog. Type or hold the mic. You can also command: "open insights", "add magnesium to cart", "what's on today".`,
     ts: new Date(),
-  }]);
+  }];
+  });
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [listening, setListening] = useState(false);
