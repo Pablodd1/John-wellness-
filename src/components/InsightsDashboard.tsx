@@ -45,13 +45,13 @@ type FeedbackRow = {
 };
 
 const EVENT_COLORS: Record<string, string> = {
-  page_view: '#344a37',
-  search: '#4a6850',
-  add_to_cart: '#785328',
-  checkout_step: '#8c6d1f',
-  order_placed: '#2b4530',
-  visit_started: '#5c5851',
-  feedback_submitted: '#8c3232',
+  page_view: '#f97316',
+  search: '#fb923c',
+  add_to_cart: '#f59e0b',
+  checkout_step: '#fbbf24',
+  order_placed: '#ea580c',
+  visit_started: '#a8a29e',
+  feedback_submitted: '#ef4444',
 };
 
 export function InsightsDashboard() {
@@ -205,11 +205,11 @@ export function InsightsDashboard() {
           <div className="h-56" role="img" aria-label={`Bar chart of events per day, ${stats.totalEvents} events total`}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats.byDay} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ebe7df" />
-                <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#5c5851' }} />
-                <YAxis tick={{ fontSize: 11, fill: '#5c5851' }} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
+                <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#a8a29e' }} />
+                <YAxis tick={{ fontSize: 11, fill: '#a8a29e' }} allowDecimals={false} />
                 <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8, border: '1px solid #ebe7df' }} />
-                <Bar dataKey="count" fill="#344a37" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="count" fill="#f97316" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -234,7 +234,7 @@ export function InsightsDashboard() {
                       className="h-full rounded-full"
                       style={{
                         width: `${Math.round((count / stats.topEvents[0][1]) * 100)}%`,
-                        background: EVENT_COLORS[name] ?? '#344a37',
+                        background: EVENT_COLORS[name] ?? '#f97316',
                       }}
                     />
                   </div>

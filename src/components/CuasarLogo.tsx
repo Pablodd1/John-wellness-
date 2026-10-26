@@ -47,7 +47,7 @@ export function CuasarLogo({
           {/* Outer Diamond Keel Orbit */}
           <path 
             d="M20 4L34 20L20 36L6 20L20 4Z" 
-            stroke={isLight ? "#181716" : "#f5f3ec"} 
+            stroke={isLight ? "#f4f2ec" : "#f5f3ec"} 
             strokeWidth="1.75" 
             strokeLinejoin="round"
             opacity="0.85"
@@ -58,7 +58,7 @@ export function CuasarLogo({
             y1="8" 
             x2="20" 
             y2="32" 
-            stroke={isLight ? "#181716" : "#f5f3ec"} 
+            stroke={isLight ? "#f4f2ec" : "#f5f3ec"} 
             strokeWidth="2" 
             strokeLinecap="round"
           />
@@ -68,7 +68,7 @@ export function CuasarLogo({
             y1="20" 
             x2="28" 
             y2="20" 
-            stroke={isLight ? "#785328" : "#d8c8b0"} 
+            stroke={isLight ? "#f59e0b" : "#d8c8b0"} 
             strokeWidth="1.5" 
             strokeLinecap="round"
           />
@@ -77,20 +77,20 @@ export function CuasarLogo({
             cx="20" 
             cy="20" 
             r="3" 
-            fill={isLight ? "#181716" : "#ffffff"} 
+            fill={isLight ? "#f4f2ec" : "#ffffff"} 
           />
           {/* Subtle 4-Point Focal Rays */}
           <circle 
             cx="20" 
             cy="11" 
             r="1" 
-            fill={isLight ? "#785328" : "#d8c8b0"} 
+            fill={isLight ? "#f59e0b" : "#d8c8b0"} 
           />
           <circle 
             cx="20" 
             cy="29" 
             r="1" 
-            fill={isLight ? "#785328" : "#d8c8b0"} 
+            fill={isLight ? "#f59e0b" : "#d8c8b0"} 
           />
         </svg>
       </div>
