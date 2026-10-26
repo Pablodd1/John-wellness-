@@ -218,7 +218,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
     setBusy(true);
     try {
       const local = localAnswer(text);
-      if (local === 'FETCH:orders' || local.startsWith('FETCH:addcart:')) {
+      if (local && (local === 'FETCH:orders' || local.startsWith('FETCH:addcart:'))) {
         const fetched = await resolveFetch(local);
         if (fetched) { say(fetched, viaVoice || speakOn); return; }
       } else if (local) {
