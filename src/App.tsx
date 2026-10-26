@@ -31,6 +31,7 @@ import { fetchCatalog, fetchBriefing, composeBriefingText } from './lib/dataServ
 import { createTracker, configureTracker, setPage as setTrackerPage } from './lib/analytics';
 import { installGlobalErrorHandlers, configureErrorReporter } from './lib/errorMonitor';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { CommandCenter } from './components/CommandCenter';
 import { 
   ShoppingBag, 
   ShoppingCart, 
@@ -87,7 +88,7 @@ function AppInner() {
 
   // Catalog connectivity check (products are seeded to match the bundled demo
   // data, so this drives the honest "connected" indicator rather than content).
-  const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'research' | 'community' | 'consent' | 'admin' | 'operator'>('marketplace');
+  const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'research' | 'community' | 'consent' | 'admin' | 'operator' | 'command'>('marketplace');
   const [marketplaceDepartment, setMarketplaceDepartment] = useState<string>('all');
   const [incomingEvaluation, setIncomingEvaluation] = useState<{ text: string; senderName: string } | null>(null);
   const [videoVisit, setVideoVisit] = useState<{ mode: TelemedicineMode; patient: UserProfile } | null>(null);
@@ -154,6 +155,8 @@ function AppInner() {
         setActiveTab('trends');
       } else if (hash === '#profile' || hash === '#dna' || hash === '#labs') {
         setActiveTab('profile');
+      } else if (hash === '#assist' || hash === '#command') {
+        setActiveTab('command');
       } else if (hash === '#research' || hash === '#performance') {
         setActiveTab('research');
       } else if (hash === '#community') {
@@ -1212,6 +1215,20 @@ function AppInner() {
               <span>Research Base</span>
             </button>
 
+            <button
+              onClick={() => setActiveTab('command')}
+              aria-current={activeTab === 'command' ? 'page' : undefined}
+              className={cn(
+                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
+                activeTab === 'command'
+                  ? "bg-[#f97316] text-white font-semibold shadow-xs"
+                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+              )}
+            >
+              <Zap className="w-3 h-3" aria-hidden="true" />
+              <span>Quick Assist</span>
+            </button>
+
             <button 
               onClick={() => setActiveTab('profile')}
               className={cn(
@@ -1339,6 +1356,7 @@ function AppInner() {
                       { tab: 'supplements', dept: undefined, label: 'Daily Regimens & Auto-Refills' },
                       { tab: 'trends', dept: undefined, label: 'Biomarker Telemetry' },
                       { tab: 'research', dept: undefined, label: 'Performance Research Base' },
+                      { tab: 'command', dept: undefined, label: 'Quick Assist (Chat & Voice)' },
                       { tab: 'profile', dept: undefined, label: 'Organ Health (AOSM) & DNA' },
                       { tab: 'community', dept: undefined, label: 'Peer Network' },
                       { tab: 'consent', dept: undefined, label: 'Privacy & Consent' },
@@ -1427,6 +1445,13 @@ function AppInner() {
           />
         )}
         {activeTab === 'research' && <PerformanceResearch />}
+        {activeTab === 'command' && (
+          <CommandCenter
+            userName={activeUser.name}
+            onNavigate={(t) => setActiveTab(t)}
+            onAddToCart={handleAddProductsToCart}
+          />
+        )}
         {activeTab === 'profile' && (
           <UserProfileTab
             user={activeUser}
