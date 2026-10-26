@@ -125,7 +125,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
       const d = S.profile?.metrics ? S.profile : S.profile?.details;
       const m = d?.metrics;
       const bits: string[] = [];
-      if (d?.readiness?.score != null) bits.push(`readiness ${d.readiness.score}/100`);
+      if ((d as any)?.readiness?.score != null) bits.push(`readiness ${(d as any).readiness.score}/100`);
       if (m?.sleep?.current != null) bits.push(`sleep ${m.sleep.current}h`);
       if (m?.hrv?.current != null) bits.push(`HRV ${m.hrv.current}ms`);
       if (m?.rhr?.current != null) bits.push(`resting HR ${m.rhr.current}bpm`);
