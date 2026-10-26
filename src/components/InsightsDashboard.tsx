@@ -371,10 +371,10 @@ export function InsightsDashboard() {
           Pulls the Supliful white-label catalog (US fulfillment) into the platform. Marked products can be offered on
           the marketplace; paid orders containing them are forwarded automatically for packing and shipping.
         </p>
-        {syncState.startsWith('Synced') && (
+        {syncState?.startsWith('Synced') && (
           <p role="status" className="text-[11px] font-bold text-orange-300 p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/25">{syncState}</p>
         )}
-        {syncState.startsWith('Sync failed') && (
+        {syncState?.startsWith('Sync failed') && (
           <p role="alert" className="text-[11px] font-bold text-red-400 p-2.5 rounded-lg bg-red-500/10 border border-red-500/25">{syncState}</p>
         )}
       </section>
