@@ -47,7 +47,12 @@ const MOCK_CATALOG_SEARCH = (term: string): Product[] => {
  */
 export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
   const { user } = useAuth();
-  const [msgs, setMsgs] = useState<Msg[]>([{
+  const [msgs, setMsgs] = useState<Msg[]>(() => {
+    try {
+      const saved = sessionStorage.getItem('cx_qa_msgs');
+      if (saved) return JSON.parse(saved).map((m: Msg) => ({ ...m, ts: new Date(m.ts) }));
+    } catch { /* ignore */ }
+    return [{
     id: uid(), role: 'assist',
     text: `Ask me anything, ${userName.split(' ')[0]} — your calendar, medications, orders, readings, the catalog. Type or hold the mic. You can also command: "open insights", "add magnesium to cart", "what's on today".`,
     ts: new Date(),
@@ -61,7 +66,10 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
   const recogRef = useRef<any>(null);
   const chatLogRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [msgs, busy]);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: 'smooth' });
+    try { sessionStorage.setItem('cx_qa_msgs', JSON.stringify(msgs.slice(-30))); } catch { /* ignore */ }
+  }, [msgs, busy]);
 
   const say = (text: string, speak = speakOn) => {
     setMsgs((m) => [...m, { id: uid(), role: 'assist', text, ts: new Date() }]);
@@ -113,7 +121,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
       return `It's ${w.tempC}°C with ${w.description?.en ?? 'variable conditions'}${w.raining ? ' — raining, take a jacket.' : ' — dry out.'}`;
     }
     if (/(readiness|score|how am i|hrv|sleep|resting)/.test(t)) {
-      const d = S.profile?.details;
+      const d = S.profile?.metrics ? S.profile : S.profile?.details;
       const m = d?.metrics;
       const bits: string[] = [];
       if (d?.readiness?.score != null) bits.push(`readiness ${d.readiness.score}/100`);
