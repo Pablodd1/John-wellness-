@@ -890,7 +890,7 @@ function AppInner() {
   // Auth gate: when the database is configured, a signed-in identity is required.
   if (dbReady && authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fbfaf8] text-xs text-[#6e6960]">
+      <div className="min-h-screen flex items-center justify-center bg-[#101210] text-xs text-stone-400">
         Checking your session…
       </div>
     );
@@ -906,19 +906,19 @@ function AppInner() {
   }).slice(0, 5);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#fbfaf8] text-[#181716] font-sans pb-16 md:pb-0">
+    <div className="flex flex-col min-h-screen bg-[#101210] text-[#f4f2ec] font-sans pb-16 md:pb-0">
       
       {/* ======================================================== */}
       {/* 0. SOFT EDITORIAL TOP RIBBON                             */}
       {/* ======================================================== */}
-      <div className="bg-[#f4f2ec] text-[#5c5851] text-[11px] px-4 py-1.5 border-b border-[#ebe7df] flex items-center justify-between select-none">
+      <div className="bg-white/[0.04] text-stone-400 text-[11px] px-4 py-1.5 border-b border-white/10 flex items-center justify-between select-none">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1.5 font-medium">
-            <Truck className="w-3.5 h-3.5 text-[#344a37]" /> Complimentary cold-chain courier on orders $99+
+            <Truck className="w-3.5 h-3.5 text-orange-400" /> Complimentary cold-chain courier on orders $99+
           </span>
           <span className="hidden lg:inline text-[#dedad0]">|</span>
-          <span className="hidden lg:flex items-center gap-1 text-[#6e6960]">
-            <Clock className="w-3.5 h-3.5 text-[#785328]" /> Order within <strong className="text-[#181716] font-semibold">2h 45m</strong> for next-morning delivery
+          <span className="hidden lg:flex items-center gap-1 text-stone-400">
+            <Clock className="w-3.5 h-3.5 text-amber-300" /> Order within <strong className="text-[#f4f2ec] font-semibold">2h 45m</strong> for next-morning delivery
           </span>
         </div>
 
@@ -926,9 +926,9 @@ function AppInner() {
           <span
             className={cn(
               'hidden xl:inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[10px] font-bold',
-              catalogSource === 'database' && 'bg-[#f1f5f2] text-[#2b4530] border-[#dbe5dc]',
-              catalogSource === 'demo' && 'bg-[#faf5ee] text-[#785328] border-[#ede1cf]',
-              catalogSource === 'checking' && 'bg-[#f5f4ef] text-[#5c5851] border-[#e6e4dc]'
+              catalogSource === 'database' && 'bg-orange-500/10 text-orange-300 border-orange-500/25',
+              catalogSource === 'demo' && 'bg-amber-500/10 text-amber-300 border-amber-500/25',
+              catalogSource === 'checking' && 'bg-white/[0.05] text-stone-400 border-white/10'
             )}
             role="status"
           >
@@ -936,39 +936,39 @@ function AppInner() {
             {catalogSource === 'database' ? 'Database connected' : catalogSource === 'demo' ? 'Demo data' : 'Checking…'}
           </span>
           {authUser ? (
-            <span className="text-[#5c5851] flex items-center gap-2">
+            <span className="text-stone-400 flex items-center gap-2">
               <span className="hidden sm:inline" title={authEmail ?? undefined}>
-                <strong className="text-[#181716] font-semibold">{activeUser.name}</strong>
-                <span className="text-[10px] text-[#8a857b]"> · {authEmail}</span>
+                <strong className="text-[#f4f2ec] font-semibold">{activeUser.name}</strong>
+                <span className="text-[10px] text-stone-500"> · {authEmail}</span>
               </span>
               <button
                 onClick={() => signOut()}
-                className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+                className="text-[10px] text-[#f4f2ec] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
               >
                 Sign out
               </button>
             </span>
           ) : (
-            <span className="text-[#5c5851]">
-              Active Persona: <strong className="text-[#181716] font-semibold">{activeUser.name}</strong>
+            <span className="text-stone-400">
+              Active Persona: <strong className="text-[#f4f2ec] font-semibold">{activeUser.name}</strong>
             </span>
           )}
           <button
             onClick={() => openVideoVisit('patient', activeUser)}
-            className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer inline-flex items-center gap-1"
+            className="text-[10px] text-[#f4f2ec] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer inline-flex items-center gap-1"
           >
             <Video className="w-3 h-3" aria-hidden="true" /> Video Visit
           </button>
           <button
             data-voicelayer-open="1"
             onClick={() => (window as unknown as { VoiceLayer?: { show?: () => void } }).VoiceLayer?.show?.()}
-            className="text-[10px] text-[#2b4530] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+            className="text-[10px] text-orange-300 hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
           >
             Voice Assistant
           </button>
           <button
             onClick={() => setChatOpen(true)}
-            className="text-[10px] text-[#181716] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+            className="text-[10px] text-[#f4f2ec] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
           >
             Wellness Assistant
           </button>
@@ -978,7 +978,7 @@ function AppInner() {
       {/* ======================================================== */}
       {/* 1. MINIMALIST MAIN HEADER (With CuasarX Logo)            */}
       {/* ======================================================== */}
-      <header className="bg-white sticky top-0 z-50 border-b border-[#ebe7df]">
+      <header className="bg-white/[0.06] sticky top-0 z-50 border-b border-white/10">
         
         {/* Main Row */}
         <div className="max-w-[1540px] mx-auto px-3 md:px-6 py-2.5 flex items-center justify-between gap-3 md:gap-5">
@@ -986,7 +986,7 @@ function AppInner() {
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 text-[#181716] hover:bg-[#f5f3ee] rounded-lg flex items-center transition-colors"
+            className="md:hidden p-1.5 text-[#f4f2ec] hover:bg-white/[0.05] rounded-lg flex items-center transition-colors"
             title="Open Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -1002,14 +1002,14 @@ function AppInner() {
 
           {/* Soft Minimalist Search Bar */}
           <div className="flex-1 max-w-2xl mx-1 md:mx-4 relative">
-            <div className="flex items-center h-9 rounded-lg overflow-hidden bg-[#fbfaf8] hover:bg-[#f6f4ee] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#181716] border border-[#e5e1d7] transition-all">
+            <div className="flex items-center h-9 rounded-lg overflow-hidden bg-[#101210] hover:bg-white/[0.05] focus-within:bg-white/[0.06] focus-within:ring-1 focus-within:ring-orange-500 border border-white/10 transition-all">
               
               {/* Category Dropdown */}
-              <div className="hidden sm:flex items-center text-xs px-2.5 h-full border-r border-[#e5e1d7] text-[#5c5851] font-medium select-none">
+              <div className="hidden sm:flex items-center text-xs px-2.5 h-full border-r border-white/10 text-stone-400 font-medium select-none">
                 <select 
                   value={searchCategory}
                   onChange={(e) => setSearchCategory(e.target.value)}
-                  className="bg-transparent border-none text-xs font-medium text-[#181716] focus:outline-none cursor-pointer pr-1"
+                  className="bg-transparent border-none text-xs font-medium text-[#f4f2ec] focus:outline-none cursor-pointer pr-1"
                 >
                   <option value="All">All Categories</option>
                   <option value="Vitamins">Micronutrients</option>
@@ -1028,14 +1028,14 @@ function AppInner() {
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search compounds, clinical panels, sleep protocols, peptides..."
-                className="w-full h-full px-3 text-xs text-[#181716] placeholder-[#9c978d] bg-transparent focus:outline-none"
+                className="w-full h-full px-3 text-xs text-[#f4f2ec] placeholder-[#9c978d] bg-transparent focus:outline-none"
               />
 
               {/* Mic for Voice HPI */}
               <button 
                 onClick={() => setChatOpen(true)}
                 title="Voice Symptom Intake"
-                className="px-2.5 h-full text-[#6e6960] hover:text-[#181716] hover:bg-[#eae7dd] flex items-center transition-colors border-l border-[#e5e1d7] cursor-pointer"
+                className="px-2.5 h-full text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06] flex items-center transition-colors border-l border-white/10 cursor-pointer"
               >
                 <Mic className="w-3.5 h-3.5" />
               </button>
@@ -1046,7 +1046,7 @@ function AppInner() {
                   setActiveTab('marketplace');
                   if (searchCategory !== 'All') setMarketplaceDepartment(searchCategory.toLowerCase());
                 }}
-                className="bg-[#181716] hover:bg-[#2e2c29] text-white px-3.5 h-full flex items-center justify-center transition-colors flex-shrink-0 cursor-pointer"
+                className="bg-orange-600 hover:bg-orange-500 text-white px-3.5 h-full flex items-center justify-center transition-colors flex-shrink-0 cursor-pointer"
               >
                 <Search className="w-3.5 h-3.5" />
               </button>
@@ -1054,8 +1054,8 @@ function AppInner() {
 
             {/* Live Autocomplete Dropdown */}
             {searchFocused && searchSuggestions.length > 0 && (
-              <div className="absolute left-0 right-0 top-full mt-1 bg-white text-[#181716] rounded-xl shadow-lg border border-[#ebe7df] p-1.5 z-50 divide-y divide-[#f4f2ec]">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-[#8a857b] px-2 py-1">
+              <div className="absolute left-0 right-0 top-full mt-1 bg-white/[0.06] text-[#f4f2ec] rounded-xl shadow-lg border border-white/10 p-1.5 z-50 divide-y divide-[#f4f2ec]">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-stone-500 px-2 py-1">
                   Matching Protocols &amp; Compounds
                 </div>
                 {searchSuggestions.map(item => (
@@ -1065,13 +1065,13 @@ function AppInner() {
                       setSearchQuery(item.name);
                       setActiveTab('marketplace');
                     }}
-                    className="p-2 hover:bg-[#f7f5ef] rounded-lg cursor-pointer flex items-center justify-between text-xs transition-colors"
+                    className="p-2 hover:bg-white/[0.05] rounded-lg cursor-pointer flex items-center justify-between text-xs transition-colors"
                   >
                     <div>
-                      <span className="font-semibold text-[#181716] block">{item.name}</span>
-                      <span className="text-[11px] text-[#6e6960]">{item.category} • Grade {item.evidenceData?.grade || 'A'}</span>
+                      <span className="font-semibold text-[#f4f2ec] block">{item.name}</span>
+                      <span className="text-[11px] text-stone-400">{item.category} • Grade {item.evidenceData?.grade || 'A'}</span>
                     </div>
-                    <span className="font-semibold text-[#181716]">${(item.price || 45.00).toFixed(2)}</span>
+                    <span className="font-semibold text-[#f4f2ec]">${(item.price || 45.00).toFixed(2)}</span>
                   </div>
                 ))}
               </div>
@@ -1079,22 +1079,22 @@ function AppInner() {
           </div>
 
           {/* Persona Switcher */}
-          <div className="relative group p-1 hover:bg-[#f6f4ee] rounded-lg cursor-pointer transition-colors flex-shrink-0">
+          <div className="relative group p-1 hover:bg-white/[0.05] rounded-lg cursor-pointer transition-colors flex-shrink-0">
             <div className="text-left leading-tight">
-              <span className="text-[10px] text-[#8a857b] block font-medium">Profile</span>
-              <span className="text-xs font-semibold text-[#181716] flex items-center gap-1">
-                {activeUser.name.split(' ')[0]} <ChevronDown className="w-3 h-3 text-[#8a857b] group-hover:rotate-180 transition-transform" />
+              <span className="text-[10px] text-stone-500 block font-medium">Profile</span>
+              <span className="text-xs font-semibold text-[#f4f2ec] flex items-center gap-1">
+                {activeUser.name.split(' ')[0]} <ChevronDown className="w-3 h-3 text-stone-500 group-hover:rotate-180 transition-transform" />
               </span>
             </div>
 
             {/* Dropdown */}
-            <div className="absolute right-0 top-full mt-1.5 w-60 bg-white text-[#181716] rounded-xl shadow-xl border border-[#ebe7df] p-2.5 hidden group-hover:block z-50 animate-in fade-in">
-              <div className="border-b border-[#f4f2ec] pb-2 mb-2">
-                <span className="text-[10px] font-semibold text-[#8a857b] uppercase tracking-wider block">Active Member</span>
-                <span className="text-xs font-bold text-[#181716] block">{activeUser.name}</span>
-                <span className="text-[11px] text-[#344a37] font-medium">{activeUser.lifestylePersona}</span>
+            <div className="absolute right-0 top-full mt-1.5 w-60 bg-white/[0.06] text-[#f4f2ec] rounded-xl shadow-xl border border-white/10 p-2.5 hidden group-hover:block z-50 animate-in fade-in">
+              <div className="border-b border-white/[0.08] pb-2 mb-2">
+                <span className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider block">Active Member</span>
+                <span className="text-xs font-bold text-[#f4f2ec] block">{activeUser.name}</span>
+                <span className="text-[11px] text-orange-400 font-medium">{activeUser.lifestylePersona}</span>
               </div>
-              <span className="text-[10px] font-semibold text-[#8a857b] uppercase tracking-wider block mb-1">Switch Persona:</span>
+              <span className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider block mb-1">Switch Persona:</span>
               <div className="space-y-0.5">
                 {SYNTHETIC_USERS.map(u => (
                   <button
@@ -1102,18 +1102,18 @@ function AppInner() {
                     onClick={() => setActiveUser(u)}
                     className={cn(
                       "w-full text-left p-1.5 rounded-lg text-xs font-medium flex items-center justify-between transition-colors",
-                      activeUser.id === u.id ? "bg-[#f4f2ec] text-[#181716] font-semibold" : "hover:bg-[#faf9f6] text-[#5c5851]"
+                      activeUser.id === u.id ? "bg-white/[0.04] text-[#f4f2ec] font-semibold" : "hover:bg-white/[0.05] text-stone-400"
                     )}
                   >
                     <span>{u.name}</span>
-                    {activeUser.id === u.id && <CheckCircle2 className="w-3.5 h-3.5 text-[#344a37]" />}
+                    {activeUser.id === u.id && <CheckCircle2 className="w-3.5 h-3.5 text-orange-400" />}
                   </button>
                 ))}
               </div>
-              <div className="pt-2 mt-2 border-t border-[#f4f2ec]">
+              <div className="pt-2 mt-2 border-t border-white/[0.08]">
                 <button 
                   onClick={() => setActiveTab('profile')}
-                  className="w-full py-1.5 bg-[#181716] text-white rounded-lg text-xs font-semibold text-center block hover:bg-[#2e2c29] transition-colors"
+                  className="w-full py-1.5 bg-orange-600 text-white rounded-lg text-xs font-semibold text-center block hover:bg-orange-500 transition-colors"
                 >
                   Manage Biomarker Profile
                 </button>
@@ -1124,18 +1124,18 @@ function AppInner() {
           {/* Subscriptions / Regimen Shortcut */}
           <div 
             onClick={() => setActiveTab('supplements')}
-            className="hidden md:flex flex-col p-1 hover:bg-[#f6f4ee] rounded-lg cursor-pointer transition-colors flex-shrink-0 text-left leading-tight"
+            className="hidden md:flex flex-col p-1 hover:bg-white/[0.05] rounded-lg cursor-pointer transition-colors flex-shrink-0 text-left leading-tight"
           >
-            <span className="text-[10px] text-[#8a857b] font-medium">Daily</span>
-            <span className="text-xs font-semibold text-[#181716] flex items-center gap-1">
-              <Repeat className="w-3 h-3 text-[#6e6960]" /> Regimens
+            <span className="text-[10px] text-stone-500 font-medium">Daily</span>
+            <span className="text-xs font-semibold text-[#f4f2ec] flex items-center gap-1">
+              <Repeat className="w-3 h-3 text-stone-400" /> Regimens
             </span>
           </div>
 
           {/* Cart Button */}
           <button 
             onClick={() => setCartOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 bg-[#181716] hover:bg-[#2e2c29] text-white rounded-lg cursor-pointer transition-all flex-shrink-0"
+            className="flex items-center gap-2 px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg cursor-pointer transition-all flex-shrink-0"
             title="View Cart"
           >
             <ShoppingCart className="w-4 h-4 text-white" />
@@ -1147,7 +1147,7 @@ function AppInner() {
         {/* ======================================================== */}
         {/* 2. SUB-NAVIGATION DEPARTMENT ROW                         */}
         {/* ======================================================== */}
-        <div className="bg-[#faf9f6] border-t border-[#ebe7df] text-xs px-3 md:px-6 py-1.5 flex items-center justify-between overflow-x-auto scrollbar-none">
+        <div className="bg-white/[0.05] border-t border-white/10 text-xs px-3 md:px-6 py-1.5 flex items-center justify-between overflow-x-auto scrollbar-none">
           <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
             
             <button 
@@ -1155,8 +1155,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'marketplace' && marketplaceDepartment === 'all' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Featured Curation</span>
@@ -1167,8 +1167,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'marketplace' && marketplaceDepartment === 'vitamins' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Micronutrients (#vitamins)</span>
@@ -1179,8 +1179,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'supplements' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Daily Regimens</span>
@@ -1191,8 +1191,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'trends'
-                  ? "bg-[#181716] text-white font-semibold shadow-xs"
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Lab Telemetry</span>
@@ -1204,8 +1204,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'research'
-                  ? "bg-[#181716] text-white font-semibold shadow-xs"
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <FlaskConical className="w-3 h-3" aria-hidden="true" />
@@ -1217,8 +1217,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'profile' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Organ Longevity (AOSM)</span>
@@ -1229,8 +1229,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'community'
-                  ? "bg-[#181716] text-white font-semibold shadow-xs"
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Peer Network</span>
@@ -1242,8 +1242,8 @@ function AppInner() {
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'consent'
-                  ? "bg-[#181716] text-white font-semibold shadow-xs"
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <Shield className="w-3 h-3" aria-hidden="true" />
@@ -1255,8 +1255,8 @@ function AppInner() {
               className={cn(
                 "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
                 activeTab === 'admin' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Physician Portal</span>
@@ -1267,8 +1267,8 @@ function AppInner() {
               className={cn(
                 "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
                 activeTab === 'operator' 
-                  ? "bg-[#181716] text-white font-semibold shadow-xs" 
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Insights</span>
@@ -1279,17 +1279,17 @@ function AppInner() {
           <div className="flex items-center gap-2 flex-shrink-0 pl-2">
             <button
               onClick={() => setEmergencyModalOpen(true)}
-              className="px-2 py-1 text-[#8c3232] hover:bg-[#fdf2f2] rounded text-[11px] font-semibold transition-colors cursor-pointer flex items-center gap-1"
+              className="px-2 py-1 text-red-400 hover:bg-red-500/10 rounded text-[11px] font-semibold transition-colors cursor-pointer flex items-center gap-1"
             >
-              <AlertTriangle className="w-3 h-3 text-[#8c3232]" />
+              <AlertTriangle className="w-3 h-3 text-red-400" />
               <span>Safety Guide</span>
             </button>
 
             <button
               onClick={() => setChatOpen(!chatOpen)}
-              className="px-2.5 py-1 bg-white hover:bg-[#f5f3ee] text-[#181716] border border-[#dedad0] rounded text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              className="px-2.5 py-1 bg-white/[0.06] hover:bg-white/[0.05] text-[#f4f2ec] border border-white/15 rounded text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
             >
-              <MessageSquare className="w-3 h-3 text-[#5c5851]" />
+              <MessageSquare className="w-3 h-3 text-stone-400" />
               <span>CuasarX AI</span>
             </button>
           </div>
@@ -1318,18 +1318,18 @@ function AppInner() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 bottom-0 left-0 w-80 max-w-[85vw] bg-white z-50 shadow-xl flex flex-col overflow-y-auto border-r border-[#ebe7df]"
+              className="fixed top-0 bottom-0 left-0 w-80 max-w-[85vw] bg-white/[0.06] z-50 shadow-xl flex flex-col overflow-y-auto border-r border-white/10"
             >
-              <div className="p-4 flex items-center justify-between border-b border-[#f4f2ec]">
+              <div className="p-4 flex items-center justify-between border-b border-white/[0.08]">
                 <CuasarLogo size="sm" showSubtitle={true} />
-                <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-[#6e6960] hover:text-[#181716]">
+                <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-stone-400 hover:text-[#f4f2ec]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="p-4 space-y-4 text-xs text-[#181716] flex-1">
+              <div className="p-4 space-y-4 text-xs text-[#f4f2ec] flex-1">
                 <div>
-                  <h4 className="font-semibold text-xs uppercase tracking-wider text-[#8a857b] mb-2">
+                  <h4 className="font-semibold text-xs uppercase tracking-wider text-stone-500 mb-2">
                     Departments
                   </h4>
                   <div className="space-y-0.5">
@@ -1356,7 +1356,7 @@ function AppInner() {
                           }}
                           className={cn(
                             "w-full flex items-center justify-between p-2 rounded-lg text-left transition-colors font-medium",
-                            active ? "bg-[#f4f2ec] text-[#181716] font-semibold" : "hover:bg-[#faf9f6] text-[#5c5851]"
+                            active ? "bg-white/[0.04] text-[#f4f2ec] font-semibold" : "hover:bg-white/[0.05] text-stone-400"
                           )}
                         >
                           <span>{item.label}</span>
@@ -1366,17 +1366,17 @@ function AppInner() {
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-[#f4f2ec] space-y-2">
+                <div className="pt-3 border-t border-white/[0.08] space-y-2">
                   <button
                     onClick={() => { setMobileMenuOpen(false); openVideoVisit('patient', activeUser); }}
-                    className="w-full py-2 bg-[#344a37] hover:bg-[#2a3b2d] text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                    className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Video className="w-3.5 h-3.5" aria-hidden="true" /> Start Video Visit
                   </button>
                 </div>
 
-                <div className="pt-3 border-t border-[#f4f2ec]">
-                  <h4 className="font-semibold text-xs uppercase tracking-wider text-[#8a857b] mb-2">
+                <div className="pt-3 border-t border-white/[0.08]">
+                  <h4 className="font-semibold text-xs uppercase tracking-wider text-stone-500 mb-2">
                     Switch Persona
                   </h4>
                   <div className="space-y-1">
@@ -1386,7 +1386,7 @@ function AppInner() {
                         onClick={() => { setActiveUser(u); setMobileMenuOpen(false); }}
                         className={cn(
                           "w-full text-left p-2 rounded-lg text-xs font-medium flex items-center justify-between",
-                          activeUser.id === u.id ? "bg-[#181716] text-white font-semibold" : "hover:bg-[#faf9f6] text-[#5c5851]"
+                          activeUser.id === u.id ? "bg-orange-600 text-white font-semibold" : "hover:bg-white/[0.05] text-stone-400"
                         )}
                       >
                         <span>{u.name}</span>
@@ -1482,8 +1482,8 @@ function AppInner() {
             className={cn(
               'hidden md:flex fixed right-6 bottom-6 z-40 text-white px-4 py-2.5 rounded-full shadow-lg items-center gap-2 text-xs font-semibold transition-all cursor-pointer',
               coachNudge
-                ? 'bg-[#344a37] hover:bg-[#2a3b2d] ring-2 ring-[#344a37] ring-offset-2 animate-pulse'
-                : 'bg-[#181716] hover:bg-[#2e2c29]'
+                ? 'bg-orange-500 hover:bg-orange-600 ring-2 ring-orange-500 ring-offset-2 animate-pulse'
+                : 'bg-orange-600 hover:bg-orange-500'
             )}
           >
             <Mic className={cn('w-3.5 h-3.5', coachNudge ? 'text-white' : 'text-[#dedad0]')} aria-hidden="true" />
@@ -1502,7 +1502,7 @@ function AppInner() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed right-0 top-0 bottom-0 w-full sm:w-96 md:w-[420px] bg-white z-50 shadow-2xl border-l border-[#ebe7df] overflow-hidden"
+            className="fixed right-0 top-0 bottom-0 w-full sm:w-96 md:w-[420px] bg-white/[0.06] z-50 shadow-2xl border-l border-white/10 overflow-hidden"
           >
             <PhiChat 
               user={activeUser} 
@@ -1523,24 +1523,24 @@ function AppInner() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-[#ebe7df] space-y-4"
+              className="bg-white/[0.06] rounded-2xl max-w-lg w-full p-6 shadow-xl border border-white/10 space-y-4"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-[#f4f2ec]">
-                <div className="flex items-center gap-2 text-[#8c3232]">
+              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                <div className="flex items-center gap-2 text-red-400">
                   <AlertTriangle className="w-5 h-5" />
-                  <h3 className="font-bold text-sm text-[#181716]">
+                  <h3 className="font-bold text-sm text-[#f4f2ec]">
                     Clinical Safety &amp; Emergency Protocol
                   </h3>
                 </div>
                 <button 
                   onClick={() => setEmergencyModalOpen(false)}
-                  className="p-1 text-[#8a857b] hover:text-[#181716] rounded"
+                  className="p-1 text-stone-500 hover:text-[#f4f2ec] rounded"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="bg-[#fdf2f2] border border-[#f5d5d5] p-3.5 rounded-xl text-xs text-[#8c3232] space-y-1">
+              <div className="bg-red-500/10 border border-red-500/25 p-3.5 rounded-xl text-xs text-red-400 space-y-1">
                 <p className="font-semibold">
                   For acute symptoms including severe chest pain, shortness of breath, sudden numbness, or loss of consciousness:
                 </p>
@@ -1549,25 +1549,25 @@ function AppInner() {
                 </p>
               </div>
 
-              <div className="space-y-2 text-xs text-[#5c5851]">
-                <span className="font-semibold text-[#181716] block">Emergency Resources:</span>
+              <div className="space-y-2 text-xs text-stone-400">
+                <span className="font-semibold text-[#f4f2ec] block">Emergency Resources:</span>
                 <div className="space-y-1.5">
-                  <div className="p-2.5 bg-[#faf9f6] rounded-lg border border-[#ebe7df] flex items-center justify-between">
+                  <div className="p-2.5 bg-white/[0.05] rounded-lg border border-white/10 flex items-center justify-between">
                     <span>Immediate Emergency Dispatch:</span>
-                    <a href="tel:911" className="px-3 py-1 bg-[#8c3232] hover:bg-[#732828] text-white rounded font-semibold flex items-center gap-1 text-xs">
+                    <a href="tel:911" className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded font-semibold flex items-center gap-1 text-xs">
                       <PhoneCall className="w-3 h-3" /> Call 911
                     </a>
                   </div>
-                  <div className="p-2.5 bg-[#faf9f6] rounded-lg border border-[#ebe7df] flex items-center justify-between">
+                  <div className="p-2.5 bg-white/[0.05] rounded-lg border border-white/10 flex items-center justify-between">
                     <span>24/7 Clinical Triage Line:</span>
-                    <span className="font-mono font-semibold text-[#181716]">1-800-BIO-HACK</span>
+                    <span className="font-mono font-semibold text-[#f4f2ec]">1-800-BIO-HACK</span>
                   </div>
                 </div>
               </div>
 
               <button
                 onClick={() => setEmergencyModalOpen(false)}
-                className="w-full py-2 bg-[#181716] hover:bg-[#2e2c29] text-white rounded-lg text-xs font-semibold transition-colors"
+                className="w-full py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-semibold transition-colors"
               >
                 Close Safety Guide
               </button>
@@ -1601,12 +1601,12 @@ function AppInner() {
       {/* ======================================================== */}
       {/* 9. MOBILE BOTTOM NAVIGATION DOCK                         */}
       {/* ======================================================== */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-white border-t border-[#ebe7df] z-40 flex items-center justify-around text-[#5c5851] px-2">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-white/[0.06] border-t border-white/10 z-40 flex items-center justify-around text-stone-400 px-2">
         <button 
           onClick={() => setActiveTab('marketplace')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'marketplace' ? "text-[#181716] font-bold" : "hover:text-[#181716]"
+            activeTab === 'marketplace' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
           )}
         >
           <ShoppingBag className="w-4 h-4" />
@@ -1617,7 +1617,7 @@ function AppInner() {
           onClick={() => setActiveTab('supplements')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'supplements' ? "text-[#181716] font-bold" : "hover:text-[#181716]"
+            activeTab === 'supplements' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
           )}
         >
           <Pill className="w-4 h-4" />
@@ -1626,7 +1626,7 @@ function AppInner() {
 
         <button 
           onClick={() => setChatOpen(true)}
-          className="flex flex-col items-center justify-center -mt-4 bg-[#181716] text-white w-10 h-10 rounded-full shadow-md active:scale-95 transition-transform"
+          className="flex flex-col items-center justify-center -mt-4 bg-orange-600 text-white w-10 h-10 rounded-full shadow-md active:scale-95 transition-transform"
           title="Wellness Assistant"
         >
           <Mic className="w-4 h-4" />
@@ -1636,7 +1636,7 @@ function AppInner() {
           onClick={() => setActiveTab('trends')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'trends' ? "text-[#181716] font-bold" : "hover:text-[#181716]"
+            activeTab === 'trends' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
           )}
         >
           <TrendingUp className="w-4 h-4" />
@@ -1647,7 +1647,7 @@ function AppInner() {
           onClick={() => setActiveTab('profile')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'profile' ? "text-[#181716] font-bold" : "hover:text-[#181716]"
+            activeTab === 'profile' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
           )}
         >
           <User className="w-4 h-4" />

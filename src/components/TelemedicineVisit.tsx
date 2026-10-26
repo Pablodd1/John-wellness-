@@ -478,42 +478,42 @@ export function TelemedicineVisit({
             <div className="h-full overflow-y-auto flex items-start sm:items-center justify-center p-4">
               <form
                 onSubmit={handleConsentSubmit}
-                className="bg-white text-[#181716] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4"
+                className="bg-white/[0.06] text-[#f4f2ec] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4"
               >
-                <div className="flex items-center gap-2 text-[#344a37]">
+                <div className="flex items-center gap-2 text-orange-400">
                   <ShieldCheck className="w-5 h-5" aria-hidden="true" />
                   <h3 className="text-sm font-bold">Telehealth Informed Consent</h3>
                 </div>
 
-                <div className="text-xs text-[#5c5851] space-y-2 leading-relaxed">
+                <div className="text-xs text-stone-400 space-y-2 leading-relaxed">
                   <p>
                     Before joining by video, please review what telehealth means. By law we need your informed consent
                     before delivering care this way.
                   </p>
                   <ul className="space-y-1.5" aria-label="Key points of the telehealth consent">
-                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" /> Telehealth uses video/audio technology — quality can vary and connections may drop or delay.</li>
-                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" /> The visit is not recorded. Your clinician documents notes in your chart as with an in-person visit.</li>
-                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-[#8c3232]">Telehealth is not for emergencies.</strong> For chest pain, breathing trouble, or any emergency, hang up and call 911.</span></li>
-                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" /> You may withdraw consent at any time — before or during a visit — and switch to in-person care without penalty.</li>
-                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" /> This demo runs entirely on your device: camera and microphone streams never leave your computer.</li>
+                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> Telehealth uses video/audio technology — quality can vary and connections may drop or delay.</li>
+                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> The visit is not recorded. Your clinician documents notes in your chart as with an in-person visit.</li>
+                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-red-400">Telehealth is not for emergencies.</strong> For chest pain, breathing trouble, or any emergency, hang up and call 911.</span></li>
+                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> You may withdraw consent at any time — before or during a visit — and switch to in-person care without penalty.</li>
+                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> This demo runs entirely on your device: camera and microphone streams never leave your computer.</li>
                   </ul>
                 </div>
 
-                <label className="flex items-start gap-2.5 p-3 rounded-xl border border-[#ebe7df] bg-[#faf9f6] cursor-pointer">
+                <label className="flex items-start gap-2.5 p-3 rounded-xl border border-white/10 bg-white/[0.05] cursor-pointer">
                   <input
                     type="checkbox"
                     checked={consentChecked}
                     onChange={(e) => setConsentChecked(e.target.checked)}
-                    className="accent-[#344a37] w-4 h-4 mt-0.5"
+                    className="accent-orange-500 w-4 h-4 mt-0.5"
                   />
-                  <span className="text-xs text-[#181716] font-medium">
+                  <span className="text-xs text-[#f4f2ec] font-medium">
                     I have read and accept this telehealth informed consent, including the emergency guidance above.
                   </span>
                 </label>
 
                 <div>
-                  <label htmlFor="visit-signature" className="block font-bold text-xs text-[#181716] mb-1">
-                    Electronic signature <span className="text-[#8c3232]">*</span>
+                  <label htmlFor="visit-signature" className="block font-bold text-xs text-[#f4f2ec] mb-1">
+                    Electronic signature <span className="text-red-400">*</span>
                   </label>
                   <input
                     id="visit-signature"
@@ -521,13 +521,13 @@ export function TelemedicineVisit({
                     value={signature}
                     onChange={(e) => setSignature(e.target.value)}
                     autoComplete="name"
-                    className="w-full px-3 py-2 rounded-lg border border-[#e5e1d7] bg-[#fbfaf8] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#181716] focus:bg-white"
+                    className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
                   />
-                  <span className="text-[10px] text-[#6e6960] block mt-1">Typing your full name adopts and signs this consent electronically.</span>
+                  <span className="text-[10px] text-stone-400 block mt-1">Typing your full name adopts and signs this consent electronically.</span>
                 </div>
 
                 {consentError && (
-                  <p role="alert" className="text-[11px] text-[#8c3232] font-bold flex items-center gap-1.5">
+                  <p role="alert" className="text-[11px] text-red-400 font-bold flex items-center gap-1.5">
                     <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" /> {consentError}
                   </p>
                 )}
@@ -536,13 +536,13 @@ export function TelemedicineVisit({
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="btn-subtle px-4 py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2 cursor-pointer"
+                    className="btn-subtle px-4 py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 cursor-pointer"
                   >
                     Not now
                   </button>
                   <button
                     type="submit"
-                    className="btn-ink px-4 py-2 text-xs inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2 cursor-pointer"
+                    className="btn-ink px-4 py-2 text-xs inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 cursor-pointer"
                   >
                     <Check className="w-3.5 h-3.5" aria-hidden="true" /> Sign &amp; continue
                   </button>
@@ -551,30 +551,30 @@ export function TelemedicineVisit({
             </div>
           ) : (
             <div className="h-full flex items-center justify-center p-4">
-              <div className="bg-white text-[#181716] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-                <div className="flex items-center gap-2 text-[#785328]">
+              <div className="bg-white/[0.06] text-[#f4f2ec] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+                <div className="flex items-center gap-2 text-amber-300">
                   <AlertTriangle className="w-5 h-5" aria-hidden="true" />
                   <h3 className="text-sm font-bold">Patient consent required before connecting</h3>
                 </div>
-                <p className="text-xs text-[#5c5851] leading-relaxed">
-                  <strong className="text-[#181716]">{patient.name}</strong> has no telehealth informed consent on file.
+                <p className="text-xs text-stone-400 leading-relaxed">
+                  <strong className="text-[#f4f2ec]">{patient.name}</strong> has no telehealth informed consent on file.
                   You cannot connect until the patient reviews and signs the consent on their own device — you cannot
                   sign on their behalf.
                 </p>
-                <p className="text-[11px] text-[#6e6960] leading-relaxed">
+                <p className="text-[11px] text-stone-400 leading-relaxed">
                   In production this button sends a consent request to the patient's app. For this demo, simulating the
                   patient signing on their device will record the consent with a note in the audit log.
                 </p>
                 <div className="flex items-center justify-between gap-2 pt-1">
                   <button
                     onClick={handleClose}
-                    className="btn-subtle px-4 py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2 cursor-pointer"
+                    className="btn-subtle px-4 py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSendConsentRequest}
-                    className="btn-ink px-4 py-2 text-xs inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2 cursor-pointer"
+                    className="btn-ink px-4 py-2 text-xs inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 cursor-pointer"
                   >
                     <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" /> Send consent request (simulated)
                   </button>
@@ -609,11 +609,11 @@ export function TelemedicineVisit({
                 <h3 className="text-xs font-bold uppercase tracking-wider text-white/70">Device check</h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <li className="flex items-center gap-2 text-white/85">
-                    <span className={cn('w-2 h-2 rounded-full', micStatus === 'ready' ? 'bg-emerald-400' : micStatus === 'checking' ? 'bg-amber-400' : 'bg-rose-400')} aria-hidden="true" />
+                    <span className={cn('w-2 h-2 rounded-full', micStatus === 'ready' ? 'bg-orange-400' : micStatus === 'checking' ? 'bg-amber-400' : 'bg-rose-400')} aria-hidden="true" />
                     Microphone: {micStatus === 'ready' ? 'Ready' : micStatus === 'checking' ? 'Checking…' : micStatus === 'denied' ? 'Blocked' : 'Unsupported'}
                   </li>
                   <li className="flex items-center gap-2 text-white/85">
-                    <span className={cn('w-2 h-2 rounded-full', cameraStatus === 'ready' ? 'bg-emerald-400' : cameraStatus === 'checking' ? 'bg-amber-400' : 'bg-rose-400')} aria-hidden="true" />
+                    <span className={cn('w-2 h-2 rounded-full', cameraStatus === 'ready' ? 'bg-orange-400' : cameraStatus === 'checking' ? 'bg-amber-400' : 'bg-rose-400')} aria-hidden="true" />
                     Camera: {cameraStatus === 'ready' ? 'Ready' : cameraStatus === 'checking' ? 'Checking…' : cameraStatus === 'denied' ? 'Blocked — audio-only' : 'Unsupported'}
                   </li>
                 </ul>
@@ -631,7 +631,7 @@ export function TelemedicineVisit({
                 </button>
                 <button
                   onClick={handleJoin}
-                  className="px-5 py-2.5 rounded-full bg-[#4a6850] hover:bg-[#54765c] text-white text-xs font-bold inline-flex items-center gap-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
+                  className="px-5 py-2.5 rounded-full bg-orange-500 hover:bg-orange-400 text-white text-xs font-bold inline-flex items-center gap-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
                 >
                   <Video className="w-4 h-4" aria-hidden="true" /> Join visit
                 </button>
@@ -707,24 +707,24 @@ export function TelemedicineVisit({
           {/* ---------- ENDED ---------- */}
           {phase === 'ended' && (
             <div className="h-full flex items-center justify-center p-4">
-              <div className="bg-white text-[#181716] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-                <div className="flex items-center gap-2 text-[#344a37]">
+              <div className="bg-white/[0.06] text-[#f4f2ec] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+                <div className="flex items-center gap-2 text-orange-400">
                   <Check className="w-5 h-5" aria-hidden="true" />
                   <h3 className="text-sm font-bold">Visit ended</h3>
                 </div>
                 <dl className="text-xs space-y-2">
-                  <div className="flex justify-between gap-4"><dt className="text-[#5c5851]">Participant</dt><dd className="font-bold text-right">{remoteName}</dd></div>
-                  <div className="flex justify-between gap-4"><dt className="text-[#5c5851]">Duration</dt><dd className="font-bold">{formatDuration(secondsElapsed)}</dd></div>
-                  <div className="flex justify-between gap-4"><dt className="text-[#5c5851]">Consent reference</dt><dd className="font-bold">Telehealth v{PRIVACY_POLICY_VERSION}</dd></div>
-                  <div className="flex justify-between gap-4"><dt className="text-[#5c5851]">Transmission</dt><dd className="font-bold">Local demo — nothing sent</dd></div>
+                  <div className="flex justify-between gap-4"><dt className="text-stone-400">Participant</dt><dd className="font-bold text-right">{remoteName}</dd></div>
+                  <div className="flex justify-between gap-4"><dt className="text-stone-400">Duration</dt><dd className="font-bold">{formatDuration(secondsElapsed)}</dd></div>
+                  <div className="flex justify-between gap-4"><dt className="text-stone-400">Consent reference</dt><dd className="font-bold">Telehealth v{PRIVACY_POLICY_VERSION}</dd></div>
+                  <div className="flex justify-between gap-4"><dt className="text-stone-400">Transmission</dt><dd className="font-bold">Local demo — nothing sent</dd></div>
                 </dl>
-                <p className="text-[11px] text-[#6e6960] leading-relaxed">
+                <p className="text-[11px] text-stone-400 leading-relaxed">
                   The completion was recorded in your consent audit log. This demo does not produce clinical notes or
                   diagnoses — nothing about this session represents medical advice.
                 </p>
                 <button
                   onClick={handleClose}
-                  className="btn-ink w-full py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2 cursor-pointer"
+                  className="btn-ink w-full py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 cursor-pointer"
                 >
                   Close
                 </button>
@@ -745,7 +745,7 @@ export function TelemedicineVisit({
               aria-pressed={micMuted}
               aria-label={micMuted ? 'Unmute microphone' : 'Mute microphone'}
               title={micMuted ? 'Unmute' : 'Mute'}
-              className={cn(controlBtn, micMuted ? 'bg-[#8c3232] hover:bg-[#732828]' : 'bg-white/10 hover:bg-white/20')}
+              className={cn(controlBtn, micMuted ? 'bg-red-600 hover:bg-red-700' : 'bg-white/10 hover:bg-white/20')}
             >
               {micMuted ? <MicOff className="w-5 h-5" aria-hidden="true" /> : <Mic className="w-5 h-5" aria-hidden="true" />}
             </button>
@@ -757,7 +757,7 @@ export function TelemedicineVisit({
               aria-pressed={camOff}
               aria-label={camOff ? 'Turn camera on' : 'Turn camera off'}
               title={camOff ? 'Camera on' : 'Camera off'}
-              className={cn(controlBtn, camOff ? 'bg-[#8c3232] hover:bg-[#732828]' : 'bg-white/10 hover:bg-white/20')}
+              className={cn(controlBtn, camOff ? 'bg-red-600 hover:bg-red-700' : 'bg-white/10 hover:bg-white/20')}
             >
               {camOff ? <VideoOff className="w-5 h-5" aria-hidden="true" /> : <Video className="w-5 h-5" aria-hidden="true" />}
             </button>
@@ -768,7 +768,7 @@ export function TelemedicineVisit({
               aria-pressed={sharing}
               aria-label={sharing ? 'Stop screen sharing' : 'Share your screen'}
               title={sharing ? 'Stop sharing' : 'Share screen'}
-              className={cn(controlBtn, sharing ? 'bg-[#785328] hover:bg-[#654621]' : 'bg-white/10 hover:bg-white/20')}
+              className={cn(controlBtn, sharing ? 'bg-[#785328] hover:bg-amber-600' : 'bg-white/10 hover:bg-white/20')}
             >
               <MonitorUp className="w-5 h-5" aria-hidden="true" />
             </button>
@@ -783,7 +783,7 @@ export function TelemedicineVisit({
               onClick={handleEndCall}
               aria-label="End visit"
               title="End visit"
-              className={cn(controlBtn, 'bg-[#8c3232] hover:bg-[#732828] px-5')}
+              className={cn(controlBtn, 'bg-red-600 hover:bg-red-700 px-5')}
             >
               <span className="flex items-center gap-2 text-xs font-bold">
                 <PhoneOff className="w-5 h-5" aria-hidden="true" /> End

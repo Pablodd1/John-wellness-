@@ -279,10 +279,10 @@ export function IntakeOnboarding({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-extrabold uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-md bg-orange-500/100/20 text-indigo-300 border border-orange-500/100/30 text-[10px] font-extrabold uppercase tracking-wider">
                 JohnMatrix &amp; CuasarX AI Intake
               </span>
-              <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
+              <span className="px-2.5 py-0.5 rounded-md bg-orange-500/20 text-emerald-300 border border-orange-500/30 text-[10px] font-bold">
                 Medical-Grade Baseline Engine
               </span>
             </div>
@@ -300,7 +300,7 @@ export function IntakeOnboarding({
               onClick={() => setIntakeMode('form')}
               className={cn(
                 "px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5",
-                intakeMode === 'form' ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+                intakeMode === 'form' ? "bg-orange-500 text-white shadow-sm" : "text-slate-400 hover:text-white"
               )}
             >
               <ClipboardList className="w-4 h-4" /> Comprehensive Form
@@ -310,7 +310,7 @@ export function IntakeOnboarding({
               onClick={() => setIntakeMode('voice')}
               className={cn(
                 "px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5",
-                intakeMode === 'voice' ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+                intakeMode === 'voice' ? "bg-orange-500 text-white shadow-sm" : "text-slate-400 hover:text-white"
               )}
             >
               <Mic className="w-4 h-4" /> AI Voice Intake
@@ -320,7 +320,7 @@ export function IntakeOnboarding({
               onClick={() => setIntakeMode('report')}
               className={cn(
                 "px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5",
-                intakeMode === 'report' ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+                intakeMode === 'report' ? "bg-orange-500 text-white shadow-sm" : "text-slate-400 hover:text-white"
               )}
             >
               <ActivityIcon className="w-4 h-4" /> Baseline Analysis
@@ -352,7 +352,7 @@ export function IntakeOnboarding({
 
       {submittedStatus && (
         <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3 text-xs text-emerald-900 font-bold animate-in fade-in">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+          <CheckCircle2 className="w-5 h-5 text-orange-400 flex-shrink-0" />
           <span>{submittedStatus}</span>
         </div>
       )}
@@ -362,7 +362,7 @@ export function IntakeOnboarding({
         <form onSubmit={handleSaveForm} className="space-y-6">
           
           {/* SECTION 1: MEDICAL HISTORY & PHARMACOLOGY */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
               <div className="p-2.5 bg-rose-50 text-rose-600 rounded-2xl">
                 <Heart className="w-5 h-5" />
@@ -387,7 +387,7 @@ export function IntakeOnboarding({
                     }
                   })}
                   placeholder="e.g. Mild Hypertension, Meniscus Repair, Asthma..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
 
@@ -404,7 +404,7 @@ export function IntakeOnboarding({
                     }
                   })}
                   placeholder="e.g. Telmisartan 20mg, BPC-157 250mcg, Omega-3..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
 
@@ -421,7 +421,7 @@ export function IntakeOnboarding({
                     }
                   })}
                   placeholder="e.g. Maternal Type 2 Diabetes, Paternal CVD..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
 
@@ -438,14 +438,14 @@ export function IntakeOnboarding({
                     }
                   })}
                   placeholder="e.g. Penicillin, Lactose Sensitivity, Shellfish..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
             </div>
           </div>
 
           {/* SECTION 2: SPORTS PERFORMANCE & ATHLETIC PROFILE */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
               <div className="p-2.5 bg-amber-50 text-amber-600 rounded-2xl">
                 <Zap className="w-5 h-5" />
@@ -467,7 +467,7 @@ export function IntakeOnboarding({
                     sportsProfile: { ...diagForm.sportsProfile!, primaryDiscipline: e.target.value }
                   })}
                   placeholder="e.g. Marathon, Powerlifting, Zone 2 Cycling..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
 
@@ -481,7 +481,7 @@ export function IntakeOnboarding({
                     ...diagForm,
                     sportsProfile: { ...diagForm.sportsProfile!, weeklyHours: parseFloat(e.target.value) || 0 }
                   })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
 
@@ -495,7 +495,7 @@ export function IntakeOnboarding({
                     ...diagForm,
                     sportsProfile: { ...diagForm.sportsProfile!, zone2WeeklyHours: parseFloat(e.target.value) || 0 }
                   })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
 
@@ -509,16 +509,16 @@ export function IntakeOnboarding({
                     sportsProfile: { ...diagForm.sportsProfile!, activeInjuries: e.target.value.split(',').map(s => s.trim()) }
                   })}
                   placeholder="e.g. Patellar Tendinopathy..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
             </div>
           </div>
 
           {/* SECTION 3: STRESS LEVELS & PSYCHOLOGY */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-              <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-2xl">
+              <div className="p-2.5 bg-orange-500/10 text-orange-500 rounded-2xl">
                 <Brain className="w-5 h-5" />
               </div>
               <div>
@@ -540,9 +540,9 @@ export function IntakeOnboarding({
                       ...diagForm,
                       psychologicalProfile: { ...diagForm.psychologicalProfile!, perceivedStressScore: parseInt(e.target.value) }
                     })}
-                    className="w-full accent-indigo-600 cursor-pointer"
+                    className="w-full accent-orange-500 cursor-pointer"
                   />
-                  <span className="font-extrabold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-200">
+                  <span className="font-extrabold text-orange-500 bg-orange-500/10 px-2.5 py-1 rounded-lg border border-orange-500/25">
                     {diagForm.psychologicalProfile?.perceivedStressScore || 5}/10
                   </span>
                 </div>
@@ -556,7 +556,7 @@ export function IntakeOnboarding({
                     ...diagForm,
                     psychologicalProfile: { ...diagForm.psychologicalProfile!, burnoutIndex: e.target.value as any }
                   })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 >
                   <option value="Low">Low Burnout (High Energy)</option>
                   <option value="Moderate">Moderate Burnout (Periodic Fatigue)</option>
@@ -575,7 +575,7 @@ export function IntakeOnboarding({
                     ...diagForm,
                     psychologicalProfile: { ...diagForm.psychologicalProfile!, cognitiveFatigueScore: parseInt(e.target.value) || 1 }
                   })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500/100"
                 />
               </div>
 
@@ -601,9 +601,9 @@ export function IntakeOnboarding({
           </div>
 
           {/* SECTION 4: BASELINE DIAGNOSTICS - DEXA, BLOODWORK, EKG & ANTHROPOMETRICS */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-              <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-2xl">
+              <div className="p-2.5 bg-emerald-50 text-orange-400 rounded-2xl">
                 <Dna className="w-5 h-5" />
               </div>
               <div>
@@ -615,7 +615,7 @@ export function IntakeOnboarding({
             {/* Sub-block A: DEXA & Body Composition */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
               <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
-                <Scale className="w-4 h-4 text-emerald-600" /> DEXA Scan Body Composition
+                <Scale className="w-4 h-4 text-orange-400" /> DEXA Scan Body Composition
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                 <div>
@@ -628,7 +628,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, bodyFatPercent: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -641,7 +641,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, leanMassKg: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -653,7 +653,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, visceralFatGrams: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -666,7 +666,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, boneDensityZScore: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
               </div>
@@ -675,7 +675,7 @@ export function IntakeOnboarding({
             {/* Sub-block B: Blood Panel */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
               <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
-                <Dna className="w-4 h-4 text-indigo-600" /> Comprehensive Longevity Blood Panel
+                <Dna className="w-4 h-4 text-orange-500" /> Comprehensive Longevity Blood Panel
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
                 <div>
@@ -687,7 +687,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, apoB: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -700,7 +700,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, hsCRP: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -712,7 +712,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, fastingGlucose: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -725,7 +725,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, hba1c: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -738,7 +738,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, fastingInsulin: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -750,7 +750,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, vitaminD: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -763,7 +763,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, testosteroneFree: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -776,7 +776,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, cortisolAM: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -788,7 +788,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, altAst: e.target.value }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -801,7 +801,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, tsh: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
               </div>
@@ -822,7 +822,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       diagnostics: { ...diagForm.diagnostics!, ekgFindings: e.target.value }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -835,7 +835,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       diagnostics: { ...diagForm.diagnostics!, vo2Max: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -847,7 +847,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, rhrBpm: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -859,7 +859,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, hrvMs: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -872,7 +872,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, weightKg: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -884,7 +884,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, heightCm: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -896,7 +896,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, sleepEfficiencyPercent: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
               </div>
@@ -906,7 +906,7 @@ export function IntakeOnboarding({
             <div className="pt-2 flex justify-end">
               <button
                 type="submit"
-                className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-2xl shadow-md transition-all flex items-center gap-2"
+                className="px-8 py-4 bg-orange-500 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-2xl shadow-md transition-all flex items-center gap-2"
               >
                 <CheckCircle2 className="w-5 h-5" /> Save Baseline Diagnostics &amp; Generate Report
               </button>
@@ -917,10 +917,10 @@ export function IntakeOnboarding({
 
       {/* MODE 2: CONVERSATIONAL VOICE INTAKE */}
       {intakeMode === 'voice' && (
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+        <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">Conversational Engine</span>
+              <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Conversational Engine</span>
               <h3 className="text-xl font-bold text-slate-900">Interactive Voice Intake with Phi</h3>
             </div>
             <div className="text-xs text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 font-bold">
@@ -932,9 +932,9 @@ export function IntakeOnboarding({
             <div className="relative flex items-center justify-center">
               <div className={cn(
                 "w-24 h-24 rounded-3xl flex items-center justify-center transition-all duration-500",
-                isSpeaking ? "bg-indigo-500 shadow-[0_0_40px_rgba(99,102,241,0.6)] scale-110" :
+                isSpeaking ? "bg-orange-500/100 shadow-[0_0_40px_rgba(99,102,241,0.6)] scale-110" :
                 isListening ? "bg-rose-500 shadow-[0_0_40px_rgba(244,63,94,0.6)] animate-pulse" :
-                "bg-indigo-600 shadow-md"
+                "bg-orange-500 shadow-md"
               )}>
                 <Activity className="w-10 h-10 text-white" />
               </div>
@@ -966,7 +966,7 @@ export function IntakeOnboarding({
                         key={i}
                         type="button"
                         onClick={() => handleProcessAnswer(opt)}
-                        className="p-3.5 bg-slate-50 hover:bg-indigo-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 text-left transition-all flex items-center justify-between"
+                        className="p-3.5 bg-slate-50 hover:bg-orange-500/10 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 text-left transition-all flex items-center justify-between"
                       >
                         <span>{opt}</span>
                         <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
@@ -985,29 +985,29 @@ export function IntakeOnboarding({
                     "w-full py-4 rounded-2xl border flex items-center justify-center gap-3 transition-all font-bold text-sm shadow-sm",
                     isListening 
                       ? "bg-rose-50 border-rose-300 text-rose-700 animate-pulse" 
-                      : "bg-indigo-50 border-indigo-200 hover:bg-indigo-100 text-indigo-900"
+                      : "bg-orange-500/10 border-orange-500/25 hover:bg-orange-500/15 text-text-orange-300"
                   )}
                 >
-                  {isListening ? <MicOff className="w-5 h-5 text-rose-600" /> : <Mic className="w-5 h-5 text-indigo-600" />}
+                  {isListening ? <MicOff className="w-5 h-5 text-rose-600" /> : <Mic className="w-5 h-5 text-orange-500" />}
                   {isListening ? "Listening... Speak clearly into mic" : "Press to Speak Naturally to Phi"}
                 </button>
               </div>
             </div>
           ) : (
-            <div className="bg-indigo-50/50 border border-indigo-200 p-6 rounded-2xl space-y-4">
+            <div className="bg-orange-500/10/50 border border-orange-500/25 p-6 rounded-2xl space-y-4">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold text-indigo-950 flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-indigo-600" /> Fact Extraction Confirmation
+                <h4 className="text-sm font-bold text-orange-950 flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-orange-500" /> Fact Extraction Confirmation
                 </h4>
-                <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                <span className="text-xs font-semibold text-orange-400 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                   97% AI Confidence
                 </span>
               </div>
 
               <div className="space-y-3">
                 {pendingFacts.map(fact => (
-                  <div key={fact.id} className="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-indigo-500 tracking-wider">{fact.category}</span>
+                  <div key={fact.id} className="bg-white/[0.06] p-4 rounded-xl border border-orange-500/15 shadow-sm space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-orange-500/100 tracking-wider">{fact.category}</span>
                     <p className="text-sm font-semibold text-slate-900">"{fact.value}"</p>
                   </div>
                 ))}
@@ -1017,14 +1017,14 @@ export function IntakeOnboarding({
                 <button
                   type="button"
                   onClick={() => setShowingConfirmation(false)}
-                  className="flex-1 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl"
+                  className="flex-1 py-2.5 bg-white/[0.06] border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl"
                 >
                   Edit / Re-answer
                 </button>
                 <button
                   type="button"
                   onClick={confirmFact}
-                  className="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl"
+                  className="flex-1 py-2.5 bg-orange-500 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl"
                 >
                   Confirm &amp; Save Fact
                 </button>
@@ -1036,10 +1036,10 @@ export function IntakeOnboarding({
 
       {/* MODE 3: BASELINE COMPARATIVE REPORT & ANALYTICS */}
       {intakeMode === 'report' && (
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+        <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">Analytical Synthesis</span>
+              <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Analytical Synthesis</span>
               <h3 className="text-xl font-bold text-slate-900">Baseline Diagnostic Health &amp; Athletic Report</h3>
             </div>
             <span className="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold flex items-center gap-1">
@@ -1054,7 +1054,7 @@ export function IntakeOnboarding({
               <div className="text-2xl font-black text-slate-900 flex items-baseline gap-1">
                 92 <span className="text-xs text-slate-400 font-normal">/ 100</span>
               </div>
-              <p className="text-[11px] text-emerald-600 font-bold">ApoB {diagForm.bloodwork?.apoB || 78} mg/dL • Optimal</p>
+              <p className="text-[11px] text-orange-400 font-bold">ApoB {diagForm.bloodwork?.apoB || 78} mg/dL • Optimal</p>
             </div>
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
@@ -1062,7 +1062,7 @@ export function IntakeOnboarding({
               <div className="text-2xl font-black text-slate-900 flex items-baseline gap-1">
                 {diagForm.diagnostics?.vo2Max || 51.5} <span className="text-xs text-slate-400 font-normal">mL/kg/min</span>
               </div>
-              <p className="text-[11px] text-indigo-600 font-bold">Top 5% for Age &amp; Gender</p>
+              <p className="text-[11px] text-orange-500 font-bold">Top 5% for Age &amp; Gender</p>
             </div>
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
@@ -1078,7 +1078,7 @@ export function IntakeOnboarding({
               <div className="text-2xl font-black text-slate-900 flex items-baseline gap-1">
                 {diagForm.dexa?.bodyFatPercent || 14.2}% <span className="text-xs text-slate-400 font-normal">Fat</span>
               </div>
-              <p className="text-[11px] text-emerald-600 font-bold">VAT: {diagForm.dexa?.visceralFatGrams || 340}g (Low Risk)</p>
+              <p className="text-[11px] text-orange-400 font-bold">VAT: {diagForm.dexa?.visceralFatGrams || 340}g (Low Risk)</p>
             </div>
           </div>
 
@@ -1100,7 +1100,7 @@ export function IntakeOnboarding({
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">hs-CRP Inflammation:</span>
-                  <strong className="text-emerald-700 font-bold">{diagForm.bloodwork?.hsCRP} mg/L (Low Risk)</strong>
+                  <strong className="text-orange-500 font-bold">{diagForm.bloodwork?.hsCRP} mg/L (Low Risk)</strong>
                 </li>
                 <li className="flex justify-between pb-1">
                   <span className="text-slate-500">Free Testosterone:</span>

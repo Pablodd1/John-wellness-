@@ -123,11 +123,11 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
   });
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[650px] overflow-hidden">
+    <div className="bg-white/[0.06] rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[650px] overflow-hidden">
       {/* Group Chat Header */}
       <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-sm">
+          <div className="w-10 h-10 rounded-2xl bg-orange-500 flex items-center justify-center text-white shadow-sm">
             <Users className="w-5 h-5" />
           </div>
           <div>
@@ -135,7 +135,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
               <h3 className="font-extrabold text-base leading-tight text-white">
                 Live Biohacking Operator Group Lounge
               </h3>
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2.5 h-2.5 rounded-full bg-orange-400 animate-pulse" />
             </div>
             <p className="text-xs text-indigo-300">
               Interactive community chat • Direct integration with CuasarX Assistant
@@ -151,7 +151,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
               onClick={() => setActiveCategoryFilter(cat)}
               className={cn(
                 "px-2.5 py-1 rounded-lg transition-all",
-                activeCategoryFilter === cat ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+                activeCategoryFilter === cat ? "bg-orange-500 text-white shadow-sm" : "text-slate-400 hover:text-white"
               )}
             >
               {cat}
@@ -170,8 +170,8 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
             <div 
               key={msg.id} 
               className={cn(
-                "p-4 rounded-2xl border transition-all space-y-3 bg-white shadow-sm",
-                isUser ? "border-indigo-200 ring-1 ring-indigo-500/20" : "border-slate-200 hover:border-slate-300"
+                "p-4 rounded-2xl border transition-all space-y-3 bg-white/[0.06] shadow-sm",
+                isUser ? "border-orange-500/25 ring-1 ring-orange-500/100/20" : "border-slate-200 hover:border-slate-300"
               )}
             >
               <div className="flex items-start justify-between gap-3">
@@ -184,7 +184,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
                         <span className={cn(
                           "text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider",
                           msg.category === 'Question' ? "bg-amber-100 text-amber-800 border border-amber-200" :
-                          msg.category === 'Protocol' ? "bg-indigo-100 text-indigo-800 border border-indigo-200" :
+                          msg.category === 'Protocol' ? "bg-orange-500/15 text-text-orange-300 border border-orange-500/25" :
                           "bg-emerald-100 text-emerald-800 border border-emerald-200"
                         )}>
                           {msg.category}
@@ -208,7 +208,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
               {/* Action Bar for Live Evaluation with Personal AI */}
               <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100">
                 <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-orange-400" />
                   <span>Community Peer Verified</span>
                 </div>
 
@@ -218,8 +218,8 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
                   className={cn(
                     "px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 shadow-sm",
                     isEvaluated 
-                      ? "bg-emerald-600 text-white" 
-                      : "bg-indigo-600 hover:bg-indigo-700 text-white"
+                      ? "bg-orange-400 text-white" 
+                      : "bg-orange-500 hover:bg-indigo-700 text-white"
                   )}
                 >
                   <Bot className="w-3.5 h-3.5" />
@@ -233,7 +233,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
       </div>
 
       {/* Group Chat Input Bar */}
-      <div className="p-4 border-t border-slate-200 bg-white">
+      <div className="p-4 border-t border-slate-200 bg-white/[0.06]">
         <form onSubmit={handleSendMessage} className="space-y-2">
           <div className="relative flex items-center">
             <input
@@ -241,19 +241,19 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Ask a question or share a protocol insight with the biohacking community..."
-              className="w-full pl-4 pr-24 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+              className="w-full pl-4 pr-24 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm focus:outline-none focus:border-orange-500/100 focus:bg-white/[0.06] transition-all"
             />
             <button
               type="submit"
               disabled={!inputText.trim()}
-              className="absolute right-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+              className="absolute right-1.5 px-4 py-2 bg-orange-500 hover:bg-indigo-700 disabled:opacity-40 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
             >
               <Send className="w-3.5 h-3.5" /> Post
             </button>
           </div>
 
           <p className="text-[10px] text-slate-400 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-indigo-500" />
+            <Sparkles className="w-3 h-3 text-orange-500/100" />
             <span>Tip: Any question or protocol shared here can be evaluated live by your personal CuasarX Assistant.</span>
           </p>
         </form>

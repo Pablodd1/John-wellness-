@@ -519,9 +519,9 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#fbfaf8] border-l border-[#ebe7df] shadow-xl relative">
+    <div className="flex flex-col h-full bg-[#101210] border-l border-white/10 shadow-xl relative">
       {/* Header */}
-      <div className="p-3.5 border-b border-[#ebe7df] flex items-center justify-between bg-white text-[#181716]">
+      <div className="p-3.5 border-b border-white/10 flex items-center justify-between bg-white/[0.06] text-[#f4f2ec]">
         <div className="flex items-center gap-2">
           <CuasarLogo size="sm" showSubtitle={true} />
         </div>
@@ -542,7 +542,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
             title={autoSpeak ? "Voice Auto-Read ON" : "Voice Auto-Read OFF"}
             className={cn(
               "p-1.5 rounded-lg transition-all text-xs font-semibold flex items-center gap-1 cursor-pointer",
-              autoSpeak ? "bg-[#181716] text-white" : "bg-[#faf9f6] border border-[#ebe7df] text-[#5c5851] hover:text-[#181716]"
+              autoSpeak ? "bg-orange-600 text-white" : "bg-white/[0.05] border border-white/10 text-stone-400 hover:text-[#f4f2ec]"
             )}
           >
             {autoSpeak ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
@@ -551,7 +551,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
           <button
             onClick={() => setShowVoiceSettings(!showVoiceSettings)}
             title="Configure Voice Settings"
-            className="p-1.5 rounded-lg bg-[#faf9f6] border border-[#ebe7df] hover:bg-[#f4f2ec] text-[#5c5851] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg bg-white/[0.05] border border-white/10 hover:bg-white/[0.04] text-stone-400 transition-colors cursor-pointer"
           >
             <Settings className="w-3.5 h-3.5" />
           </button>
@@ -560,7 +560,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
             <button
               onClick={onClose}
               title="Close Assistant"
-              className="p-1.5 rounded-lg text-[#8a857b] hover:text-[#181716] transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-stone-500 hover:text-[#f4f2ec] transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -611,7 +611,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                 step={0.05}
                 value={voiceSpeed}
                 onChange={(e) => setVoiceSpeed(parseFloat(e.target.value))}
-                className="w-full accent-indigo-500"
+                className="w-full accent-orange-500/100"
               />
             </div>
 
@@ -627,7 +627,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                 step={0.05}
                 value={voicePitch}
                 onChange={(e) => setVoicePitch(parseFloat(e.target.value))}
-                className="w-full accent-indigo-500"
+                className="w-full accent-orange-500/100"
               />
             </div>
           </div>
@@ -646,7 +646,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
             {/* HPI Header */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-600 to-indigo-600 flex items-center justify-center text-white shadow-lg">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-600 to-orange-500 flex items-center justify-center text-white shadow-lg">
                   <Stethoscope className="w-4 h-4" />
                 </div>
                 <div>
@@ -686,7 +686,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                       className={cn(
                         "px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all border",
                         active 
-                          ? "bg-indigo-600 text-white border-indigo-400 shadow-sm" 
+                          ? "bg-orange-500 text-white border-indigo-400 shadow-sm" 
                           : "bg-slate-900 text-slate-400 border-slate-800 hover:text-slate-200"
                       )}
                     >
@@ -706,7 +706,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                 </span>
                 <span className={cn(
                   "font-black px-2 py-0.5 rounded text-xs",
-                  hpiSeverity >= 7 ? "bg-rose-500/20 text-rose-400" : hpiSeverity >= 4 ? "bg-amber-500/20 text-amber-300" : "bg-emerald-500/20 text-emerald-300"
+                  hpiSeverity >= 7 ? "bg-rose-500/20 text-rose-400" : hpiSeverity >= 4 ? "bg-amber-500/20 text-amber-300" : "bg-orange-500/20 text-emerald-300"
                 )}>
                   {hpiSeverity} / 10 ({hpiSeverity >= 8 ? "Acute" : hpiSeverity >= 5 ? "Moderate" : "Mild"})
                 </span>
@@ -806,7 +806,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                     "flex-1 py-3 px-4 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-lg",
                     hpiListening 
                       ? "bg-rose-600 text-white animate-pulse shadow-rose-600/30" 
-                      : "bg-gradient-to-r from-rose-600 via-pink-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white shadow-indigo-600/20"
+                      : "bg-gradient-to-r from-rose-600 via-pink-600 to-orange-500 hover:from-rose-500 hover:to-orange-500/100 text-white shadow-orange-500/20"
                   )}
                 >
                   {hpiListening ? (
@@ -826,7 +826,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                   type="button"
                   disabled={!hpiTranscript.trim()}
                   onClick={handleSubmitHpi}
-                  className="py-3 px-4 rounded-xl font-extrabold text-xs bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-30 disabled:bg-slate-800 transition-all flex items-center gap-1.5 shadow-md"
+                  className="py-3 px-4 rounded-xl font-extrabold text-xs bg-orange-400 hover:bg-orange-500 text-white disabled:opacity-30 disabled:bg-slate-800 transition-all flex items-center gap-1.5 shadow-md"
                 >
                   <Send className="w-4 h-4" />
                   <span>Analyze HPI</span>
@@ -840,9 +840,9 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50" aria-live="polite">
         {!aiConsented && (
-          <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm space-y-3" role="status">
+          <div className="bg-white/[0.06] border border-slate-200 rounded-2xl p-4 shadow-sm space-y-3" role="status">
             <div className="flex items-center gap-2 text-slate-800">
-              <ShieldCheck className="w-5 h-5 text-emerald-700" aria-hidden="true" />
+              <ShieldCheck className="w-5 h-5 text-orange-500" aria-hidden="true" />
               <h3 className="text-sm font-bold">AI analysis is paused — your consent is needed first</h3>
             </div>
             <p className="text-[11px] text-slate-600 leading-relaxed">
@@ -854,7 +854,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
               type="button"
               aria-expanded={aiDisclosureOpen}
               onClick={() => setAiDisclosureOpen(open => !open)}
-              className="flex items-center gap-1.5 text-[11px] font-bold text-indigo-800 bg-indigo-50 border border-indigo-200 px-2.5 py-1.5 rounded-lg hover:bg-indigo-100 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600"
+              className="flex items-center gap-1.5 text-[11px] font-bold text-text-orange-300 bg-orange-500/10 border border-orange-500/25 px-2.5 py-1.5 rounded-lg hover:bg-orange-500/15 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
             >
               What exactly would be shared?
               {aiDisclosureOpen ? <ChevronUp className="w-3 h-3" aria-hidden="true" /> : <ChevronDown className="w-3 h-3" aria-hidden="true" />}
@@ -874,7 +874,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                 type="checkbox"
                 checked={aiAckChecked}
                 onChange={(e) => setAiAckChecked(e.target.checked)}
-                className="accent-indigo-600 w-4 h-4 mt-0.5"
+                className="accent-orange-500 w-4 h-4 mt-0.5"
               />
               <span className="text-[11px] text-slate-800">I understand what will be shared and I consent to AI analysis of my health data.</span>
             </label>
@@ -909,14 +909,14 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
               <div className={cn(
                 "px-4 py-3 rounded-2xl text-xs leading-relaxed relative group shadow-sm transition-all",
                 isBot 
-                  ? "bg-white text-slate-900 border border-slate-200/80 rounded-tl-sm" 
+                  ? "bg-white/[0.06] text-slate-900 border border-slate-200/80 rounded-tl-sm" 
                   : isHpiIntake
-                    ? "bg-gradient-to-r from-slate-900 to-indigo-950 text-white border border-indigo-500/40 rounded-tr-sm"
+                    ? "bg-gradient-to-r from-slate-900 to-orange-950 text-white border border-orange-500/100/40 rounded-tr-sm"
                     : "bg-slate-900 text-white rounded-tr-sm"
               )}>
                 {/* Visual badge for Voice HPI intake notes */}
                 {isHpiIntake && (
-                  <div className="flex items-center gap-1.5 mb-1.5 pb-1.5 border-b border-indigo-500/30 text-amber-300 font-extrabold text-[10px] tracking-wider uppercase">
+                  <div className="flex items-center gap-1.5 mb-1.5 pb-1.5 border-b border-orange-500/100/30 text-amber-300 font-extrabold text-[10px] tracking-wider uppercase">
                     <Stethoscope className="w-3.5 h-3.5 text-rose-400" />
                     <span>Voice Symptom Intake</span>
                   </div>
@@ -932,7 +932,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                       className={cn(
                         "flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all",
                         isSpeaking 
-                          ? "bg-indigo-600 text-white animate-pulse" 
+                          ? "bg-orange-500 text-white animate-pulse" 
                           : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                       )}
                     >
@@ -943,7 +943,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                         </>
                       ) : (
                         <>
-                          <Volume2 className="w-3 h-3 text-indigo-600" />
+                          <Volume2 className="w-3 h-3 text-orange-500" />
                           Listen (Realistic Voice)
                         </>
                       )}
@@ -975,11 +975,11 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
               )}
 
               {msg.action?.type === 'recommendation' && (
-                <div className="mt-2 bg-indigo-50 border border-indigo-200 rounded-xl p-3 max-w-sm text-xs space-y-1">
-                  <div className="flex items-center gap-2 text-indigo-900 font-bold">
-                    <Info className="w-4 h-4 text-indigo-600" /> Tailored Recommendation
+                <div className="mt-2 bg-orange-500/10 border border-orange-500/25 rounded-xl p-3 max-w-sm text-xs space-y-1">
+                  <div className="flex items-center gap-2 text-text-orange-300 font-bold">
+                    <Info className="w-4 h-4 text-orange-500" /> Tailored Recommendation
                   </div>
-                  <p className="text-[11px] text-indigo-800">
+                  <p className="text-[11px] text-text-orange-300">
                     1-Click Executive Bundle added to Marketplace queue.
                   </p>
                 </div>
@@ -989,8 +989,8 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
         })}
         {coachTyping && (
           <div className="mr-auto flex flex-col items-start" role="status" aria-live="polite">
-            <div className="px-4 py-3 rounded-2xl text-xs bg-white text-slate-500 border border-slate-200/80 rounded-tl-sm shadow-sm inline-flex items-center gap-2">
-              <RadioIcon className="w-3 h-3 animate-pulse text-indigo-600" aria-hidden="true" />
+            <div className="px-4 py-3 rounded-2xl text-xs bg-white/[0.06] text-slate-500 border border-slate-200/80 rounded-tl-sm shadow-sm inline-flex items-center gap-2">
+              <RadioIcon className="w-3 h-3 animate-pulse text-orange-500" aria-hidden="true" />
               Quasar Keel is thinking…
             </div>
           </div>
@@ -999,16 +999,16 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
       </div>
 
       {/* Input Area with dedicated HPI Action Bar */}
-      <div className="p-3.5 border-t border-slate-200 bg-white space-y-2">
+      <div className="p-3.5 border-t border-slate-200 bg-white/[0.06] space-y-2">
         {/* Quick Launch Pill for Voice HPI */}
         <div className="flex items-center justify-between">
           <button
             onClick={() => setShowHpiModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200 text-[10px] font-bold transition-all"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 hover:bg-orange-500/15 text-text-orange-300 border border-orange-500/25 text-[10px] font-bold transition-all"
           >
             <Mic className="w-3 h-3 text-rose-600" />
             <span>Voice HPI &amp; Symptom Intake</span>
-            <span className="text-[9px] px-1.5 py-0.2 bg-indigo-600 text-white rounded-full">Dictate</span>
+            <span className="text-[9px] px-1.5 py-0.2 bg-orange-500 text-white rounded-full">Dictate</span>
           </button>
 
           <span className="text-[10px] text-slate-400 font-medium">
@@ -1029,7 +1029,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
               "w-full pl-3.5 pr-24 py-2.5 border rounded-2xl text-xs focus:outline-none transition-all",
               isListening 
                 ? "border-rose-500 bg-rose-50/50 text-rose-900 placeholder-rose-400 font-medium"
-                : "border-slate-200 bg-slate-50 focus:border-indigo-500"
+                : "border-slate-200 bg-slate-50 focus:border-orange-500/100"
             )}
           />
 
@@ -1044,7 +1044,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                 "p-1.5 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed",
                 isListening
                   ? "bg-rose-600 text-white animate-bounce"
-                  : "text-slate-400 hover:text-indigo-600 hover:bg-slate-100"
+                  : "text-slate-400 hover:text-orange-500 hover:bg-slate-100"
               )}
             >
               {isListening ? <MicOff className="w-3.5 h-3.5" aria-hidden="true" /> : <Mic className="w-3.5 h-3.5" aria-hidden="true" />}
@@ -1054,7 +1054,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
               type="submit"
               aria-label="Send message"
               disabled={!input.trim() || !aiConsented}
-              className="p-1.5 bg-indigo-600 text-white rounded-xl disabled:opacity-40 disabled:bg-slate-300 transition-colors shadow-sm"
+              className="p-1.5 bg-orange-500 text-white rounded-xl disabled:opacity-40 disabled:bg-slate-300 transition-colors shadow-sm"
             >
               <Send className="w-3.5 h-3.5" aria-hidden="true" />
             </button>

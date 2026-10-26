@@ -23,9 +23,9 @@ export const THEMES: {
     id: 'smart_marketplace',
     name: 'Smart Marketplace & Personal Biohack',
     tagline: 'Custom E-Commerce & 1-Click Biometric Subscriptions',
-    previewBg: 'bg-[#0f172a] border-emerald-500',
-    previewCard: 'bg-white text-slate-900 border-slate-200',
-    accentColor: 'bg-emerald-600 text-white',
+    previewBg: 'bg-[#0f172a] border-orange-500',
+    previewCard: 'bg-white/[0.06] text-slate-900 border-slate-200',
+    accentColor: 'bg-orange-400 text-white',
     badge: 'Personal Biohack',
     description: 'High-performance bespoke e-commerce layout with midnight slate navigation (#0f172a), bio-emerald instant checkout, and responsive mobile bottom dock.'
   },
@@ -34,8 +34,8 @@ export const THEMES: {
     name: 'Titanium Precision',
     tagline: 'Modern Executive Light',
     previewBg: 'bg-slate-100 border-slate-200',
-    previewCard: 'bg-white text-slate-900 border-slate-200',
-    accentColor: 'bg-indigo-600',
+    previewCard: 'bg-white/[0.06] text-slate-900 border-slate-200',
+    accentColor: 'bg-orange-500',
     badge: 'Clean Light',
     description: 'Ultra-crisp light canvas with slate-900 typography, indigo focus rings, and high contrast data tables.'
   },
@@ -54,8 +54,8 @@ export const THEMES: {
     name: 'Nordic Emerald',
     tagline: 'Organic Biohacking & Circadian Flow',
     previewBg: 'bg-emerald-950/20 border-emerald-200',
-    previewCard: 'bg-white text-emerald-950 border-emerald-100',
-    accentColor: 'bg-emerald-600',
+    previewCard: 'bg-white/[0.06] text-emerald-950 border-emerald-100',
+    accentColor: 'bg-orange-400',
     badge: 'Calm Wellness',
     description: 'Soothing sage tones (#f2f7f4) with deep forest green accents, optimized for parasympathetic recovery.'
   },
@@ -63,7 +63,7 @@ export const THEMES: {
     id: 'solar',
     name: 'Solar Cyberpunk',
     tagline: 'High-Energy Midnight & Amber Gold',
-    previewBg: 'bg-indigo-950 border-amber-500/30',
+    previewBg: 'bg-orange-950 border-amber-500/30',
     previewCard: 'bg-slate-900 text-amber-100 border-amber-500/20',
     accentColor: 'bg-amber-500',
     badge: 'Executive Night',
@@ -100,7 +100,7 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Palette className="w-5 h-5 text-indigo-600" /> Global Modern Visual Design Themes
+            <Palette className="w-5 h-5 text-orange-500" /> Global Modern Visual Design Themes
           </h3>
           <p className="text-xs text-slate-500">
             Select a custom color palette for JohnMatrix &amp; CuasarX Assistant interfaces
@@ -118,8 +118,8 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
               className={cn(
                 "relative p-4 rounded-2xl border text-left transition-all flex flex-col justify-between space-y-3 cursor-pointer group hover:scale-[1.02]",
                 isSelected
-                  ? "border-indigo-600 ring-2 ring-indigo-600/20 shadow-md bg-white"
-                  : "border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300"
+                  ? "border-orange-500 ring-2 ring-orange-500/20 shadow-md bg-white/[0.06]"
+                  : "border-slate-200 bg-slate-50/50 hover:bg-white/[0.06] hover:border-slate-300"
               )}
             >
               <div>
@@ -128,13 +128,13 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
                     {theme.badge}
                   </span>
                   {isSelected && (
-                    <span className="p-1 bg-indigo-600 text-white rounded-full">
+                    <span className="p-1 bg-orange-500 text-white rounded-full">
                       <Check className="w-3 h-3" />
                     </span>
                   )}
                 </div>
 
-                <h4 className="font-bold text-slate-900 text-sm group-hover:text-indigo-600 transition-colors">
+                <h4 className="font-bold text-slate-900 text-sm group-hover:text-orange-500 transition-colors">
                   {theme.name}
                 </h4>
                 <p className="text-[11px] font-medium text-slate-500 mb-2">{theme.tagline}</p>

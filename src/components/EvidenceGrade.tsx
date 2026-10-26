@@ -22,17 +22,17 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
 
   if (typeof effectiveEvidence === 'string') {
     return (
-      <div className="mt-2 p-3 bg-[#faf9f6] rounded-xl border border-[#ebe7df] text-xs text-[#5c5851] space-y-2">
+      <div className="mt-2 p-3 bg-white/[0.05] rounded-xl border border-white/10 text-xs text-stone-400 space-y-2">
         <div className="flex items-start gap-2">
-          <BookOpen className="w-3.5 h-3.5 text-[#6e6960] mt-0.5 flex-shrink-0" />
+          <BookOpen className="w-3.5 h-3.5 text-stone-400 mt-0.5 flex-shrink-0" />
           <div>
-            <span className="font-semibold text-[#181716] block text-xs">Clinical Summary</span>
+            <span className="font-semibold text-[#f4f2ec] block text-xs">Clinical Summary</span>
             <p className="leading-relaxed mt-0.5">{effectiveEvidence}</p>
           </div>
         </div>
 
         {hasHumanStudies !== undefined && (
-          <div className="p-2 rounded-lg border text-[11px] bg-[#f1f5f2] border-[#dbe5dc] text-[#2b4530]">
+          <div className="p-2 rounded-lg border text-[11px] bg-orange-500/10 border-orange-500/25 text-orange-300">
             <span className="font-semibold block">
               {hasHumanStudies === false ? 'Observational / Preclinical Data' : 'Human Clinical Trials Available'}
             </span>
@@ -40,8 +40,8 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
           </div>
         )}
 
-        <div className="pt-2 border-t border-[#ebe7df] flex items-center gap-1.5 text-[10px] text-[#8a857b] italic">
-          <Stethoscope className="w-3 h-3 text-[#8a857b] flex-shrink-0" />
+        <div className="pt-2 border-t border-white/10 flex items-center gap-1.5 text-[10px] text-stone-500 italic">
+          <Stethoscope className="w-3 h-3 text-stone-500 flex-shrink-0" />
           <span>{medicalDisclaimer}</span>
         </div>
       </div>
@@ -57,42 +57,42 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
   const clinicalRationale = effectiveEvidence?.clinicalRationale || '';
 
   return (
-    <div className="mt-2 bg-[#faf9f6] rounded-xl border border-[#ebe7df] overflow-hidden text-xs">
+    <div className="mt-2 bg-white/[0.05] rounded-xl border border-white/10 overflow-hidden text-xs">
       <div 
         onClick={() => setExpanded(!expanded)}
-        className="p-2.5 bg-white hover:bg-[#fbfaf8] cursor-pointer flex items-center justify-between transition-colors border-b border-[#ebe7df]"
+        className="p-2.5 bg-white/[0.06] hover:bg-[#101210] cursor-pointer flex items-center justify-between transition-colors border-b border-white/10"
       >
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="flex items-center gap-1 font-semibold text-[#181716] text-xs">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#344a37]" />
+          <span className="flex items-center gap-1 font-semibold text-[#f4f2ec] text-xs">
+            <ShieldCheck className="w-3.5 h-3.5 text-orange-400" />
             Clinical Evidence
           </span>
           <span className={grade === 'A' ? "badge-clinical" : grade === 'B' ? "badge-warm" : "badge-neutral"}>
             Grade {grade}
           </span>
-          <span className="text-[10px] text-[#6e6960] font-mono">
+          <span className="text-[10px] text-stone-400 font-mono">
             {confidenceScore}% Confidence
           </span>
         </div>
 
-        <button className="text-[#8a857b] hover:text-[#181716] p-0.5">
+        <button className="text-stone-500 hover:text-[#f4f2ec] p-0.5">
           {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
         </button>
       </div>
 
       {expanded && (
-        <div className="p-3 bg-[#faf9f6] space-y-2.5">
+        <div className="p-3 bg-white/[0.05] space-y-2.5">
           <div>
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8a857b] block mb-0.5">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-stone-500 block mb-0.5">
               Mechanism of Action
             </span>
-            <p className="text-[#5c5851] leading-relaxed text-xs">
+            <p className="text-stone-400 leading-relaxed text-xs">
               {clinicalRationale}
             </p>
           </div>
 
           {hasHumanStudies !== undefined && (
-            <div className="p-2 rounded-lg border text-[11px] bg-[#f1f5f2] border-[#dbe5dc] text-[#2b4530]">
+            <div className="p-2 rounded-lg border text-[11px] bg-orange-500/10 border-orange-500/25 text-orange-300">
               <span className="font-semibold block">
                 {hasHumanStudies === false ? 'Observational / Preclinical Data' : 'Human Clinical Studies Validated'}
               </span>
@@ -103,7 +103,7 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
           {(potentialSideBenefits || potentialSideEffects) && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
               {potentialSideBenefits && potentialSideBenefits.length > 0 && (
-                <div className="p-2 bg-[#f1f5f2] rounded-lg border border-[#dbe5dc] text-[#2b4530]">
+                <div className="p-2 bg-orange-500/10 rounded-lg border border-orange-500/25 text-orange-300">
                   <span className="font-semibold block mb-0.5">Secondary Benefits:</span>
                   <ul className="list-disc list-inside space-y-0.5 text-[10px]">
                     {potentialSideBenefits.map((b, i) => (
@@ -114,7 +114,7 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
               )}
 
               {potentialSideEffects && potentialSideEffects.length > 0 && (
-                <div className="p-2 bg-[#faf5ee] rounded-lg border border-[#ede1cf] text-[#785328]">
+                <div className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/25 text-amber-300">
                   <span className="font-semibold block mb-0.5">Precautions:</span>
                   <ul className="list-disc list-inside space-y-0.5 text-[10px]">
                     {potentialSideEffects.map((e, i) => (
@@ -127,9 +127,9 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
           )}
 
           {journal && (
-            <div className="pt-2 border-t border-[#ebe7df] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px]">
-              <div className="text-[#6e6960] truncate max-w-md">
-                <span className="font-semibold text-[#181716]">{journal}</span> ({year}) — <span className="italic">{referenceTitle}</span>
+            <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px]">
+              <div className="text-stone-400 truncate max-w-md">
+                <span className="font-semibold text-[#f4f2ec]">{journal}</span> ({year}) — <span className="italic">{referenceTitle}</span>
               </div>
 
               {doiOrUrl && (
@@ -137,10 +137,10 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
                   href={doiOrUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-medium text-[#181716] hover:underline bg-white px-2 py-0.5 rounded border border-[#ebe7df] transition-colors flex-shrink-0"
+                  className="inline-flex items-center gap-1 font-medium text-[#f4f2ec] hover:underline bg-white/[0.06] px-2 py-0.5 rounded border border-white/10 transition-colors flex-shrink-0"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <FileText className="w-3 h-3 text-[#6e6960]" />
+                  <FileText className="w-3 h-3 text-stone-400" />
                   <span>PubMed</span>
                   <ExternalLink className="w-2.5 h-2.5" />
                 </a>
@@ -148,8 +148,8 @@ export function EvidenceGrade({ evidence, product, compact = false }: EvidenceGr
             </div>
           )}
 
-          <div className="pt-1.5 flex items-center gap-1 text-[10px] text-[#8a857b] italic">
-            <Stethoscope className="w-3 h-3 text-[#8a857b] flex-shrink-0" />
+          <div className="pt-1.5 flex items-center gap-1 text-[10px] text-stone-500 italic">
+            <Stethoscope className="w-3 h-3 text-stone-500 flex-shrink-0" />
             <span>{medicalDisclaimer}</span>
           </div>
         </div>

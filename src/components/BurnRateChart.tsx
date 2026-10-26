@@ -33,11 +33,11 @@ export function BurnRateChart({ inventory }: BurnRateChartProps) {
   const colors = ['#6366f1', '#06b6d4', '#f59e0b', '#10b981', '#ec4899'];
 
   return (
-    <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+    <div className="bg-white/[0.06] p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
         <div>
           <div className="flex items-center gap-2">
-            <TrendingDown className="w-5 h-5 text-indigo-600" />
+            <TrendingDown className="w-5 h-5 text-orange-500" />
             <h3 className="text-base font-bold text-slate-900">30-Day Inventory Burn-Rate & Depletion Trajectory</h3>
           </div>
           <p className="text-xs text-slate-500">

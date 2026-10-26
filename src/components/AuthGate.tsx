@@ -54,20 +54,20 @@ export function AuthGate() {
     }
   };
 
-  const field = 'w-full pl-9 pr-3 py-2.5 rounded-xl text-xs bg-[#fbfaf8] border border-[#e5e1d7] focus:outline-none focus:ring-2 focus:ring-[#181716] focus:bg-white';
+  const field = 'w-full pl-9 pr-3 py-2.5 rounded-xl text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]';
 
   return (
     <div className="min-h-screen flex items-start justify-center p-4 pt-[38vh] pb-12">
-      <div className="bg-white rounded-3xl border border-[#ebe7df] shadow-sm p-6 sm:p-8 w-full max-w-md space-y-5">
+      <div className="bg-white/[0.06] rounded-3xl border border-white/10 shadow-sm p-6 sm:p-8 w-full max-w-md space-y-5">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-[#f1f5f2] rounded-xl border border-[#dbe5dc]">
-            <ShieldCheck className="w-6 h-6 text-[#344a37]" aria-hidden="true" />
+          <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/25">
+            <ShieldCheck className="w-6 h-6 text-orange-400" aria-hidden="true" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-[#181716]">
+            <h1 className="text-lg font-bold text-[#f4f2ec]">
               {mode === 'signin' ? 'Sign in to your account' : 'Create your account'}
             </h1>
-            <p className="text-[11px] text-[#6e6960] leading-relaxed">
+            <p className="text-[11px] text-stone-400 leading-relaxed">
               Your orders, intake results, and consent records are tied to this identity.
             </p>
           </div>
@@ -77,7 +77,7 @@ export function AuthGate() {
           {mode === 'signup' && (
             <div className="relative">
               <label htmlFor="auth-name" className="sr-only">Full name</label>
-              <UserIcon className="w-4 h-4 text-[#8a857b] absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+              <UserIcon className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
                 id="auth-name"
                 type="text"
@@ -93,7 +93,7 @@ export function AuthGate() {
 
           <div className="relative">
             <label htmlFor="auth-email" className="sr-only">Email</label>
-            <Mail className="w-4 h-4 text-[#8a857b] absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+            <Mail className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
             <input
               id="auth-email"
               type="email"
@@ -108,7 +108,7 @@ export function AuthGate() {
 
           <div className="relative">
             <label htmlFor="auth-password" className="sr-only">Password</label>
-            <Lock className="w-4 h-4 text-[#8a857b] absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+            <Lock className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
             <input
               id="auth-password"
               type="password"
@@ -122,12 +122,12 @@ export function AuthGate() {
           </div>
 
           {error && (
-            <p role="alert" className="text-[11px] text-[#8c3232] font-bold p-2.5 rounded-lg border border-[#f5d5d5] bg-[#fdf2f2]">
+            <p role="alert" className="text-[11px] text-red-400 font-bold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10">
               {error}
             </p>
           )}
           {notice && (
-            <p role="status" className="text-[11px] text-[#2b4530] font-semibold p-2.5 rounded-lg border border-[#dbe5dc] bg-[#f1f5f2]">
+            <p role="status" className="text-[11px] text-orange-300 font-semibold p-2.5 rounded-lg border border-orange-500/25 bg-orange-500/10">
               {notice}
             </p>
           )}
@@ -135,7 +135,7 @@ export function AuthGate() {
           <button
             type="submit"
             disabled={busy}
-            className="btn-ink w-full py-2.5 text-xs inline-flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2"
+            className="btn-ink w-full py-2.5 text-xs inline-flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
           >
             {mode === 'signin'
               ? <><LogIn className="w-4 h-4" aria-hidden="true" /> {busy ? 'Signing in…' : 'Sign in'}</>
@@ -146,7 +146,7 @@ export function AuthGate() {
         <button
           onClick={handleGuest}
           disabled={busy}
-          className="w-full py-3 rounded-xl bg-[#344a37] hover:bg-[#2a3b2d] text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2"
+          className="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
         >
           <Zap className="w-4 h-4" aria-hidden="true" />
           {busy ? 'Entering…' : 'Skip — enter as guest tester (1 click)'}
@@ -155,12 +155,12 @@ export function AuthGate() {
         <button
           type="button"
           onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setError(null); setNotice(null); }}
-          className="w-full text-[11px] font-semibold text-[#5c5851] hover:text-[#181716] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded"
+          className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#f4f2ec] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
         >
           {mode === 'signin' ? 'No account yet? Create one' : 'Already have an account? Sign in'}
         </button>
 
-        <p className="text-[10px] text-[#6e6960] flex items-start gap-1.5 p-2.5 rounded-lg bg-[#faf9f6] border border-[#ebe7df]">
+        <p className="text-[10px] text-stone-400 flex items-start gap-1.5 p-2.5 rounded-lg bg-white/[0.05] border border-white/10">
           <Database className="w-3 h-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
           <span>Your account is protected: information is sent over an encrypted connection, and each member can only ever see their own information.</span>
         </p>

@@ -5,140 +5,107 @@
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --font-serif: 'Newsreader', Georgia, serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --accent: #f97316;
+    --accent-soft: #fb923c;
   }
 
   body {
-    background-color: #fbfaf8;
-    color: #181716;
+    background-color: #0e100f;
+    color: #f4f2ec;
     font-family: var(--font-sans);
     min-height: 100vh;
     overflow-x: hidden;
     letter-spacing: -0.012em;
   }
+
+  ::selection { background: rgba(249, 115, 22, 0.35); color: #fff; }
 }
 
-/* Custom Soft Scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #fbfaf8;
-}
-::-webkit-scrollbar-thumb {
-  background: #dedad0;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #beb8ab;
-}
+/* Dark glass scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0e100f; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.24); }
 
-/* Soft Luxury Minimalism Tokens */
+/* ── Glass card system ── */
 .soft-card {
-  background: #ffffff;
-  border: 1px solid #ebe7df;
-  border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(24, 23, 22, 0.02);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-
 .soft-card:hover {
-  border-color: #dedad0;
-  box-shadow: 0 4px 12px rgba(24, 23, 22, 0.04);
+  border-color: rgba(249, 115, 22, 0.35);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(249,115,22,0.06);
 }
 
+/* ── Buttons ── */
 .btn-ink {
-  background-color: #181716;
-  color: #ffffff;
-  border: 1px solid #181716;
-  font-weight: 600;
-  border-radius: 8px;
+  background: linear-gradient(180deg, #f97316, #ea580c);
+  color: #fff;
+  border: 1px solid rgba(249, 115, 22, 0.6);
+  font-weight: 700;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.25);
   transition: all 0.15s ease;
 }
-
 .btn-ink:hover {
-  background-color: #2e2c29;
-  border-color: #2e2c29;
+  background: linear-gradient(180deg, #fb923c, #f97316);
+  box-shadow: 0 6px 22px rgba(249, 115, 22, 0.4);
 }
 
 .btn-subtle {
-  background-color: #ffffff;
-  color: #181716;
-  border: 1px solid #dedad0;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f4f2ec;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
   transition: all 0.15s ease;
 }
-
-.btn-subtle:hover {
-  background-color: #f6f4ee;
-  border-color: #cbca2;
-}
+.btn-subtle:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255,255,255,0.25); }
 
 .btn-stone {
-  background-color: #f4f2eb;
-  color: #181716;
-  border: 1px solid #e7e3d8;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4f2ec;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0.15s ease;
 }
+.btn-stone:hover { background: rgba(255, 255, 255, 0.09); border-color: rgba(255,255,255,0.2); }
 
-.btn-stone:hover {
-  background-color: #eae6dc;
-}
-
-/* Soft, Quiet Badges */
+/* ── Badges (dark glass) ── */
 .badge-clinical {
-  background-color: #f1f5f2;
-  color: #2b4530;
-  border: 1px solid #dbe5dc;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  background-color: rgba(249, 115, 22, 0.12);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.28);
+  font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px;
+  display: inline-flex; align-items: center; gap: 4px;
 }
-
 .badge-warm {
-  background-color: #faf5ee;
-  color: #785328;
-  border: 1px solid #ede1cf;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  background-color: rgba(245, 158, 11, 0.12);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px;
+  display: inline-flex; align-items: center; gap: 4px;
 }
-
 .badge-neutral {
-  background-color: #f5f4ef;
-  color: #5c5851;
-  border: 1px solid #e6e4dc;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.07);
+  color: #d6d3d1;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px;
+  display: inline-flex; align-items: center; gap: 4px;
 }
-
 .badge-flag {
-  background-color: #fdf2f2;
-  color: #8c3232;
-  border: 1px solid #f5d5d5;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 6px;
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px;
 }
 
-/* Editorial serif titles when desired */
-.font-serif-title {
-  font-family: var(--font-serif);
-}
+.font-serif-title { font-family: var(--font-serif); }

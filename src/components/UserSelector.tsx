@@ -28,7 +28,7 @@ export function UserSelector({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-slate-200 shadow-xl rounded-2xl overflow-hidden z-50">
+        <div className="absolute top-full left-0 mt-2 w-64 bg-white/[0.06] border border-slate-200 shadow-xl rounded-2xl overflow-hidden z-50">
           <div className="p-3 bg-slate-50 border-b border-slate-100 flex items-center gap-2 text-xs font-medium text-slate-500 uppercase tracking-wider">
             <Users className="w-4 h-4" /> Synthetic Users
           </div>
@@ -42,7 +42,7 @@ export function UserSelector({
                 }}
                 className={cn(
                   "flex items-center gap-3 w-full p-3 text-left hover:bg-slate-50 transition-colors border-l-2",
-                  selectedUser.id === user.id ? "border-indigo-500 bg-indigo-50/50" : "border-transparent"
+                  selectedUser.id === user.id ? "border-orange-500/100 bg-orange-500/10/50" : "border-transparent"
                 )}
               >
                 <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full bg-slate-200" />

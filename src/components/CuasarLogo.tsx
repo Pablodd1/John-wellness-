@@ -36,7 +36,7 @@ export function CuasarLogo({
       <div className={cn(
         iconSizes[size],
         "rounded-lg flex items-center justify-center relative overflow-hidden transition-transform",
-        isLight ? "bg-white border border-stone-200 shadow-xs" : "bg-[#181716] text-white shadow-xs"
+        isLight ? "bg-white/[0.06] border border-stone-200 shadow-xs" : "bg-orange-600 text-white shadow-xs"
       )}>
         <svg 
           viewBox="0 0 40 40" 
@@ -101,7 +101,7 @@ export function CuasarLogo({
           <span className={cn(
             "font-extrabold tracking-tight font-sans",
             textSizes[size],
-            isLight ? "text-white" : "text-[#181716]"
+            isLight ? "text-white" : "text-[#f4f2ec]"
           )}>
             CUASAR<span className="font-serif italic font-bold">X</span>
           </span>
@@ -110,7 +110,7 @@ export function CuasarLogo({
         {showSubtitle && (
           <span className={cn(
             "text-[9px] tracking-[0.16em] uppercase font-semibold mt-0.5",
-            isLight ? "text-stone-300" : "text-[#6e6960]"
+            isLight ? "text-stone-300" : "text-stone-400"
           )}>
             LONGEVITY BY KEEL
           </span>

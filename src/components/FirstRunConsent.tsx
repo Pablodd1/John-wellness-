@@ -45,10 +45,10 @@ export function FirstRunConsent() {
   };
 
   const optionalToggle = (label: string, info: typeof aiInfo, value: boolean | null, setter: (v: boolean) => void) => (
-    <div className="flex items-start justify-between gap-4 p-3.5 rounded-xl border border-[#ebe7df] bg-[#faf9f6]">
+    <div className="flex items-start justify-between gap-4 p-3.5 rounded-xl border border-white/10 bg-white/[0.05]">
       <div className="min-w-0">
-        <span className="text-xs font-bold text-[#181716] block">{label} <span className="font-normal text-[#6e6960]">— optional</span></span>
-        <span className="text-[11px] text-[#5c5851] block mt-0.5 leading-relaxed">{info.summary}</span>
+        <span className="text-xs font-bold text-[#f4f2ec] block">{label} <span className="font-normal text-stone-400">— optional</span></span>
+        <span className="text-[11px] text-stone-400 block mt-0.5 leading-relaxed">{info.summary}</span>
       </div>
       <div className="flex items-center gap-1.5 flex-shrink-0" role="group" aria-label={`${label} choose yes or no`}>
         <button
@@ -57,8 +57,8 @@ export function FirstRunConsent() {
           aria-label={`${label}: yes`}
           onClick={() => setter(true)}
           className={cn(
-            'px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]',
-            value === true ? 'bg-[#344a37] text-white border-[#344a37]' : 'bg-white text-[#5c5851] border-[#dedad0] hover:bg-[#f6f4ee]'
+            'px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500',
+            value === true ? 'bg-orange-500 text-white border-orange-500' : 'bg-white/[0.06] text-stone-400 border-white/15 hover:bg-white/[0.05]'
           )}
         >
           Yes
@@ -69,8 +69,8 @@ export function FirstRunConsent() {
           aria-label={`${label}: no`}
           onClick={() => setter(false)}
           className={cn(
-            'px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]',
-            value === false ? 'bg-[#181716] text-white border-[#181716]' : 'bg-white text-[#5c5851] border-[#dedad0] hover:bg-[#f6f4ee]'
+            'px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500',
+            value === false ? 'bg-orange-600 text-white border-orange-600' : 'bg-white/[0.06] text-stone-400 border-white/15 hover:bg-white/[0.05]'
           )}
         >
           No
@@ -87,63 +87,63 @@ export function FirstRunConsent() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="firstrun-title"
-          className="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8"
+          className="bg-white/[0.06] rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8"
         >
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-[#f1f5f2] rounded-xl border border-[#dbe5dc]">
-              <ShieldCheck className="w-6 h-6 text-[#344a37]" aria-hidden="true" />
+            <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/25">
+              <ShieldCheck className="w-6 h-6 text-orange-400" aria-hidden="true" />
             </div>
             <div>
-              <h1 id="firstrun-title" className="text-lg font-bold text-[#181716]">Your data, your rules</h1>
-              <span className="text-[11px] text-[#6e6960] font-mono">Privacy notice &amp; terms of engagement • v{PRIVACY_POLICY_VERSION}</span>
+              <h1 id="firstrun-title" className="text-lg font-bold text-[#f4f2ec]">Your data, your rules</h1>
+              <span className="text-[11px] text-stone-400 font-mono">Privacy notice &amp; terms of engagement • v{PRIVACY_POLICY_VERSION}</span>
             </div>
           </div>
 
-          <p className="text-xs text-[#5c5851] leading-relaxed">
+          <p className="text-xs text-stone-400 leading-relaxed">
             This app handles health information, so before you use it you need to know — and choose — what happens with
             your data. The short version:
           </p>
 
-          <ul className="text-xs text-[#181716] space-y-2" aria-label="Summary of our data practices">
+          <ul className="text-xs text-[#f4f2ec] space-y-2" aria-label="Summary of our data practices">
             <li className="flex gap-2.5">
-              <Check className="w-4 h-4 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <Check className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
               <span><strong>Everything is off by default.</strong> Each data use (AI analysis, wearable sync, research, community sharing, marketing) is a separate choice you control in the Privacy &amp; Consent center.</span>
             </li>
             <li className="flex gap-2.5">
-              <Check className="w-4 h-4 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <Check className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
               <span><strong>You can withdraw any consent at any time,</strong> and video visits ask for their own informed consent before you join.</span>
             </li>
             <li className="flex gap-2.5">
-              <Check className="w-4 h-4 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <Check className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
               <span><strong>Every consent action is written to an audit log</strong> you can view, and you can export or request deletion of your data at any time.</span>
             </li>
             <li className="flex gap-2.5">
-              <Check className="w-4 h-4 text-[#344a37] flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <Check className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
               <span><strong>This demo stores everything locally in your browser</strong> — nothing is sent to a server.</span>
             </li>
           </ul>
 
           <div className="space-y-2">
-            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-[#ebe7df] cursor-pointer hover:bg-[#faf9f6]">
-              <input type="checkbox" checked={privacyAck} onChange={(e) => setPrivacyAck(e.target.checked)} className="accent-[#344a37] w-4 h-4 mt-0.5" />
-              <span className="text-xs text-[#181716]">I have read and understand the <strong>Privacy Notice</strong>, including what data the app collects and my rights to access, export, correct, and delete it.</span>
+            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-white/10 cursor-pointer hover:bg-white/[0.05]">
+              <input type="checkbox" checked={privacyAck} onChange={(e) => setPrivacyAck(e.target.checked)} className="accent-orange-500 w-4 h-4 mt-0.5" />
+              <span className="text-xs text-[#f4f2ec]">I have read and understand the <strong>Privacy Notice</strong>, including what data the app collects and my rights to access, export, correct, and delete it.</span>
             </label>
-            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-[#ebe7df] cursor-pointer hover:bg-[#faf9f6]">
-              <input type="checkbox" checked={termsAck} onChange={(e) => setTermsAck(e.target.checked)} className="accent-[#344a37] w-4 h-4 mt-0.5" />
-              <span className="text-xs text-[#181716]">I accept the <strong>Terms of Engagement</strong>: wellness support, not medical care; not for emergencies (call 911); clinicians may communicate through the app.</span>
+            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-white/10 cursor-pointer hover:bg-white/[0.05]">
+              <input type="checkbox" checked={termsAck} onChange={(e) => setTermsAck(e.target.checked)} className="accent-orange-500 w-4 h-4 mt-0.5" />
+              <span className="text-xs text-[#f4f2ec]">I accept the <strong>Terms of Engagement</strong>: wellness support, not medical care; not for emergencies (call 911); clinicians may communicate through the app.</span>
             </label>
           </div>
 
           <div className="space-y-2">
-            <span className="text-xs font-bold text-[#181716] block">Choose now or later — both are fine:</span>
+            <span className="text-xs font-bold text-[#f4f2ec] block">Choose now or later — both are fine:</span>
             {optionalToggle('AI Clinical Analysis', aiInfo, aiChoice, setAiChoice)}
             {optionalToggle('Product Analytics', analyticsInfo, analyticsChoice, setAnalyticsChoice)}
             {optionalToggle('Product & Marketing Communications', marketingInfo, marketingChoice, setMarketingChoice)}
           </div>
 
           <div>
-            <label htmlFor="firstrun-signature" className="block font-bold text-xs text-[#181716] mb-1">
-              Electronic signature <span className="text-[#8c3232]">*</span>
+            <label htmlFor="firstrun-signature" className="block font-bold text-xs text-[#f4f2ec] mb-1">
+              Electronic signature <span className="text-red-400">*</span>
             </label>
             <input
               id="firstrun-signature"
@@ -152,12 +152,12 @@ export function FirstRunConsent() {
               onChange={(e) => setSignature(e.target.value)}
               autoComplete="name"
               placeholder="Your full name"
-              className="w-full px-3 py-2 rounded-lg border border-[#e5e1d7] bg-[#fbfaf8] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#181716] focus:bg-white"
+              className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
             />
           </div>
 
           {error && (
-            <p role="alert" className="text-[11px] text-[#8c3232] font-bold flex items-center gap-1.5">
+            <p role="alert" className="text-[11px] text-red-400 font-bold flex items-center gap-1.5">
               <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" /> {error}
             </p>
           )}
@@ -165,13 +165,13 @@ export function FirstRunConsent() {
           <button
             type="submit"
             disabled={!canSubmit}
-            className="btn-ink w-full py-2.5 text-xs inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2 cursor-pointer"
+            className="btn-ink w-full py-2.5 text-xs inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 cursor-pointer"
           >
             <ScrollText className="w-4 h-4" aria-hidden="true" />
             Acknowledge &amp; continue
           </button>
 
-          <p className="text-[10px] text-[#6e6960] text-center">
+          <p className="text-[10px] text-stone-400 text-center">
             Skipping the optional choices keeps them off. You can change everything later in Privacy &amp; Consent.
           </p>
         </form>

@@ -87,15 +87,15 @@ export function SubscriptionsPanel({
   };
 
   return (
-    <section aria-labelledby="subs-heading" className="bg-white p-5 rounded-2xl border border-[#ebe7df] shadow-sm space-y-3">
-      <h2 id="subs-heading" className="text-sm font-bold text-[#181716] flex items-center gap-2">
-        <RefreshCw className="w-4 h-4 text-[#344a37]" aria-hidden="true" /> My Auto-Deliveries
+    <section aria-labelledby="subs-heading" className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm space-y-3">
+      <h2 id="subs-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+        <RefreshCw className="w-4 h-4 text-orange-400" aria-hidden="true" /> My Auto-Deliveries
       </h2>
 
       {subs === null ? (
-        <p className="text-xs text-[#6e6960]">Loading subscriptions…</p>
+        <p className="text-xs text-stone-400">Loading subscriptions…</p>
       ) : subs.length === 0 ? (
-        <p className="text-xs text-[#5c5851] p-4 bg-[#faf9f6] rounded-xl border border-[#ebe7df]">
+        <p className="text-xs text-stone-400 p-4 bg-white/[0.05] rounded-xl border border-white/10">
           No auto-deliveries yet. Tick <strong>"Auto-Delivery (Save 15%)"</strong> on any cart item at checkout and it
           appears here — pause, skip, or reschedule anytime. No lock-in, ever.
         </p>
@@ -108,21 +108,21 @@ export function SubscriptionsPanel({
                 key={sub.id}
                 className={cn(
                   'p-3.5 rounded-xl border space-y-2',
-                  due ? 'bg-[#faf5ee] border-[#ede1cf]' : 'bg-[#faf9f6] border-[#ebe7df]'
+                  due ? 'bg-amber-500/10 border-amber-500/25' : 'bg-white/[0.05] border-white/10'
                 )}
               >
                 <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <span className="text-xs font-bold text-[#181716]">{sub.product_name}</span>
+                  <span className="text-xs font-bold text-[#f4f2ec]">{sub.product_name}</span>
                   <span className={cn(
                     'px-2 py-0.5 rounded-md text-[10px] font-bold uppercase border',
-                    sub.status === 'active' ? 'bg-[#f1f5f2] text-[#2b4530] border-[#dbe5dc]' : 'bg-[#f5f4ef] text-[#5c5851] border-[#e6e4dc]'
+                    sub.status === 'active' ? 'bg-orange-500/10 text-orange-300 border-orange-500/25' : 'bg-white/[0.05] text-stone-400 border-white/10'
                   )}>
                     {sub.status}
                   </span>
                 </div>
 
-                <div className="text-[11px] text-[#5c5851] flex items-center gap-2 flex-wrap">
-                  <span className={cn('inline-flex items-center gap-1 font-semibold', due && 'text-[#785328]')}>
+                <div className="text-[11px] text-stone-400 flex items-center gap-2 flex-wrap">
+                  <span className={cn('inline-flex items-center gap-1 font-semibold', due && 'text-amber-300')}>
                     <Truck className="w-3 h-3" aria-hidden="true" />
                     {sub.status === 'paused' ? 'Paused' : `Next delivery: ${format(new Date(sub.next_delivery), 'MMM d')}`}
                     {due && ' — due soon'}
@@ -133,7 +133,7 @@ export function SubscriptionsPanel({
                 {due && sub.status === 'active' && (
                   <button
                     onClick={() => deliverNow(sub)}
-                    className="px-3 py-1.5 bg-[#785328] hover:bg-[#654621] text-white text-[11px] font-bold rounded-lg transition-colors inline-flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#785328]"
+                    className="px-3 py-1.5 bg-[#785328] hover:bg-amber-600 text-white text-[11px] font-bold rounded-lg transition-colors inline-flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
                   >
                     <FastForward className="w-3 h-3" aria-hidden="true" /> Deliver now — reorder in one click
                   </button>
@@ -145,7 +145,7 @@ export function SubscriptionsPanel({
                       <button
                         onClick={() => patch(sub, { status: 'paused' })}
                         disabled={busyId === sub.id}
-                        className="btn-stone px-2.5 py-1 text-[10px] inline-flex items-center gap-1 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                        className="btn-stone px-2.5 py-1 text-[10px] inline-flex items-center gap-1 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                       >
                         <Pause className="w-3 h-3" aria-hidden="true" /> Pause
                       </button>
@@ -154,7 +154,7 @@ export function SubscriptionsPanel({
                       <button
                         onClick={() => patch(sub, { status: 'active' })}
                         disabled={busyId === sub.id}
-                        className="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-[#dbe5dc] bg-[#f1f5f2] text-[#2b4530] hover:bg-[#e6efe7] inline-flex items-center gap-1 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                        className="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-orange-500/25 bg-orange-500/10 text-orange-300 hover:bg-[#e6efe7] inline-flex items-center gap-1 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                       >
                         <Play className="w-3 h-3" aria-hidden="true" /> Resume
                       </button>
@@ -163,7 +163,7 @@ export function SubscriptionsPanel({
                       <button
                         onClick={() => skipNext(sub)}
                         disabled={busyId === sub.id}
-                        className="btn-stone px-2.5 py-1 text-[10px] inline-flex items-center gap-1 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                        className="btn-stone px-2.5 py-1 text-[10px] inline-flex items-center gap-1 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                       >
                         <FastForward className="w-3 h-3" aria-hidden="true" /> Skip next
                       </button>
@@ -173,13 +173,13 @@ export function SubscriptionsPanel({
                       disabled={busyId === sub.id}
                       onChange={(e) => patch(sub, { cadence_days: Number(e.target.value) })}
                       aria-label={`Delivery cadence for ${sub.product_name}`}
-                      className="px-2 py-1 text-[10px] rounded-lg border border-[#dedad0] bg-white text-[#181716] focus:outline-none focus:ring-2 focus:ring-[#181716] cursor-pointer"
+                      className="px-2 py-1 text-[10px] rounded-lg border border-white/15 bg-white/[0.06] text-[#f4f2ec] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
                     >
                       {[14, 30, 45, 60, 90].map(d => <option key={d} value={d}>Every {d} days</option>)}
                     </select>
                     <button
                       onClick={() => setCancelTarget(sub)}
-                      className="text-[10px] font-bold text-[#8c3232] hover:underline ml-auto cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c3232] rounded"
+                      className="text-[10px] font-bold text-red-400 hover:underline ml-auto cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded"
                     >
                       Cancel
                     </button>
@@ -191,7 +191,7 @@ export function SubscriptionsPanel({
         </ul>
       )}
 
-      <p className="text-[10px] text-[#6e6960] flex items-start gap-1.5">
+      <p className="text-[10px] text-stone-400 flex items-start gap-1.5">
         <ShieldCheck className="w-3 h-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
         No lock-in: pause, skip, or cancel anytime — deliveries are simulated in this MVP, so nothing ships and no charge recurs.
       </p>
@@ -203,62 +203,62 @@ export function SubscriptionsPanel({
             role="dialog"
             aria-modal="true"
             aria-labelledby="cancel-title"
-            className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-[#ebe7df] space-y-4"
+            className="bg-white/[0.06] rounded-2xl max-w-md w-full p-6 shadow-xl border border-white/10 space-y-4"
           >
-            <div className="flex items-center gap-2 text-[#785328]">
+            <div className="flex items-center gap-2 text-amber-300">
               <CalendarX className="w-5 h-5" aria-hidden="true" />
-              <h3 id="cancel-title" className="text-sm font-bold text-[#181716]">
+              <h3 id="cancel-title" className="text-sm font-bold text-[#f4f2ec]">
                 Before you cancel {cancelTarget.product_name}…
               </h3>
             </div>
-            <p className="text-xs text-[#5c5851] leading-relaxed">
+            <p className="text-xs text-stone-400 leading-relaxed">
               Most people cancel because of timing, not because the product stopped working. Take one of these instead:
             </p>
 
             <div className="space-y-2">
               {saveOfferUsed === cancelTarget.id ? (
-                <div className="p-3 bg-[#f1f5f2] border border-[#dbe5dc] rounded-xl text-xs text-[#2b4530] font-bold flex items-center gap-2">
+                <div className="p-3 bg-orange-500/10 border border-orange-500/25 rounded-xl text-xs text-orange-300 font-bold flex items-center gap-2">
                   <Tag className="w-4 h-4" aria-hidden="true" />
                   30% off locked in — next delivery pushed 2 weeks so you can use it.
                 </div>
               ) : (
                 <button
                   onClick={() => confirmCancel('discount')}
-                  className="w-full p-3 text-left rounded-xl border-2 border-[#344a37] bg-[#f1f5f2] hover:bg-[#e6efe7] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                  className="w-full p-3 text-left rounded-xl border-2 border-orange-500 bg-orange-500/10 hover:bg-[#e6efe7] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                 >
-                  <span className="text-xs font-bold text-[#2b4530] flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-orange-300 flex items-center gap-1.5">
                     <Tag className="w-3.5 h-3.5" aria-hidden="true" /> Take 30% off your next delivery
                   </span>
-                  <span className="text-[11px] text-[#5c5851] block mt-0.5">Plus we'll push the next delivery 2 weeks out.</span>
+                  <span className="text-[11px] text-stone-400 block mt-0.5">Plus we'll push the next delivery 2 weeks out.</span>
                 </button>
               )}
 
               {!saveOfferUsed && (
                 <button
                   onClick={() => confirmCancel('pause')}
-                  className="w-full p-3 text-left rounded-xl border border-[#ebe7df] bg-white hover:bg-[#faf9f6] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                  className="w-full p-3 text-left rounded-xl border border-white/10 bg-white/[0.06] hover:bg-white/[0.05] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                 >
-                  <span className="text-xs font-bold text-[#181716] flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5">
                     <Pause className="w-3.5 h-3.5" aria-hidden="true" /> Just pause it for now
                   </span>
-                  <span className="text-[11px] text-[#5c5851] block mt-0.5">Resume whenever you're ready — nothing is deleted.</span>
+                  <span className="text-[11px] text-stone-400 block mt-0.5">Resume whenever you're ready — nothing is deleted.</span>
                 </button>
               )}
 
               <button
                 onClick={() => confirmCancel('cancel')}
-                className="w-full p-3 text-left rounded-xl border border-[#f5d5d5] bg-[#fffbfa] hover:bg-[#fdf2f2] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c3232]"
+                className="w-full p-3 text-left rounded-xl border border-red-500/25 bg-red-500/[0.06] hover:bg-red-500/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
               >
-                <span className="text-xs font-bold text-[#8c3232] flex items-center gap-1.5">
+                <span className="text-xs font-bold text-red-400 flex items-center gap-1.5">
                   <AlertTriangle className="w-3.5 h-3.5" aria-hidden="true" /> Cancel completely
                 </span>
-                <span className="text-[11px] text-[#5c5851] block mt-0.5">Stops all future deliveries. You can re-subscribe anytime.</span>
+                <span className="text-[11px] text-stone-400 block mt-0.5">Stops all future deliveries. You can re-subscribe anytime.</span>
               </button>
             </div>
 
             <button
               onClick={() => setCancelTarget(null)}
-              className="w-full text-[11px] font-semibold text-[#5c5851] hover:text-[#181716] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded"
+              className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#f4f2ec] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
             >
               Keep my subscription as it is
             </button>

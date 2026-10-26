@@ -4,9 +4,9 @@ import { Sparkles } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const INTENT_COPY: Record<Intent, { label: string; classes: string }> = {
-  browsing: { label: 'Exploring mode — curated picks are being tuned to your profile', classes: 'bg-[#eef2ff] text-[#3730a3] border-[#c7d2fe]' },
-  comparing: { label: 'Comparing mode — evidence grades and match reasons can help', classes: 'bg-[#f5f3ff] text-[#5b21b6] border-[#ddd6fe]' },
-  buying: { label: 'Buyer mode — your cart is saved and checkouts are one step faster', classes: 'bg-[#f1f5f2] text-[#2b4530] border-[#dbe5dc]' },
+  browsing: { label: 'Exploring mode — curated picks are being tuned to your profile', classes: 'bg-orange-500/10 text-orange-300 border-orange-500/25' },
+  comparing: { label: 'Comparing mode — evidence grades and match reasons can help', classes: 'bg-orange-500/10 text-orange-300 border-orange-500/25' },
+  buying: { label: 'Buyer mode — your cart is saved and checkouts are one step faster', classes: 'bg-orange-500/10 text-orange-300 border-orange-500/25' },
 };
 
 /**

@@ -118,13 +118,13 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Layers className="w-5 h-5 text-indigo-600" /> 2D Vector Brand Logo Options
+            <Layers className="w-5 h-5 text-orange-500" /> 2D Vector Brand Logo Options
           </h3>
           <p className="text-xs text-slate-500">
             Select your preferred 2D logo identity for JohnMatrix &amp; CuasarX Assistant branding
           </p>
         </div>
-        <span className="text-xs font-extrabold bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full border border-indigo-200">
+        <span className="text-xs font-extrabold bg-orange-500/10 text-indigo-700 px-3 py-1 rounded-full border border-orange-500/25">
           Active: {selectedLogo.subtitle}
         </span>
       </div>
@@ -141,8 +141,8 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
               className={cn(
                 "p-6 rounded-3xl border text-left transition-all flex flex-col justify-between space-y-4 cursor-pointer group hover:shadow-md",
                 isSelected
-                  ? "border-indigo-600 ring-2 ring-indigo-600/20 bg-white shadow-sm"
-                  : "border-slate-200 bg-slate-50/60 hover:bg-white hover:border-slate-300"
+                  ? "border-orange-500 ring-2 ring-orange-500/20 bg-white/[0.06] shadow-sm"
+                  : "border-slate-200 bg-slate-50/60 hover:bg-white/[0.06] hover:border-slate-300"
               )}
             >
               <div>
@@ -150,13 +150,13 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                   {/* 2D Logo Container */}
                   <div className={cn(
                     "w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm",
-                    isSelected ? "bg-slate-900 text-amber-400" : "bg-white text-slate-800 border border-slate-200"
+                    isSelected ? "bg-slate-900 text-amber-400" : "bg-white/[0.06] text-slate-800 border border-slate-200"
                   )}>
                     <IconComp className="w-9 h-9" />
                   </div>
 
                   {isSelected ? (
-                    <span className="px-3 py-1 bg-indigo-600 text-white rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
+                    <span className="px-3 py-1 bg-orange-500 text-white rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
                       <Check className="w-3.5 h-3.5" /> Active Logo
                     </span>
                   ) : (
@@ -166,10 +166,10 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                   )}
                 </div>
 
-                <h4 className="font-extrabold text-slate-900 text-base group-hover:text-indigo-600 transition-colors mb-1">
+                <h4 className="font-extrabold text-slate-900 text-base group-hover:text-orange-500 transition-colors mb-1">
                   {logo.name}
                 </h4>
-                <p className="text-xs font-semibold text-indigo-600 mb-2">{logo.subtitle}</p>
+                <p className="text-xs font-semibold text-orange-500 mb-2">{logo.subtitle}</p>
                 <p className="text-xs text-slate-600 leading-relaxed mb-3">{logo.designConcept}</p>
               </div>
 

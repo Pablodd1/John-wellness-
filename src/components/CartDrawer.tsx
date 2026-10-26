@@ -206,9 +206,9 @@ export function CartDrawer({
               aria-current={active ? 'step' : undefined}
               className={cn(
                 'px-2 py-0.5 rounded-md border',
-                active ? 'bg-[#181716] text-white border-[#181716]'
-                  : done ? 'bg-[#f1f5f2] text-[#2b4530] border-[#dbe5dc]'
-                  : 'bg-white text-[#6e6960] border-[#ebe7df]'
+                active ? 'bg-orange-600 text-white border-orange-600'
+                  : done ? 'bg-orange-500/10 text-orange-300 border-orange-500/25'
+                  : 'bg-white/[0.06] text-stone-400 border-white/10'
               )}
             >
               {i + 1}. {labels[s]}
@@ -220,8 +220,8 @@ export function CartDrawer({
     </ol>
   );
 
-  const input = 'w-full px-3 py-2 rounded-lg text-xs bg-[#fbfaf8] border border-[#e5e1d7] focus:outline-none focus:ring-2 focus:ring-[#181716] focus:bg-white';
-  const label = 'block text-[11px] font-bold text-[#181716] mb-1';
+  const input = 'w-full px-3 py-2 rounded-lg text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]';
+  const label = 'block text-[11px] font-bold text-[#f4f2ec] mb-1';
 
   return (
     <>
@@ -246,17 +246,17 @@ export function CartDrawer({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 240 }}
-              className="fixed right-0 top-0 bottom-0 w-full sm:w-[460px] bg-white z-50 shadow-2xl flex flex-col border-l border-[#ebe7df] overflow-hidden focus:outline-none"
+              className="fixed right-0 top-0 bottom-0 w-full sm:w-[460px] bg-white/[0.06] z-50 shadow-2xl flex flex-col border-l border-white/10 overflow-hidden focus:outline-none"
             >
               {/* Header */}
-              <div className="p-4 flex items-center justify-between border-b border-[#f4f2ec] flex-shrink-0 gap-2">
+              <div className="p-4 flex items-center justify-between border-b border-white/[0.08] flex-shrink-0 gap-2">
                 <CuasarLogo size="sm" showSubtitle={true} />
                 <div className="flex items-center gap-2">
                   {step !== 'cart' && stepIndicator}
                   <button
                     onClick={() => (step !== 'cart' ? setStep('cart') : onClose())}
                     aria-label="Close cart"
-                    className="p-1 text-[#8a857b] hover:text-[#181716] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                    className="p-1 text-stone-500 hover:text-[#f4f2ec] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                   >
                     <X className="w-5 h-5" aria-hidden="true" />
                   </button>
@@ -266,55 +266,55 @@ export function CartDrawer({
               {/* ---- ADDRESS STEP ---- */}
               {step === 'address' && (
                 <form onSubmit={handleAddressContinue} className="flex-1 overflow-y-auto p-4 space-y-3">
-                  <h3 className="text-sm font-bold text-[#181716] flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#344a37]" aria-hidden="true" /> Delivery address
+                  <h3 className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-orange-400" aria-hidden="true" /> Delivery address
                   </h3>
 
                   <div>
-                    <label htmlFor="co-name" className={label}>Full name <span className="text-[#8c3232]">*</span></label>
+                    <label htmlFor="co-name" className={label}>Full name <span className="text-red-400">*</span></label>
                     <input id="co-name" className={input} value={fullName} onChange={(e) => setFullName(e.target.value)} autoComplete="name" />
                   </div>
                   <div>
-                    <label htmlFor="co-email" className={label}>Email for order updates <span className="text-[#8c3232]">*</span></label>
+                    <label htmlFor="co-email" className={label}>Email for order updates <span className="text-red-400">*</span></label>
                     <input id="co-email" type="email" className={input} value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
                   </div>
                   <div>
-                    <label htmlFor="co-street" className={label}>Street address <span className="text-[#8c3232]">*</span></label>
+                    <label htmlFor="co-street" className={label}>Street address <span className="text-red-400">*</span></label>
                     <input id="co-street" className={input} value={street} onChange={(e) => setStreet(e.target.value)} autoComplete="address-line1" placeholder="450 Mission St" />
                   </div>
                   <div>
-                    <label htmlFor="co-apt" className={label}>Apt / Suite <span className="font-normal text-[#6e6960]">(optional)</span></label>
+                    <label htmlFor="co-apt" className={label}>Apt / Suite <span className="font-normal text-stone-400">(optional)</span></label>
                     <input id="co-apt" className={input} value={apt} onChange={(e) => setApt(e.target.value)} autoComplete="address-line2" />
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     <div className="col-span-1">
-                      <label htmlFor="co-city" className={label}>City <span className="text-[#8c3232]">*</span></label>
+                      <label htmlFor="co-city" className={label}>City <span className="text-red-400">*</span></label>
                       <input id="co-city" className={input} value={city} onChange={(e) => setCity(e.target.value)} autoComplete="address-level2" />
                     </div>
                     <div>
-                      <label htmlFor="co-state" className={label}>State <span className="text-[#8c3232]">*</span></label>
+                      <label htmlFor="co-state" className={label}>State <span className="text-red-400">*</span></label>
                       <input id="co-state" className={input} value={stateCode} onChange={(e) => setStateCode(e.target.value)} autoComplete="address-level1" placeholder="TX" />
                     </div>
                     <div>
-                      <label htmlFor="co-zip" className={label}>ZIP <span className="text-[#8c3232]">*</span></label>
+                      <label htmlFor="co-zip" className={label}>ZIP <span className="text-red-400">*</span></label>
                       <input id="co-zip" className={input} value={zip} onChange={(e) => setZip(e.target.value)} autoComplete="postal-code" placeholder="78701" inputMode="numeric" />
                     </div>
                   </div>
 
                   {addressError && (
-                    <p role="alert" className="text-[11px] text-[#8c3232] font-bold p-2.5 rounded-lg border border-[#f5d5d5] bg-[#fdf2f2]">{addressError}</p>
+                    <p role="alert" className="text-[11px] text-red-400 font-bold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10">{addressError}</p>
                   )}
 
                   <button
                     type="submit"
-                    className="w-full py-2.5 px-4 rounded-lg font-semibold text-xs btn-ink flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2"
+                    className="w-full py-2.5 px-4 rounded-lg font-semibold text-xs btn-ink flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
                   >
                     Continue to payment <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                   <button
                     type="button"
                     onClick={() => setStep('cart')}
-                    className="w-full text-[11px] font-semibold text-[#5c5851] hover:text-[#181716] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded"
+                    className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#f4f2ec] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
                   >
                     ← Back to cart
                   </button>
@@ -324,11 +324,11 @@ export function CartDrawer({
               {/* ---- PAYMENT STEP (SIMULATED) ---- */}
               {step === 'payment' && (
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  <h3 className="text-sm font-bold text-[#181716] flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-[#344a37]" aria-hidden="true" /> Payment
+                  <h3 className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+                    <CreditCard className="w-4 h-4 text-orange-400" aria-hidden="true" /> Payment
                   </h3>
 
-                  <p className="text-[11px] text-[#785328] font-semibold p-3 rounded-xl border border-[#ede1cf] bg-[#faf5ee] flex items-start gap-2">
+                  <p className="text-[11px] text-amber-300 font-semibold p-3 rounded-xl border border-amber-500/25 bg-amber-500/10 flex items-start gap-2">
                     <FlaskConical className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <span>
                       <strong>Test mode — no real charge.</strong> Stripe isn't connected yet, so this checkout runs a
@@ -337,44 +337,44 @@ export function CartDrawer({
                     </span>
                   </p>
 
-                  <div className="p-4 rounded-xl border border-[#ebe7df] bg-[#faf9f6] space-y-2" aria-label="Simulated card details">
-                    <span className="text-[11px] font-bold text-[#181716] block">Simulated card on file</span>
-                    <div className="flex items-center gap-2 text-xs font-mono text-[#5c5851]">
-                      <CreditCard className="w-4 h-4 text-[#8a857b]" aria-hidden="true" />
+                  <div className="p-4 rounded-xl border border-white/10 bg-white/[0.05] space-y-2" aria-label="Simulated card details">
+                    <span className="text-[11px] font-bold text-[#f4f2ec] block">Simulated card on file</span>
+                    <div className="flex items-center gap-2 text-xs font-mono text-stone-400">
+                      <CreditCard className="w-4 h-4 text-stone-500" aria-hidden="true" />
                       <span>•••• •••• •••• 4242</span>
-                      <span className="ml-auto text-[10px] text-[#6e6960]">TEST CARD</span>
+                      <span className="ml-auto text-[10px] text-stone-400">TEST CARD</span>
                     </div>
-                    <div className="flex gap-2 text-[10px] text-[#6e6960]">
+                    <div className="flex gap-2 text-[10px] text-stone-400">
                       <span>Exp 12/29</span><span>CVC •••</span>
                     </div>
                   </div>
 
-                  <div className="space-y-1 text-xs text-[#5c5851] border-t border-[#ebe7df] pt-3">
-                    <div className="flex justify-between"><span>Items ({itemsCount})</span><span className="font-semibold text-[#181716]">${subtotal.toFixed(2)}</span></div>
+                  <div className="space-y-1 text-xs text-stone-400 border-t border-white/10 pt-3">
+                    <div className="flex justify-between"><span>Items ({itemsCount})</span><span className="font-semibold text-[#f4f2ec]">${subtotal.toFixed(2)}</span></div>
                     {appliedDiscount > 0 && (
-                      <div className="flex justify-between text-[#2b4530] font-medium"><span>Discount ({(appliedDiscount * 100).toFixed(0)}%)</span><span>-${discountAmount.toFixed(2)}</span></div>
+                      <div className="flex justify-between text-orange-300 font-medium"><span>Discount ({(appliedDiscount * 100).toFixed(0)}%)</span><span>-${discountAmount.toFixed(2)}</span></div>
                     )}
-                    <div className="flex justify-between"><span>Shipping</span><span>{shippingCost === 0 ? <strong className="text-[#2b4530]">Free</strong> : `$${shippingCost.toFixed(2)}`}</span></div>
+                    <div className="flex justify-between"><span>Shipping</span><span>{shippingCost === 0 ? <strong className="text-orange-300">Free</strong> : `$${shippingCost.toFixed(2)}`}</span></div>
                     <div className="flex justify-between"><span>Estimated tax</span><span>${estimatedTax.toFixed(2)}</span></div>
 
                     {pointsBalance >= 100 && maxLoyaltyDiscount >= 5 ? (
-                      <label className="flex items-center justify-between gap-2 p-2 mt-1 rounded-lg border border-[#dbe5dc] bg-[#f1f5f2] cursor-pointer">
-                        <span className="text-[11px] font-bold text-[#2b4530] flex items-center gap-1.5">
+                      <label className="flex items-center justify-between gap-2 p-2 mt-1 rounded-lg border border-orange-500/25 bg-orange-500/10 cursor-pointer">
+                        <span className="text-[11px] font-bold text-orange-300 flex items-center gap-1.5">
                           <input
                             type="checkbox"
                             checked={redeemPoints}
                             onChange={(e) => setRedeemPoints(e.target.checked)}
-                            className="accent-[#344a37] w-3.5 h-3.5"
+                            className="accent-orange-500 w-3.5 h-3.5"
                           />
                           Redeem {Math.min(pointsBalance, Math.ceil(maxLoyaltyDiscount / 5) * 100)} loyalty pts
                         </span>
-                        <span className="text-[11px] font-bold text-[#2b4530]">−${maxLoyaltyDiscount.toFixed(2)}</span>
+                        <span className="text-[11px] font-bold text-orange-300">−${maxLoyaltyDiscount.toFixed(2)}</span>
                       </label>
                     ) : (
-                      <p className="text-[10px] text-[#6e6960] mt-1">Earn 1 loyalty point per $1 — 100 pts = $5 off a future order.</p>
+                      <p className="text-[10px] text-stone-400 mt-1">Earn 1 loyalty point per $1 — 100 pts = $5 off a future order.</p>
                     )}
 
-                    <div className="flex justify-between text-sm font-bold text-[#181716] pt-2 border-t border-[#ebe7df]">
+                    <div className="flex justify-between text-sm font-bold text-[#f4f2ec] pt-2 border-t border-white/10">
                       <span>Total (simulated)</span><span className="text-base">${grandTotal.toFixed(2)}</span>
                     </div>
                   </div>
@@ -382,7 +382,7 @@ export function CartDrawer({
                   <button
                     onClick={handlePlaceOrder}
                     disabled={placing}
-                    className="w-full py-2.5 px-4 rounded-lg font-semibold text-xs btn-ink flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2"
+                    className="w-full py-2.5 px-4 rounded-lg font-semibold text-xs btn-ink flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
                   >
                     {placing ? (
                       <span>Saving your order…</span>
@@ -393,7 +393,7 @@ export function CartDrawer({
                   <button
                     onClick={() => setStep('address')}
                     disabled={placing}
-                    className="w-full text-[11px] font-semibold text-[#5c5851] hover:text-[#181716] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded disabled:opacity-50"
+                    className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#f4f2ec] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded disabled:opacity-50"
                   >
                     ← Back to address
                   </button>
@@ -404,23 +404,23 @@ export function CartDrawer({
               {step === 'cart' && (
                 <>
                   {/* Free Shipping Line */}
-                  <div className="bg-[#faf9f6] border-b border-[#ebe7df] px-4 py-2.5 flex-shrink-0">
+                  <div className="bg-white/[0.05] border-b border-white/10 px-4 py-2.5 flex-shrink-0">
                     <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-[#5c5851] flex items-center gap-1.5">
-                        <Truck className="w-3.5 h-3.5 text-[#344a37]" aria-hidden="true" />
+                      <span className="text-stone-400 flex items-center gap-1.5">
+                        <Truck className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
                         {freeShipping ? (
-                          <span className="text-[#2b4530] font-semibold">Complimentary cold-chain shipping unlocked</span>
+                          <span className="text-orange-300 font-semibold">Complimentary cold-chain shipping unlocked</span>
                         ) : (
                           <span>Add ${(shippingThreshold - subtotal).toFixed(2)} for <strong>free cold-chain shipping</strong></span>
                         )}
                       </span>
-                      <span className="font-mono text-[11px] text-[#8a857b]">
+                      <span className="font-mono text-[11px] text-stone-500">
                         ${subtotal.toFixed(0)} / ${shippingThreshold}
                       </span>
                     </div>
-                    <div className="w-full bg-[#ebe7df] h-1 rounded-full overflow-hidden" aria-hidden="true">
+                    <div className="w-full bg-white/[0.08] h-1 rounded-full overflow-hidden" aria-hidden="true">
                       <div
-                        className="bg-[#181716] h-full rounded-full transition-all duration-300"
+                        className="bg-orange-600 h-full rounded-full transition-all duration-300"
                         style={{ width: `${Math.min(100, (subtotal / shippingThreshold) * 100)}%` }}
                       />
                     </div>
@@ -429,15 +429,15 @@ export function CartDrawer({
                   {/* Items List */}
                   <div className="flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-[#f4f2ec]">
                     {cartItems.length === 0 ? (
-                      <div className="h-full flex flex-col items-center justify-center text-center p-8 text-[#8a857b]">
+                      <div className="h-full flex flex-col items-center justify-center text-center p-8 text-stone-500">
                         <ShoppingBag className="w-8 h-8 text-[#dedad0] mb-2" aria-hidden="true" />
-                        <h3 className="text-sm font-semibold text-[#181716] mb-1">Your cart is empty</h3>
-                        <p className="text-xs text-[#6e6960] max-w-xs mb-4">
+                        <h3 className="text-sm font-semibold text-[#f4f2ec] mb-1">Your cart is empty</h3>
+                        <p className="text-xs text-stone-400 max-w-xs mb-4">
                           Select protocols, clinical micronutrients, or diagnostic panels to begin.
                         </p>
                         <button
                           onClick={onClose}
-                          className="px-4 py-2 bg-[#181716] text-white rounded-lg text-xs font-semibold hover:bg-[#2e2c29] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                          className="px-4 py-2 bg-orange-600 text-white rounded-lg text-xs font-semibold hover:bg-orange-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                         >
                           Explore Formulations
                         </button>
@@ -455,17 +455,17 @@ export function CartDrawer({
                                     {item.product.category}
                                   </span>
                                 </div>
-                                <h4 className="text-xs font-semibold text-[#181716] leading-snug">
+                                <h4 className="text-xs font-semibold text-[#f4f2ec] leading-snug">
                                   {item.product.name}
                                 </h4>
                               </div>
 
                               <div className="text-right flex-shrink-0">
-                                <span className="text-xs font-bold text-[#181716]">
+                                <span className="text-xs font-bold text-[#f4f2ec]">
                                   ${(price * item.quantity).toFixed(2)}
                                 </span>
                                 {item.isSubscription && (
-                                  <span className="block text-[10px] text-[#2b4530] font-semibold">
+                                  <span className="block text-[10px] text-orange-300 font-semibold">
                                     -15% Sub
                                   </span>
                                 )}
@@ -473,16 +473,16 @@ export function CartDrawer({
                             </div>
 
                             {/* Subscription Cadence Selector */}
-                            <div className="bg-[#faf9f6] p-2 rounded-lg border border-[#ebe7df] flex items-center justify-between text-xs">
+                            <div className="bg-white/[0.05] p-2 rounded-lg border border-white/10 flex items-center justify-between text-xs">
                               <label className="flex items-center gap-2 cursor-pointer select-none">
                                 <input
                                   type="checkbox"
                                   checked={item.isSubscription}
                                   onChange={(e) => onToggleSubscription(item.product.id, e.target.checked, item.frequency)}
-                                  className="w-3.5 h-3.5 accent-[#181716] rounded"
+                                  className="w-3.5 h-3.5 accent-orange-500 rounded"
                                 />
-                                <span className="text-[11px] font-medium text-[#181716] flex items-center gap-1">
-                                  <Repeat className="w-3 h-3 text-[#6e6960]" aria-hidden="true" />
+                                <span className="text-[11px] font-medium text-[#f4f2ec] flex items-center gap-1">
+                                  <Repeat className="w-3 h-3 text-stone-400" aria-hidden="true" />
                                   Auto-Delivery (Save 15%)
                                 </span>
                               </label>
@@ -492,7 +492,7 @@ export function CartDrawer({
                                   value={item.frequency}
                                   onChange={(e) => onToggleSubscription(item.product.id, true, e.target.value as CartItem['frequency'])}
                                   aria-label={`Delivery frequency for ${item.product.name}`}
-                                  className="text-[11px] bg-white border border-[#dedad0] rounded px-1.5 py-0.5 text-[#181716] focus:outline-none focus:ring-2 focus:ring-[#181716] cursor-pointer"
+                                  className="text-[11px] bg-white/[0.06] border border-white/15 rounded px-1.5 py-0.5 text-[#f4f2ec] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
                                 >
                                   <option value="30">Every 30 Days</option>
                                   <option value="45">Every 45 Days</option>
@@ -503,21 +503,21 @@ export function CartDrawer({
 
                             {/* Quantity & Remove */}
                             <div className="flex items-center justify-between pt-0.5">
-                              <div className="flex items-center border border-[#ebe7df] rounded-md bg-white overflow-hidden">
+                              <div className="flex items-center border border-white/10 rounded-md bg-white/[0.06] overflow-hidden">
                                 <button
                                   onClick={() => onUpdateQuantity(item.product.id, Math.max(1, item.quantity - 1))}
                                   aria-label={`Decrease quantity of ${item.product.name}`}
-                                  className="p-1 hover:bg-[#f4f2ec] text-[#5c5851] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                                  className="p-1 hover:bg-white/[0.04] text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                                 >
                                   <Minus className="w-3 h-3" aria-hidden="true" />
                                 </button>
-                                <span className="px-2.5 text-xs font-mono text-[#181716]" aria-live="polite">
+                                <span className="px-2.5 text-xs font-mono text-[#f4f2ec]" aria-live="polite">
                                   {item.quantity}
                                 </span>
                                 <button
                                   onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
                                   aria-label={`Increase quantity of ${item.product.name}`}
-                                  className="p-1 hover:bg-[#f4f2ec] text-[#5c5851] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                                  className="p-1 hover:bg-white/[0.04] text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                                 >
                                   <Plus className="w-3 h-3" aria-hidden="true" />
                                 </button>
@@ -525,7 +525,7 @@ export function CartDrawer({
 
                               <button
                                 onClick={() => onRemoveItem(item.product.id)}
-                                className="text-[#8a857b] hover:text-[#8c3232] text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded"
+                                className="text-stone-500 hover:text-red-400 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
                               >
                                 <Trash2 className="w-3 h-3" aria-hidden="true" />
                                 <span>Remove</span>
@@ -539,23 +539,23 @@ export function CartDrawer({
 
                   {/* Footer */}
                   {cartItems.length > 0 && (
-                    <div className="bg-[#faf9f6] border-t border-[#ebe7df] p-4 space-y-3 flex-shrink-0">
+                    <div className="bg-white/[0.05] border-t border-white/10 p-4 space-y-3 flex-shrink-0">
                       <form onSubmit={handleApplyPromo} className="flex gap-2">
                         <div className="relative flex-1">
                           <label htmlFor="promo-input" className="sr-only">Promo code</label>
-                          <Tag className="w-3.5 h-3.5 text-[#8a857b] absolute left-2.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                          <Tag className="w-3.5 h-3.5 text-stone-500 absolute left-2.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
                           <input
                             id="promo-input"
                             type="text"
                             value={promoCode}
                             onChange={(e) => setPromoCode(e.target.value)}
                             placeholder="Promo: LONGEVITY20"
-                            className="w-full pl-8 pr-2 py-1.5 text-xs bg-white border border-[#dedad0] rounded-lg uppercase placeholder:normal-case focus:outline-none focus:ring-2 focus:ring-[#181716] font-mono"
+                            className="w-full pl-8 pr-2 py-1.5 text-xs bg-white/[0.06] border border-white/15 rounded-lg uppercase placeholder:normal-case focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono"
                           />
                         </div>
                         <button
                           type="submit"
-                          className="px-3 py-1.5 bg-[#181716] hover:bg-[#2e2c29] text-white rounded-lg text-xs font-semibold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                          className="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-semibold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                         >
                           Apply
                         </button>
@@ -564,54 +564,54 @@ export function CartDrawer({
                       {promoMessage && (
                         <p className={cn(
                           "text-[11px] font-medium",
-                          appliedDiscount > 0 ? "text-[#2b4530]" : "text-[#8c3232]"
+                          appliedDiscount > 0 ? "text-orange-300" : "text-red-400"
                         )} role="status">
                           {promoMessage}
                         </p>
                       )}
 
-                      <div className="space-y-1 text-xs text-[#5c5851]">
+                      <div className="space-y-1 text-xs text-stone-400">
                         <div className="flex justify-between">
                           <span>Subtotal</span>
-                          <span className="font-semibold text-[#181716]">${subtotal.toFixed(2)}</span>
+                          <span className="font-semibold text-[#f4f2ec]">${subtotal.toFixed(2)}</span>
                         </div>
                         {appliedDiscount > 0 && (
-                          <div className="flex justify-between text-[#2b4530] font-medium">
+                          <div className="flex justify-between text-orange-300 font-medium">
                             <span>Discount ({(appliedDiscount * 100).toFixed(0)}%)</span>
                             <span>-${discountAmount.toFixed(2)}</span>
                           </div>
                         )}
                         <div className="flex justify-between">
                           <span>Cold-Chain Courier</span>
-                          <span>{shippingCost === 0 ? <strong className="text-[#2b4530]">Complimentary</strong> : `$${shippingCost.toFixed(2)}`}</span>
+                          <span>{shippingCost === 0 ? <strong className="text-orange-300">Complimentary</strong> : `$${shippingCost.toFixed(2)}`}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Estimated Tax</span>
                           <span>${estimatedTax.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between text-sm font-bold text-[#181716] pt-2 border-t border-[#ebe7df]">
+                        <div className="flex justify-between text-sm font-bold text-[#f4f2ec] pt-2 border-t border-white/10">
                           <span>Total Due</span>
                           <span className="text-base">${grandTotal.toFixed(2)}</span>
                         </div>
                       </div>
 
                       {!authUser ? (
-                        <p className="text-[11px] text-[#8c3232] font-semibold p-2.5 rounded-lg border border-[#f5d5d5] bg-[#fdf2f2] text-center">
+                        <p className="text-[11px] text-red-400 font-semibold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10 text-center">
                           Sign in to place an order — your cart needs an account so it's saved and tracked.
                         </p>
                       ) : (
                         <button
                           onClick={() => setStep('address')}
-                          className="w-full py-2.5 px-4 rounded-lg font-semibold text-xs btn-ink flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] focus-visible:ring-offset-2"
+                          className="w-full py-2.5 px-4 rounded-lg font-semibold text-xs btn-ink flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
                         >
                           <span>Checkout (${grandTotal.toFixed(2)})</span>
                           <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                         </button>
                       )}
 
-                      <div className="flex items-center justify-center gap-4 text-[10px] text-[#8a857b]">
+                      <div className="flex items-center justify-center gap-4 text-[10px] text-stone-500">
                         <span className="flex items-center gap-1">
-                          <ShieldCheck className="w-3 h-3 text-[#344a37]" aria-hidden="true" /> Test-mode checkout — no real charge
+                          <ShieldCheck className="w-3 h-3 text-orange-400" aria-hidden="true" /> Test-mode checkout — no real charge
                         </span>
                       </div>
                     </div>
@@ -634,64 +634,64 @@ export function CartDrawer({
               role="dialog"
               aria-modal="true"
               aria-labelledby="order-confirm-title"
-              className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-[#ebe7df] space-y-4"
+              className="bg-white/[0.06] rounded-2xl max-w-md w-full p-6 shadow-xl border border-white/10 space-y-4"
             >
-              <div className="w-10 h-10 bg-[#f1f5f2] text-[#2b4530] rounded-xl flex items-center justify-center mx-auto">
+              <div className="w-10 h-10 bg-orange-500/10 text-orange-300 rounded-xl flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
               </div>
 
               <div className="text-center space-y-1">
-                <h3 id="order-confirm-title" className="text-base font-bold text-[#181716]">
+                <h3 id="order-confirm-title" className="text-base font-bold text-[#f4f2ec]">
                   Order placed
                 </h3>
-                <p className="text-xs text-[#6e6960]">
+                <p className="text-xs text-stone-400">
                   Your order was saved and set to <strong>processing</strong>. Fulfillment is simulated in this MVP —
                   nothing ships and <strong>no charge was made</strong>.
                 </p>
-                <div className="inline-block bg-[#faf9f6] text-[#181716] text-xs font-mono font-semibold px-2.5 py-0.5 rounded-md mt-1 border border-[#ebe7df]">
+                <div className="inline-block bg-white/[0.05] text-[#f4f2ec] text-xs font-mono font-semibold px-2.5 py-0.5 rounded-md mt-1 border border-white/10">
                   Order #{orderConfirmed.orderNumber}
                 </div>
               </div>
 
-              <div className="bg-[#faf9f6] rounded-xl p-3.5 border border-[#ebe7df] space-y-2 text-xs">
+              <div className="bg-white/[0.05] rounded-xl p-3.5 border border-white/10 space-y-2 text-xs">
                 <div className="flex items-start gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-[#6e6960] flex-shrink-0 mt-0.5" aria-hidden="true" />
-                  <span className="text-[#5c5851]">{orderConfirmed.address}</span>
+                  <MapPin className="w-3.5 h-3.5 text-stone-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                  <span className="text-stone-400">{orderConfirmed.address}</span>
                 </div>
-                <div className="flex justify-between pt-2 border-t border-[#ebe7df]">
-                  <span className="text-[#6e6960]">Items:</span>
-                  <span className="font-semibold text-[#181716]">{orderConfirmed.itemsCount}</span>
+                <div className="flex justify-between pt-2 border-t border-white/10">
+                  <span className="text-stone-400">Items:</span>
+                  <span className="font-semibold text-[#f4f2ec]">{orderConfirmed.itemsCount}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6e6960]">Payment:</span>
-                  <span className="font-semibold text-[#785328]">Simulated (test mode)</span>
+                  <span className="text-stone-400">Payment:</span>
+                  <span className="font-semibold text-amber-300">Simulated (test mode)</span>
                 </div>
-                <div className="flex justify-between font-bold text-[#181716] pt-1 border-t border-[#ebe7df]">
+                <div className="flex justify-between font-bold text-[#f4f2ec] pt-1 border-t border-white/10">
                   <span>Order total:</span>
                   <span>${orderConfirmed.total}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6e6960]">Saved to database:</span>
-                  <span className={cn('font-semibold', orderConfirmed.persisted ? 'text-[#2b4530]' : 'text-[#8c3232]')}>
+                  <span className="text-stone-400">Saved to database:</span>
+                  <span className={cn('font-semibold', orderConfirmed.persisted ? 'text-orange-300' : 'text-red-400')}>
                     {orderConfirmed.persisted ? 'Yes — visible on your account' : 'No — demo mode only'}
                   </span>
                 </div>
-                <div className="flex justify-between pt-1 border-t border-[#ebe7df]">
-                  <span className="text-[#6e6960]">Loyalty points:</span>
-                  <span className="font-semibold text-[#2b4530]">
+                <div className="flex justify-between pt-1 border-t border-white/10">
+                  <span className="text-stone-400">Loyalty points:</span>
+                  <span className="font-semibold text-orange-300">
                     {orderConfirmed.pointsRedeemed > 0 ? `−${orderConfirmed.pointsRedeemed} redeemed • ` : ''}+{orderConfirmed.pointsEarned} earned
                   </span>
                 </div>
                 {orderConfirmed.subscriptionsStarted > 0 && (
                   <div className="flex justify-between">
-                    <span className="text-[#6e6960]">Auto-deliveries started:</span>
-                    <span className="font-semibold text-[#181716]">{orderConfirmed.subscriptionsStarted} — manage them in Profile</span>
+                    <span className="text-stone-400">Auto-deliveries started:</span>
+                    <span className="font-semibold text-[#f4f2ec]">{orderConfirmed.subscriptionsStarted} — manage them in Profile</span>
                   </div>
                 )}
               </div>
 
               {orderConfirmed.notice && (
-                <p role="status" className="text-[11px] text-[#785328] p-2.5 rounded-lg border border-[#ede1cf] bg-[#faf5ee]">
+                <p role="status" className="text-[11px] text-amber-300 p-2.5 rounded-lg border border-amber-500/25 bg-amber-500/10">
                   {orderConfirmed.notice}
                 </p>
               )}
@@ -701,7 +701,7 @@ export function CartDrawer({
                   setOrderConfirmed(null);
                   onClose();
                 }}
-                className="w-full py-2 bg-[#181716] hover:bg-[#2e2c29] text-white rounded-lg text-xs font-semibold transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+                className="w-full py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-semibold transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
               >
                 Return to Storefront
               </button>

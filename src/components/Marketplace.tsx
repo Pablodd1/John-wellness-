@@ -237,51 +237,51 @@ export function Marketplace({
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#181716] leading-tight font-serif-title">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#f4f2ec] leading-tight font-serif-title">
             Executive Neuro-Vascular &amp; Cellular Recovery Stack
           </h1>
           
-          <p className="text-xs sm:text-sm text-[#5c5851] leading-relaxed font-normal">
+          <p className="text-xs sm:text-sm text-stone-400 leading-relaxed font-normal">
             A targeted four-pillar regimen formulated to modulate acute sympathetic tone, support restorative deep sleep architecture, and preserve executive cognitive endurance under sustained load.
           </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-[#5c5851]">
-            <div className="flex items-center gap-2 bg-white/80 px-3 py-1.5 rounded-md border border-[#e4e0d4] font-mono text-[11px] font-medium text-[#181716]">
-              <Clock className="w-3.5 h-3.5 text-[#785328]" />
+          <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-stone-400">
+            <div className="flex items-center gap-2 bg-white/80 px-3 py-1.5 rounded-md border border-white/10 font-mono text-[11px] font-medium text-[#f4f2ec]">
+              <Clock className="w-3.5 h-3.5 text-amber-300" />
               <span>Curated window closes in {String(timeLeft.hours).padStart(2, '0')}h : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}s</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="w-28 bg-[#e8e4db] rounded-full h-1.5 overflow-hidden">
-                <div className="bg-[#181716] h-full rounded-full w-[82%]" />
+              <div className="w-28 bg-white/[0.07] rounded-full h-1.5 overflow-hidden">
+                <div className="bg-orange-600 h-full rounded-full w-[82%]" />
               </div>
-              <span className="text-[11px] text-[#6e6960] font-medium">82% Claimed</span>
+              <span className="text-[11px] text-stone-400 font-medium">82% Claimed</span>
             </div>
           </div>
         </div>
 
         {/* Right Buy Box */}
-        <div className="bg-white p-5 rounded-xl border border-[#ebe7df] shadow-xs w-full lg:w-76 flex-shrink-0 space-y-3">
-          <div className="flex items-baseline justify-between border-b border-[#f4f2ec] pb-2.5">
+        <div className="bg-white/[0.06] p-5 rounded-xl border border-white/10 shadow-xs w-full lg:w-76 flex-shrink-0 space-y-3">
+          <div className="flex items-baseline justify-between border-b border-white/[0.08] pb-2.5">
             <div>
-              <span className="text-2xl font-bold text-[#181716]">$110.00</span>
-              <span className="text-xs text-[#8a857b] line-through ml-2 font-mono">$170.00</span>
+              <span className="text-2xl font-bold text-[#f4f2ec]">$110.00</span>
+              <span className="text-xs text-stone-500 line-through ml-2 font-mono">$170.00</span>
             </div>
-            <span className="text-[11px] font-semibold text-[#785328] bg-[#faf5ee] px-2 py-0.5 rounded border border-[#ede1cf]">
+            <span className="text-[11px] font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/25">
               Save 35%
             </span>
           </div>
 
-          <div className="text-xs space-y-1.5 text-[#5c5851]">
-            <div className="flex items-center gap-1.5 text-[#2b4530] font-semibold">
+          <div className="text-xs space-y-1.5 text-stone-400">
+            <div className="flex items-center gap-1.5 text-orange-300 font-semibold">
               <Truck className="w-3.5 h-3.5" />
               <span>Complimentary cold-chain delivery</span>
             </div>
-            <p className="text-[11px] text-[#6e6960]">
+            <p className="text-[11px] text-stone-400">
               Dispatch tomorrow morning for confirmed members.
             </p>
-            <div className="flex items-center gap-1.5 text-[#181716] text-[11px] font-medium">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#344a37]" />
+            <div className="flex items-center gap-1.5 text-[#f4f2ec] text-[11px] font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5 text-orange-400" />
               <span>In stock. Verified 3rd-party purity tested.</span>
             </div>
           </div>
@@ -292,7 +292,7 @@ export function Marketplace({
               className={cn(
                 "w-full py-2.5 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer",
                 purchasedIds.includes(executiveBundle.id)
-                  ? "bg-[#2b4530] text-white"
+                  ? "bg-orange-600 text-white"
                   : "btn-ink"
               )}
             >
@@ -313,13 +313,13 @@ export function Marketplace({
               onClick={() => handleQuickBuy(executiveBundle)}
               className="w-full py-2 px-3 rounded-lg text-xs font-semibold btn-stone transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <Zap className="w-3.5 h-3.5 text-[#785328]" />
+              <Zap className="w-3.5 h-3.5 text-amber-300" />
               <span>1-Click Instant Order</span>
             </button>
           </div>
 
-          <p className="text-[10px] text-[#8a857b] text-center flex items-center justify-center gap-1">
-            <ShieldCheck className="w-3 h-3 text-[#344a37]" /> Physician reviewed &amp; cGMP audited
+          <p className="text-[10px] text-stone-500 text-center flex items-center justify-center gap-1">
+            <ShieldCheck className="w-3 h-3 text-orange-400" /> Physician reviewed &amp; cGMP audited
           </p>
         </div>
       </div>
@@ -333,16 +333,16 @@ export function Marketplace({
             <span className="badge-flag mb-2">
               Biomarker Focus
             </span>
-            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+            <h3 className="text-xs font-bold text-[#f4f2ec] leading-snug">
               ApoB &amp; hs-CRP Modulation
             </h3>
-            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+            <p className="text-[11px] text-stone-400 mt-1 leading-relaxed">
               Arterial inflammatory markers show room for optimization. Bergamot &amp; high-EPA Omega-3 recommended.
             </p>
           </div>
           <button
             onClick={() => setActiveDepartment('vitamins')}
-            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+            className="text-xs font-semibold text-[#f4f2ec] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
           >
             <span>View Cardiovascular Stacks</span>
             <ChevronRight className="w-3 h-3" />
@@ -354,10 +354,10 @@ export function Marketplace({
             <span className="badge-warm mb-2">
               Refill Notice (4 Days)
             </span>
-            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+            <h3 className="text-xs font-bold text-[#f4f2ec] leading-snug">
               Magnesium Glycinate 400mg
             </h3>
-            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+            <p className="text-[11px] text-stone-400 mt-1 leading-relaxed">
               Estimated supply depletes in 4 days. Auto-refill with Subscribe &amp; Save (15% off).
             </p>
           </div>
@@ -366,7 +366,7 @@ export function Marketplace({
               const mg = allProducts.find(p => p.id === 'p2');
               if (mg) handleAddToCart(mg);
             }}
-            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+            className="text-xs font-semibold text-[#f4f2ec] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
           >
             <span>1-Click Refill ($21.25)</span>
             <ChevronRight className="w-3 h-3" />
@@ -378,16 +378,16 @@ export function Marketplace({
             <span className="badge-clinical mb-2">
               Clinical Protocol
             </span>
-            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+            <h3 className="text-xs font-bold text-[#f4f2ec] leading-snug">
               5-Pillar Essential Vitamins
             </h3>
-            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+            <p className="text-[11px] text-stone-400 mt-1 leading-relaxed">
               Liposomal D3+K2, Methyl-B12, High-EPA Omega-3, Liposomal C &amp; Ubiquinol CoQ10.
             </p>
           </div>
           <button
             onClick={handleAddAllVitamins}
-            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+            className="text-xs font-semibold text-[#f4f2ec] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
           >
             <span>Add 5-Pillar Bundle ($165)</span>
             <ChevronRight className="w-3 h-3" />
@@ -399,16 +399,16 @@ export function Marketplace({
             <span className="badge-neutral mb-2">
               Diagnostic Panel
             </span>
-            <h3 className="text-xs font-bold text-[#181716] leading-snug">
+            <h3 className="text-xs font-bold text-[#f4f2ec] leading-snug">
               Epigenetic Biological Age Panel
             </h3>
-            <p className="text-[11px] text-[#5c5851] mt-1 leading-relaxed">
+            <p className="text-[11px] text-stone-400 mt-1 leading-relaxed">
               Assesses Horvath DNA methylation clock and 42 cellular senescence markers.
             </p>
           </div>
           <button
             onClick={() => setActiveDepartment('diagnostics')}
-            className="text-xs font-semibold text-[#181716] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
+            className="text-xs font-semibold text-[#f4f2ec] hover:text-black flex items-center gap-1 pt-1 cursor-pointer"
           >
             <span>Explore Diagnostic Kits</span>
             <ChevronRight className="w-3 h-3" />
@@ -419,7 +419,7 @@ export function Marketplace({
       {/* ======================================================== */}
       {/* 3. SOFT DEPARTMENT FILTER PILLS & CONTROLS TOOLBAR       */}
       {/* ======================================================== */}
-      <div className="bg-white rounded-xl border border-[#ebe7df] p-3 space-y-3">
+      <div className="bg-white/[0.06] rounded-xl border border-white/10 p-3 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           
           {/* Department Pills */}
@@ -438,14 +438,14 @@ export function Marketplace({
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border flex items-center gap-1.5 flex-shrink-0 cursor-pointer",
                   activeDepartment === dept.id
-                    ? "bg-[#181716] text-white border-[#181716]"
-                    : "bg-[#faf9f6] hover:bg-[#f4f2ec] text-[#5c5851] border-[#ebe7df]"
+                    ? "bg-orange-600 text-white border-orange-600"
+                    : "bg-white/[0.05] hover:bg-white/[0.04] text-stone-400 border-white/10"
                 )}
               >
                 <span>{dept.label}</span>
                 <span className={cn(
                   "text-[10px] px-1.5 py-0.2 rounded-full font-mono",
-                  activeDepartment === dept.id ? "bg-white/20 text-white" : "bg-[#dedad0] text-[#5c5851]"
+                  activeDepartment === dept.id ? "bg-white/20 text-white" : "bg-[#dedad0] text-stone-400"
                 )}>
                   {dept.count}
                 </span>
@@ -455,12 +455,12 @@ export function Marketplace({
 
           {/* Sort & Filter */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            <div className="flex items-center gap-1 bg-[#faf9f6] border border-[#ebe7df] rounded-lg px-2.5 py-1 text-xs text-[#5c5851]">
-              <SlidersHorizontal className="w-3 h-3 text-[#8a857b]" />
+            <div className="flex items-center gap-1 bg-white/[0.05] border border-white/10 rounded-lg px-2.5 py-1 text-xs text-stone-400">
+              <SlidersHorizontal className="w-3 h-3 text-stone-500" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-transparent border-none text-xs font-medium text-[#181716] focus:outline-none cursor-pointer"
+                className="bg-transparent border-none text-xs font-medium text-[#f4f2ec] focus:outline-none cursor-pointer"
               >
                 <option value="featured">Featured</option>
                 <option value="grade">Clinical Grade (A → C)</option>
@@ -470,12 +470,12 @@ export function Marketplace({
               </select>
             </div>
 
-            <div className="hidden sm:flex items-center gap-1 bg-[#faf9f6] border border-[#ebe7df] rounded-lg px-2.5 py-1 text-xs text-[#5c5851]">
-              <ShieldCheck className="w-3 h-3 text-[#344a37]" />
+            <div className="hidden sm:flex items-center gap-1 bg-white/[0.05] border border-white/10 rounded-lg px-2.5 py-1 text-xs text-stone-400">
+              <ShieldCheck className="w-3 h-3 text-orange-400" />
               <select
                 value={riskFilter}
                 onChange={(e) => setRiskFilter(e.target.value as any)}
-                className="bg-transparent border-none text-xs font-medium text-[#181716] focus:outline-none cursor-pointer"
+                className="bg-transparent border-none text-xs font-medium text-[#f4f2ec] focus:outline-none cursor-pointer"
               >
                 <option value="all">All Tiers</option>
                 <option value="low">Standard (OTC)</option>
@@ -487,11 +487,11 @@ export function Marketplace({
         </div>
 
         {localSearch.trim() && (
-          <div className="pt-2 border-t border-[#f4f2ec] flex items-center justify-between text-xs text-[#5c5851]">
+          <div className="pt-2 border-t border-white/[0.08] flex items-center justify-between text-xs text-stone-400">
             <span>Matching query: <strong>&quot;{localSearch}&quot;</strong> ({filteredProducts.length} items)</span>
             <button
               onClick={() => setLocalSearch('')}
-              className="text-[#8c3232] hover:underline font-medium cursor-pointer"
+              className="text-red-400 hover:underline font-medium cursor-pointer"
             >
               Clear filter
             </button>
@@ -504,12 +504,12 @@ export function Marketplace({
       {/* ======================================================== */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-[#181716] tracking-tight flex items-center gap-2">
+          <h2 className="text-base font-bold text-[#f4f2ec] tracking-tight flex items-center gap-2">
             <span>Clinical Formulations &amp; Testing</span>
-            <span className="text-xs font-normal text-[#8a857b] font-mono">({filteredProducts.length})</span>
+            <span className="text-xs font-normal text-stone-500 font-mono">({filteredProducts.length})</span>
           </h2>
-          <span className="text-xs text-[#6e6960] flex items-center gap-1">
-            <Truck className="w-3.5 h-3.5 text-[#344a37]" /> Cold-chain courier eligible
+          <span className="text-xs text-stone-400 flex items-center gap-1">
+            <Truck className="w-3.5 h-3.5 text-orange-400" /> Cold-chain courier eligible
           </span>
         </div>
 
@@ -555,7 +555,7 @@ export function Marketplace({
 
                   <h3 
                     onClick={() => setQuickViewProduct(product)}
-                    className="text-sm font-semibold text-[#181716] leading-snug hover:text-black cursor-pointer transition-colors line-clamp-2"
+                    className="text-sm font-semibold text-[#f4f2ec] leading-snug hover:text-black cursor-pointer transition-colors line-clamp-2"
                   >
                     {product.name}
                   </h3>
@@ -563,51 +563,51 @@ export function Marketplace({
                   <div className="flex items-center gap-1.5 mt-1.5">
                     {match.score >= 70 ? (
                       <span
-                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#f1f5f2] border border-[#dbe5dc] text-[10px] font-bold text-[#2b4530]"
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/25 text-[10px] font-bold text-orange-300"
                         title={match.reasons.join(' • ') || 'Rule-based match for your profile'}
                       >
-                        <Sparkles className="w-3 h-3 text-[#344a37]" aria-hidden="true" />
+                        <Sparkles className="w-3 h-3 text-orange-400" aria-hidden="true" />
                         {match.score}% match
                       </span>
                     ) : (
-                      <span className="text-[10px] text-[#8a857b] px-1.5 py-0.5">{match.score}% match</span>
+                      <span className="text-[10px] text-stone-500 px-1.5 py-0.5">{match.score}% match</span>
                     )}
                     {match.reasons[0] && (
-                      <span className="text-[10px] text-[#6e6960] truncate">— {match.reasons[0]}</span>
+                      <span className="text-[10px] text-stone-400 truncate">— {match.reasons[0]}</span>
                     )}
                   </div>
 
-                  <p className="text-xs text-[#5c5851] leading-relaxed mt-2 line-clamp-2">
+                  <p className="text-xs text-stone-400 leading-relaxed mt-2 line-clamp-2">
                     {product.description}
                   </p>
 
                   {product.tailoredReason && (
-                    <div className="mt-2.5 p-2 bg-[#f6f5ef] border border-[#e8e4da] rounded-lg text-[11px] text-[#3e3b35] leading-tight flex items-start gap-1.5">
-                      <Sparkles className="w-3 h-3 text-[#785328] flex-shrink-0 mt-0.5" />
+                    <div className="mt-2.5 p-2 bg-white/[0.05] border border-white/10 rounded-lg text-[11px] text-stone-300 leading-tight flex items-start gap-1.5">
+                      <Sparkles className="w-3 h-3 text-amber-300 flex-shrink-0 mt-0.5" />
                       <span>{product.tailoredReason}</span>
                     </div>
                   )}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#f4f2ec] space-y-2">
+                <div className="mt-4 pt-3 border-t border-white/[0.08] space-y-2">
                   <div className="flex items-baseline justify-between">
                     <div>
-                      <span className="text-base font-bold text-[#181716]">
+                      <span className="text-base font-bold text-[#f4f2ec]">
                         ${price.toFixed(2)}
                       </span>
                       {isSub && (
-                        <span className="text-xs text-[#8a857b] line-through ml-1.5 font-mono">
+                        <span className="text-xs text-stone-500 line-through ml-1.5 font-mono">
                           ${basePrice.toFixed(2)}
                         </span>
                       )}
                     </div>
-                    <span className="text-[10px] text-[#5c5851] bg-[#f4f2ec] px-1.5 py-0.2 rounded font-medium">
+                    <span className="text-[10px] text-stone-400 bg-white/[0.04] px-1.5 py-0.2 rounded font-medium">
                       Next-Day AM
                     </span>
                   </div>
 
                   {/* Subscribe & Save Toggle */}
-                  <label className="flex items-center justify-between p-1.5 bg-[#faf9f6] hover:bg-[#f5f3ee] rounded-lg border border-[#ebe7df] text-xs cursor-pointer select-none transition-colors">
+                  <label className="flex items-center justify-between p-1.5 bg-white/[0.05] hover:bg-white/[0.05] rounded-lg border border-white/10 text-xs cursor-pointer select-none transition-colors">
                     <div className="flex items-center gap-1.5">
                       <input
                         type="checkbox"
@@ -618,13 +618,13 @@ export function Marketplace({
                             [product.id]: e.target.checked
                           }));
                         }}
-                        className="w-3.5 h-3.5 accent-[#181716] rounded"
+                        className="w-3.5 h-3.5 accent-orange-500 rounded"
                       />
-                      <span className="text-[11px] font-medium text-[#181716]">
+                      <span className="text-[11px] font-medium text-[#f4f2ec]">
                         Subscribe &amp; Save 15%
                       </span>
                     </div>
-                    <span className="text-[10px] font-semibold text-[#2b4530]">
+                    <span className="text-[10px] font-semibold text-orange-300">
                       -${(basePrice * 0.15).toFixed(2)}
                     </span>
                   </label>
@@ -636,7 +636,7 @@ export function Marketplace({
                       className={cn(
                         "py-2 px-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer",
                         isPurchased
-                          ? "bg-[#2b4530] text-white"
+                          ? "bg-orange-600 text-white"
                           : "btn-ink"
                       )}
                     >
@@ -657,14 +657,14 @@ export function Marketplace({
                       onClick={(e) => handleQuickBuy(product, e)}
                       className="py-2 px-2 rounded-lg text-xs font-semibold btn-stone transition-all flex items-center justify-center gap-1 cursor-pointer"
                     >
-                      <Zap className="w-3 h-3 text-[#785328]" />
+                      <Zap className="w-3 h-3 text-amber-300" />
                       <span>1-Click Order</span>
                     </button>
                   </div>
 
                   <button
                     onClick={() => setQuickViewProduct(product)}
-                    className="w-full text-center text-[11px] font-medium text-[#6e6960] hover:text-[#181716] py-0.5 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                    className="w-full text-center text-[11px] font-medium text-stone-400 hover:text-[#f4f2ec] py-0.5 transition-colors flex items-center justify-center gap-1 cursor-pointer"
                   >
                     <Eye className="w-3 h-3" />
                     <span>View Clinical Evidence &amp; Citations</span>
@@ -685,11 +685,11 @@ export function Marketplace({
             <span className="badge-warm mb-1">
               Paired Synergy Protocol (Save 15%)
             </span>
-            <h3 className="text-sm font-bold text-[#181716] mt-1">
+            <h3 className="text-sm font-bold text-[#f4f2ec] mt-1">
               Frequently Paired Together: Executive Anti-Burnout Protocol
             </h3>
           </div>
-          <span className="text-xs text-[#2b4530] font-medium hidden sm:inline">
+          <span className="text-xs text-orange-300 font-medium hidden sm:inline">
             Complimentary Cold-Chain Shipping
           </span>
         </div>
@@ -699,29 +699,29 @@ export function Marketplace({
             {bundleItems.map(item => (
               <label
                 key={item.id}
-                className="flex items-center gap-3 p-3 bg-[#faf9f6] hover:bg-[#f4f2ec] rounded-xl border border-[#ebe7df] cursor-pointer transition-colors"
+                className="flex items-center gap-3 p-3 bg-white/[0.05] hover:bg-white/[0.04] rounded-xl border border-white/10 cursor-pointer transition-colors"
               >
                 <input
                   type="checkbox"
                   checked={bundleChecked[item.id] || false}
                   onChange={(e) => setBundleChecked(prev => ({ ...prev, [item.id]: e.target.checked }))}
-                  className="w-3.5 h-3.5 accent-[#181716] rounded"
+                  className="w-3.5 h-3.5 accent-orange-500 rounded"
                 />
                 <div className="flex-1 flex justify-between items-center text-xs">
-                  <span className="font-semibold text-[#181716]">{item.name}</span>
-                  <span className="font-semibold text-[#181716]">${item.price.toFixed(2)}</span>
+                  <span className="font-semibold text-[#f4f2ec]">{item.name}</span>
+                  <span className="font-semibold text-[#f4f2ec]">${item.price.toFixed(2)}</span>
                 </div>
               </label>
             ))}
           </div>
 
-          <div className="bg-[#faf9f6] p-4 rounded-xl border border-[#ebe7df] flex flex-col justify-between space-y-3">
+          <div className="bg-white/[0.05] p-4 rounded-xl border border-white/10 flex flex-col justify-between space-y-3">
             <div>
-              <span className="text-xs text-[#6e6960] block">Bundle Total:</span>
+              <span className="text-xs text-stone-400 block">Bundle Total:</span>
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-bold text-[#181716]">${bundleDiscountPrice}</span>
-                <span className="text-xs text-[#8a857b] line-through font-mono">${totalBundleOriginalPrice.toFixed(2)}</span>
-                <span className="text-[10px] font-semibold text-[#2b4530] bg-[#f1f5f2] px-1.5 py-0.2 rounded">Save 15%</span>
+                <span className="text-xl font-bold text-[#f4f2ec]">${bundleDiscountPrice}</span>
+                <span className="text-xs text-stone-500 line-through font-mono">${totalBundleOriginalPrice.toFixed(2)}</span>
+                <span className="text-[10px] font-semibold text-orange-300 bg-orange-500/10 px-1.5 py-0.2 rounded">Save 15%</span>
               </div>
             </div>
 
@@ -734,7 +734,7 @@ export function Marketplace({
               className={cn(
                 "w-full py-2.5 px-4 rounded-lg font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer",
                 bundlePurchased
-                  ? "bg-[#2b4530] text-white"
+                  ? "bg-orange-600 text-white"
                   : "btn-ink"
               )}
             >
@@ -759,10 +759,10 @@ export function Marketplace({
       {/* ======================================================== */}
       <div className="space-y-4">
         <div>
-          <h3 className="text-base font-bold text-[#181716]">
+          <h3 className="text-base font-bold text-[#f4f2ec]">
             Evidence-Graded Lifestyle Protocols (Non-Supplement)
           </h3>
-          <p className="text-xs text-[#6e6960]">
+          <p className="text-xs text-stone-400">
             Actionable behavioral interventions calibrated to your daily circadian rhythm and training load.
           </p>
         </div>
@@ -778,24 +778,24 @@ export function Marketplace({
                   <span className="badge-clinical">
                     {protocol.category}
                   </span>
-                  <span className="text-[10px] font-mono text-[#8a857b]">
+                  <span className="text-[10px] font-mono text-stone-500">
                     {protocol.evidenceGrade}
                   </span>
                 </div>
-                <h4 className="text-xs font-bold text-[#181716] leading-snug">
+                <h4 className="text-xs font-bold text-[#f4f2ec] leading-snug">
                   {protocol.title}
                 </h4>
-                <p className="text-xs text-[#5c5851] mt-1 leading-relaxed">
+                <p className="text-xs text-stone-400 mt-1 leading-relaxed">
                   {protocol.protocol}
                 </p>
               </div>
 
-              <div className="pt-2 border-t border-[#f4f2ec] space-y-1.5 text-[11px]">
-                <div className="flex items-center justify-between text-[#5c5851]">
-                  <span className="font-semibold text-[#181716]">Timing:</span>
+              <div className="pt-2 border-t border-white/[0.08] space-y-1.5 text-[11px]">
+                <div className="flex items-center justify-between text-stone-400">
+                  <span className="font-semibold text-[#f4f2ec]">Timing:</span>
                   <span>{protocol.recommendedTiming}</span>
                 </div>
-                <div className="p-2 bg-[#faf9f6] rounded-lg text-[#5c5851] text-[11px] leading-tight border border-[#ebe7df]">
+                <div className="p-2 bg-white/[0.05] rounded-lg text-stone-400 text-[11px] leading-tight border border-white/10">
                   <strong>Outcome:</strong> {protocol.targetOutcome}
                 </div>
               </div>
@@ -814,7 +814,7 @@ export function Marketplace({
               initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.96, opacity: 0 }}
-              className="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-xl border border-[#ebe7df] max-h-[90vh] overflow-y-auto space-y-4"
+              className="bg-white/[0.06] rounded-2xl max-w-2xl w-full p-6 shadow-xl border border-white/10 max-h-[90vh] overflow-y-auto space-y-4"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -826,57 +826,57 @@ export function Marketplace({
                       Grade {quickViewProduct.evidenceData?.grade || 'A'}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-[#181716]">
+                  <h3 className="text-lg font-bold text-[#f4f2ec]">
                     {quickViewProduct.name}
                   </h3>
                 </div>
                 <button
                   onClick={() => setQuickViewProduct(null)}
-                  className="p-1 text-[#8a857b] hover:text-[#181716] rounded"
+                  className="p-1 text-stone-500 hover:text-[#f4f2ec] rounded"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <p className="text-xs text-[#5c5851] leading-relaxed">
+              <p className="text-xs text-stone-400 leading-relaxed">
                 {quickViewProduct.description}
               </p>
 
-              <div className="grid grid-cols-2 gap-3 p-3 bg-[#faf9f6] rounded-xl border border-[#ebe7df] text-xs">
+              <div className="grid grid-cols-2 gap-3 p-3 bg-white/[0.05] rounded-xl border border-white/10 text-xs">
                 <div>
-                  <span className="text-[#8a857b] font-medium block text-[10px] uppercase">Recommended Dosage:</span>
-                  <span className="font-semibold text-[#181716]">{quickViewProduct.dailyDosage || '1 Serving Daily'}</span>
+                  <span className="text-stone-500 font-medium block text-[10px] uppercase">Recommended Dosage:</span>
+                  <span className="font-semibold text-[#f4f2ec]">{quickViewProduct.dailyDosage || '1 Serving Daily'}</span>
                 </div>
                 <div>
-                  <span className="text-[#8a857b] font-medium block text-[10px] uppercase">Timing:</span>
-                  <span className="font-semibold text-[#181716]">{quickViewProduct.timing || 'Morning with meal'}</span>
+                  <span className="text-stone-500 font-medium block text-[10px] uppercase">Timing:</span>
+                  <span className="font-semibold text-[#f4f2ec]">{quickViewProduct.timing || 'Morning with meal'}</span>
                 </div>
               </div>
 
               <EvidenceGrade product={quickViewProduct} />
 
-              <div className="p-3 rounded-xl border border-[#ebe7df] bg-[#faf9f6] flex items-center justify-between gap-3">
-                <span className="text-[11px] font-semibold text-[#181716] flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#344a37]" aria-hidden="true" /> Lab report (Certificate of Analysis)
+              <div className="p-3 rounded-xl border border-white/10 bg-white/[0.05] flex items-center justify-between gap-3">
+                <span className="text-[11px] font-semibold text-[#f4f2ec] flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> Lab report (Certificate of Analysis)
                 </span>
                 {quickViewProduct.coaUrl ? (
                   <a
                     href={quickViewProduct.coaUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[11px] font-bold text-[#344a37] hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716] rounded"
+                    className="text-[11px] font-bold text-orange-400 hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
                   >
                     View COA
                   </a>
                 ) : (
-                  <span className="text-[10px] text-[#6e6960]">Available on request</span>
+                  <span className="text-[10px] text-stone-400">Available on request</span>
                 )}
               </div>
 
-              <div className="pt-3 border-t border-[#f4f2ec] flex items-center justify-between gap-3">
+              <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-xl font-bold text-[#181716]">${(quickViewProduct.price || 49.00).toFixed(2)}</span>
-                  <span className="text-xs text-[#8a857b] block">Complimentary cold-chain delivery</span>
+                  <span className="text-xl font-bold text-[#f4f2ec]">${(quickViewProduct.price || 49.00).toFixed(2)}</span>
+                  <span className="text-xs text-stone-500 block">Complimentary cold-chain delivery</span>
                 </div>
 
                 <div className="flex gap-2">
@@ -898,7 +898,7 @@ export function Marketplace({
                     }}
                     className="py-2 px-4 rounded-lg font-semibold text-xs btn-stone flex items-center gap-1.5 cursor-pointer"
                   >
-                    <Zap className="w-3.5 h-3.5 text-[#785328]" />
+                    <Zap className="w-3.5 h-3.5 text-amber-300" />
                     <span>1-Click Order</span>
                   </button>
                 </div>
