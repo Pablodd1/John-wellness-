@@ -19,7 +19,15 @@ type Symbiosis = {
   calendar?: { title: string; time: string; location?: string }[];
   toTake?: { name: string; dose?: string; time?: string }[];
   toBuy?: { name: string; reason?: string }[];
-  profile?: { details?: { readiness?: { score?: number }, metrics?: { sleep?: { current?: number }, hrv?: { current?: number }, rhr?: { current?: number } } }, loyaltyPoints?: number };
+  profile?: {
+    details?: {
+      readiness?: { score?: number };
+      metrics?: { sleep?: { current?: number }, hrv?: { current?: number }, rhr?: { current?: number } };
+    };
+    readiness?: { score?: number };
+    metrics?: { sleep?: { current?: number }, hrv?: { current?: number }, rhr?: { current?: number } };
+    loyaltyPoints?: number;
+  };
   weather?: { tempC?: number; description?: { en?: string }; raining?: boolean };
   inventory?: { name: string }[];
 };
@@ -125,7 +133,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
       const d = S.profile?.metrics ? S.profile : S.profile?.details;
       const m = d?.metrics;
       const bits: string[] = [];
-      if ((d as any)?.readiness?.score != null) bits.push(`readiness ${(d as any).readiness.score}/100`);
+      if (d?.readiness?.score != null) bits.push(`readiness ${d.readiness.score}/100`);
       if (m?.sleep?.current != null) bits.push(`sleep ${m.sleep.current}h`);
       if (m?.hrv?.current != null) bits.push(`HRV ${m.hrv.current}ms`);
       if (m?.rhr?.current != null) bits.push(`resting HR ${m.rhr.current}bpm`);
