@@ -222,7 +222,7 @@ export function Marketplace({
       {/* ======================================================== */}
       {/* 1. SOFT EDITORIAL HERO CURATION                          */}
       {/* ======================================================== */}
-      <div className="bg-[#f5f3ec] rounded-2xl p-6 sm:p-8 md:p-10 border border-[#e8e4db] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+      <div className="bg-white/[0.05] rounded-2xl p-6 sm:p-8 md:p-10 border border-white/10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
         
         <div className="space-y-3.5 max-w-2xl">
           <div className="flex flex-wrap items-center gap-2">

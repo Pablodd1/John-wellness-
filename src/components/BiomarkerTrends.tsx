@@ -803,7 +803,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             className="space-y-6"
           >
             {/* DYNAMIC BIOMARKER DEFICIENCY & ONE-CLICK ADD ALL ACTION BANNER */}
-            <div className="bg-[#f5f3ec] text-[#f4f2ec] p-5 sm:p-6 rounded-2xl border border-[#e8e4db] space-y-4">
+            <div className="bg-white/[0.05] text-[#f4f2ec] p-5 sm:p-6 rounded-2xl border border-white/10 space-y-4">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="space-y-2 max-w-2xl">
                   <div className="flex flex-wrap items-center gap-2">
@@ -877,7 +877,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               </div>
 
               {/* Targeted Supplement Quick Pills */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-3 border-t border-[#e8e4db]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-3 border-t border-white/10">
                 {allTargetedSupplements.slice(0, 4).map(s => {
                   const isItemAdded = addedSuppIds.includes(s.id);
                   return (
