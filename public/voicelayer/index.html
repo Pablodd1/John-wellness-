@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoiceLayer — Symbiotic Voice &amp; Spatial Intelligence Layer for Any Website</title>
+  <meta name="description" content="Drop-in voice and spatial intelligence layer for any website. Ultra-clear 15% glass tint, 4px blur top pill, symbiotic DOM/catalog absorption, 5-stream executive briefings, and verified DOM execution." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ivory: '#fbfaf8',
+            stonewarm: '#f4f2ec',
+            subtle: '#faf9f6',
+            borderwarm: '#ebe7df',
+            borderstrong: '#dedad0',
+            ink: '#181716',
+            inksec: '#5c5851',
+            inkmuted: '#8a857b',
+            forest: '#344a37',
+            forestdeep: '#2b4530',
+            foresttint: '#f1f5f2',
+            forestborder: '#dbe5dc',
+            bronze: '#785328',
+            bronzetint: '#faf5ee',
+            bronzeborder: '#ede1cf',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            serif: ['"Newsreader"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-ivory: #fbfaf8;
+      --bg-stone: #f4f2ec;
+      --border-warm: #ebe7df;
+      --border-strong: #dedad0;
+      --ink: #181716;
+      --ink-secondary: #5c5851;
+      --forest: #344a37;
+      --forest-deep: #2b4530;
+      --bronze: #785328;
+    }
+    body {
+      background-color: #fbfaf8;
+      color: #181716;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    @keyframes wave-bar {
+      0%, 100% { height: 6px; }
+      50% { height: 24px; }
+    }
+    .wave-1 { animation: wave-bar 1.15s ease-in-out infinite 0.05s; }
+    .wave-2 { animation: wave-bar 0.85s ease-in-out infinite 0.20s; }
+    .wave-3 { animation: wave-bar 1.35s ease-in-out infinite 0.10s; }
+    .wave-4 { animation: wave-bar 0.95s ease-in-out infinite 0.30s; }
+    .wave-5 { animation: wave-bar 1.25s ease-in-out infinite 0.15s; }
+    .wave-6 { animation: wave-bar 0.80s ease-in-out infinite 0.35s; }
+    .wave-7 { animation: wave-bar 1.10s ease-in-out infinite 0.25s; }
+
+    @keyframes ring-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55), 0 0 0 3px rgba(16, 185, 129, 0.85); }
+      50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0), 0 0 0 3px rgba(16, 185, 129, 1); }
+    }
+    .vl-verified-ring {
+      animation: ring-pulse 1.8s ease-in-out infinite;
+    }
+  </style>
+  <!-- Load Live VoiceLayer Widget CSS -->
+  <link rel="stylesheet" href="/voicelayer/voicelayer.css" />
+</head>
+<body class="bg-ivory text-ink selection:bg-forest selection:text-white">
+
+  <!-- ===================================================================== -->
+  <!-- TOP NAVIGATION BAR                                                    -->
+  <!-- ===================================================================== -->
+  <nav class="sticky top-0 z-40 bg-ivory/85 backdrop-blur-md border-b border-borderwarm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <!-- Brand -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-forest flex items-center justify-center text-white font-bold text-sm tracking-tight shadow-sm group-hover:bg-forestdeep transition-colors">
+          VL
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-base tracking-tight text-ink">VoiceLayer</span>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded-full bg-foresttint text-forest border border-forestborder font-semibold">v0.7.0</span>
+          </div>
+          <p class="text-[11px] text-inkmuted hidden sm:block">Symbiotic Website Voice &amp; Spatial Layer</p>
+        </div>
+      </a>
+
+      <!-- Center Nav Links -->
+      <div class="hidden md:flex items-center gap-7 text-xs font-semibold text-inksec">
+        <a href="#interactive-stage" class="hover:text-forest transition-colors">Live Glass Pill</a>
+        <a href="#features" class="hover:text-forest transition-colors">8 Core Features</a>
+        <a href="#architecture" class="hover:text-forest transition-colors">3-Tier Architecture</a>
+        <a href="#comparison" class="hover:text-forest transition-colors">VS Comparison Matrix</a>
+        <a href="#sandbox" class="hover:text-forest transition-colors">Live Sandbox</a>
+        <a href="#integration" class="hover:text-forest transition-colors">1-Line Install</a>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="flex items-center gap-2.5">
+        <a href="/voicelayer/pitch-deck.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-stonewarm hover:bg-borderwarm text-ink border border-borderstrong transition-colors">
+          <span>Pitch Deck</span>
+        </a>
+        <button onclick="wakeLiveAssistant()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-forest hover:bg-forestdeep text-white shadow-sm transition-all cursor-pointer">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Wake Live VoiceLayer</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================================================================== -->
+  <!-- HERO SECTION + LIVE VERSION 1 (15% TINT, 4PX BLUR) STAGE              -->
+  <!-- ===================================================================== -->
+  <section class="relative pt-12 pb-20 overflow-hidden border-b border-borderwarm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Editorial Eyebrow & Headline -->
+      <div class="max-w-4xl mx-auto text-center mb-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-foresttint border border-forestborder text-forest text-xs font-semibold mb-6">
+          <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+          <span>Version 1 Design Standard &bull; 15% Glass Tint &bull; 4px Optical Blur &bull; Symbiotic Protocol</span>
+        </div>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-medium text-ink tracking-tight leading-[1.08] mb-6">
+          Give any website a voice that <span class="italic text-forest">sees the screen</span>, absorbs the data, and takes verified action.
+        </h1>
+        <p class="text-base sm:text-lg text-inksec max-w-3xl mx-auto leading-relaxed mb-8">
+          VoiceLayer drops into any web application with a single script tag. Engineered with an ultra-clear <strong>15% glass tint and 4px blur floating top pill</strong>, it leaves <strong>96% of your website completely unobstructed</strong> while synthesizing live briefings, answering catalog questions, and clicking real DOM buttons with visual verification receipts.
+        </p>
+
+        <!-- Primary Hero CTAs -->
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button onclick="wakeLiveAssistant()" class="px-6 py-3 rounded-xl bg-forest hover:bg-forestdeep text-white font-semibold text-sm shadow-md flex items-center gap-2.5 transition-all cursor-pointer">
+            <svg class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+            <span>Test Live Voice Briefing (“Update”)</span>
+          </button>
+          <a href="#comparison" class="px-6 py-3 rounded-xl bg-white hover:bg-stonewarm text-ink font-semibold text-sm border border-borderstrong shadow-sm transition-all">
+            See VoiceLayer vs. Competitors
+          </a>
+          <a href="#integration" class="px-5 py-3 rounded-xl bg-bronzetint hover:bg-bronzeborder/40 text-bronze font-mono text-xs font-semibold border border-bronzeborder transition-all">
+            &lt;script src="voicelayer.min.js"&gt;
+          </a>
+        </div>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- INTERACTIVE VERSION 1 GLASS PILL SHOWCASE ON TOP OF KEEL HOST     -->
+      <!-- ================================================================= -->
+      <div id="interactive-stage" class="mt-8 rounded-3xl border border-borderstrong bg-white shadow-2xl overflow-hidden">
+        
+        <!-- Stage Top Control Bar -->
+        <div class="bg-stonewarm border-b border-borderwarm px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-2.5">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+              <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+              <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+            </div>
+            <span class="font-mono text-xs text-inksec bg-ivory px-3 py-1 rounded-lg border border-borderwarm">
+              https://keel-longevity.app &bull; Host Connected via Symbiosis
+            </span>
+          </div>
+
+          <!-- Interactive Glass Spec Controls -->
+          <div class="flex flex-wrap items-center gap-4 text-xs">
+            <div class="flex items-center gap-2 bg-ivory px-3 py-1 rounded-lg border border-borderwarm">
+              <span class="text-inkmuted font-medium">Glass Tint:</span>
+              <input type="range" id="hero-tint" min="5" max="75" value="15" oninput="updateHeroGlass()" class="w-20 accent-forest cursor-pointer" />
+              <span id="hero-tint-label" class="font-mono font-semibold text-forest w-8">15%</span>
+            </div>
+            <div class="flex items-center gap-2 bg-ivory px-3 py-1 rounded-lg border border-borderwarm">
+              <span class="text-inkmuted font-medium">Blur:</span>
+              <input type="range" id="hero-blur" min="0" max="24" value="4" oninput="updateHeroGlass()" class="w-20 accent-forest cursor-pointer" />
+              <span id="hero-blur-label" class="font-mono font-semibold text-forest w-8">4px</span>
+            </div>
+            <button onclick="resetHeroGlass()" class="text-xs font-mono text-bronze hover:underline cursor-pointer">Reset (15% / 4px)</button>
+          </div>
+        </div>
+
+        <!-- Stage Viewport with Real Keel Screenshot + Floating Version 1 Pill -->
+        <div class="relative min-h-[540px] sm:min-h-[620px] bg-ivory overflow-hidden flex flex-col justify-between">
+          
+          <!-- Authentic Host Website Screenshot Underneath -->
+          <div class="absolute inset-0 z-0">
+            <img src="/voicelayer/keel_dashboard_screen.png" alt="Host Website Under VoiceLayer" class="w-full h-full object-cover object-top" />
+          </div>
+
+          <!-- VERSION 1: FLOATING TRANSPARENT TOP PILL (15% TINT, 4PX BLUR) -->
+          <div class="relative z-20 pt-4 px-4 sm:px-8 flex justify-center">
+            <div id="hero-glass-pill"
+                 class="w-full max-w-4xl rounded-[22px] border border-white/75 shadow-[0_14px_36px_rgba(24,23,22,0.16)] px-4 py-2.5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 transition-all duration-200"
+                 style="background: rgba(251, 250, 248, 0.15); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
+              
+              <!-- Left: Glowing Voice Orb + User Persona -->
+              <div class="flex items-center gap-3 shrink-0">
+                <button onclick="simulateStagePrompt('briefing')" class="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-forest to-emerald-700 flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform cursor-pointer" title="Tap to speak">
+                  <span class="absolute -inset-1 rounded-2xl bg-emerald-500/25 animate-ping"></span>
+                  <svg class="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                </button>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-bold text-ink">VoiceLayer</span>
+                    <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-forest text-white font-semibold">15% GLASS</span>
+                  </div>
+                  <p class="text-[11px] font-medium text-inksec">Alex Rivera &bull; Bio-Age 25.8y</p>
+                </div>
+              </div>
+
+              <!-- Center: Kinetic Waveform + Live Synchronized Transcript -->
+              <div class="flex-1 flex items-center gap-3 min-w-[240px] bg-white/55 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/80 shadow-sm">
+                <div class="flex items-center gap-1 h-6 shrink-0">
+                  <span class="w-1 bg-forest rounded-full wave-1"></span>
+                  <span class="w-1 bg-emerald-600 rounded-full wave-2"></span>
+                  <span class="w-1 bg-teal-600 rounded-full wave-3"></span>
+                  <span class="w-1 bg-bronze rounded-full wave-4"></span>
+                  <span class="w-1 bg-forest rounded-full wave-5"></span>
+                  <span class="w-1 bg-emerald-500 rounded-full wave-6"></span>
+                  <span class="w-1 bg-forestdeep rounded-full wave-7"></span>
+                </div>
+                <p id="stage-caption" class="text-xs text-ink font-medium leading-snug line-clamp-2">
+                  <strong class="text-forest font-bold">Welcome back, Alex.</strong> Say “update” for your summary. It’s 81°F (27°C), overcast with a chance of rain today. Readiness 72/100, Sleep 6.2h, HRV 45ms, Bio-age 25.8y...
+                </p>
+              </div>
+
+              <!-- Right: Interactive Voice Simulation Pills -->
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button onclick="simulateStagePrompt('briefing')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-white/80 hover:bg-white text-ink border border-borderstrong shadow-sm transition-all cursor-pointer">
+                  “Update”
+                </button>
+                <button onclick="simulateStagePrompt('lookup')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-white/80 hover:bg-white text-ink border border-borderstrong shadow-sm transition-all cursor-pointer">
+                  “Price of Whey?”
+                </button>
+                <button onclick="simulateStagePrompt('action')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-forest hover:bg-forestdeep text-white shadow-sm transition-all cursor-pointer">
+                  “Open Marketplace”
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Bottom Interactive Callout Banner inside the Stage -->
+          <div class="relative z-20 m-4 sm:m-6 p-4 rounded-2xl bg-ivory/90 backdrop-blur-md border border-borderstrong shadow-lg flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-foresttint border border-forestborder font-mono text-xs font-bold text-forest" id="stage-receipt-badge">
+                RECEIPT: briefing_all &bull; VERIFIED
+              </span>
+              <span id="stage-explanation" class="text-xs text-inksec font-medium">
+                96% of the underlying Keel dashboard remains completely visible and clickable through the 15% tint / 4px blur top pill.
+              </span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-inkmuted">Try clicking a voice command:</span>
+              <button onclick="simulateStagePrompt('calendar')" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-stonewarm hover:bg-borderwarm text-ink border border-borderstrong cursor-pointer">“My Calendar”</button>
+              <button onclick="simulateStagePrompt('persona')" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-stonewarm hover:bg-borderwarm text-ink border border-borderstrong cursor-pointer">“Switch Persona”</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 5-Column Benchmark Strip -->
+      <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="bg-white rounded-2xl p-5 border border-borderwarm shadow-sm">
+          <div class="font-mono text-2xl font-bold text-forest">96%</div>
+          <div class="text-xs font-semibold text-ink mt-1">Unobstructed Viewport</div>
+          <p class="text-xs text-inkmuted mt-0.5">Version 1 compact pill with 15% tint &amp; 4px optical blur</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-borderwarm shadow-sm">
+          <div class="font-mono text-2xl font-bold text-forest">&lt; 10ms</div>
+          <div class="text-xs font-semibold text-ink mt-1">Tier-0 Bypass Latency</div>
+          <p class="text-xs text-inkmuted mt-0.5">$0 LLM cost for exact navigation, cart &amp; briefing commands</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-borderwarm shadow-sm">
+          <div class="font-mono text-2xl font-bold text-forest">5-in-1</div>
+          <div class="text-xs font-semibold text-ink mt-1">Executive Briefing</div>
+          <p class="text-xs text-inkmuted mt-0.5">Weather, biometrics, 2 calendars, to-take &amp; to-buy refills</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-borderwarm shadow-sm">
+          <div class="font-mono text-2xl font-bold text-bronze">100%</div>
+          <div class="text-xs font-semibold text-ink mt-1">Verified DOM Receipts</div>
+          <p class="text-xs text-inkmuted mt-0.5">Proves DOM, URL, or cart state changed before confirming</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-borderwarm shadow-sm col-span-2 sm:col-span-1">
+          <div class="font-mono text-2xl font-bold text-ink">1 Script</div>
+          <div class="text-xs font-semibold text-ink mt-1">Zero-Layout-Shift Drop-In</div>
+          <p class="text-xs text-inkmuted mt-0.5">Isolated Shadow DOM + bilingual EN/ES auto-detection</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 2: THE 8 AMAZING FEATURES IN DETAIL                           -->
+  <!-- ===================================================================== -->
+  <section id="features" class="py-20 border-b border-borderwarm bg-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-14">
+        <div class="font-mono text-xs uppercase tracking-widest text-forest font-semibold mb-2">Capabilities Deep-Dive</div>
+        <h2 class="font-serif text-3xl sm:text-4xl font-medium text-ink tracking-tight mb-4">
+          Engineered as a true website symbiont—not a corner chat popup.
+        </h2>
+        <p class="text-base text-inksec leading-relaxed">
+          Traditional chatbots sit in the bottom-right corner blind to the page around them. VoiceLayer merges with your live DOM, catalog, user state, and custom actions the instant it loads.
+        </p>
+      </div>
+
+      <!-- 8-Card Detailed Feature Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Feature 1 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-foresttint border border-forestborder font-mono text-xs font-bold text-forest">01 &bull; OPTICAL UI</span>
+              <span class="font-mono text-xs text-inkmuted">tint: 0.15 | blur: 4px</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">Ultra-Clear Top Glass Pill (Version 1 Standard)</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              Designed so your visitors see <strong>96% of your website</strong> at all times. Docked at the top center with a 15% warm glass tint and 4px optical blur, clicks and scroll events pass directly through to your site (<code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">passThrough: true</code>). Whenever VoiceLayer highlights a product or button on screen, it automatically relaxes its blur to <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">1.5px</code> so the target element is crystal clear.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Shadow DOM Isolated</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">60fps Radial/Line Canvas</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Zero CSS Collisions</span>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-foresttint border border-forestborder font-mono text-xs font-bold text-forest">02 &bull; SYMBIOSIS PROTOCOL</span>
+              <span class="font-mono text-xs text-inkmuted">window.__VOICELAYER_SYMBIOSIS__</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">4-Channel Automatic Website Absorption</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              VoiceLayer automatically discovers and absorbs your site’s capabilities on load and after SPA route transitions: (1) Global <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">__VOICELAYER_SYMBIOSIS__</code> handshake, (2) declarative <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">&lt;script type="application/voicelayer+json"&gt;</code>, (3) W3C WebMCP (<code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">navigator.modelContext.tools</code>), and (4) live DOM <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">data-vl-*</code> attributes.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Catalog &amp; Live Cart</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">W3C WebMCP Ready</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Host Custom Actions</span>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-bronzetint border border-bronzeborder font-mono text-xs font-bold text-bronze">03 &bull; EXECUTIVE BRIEFING</span>
+              <span class="font-mono text-xs text-inkmuted">Say “Update” or “Summary”</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">5-Stream Unified Morning Briefing Engine</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              One voice command (<code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">“update”</code>) synthesizes five live data streams into a single cohesive spoken update: (1) Live local weather &amp; precipitation via Open-Meteo, (2) Biometrics (Readiness, Sleep, HRV, Bio-age), (3) Primary medical/personal calendar, (4) Secondary work, training &amp; travel calendar, and (5) Pending daily regimen doses + low-supply items to buy (&le;10 days left).
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Dual Calendar Synthesis</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Smart Deduplication</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Open-Meteo Live Weather</span>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-foresttint border border-forestborder font-mono text-xs font-bold text-forest">04 &bull; VERIFIED EXECUTION</span>
+              <span class="font-mono text-xs text-inkmuted">Zero Hallucinated Clicks</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">Spatial DOM Scanner &amp; Verification Receipts</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              VoiceLayer scans all visible headings, buttons, links, product cards, prices, stock badges, and form inputs. When asked to click a button or add to cart, it draws a glowing verification ring around the target element, executes the native click, and inspects DOM mutations, <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">aria-expanded</code>, URL changes, or cart delta before issuing a verified receipt.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">MutationObserver Proof</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Numbered Disambiguation Rings</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Safe Checkout Gate</span>
+          </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-foresttint border border-forestborder font-mono text-xs font-bold text-forest">05 &bull; DEICTIC SPATIAL AI</span>
+              <span class="font-mono text-xs text-inkmuted">“How much is this one?”</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">Viewport Tracking &amp; Behavioral Interest Scoring</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              Visitors don’t speak in exact SKU names—they say <em>“How much is this one?”</em>, <em>“Is this in stock?”</em>, or <em>“Add this to my cart.”</em> VoiceLayer tracks viewport center proximity, pointer hover, keyboard focus, and section dwell time in real time to resolve deictic references to the exact product card the user is looking at.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Deictic Pronoun Resolution</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Dwell-Time Interest Rank</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Product Side-by-Side Compare</span>
+          </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-bronzetint border border-bronzeborder font-mono text-xs font-bold text-bronze">06 &bull; 3-TIER BRAIN</span>
+              <span class="font-mono text-xs text-inkmuted">Bypass + Jev + Cloud AI</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">Deterministic Bypass + Jev Guardrail + Multi-LLM</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              <strong>Tier 0</strong> executes 35+ exact voice intents locally in &lt;10ms at $0 cost. <strong>Tier 0.5</strong> routes colloquial/multilingual phrasing through TypeSafe Jev System One into 28 strictly allowlisted UI actions (blocking unsafe requests via <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">noul &ge; 0.30</code>). <strong>Tier 1</strong> answers open domain questions using DeepSeek V3.2, xAI Grok, Gemini 2.5 Flash, OpenAI, or Claude grounded strictly in your page context.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Grok Voice 3.0 &amp; Deepgram Aura-2</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Zero Model Execution Authority</span>
+          </div>
+        </div>
+
+        <!-- Feature 7 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-foresttint border border-forestborder font-mono text-xs font-bold text-forest">07 &bull; MULTI-TENANT MEMORY</span>
+              <span class="font-mono text-xs text-inkmuted">VoiceLayer.setUser(id, profile)</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">Per-Persona Isolated Memory &amp; Instant Switching</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              Built for multi-profile platforms, clinical portals, and household accounts. Calling <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">VoiceLayer.setUser('u2', profile)</code> partitions behavioral history, goals, and preferences into isolated storage keys (<code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">vl_mem_v1_u2</code>). Visitors can inspect what is remembered or wipe it anytime by saying <em>“Forget everything.”</em>
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Zero Cross-User Leakage</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Voice-Controlled Wipe</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Bilingual EN / ES Auto-Switch</span>
+          </div>
+        </div>
+
+        <!-- Feature 8 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderwarm shadow-sm hover:border-forestborder transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-bronzetint border border-bronzeborder font-mono text-xs font-bold text-bronze">08 &bull; DEMAND &amp; COMPLIANCE</span>
+              <span class="font-mono text-xs text-inkmuted">/api/voice/demand</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2">Voice Funnel Demand Beacon &amp; Clinical Guardrails</h3>
+            <p class="text-sm text-inksec leading-relaxed mb-4">
+              When visitors ask for products you don’t carry or compare items, VoiceLayer streams anonymized intent beacons to <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">GET /api/voice/demand</code>—revealing unmet catalog demand. Includes built-in clinical guardrails (never diagnoses or recommends Rx items, routing to the user’s clinician), crisis line interception, and automatic password/CVC/SSN form redaction.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderwarm flex flex-wrap gap-2 text-xs font-mono text-inksec">
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Unmatched Query Analytics</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">Rx &amp; Medical Linter</span>
+            <span class="bg-stonewarm px-2.5 py-1 rounded-lg">PII Form Redaction</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 3: 3-TIER HYBRID ARCHITECTURE DIAGRAM                         -->
+  <!-- ===================================================================== -->
+  <section id="architecture" class="py-20 border-b border-borderwarm bg-stonewarm/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12">
+        <div class="font-mono text-xs uppercase tracking-widest text-bronze font-semibold mb-2">Universal Handoff Architecture</div>
+        <h2 class="font-serif text-3xl sm:text-4xl font-medium text-ink tracking-tight mb-4">
+          Why VoiceLayer is 10&times; faster and 80% cheaper to run than raw LLM voice agents.
+        </h2>
+        <p class="text-base text-inksec leading-relaxed">
+          Sending every spoken word ("scroll down", "update", "how much is this?") through a frontier LLM audio stream costs $0.15+/minute and adds 800ms of lag. VoiceLayer uses a 3-Tier Universal Handoff pipeline.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Tier 0 -->
+        <div class="bg-white rounded-3xl p-7 border-2 border-forest shadow-md relative">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded-full bg-forest text-white font-mono text-xs font-bold">TIER 0 &bull; ~75% OF TRAFFIC</span>
+            <span class="font-mono text-xs font-bold text-emerald-700">&lt; 10ms &bull; $0.00</span>
+          </div>
+          <h3 class="text-lg font-bold text-ink mb-2">Deterministic Local Bypass</h3>
+          <p class="text-xs text-inksec leading-relaxed mb-4">
+            Executes directly inside the browser with zero network round-trip. Handles navigation, scrolling, cart inspection, price/stock checks, deictic commands (<em>“add this one”</em>), and the 5-stream executive briefing (<em>“update”</em>).
+          </p>
+          <div class="bg-ivory rounded-xl p-3 border border-borderwarm font-mono text-[11px] text-inksec space-y-1">
+            <div>&rarr; "update" &rarr; <span class="text-forest font-semibold">Briefing.summaryLine()</span></div>
+            <div>&rarr; "how much is whey" &rarr; <span class="text-forest font-semibold">Inventory.query()</span></div>
+            <div>&rarr; "scroll down" &rarr; <span class="text-forest font-semibold">window.scrollBy()</span></div>
+          </div>
+        </div>
+
+        <!-- Tier 0.5 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderstrong shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded-full bg-foresttint text-forest border border-forestborder font-mono text-xs font-bold">TIER 0.5 &bull; ~15% OF TRAFFIC</span>
+            <span class="font-mono text-xs font-bold text-inksec">~120ms &bull; Allowlisted</span>
+          </div>
+          <h3 class="text-lg font-bold text-ink mb-2">Jev System One Classifier</h3>
+          <p class="text-xs text-inksec leading-relaxed mb-4">
+            When a user speaks colloquially or in another language, TypeSafe Jev classifies the utterance strictly into one of <strong>28 allowlisted UI actions</strong> and evaluates the <code class="font-mono">noul</code> safety score. The model never receives raw DOM execution authority.
+          </p>
+          <div class="bg-ivory rounded-xl p-3 border border-borderwarm font-mono text-[11px] text-inksec space-y-1">
+            <div>&rarr; Input: colloquial / multilingual</div>
+            <div>&rarr; Guardrail: <span class="text-bronze font-semibold">if (noul &ge; 0.30) block()</span></div>
+            <div>&rarr; Output: <span class="text-forest font-semibold">ALLOWLISTED_UI_ACTIONS[i]</span></div>
+          </div>
+        </div>
+
+        <!-- Tier 1 -->
+        <div class="bg-white rounded-3xl p-7 border border-borderstrong shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded-full bg-bronzetint text-bronze border border-bronzeborder font-mono text-xs font-bold">TIER 1 &bull; ~10% OF TRAFFIC</span>
+            <span class="font-mono text-xs font-bold text-bronze">Grounded RAG + Neural TTS</span>
+          </div>
+          <h3 class="text-lg font-bold text-ink mb-2">Context-Grounded Cloud Brain</h3>
+          <p class="text-xs text-inksec leading-relaxed mb-4">
+            For open-ended domain questions, VoiceLayer sends a compact JSON snapshot of the live page, catalog, and profile to DeepSeek V3.2, xAI Grok, Gemini 2.5 Flash, OpenAI, or Claude—speaking the answer via Grok Voice 3.0 or Deepgram Aura-2.
+          </p>
+          <div class="bg-ivory rounded-xl p-3 border border-borderwarm font-mono text-[11px] text-inksec space-y-1">
+            <div>&rarr; Context: <span class="text-forest font-semibold">VL.contextSnapshot()</span></div>
+            <div>&rarr; Linter: <span class="text-bronze font-semibold">CP_LINT (No Rx / Diagnosis)</span></div>
+            <div>&rarr; Voice: <span class="text-forest font-semibold">Grok Voice 3.0 / Aura-2</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 4: COMPREHENSIVE "VS" COMPARATIVE MATRIX TABLE                -->
+  <!-- ===================================================================== -->
+  <section id="comparison" class="py-20 border-b border-borderwarm bg-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-12">
+        <div class="font-mono text-xs uppercase tracking-widest text-forest font-semibold mb-2">Competitive Landscape</div>
+        <h2 class="font-serif text-3xl sm:text-4xl font-medium text-ink tracking-tight mb-4">
+          How VoiceLayer compares to chatbots, raw voice APIs, and accessibility overlays.
+        </h2>
+        <p class="text-base text-inksec leading-relaxed">
+          Existing tools force a false choice: either install a text chatbot that can’t see or control the page, or spend 6 months wiring raw WebRTC audio pipes and custom tool-calling schemas from scratch.
+        </p>
+      </div>
+
+      <!-- Responsive Comparison Matrix Table -->
+      <div class="bg-white rounded-3xl border border-borderstrong shadow-xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[920px]">
+            <thead>
+              <tr class="bg-stonewarm border-b border-borderstrong text-xs">
+                <th class="py-4 px-5 font-bold text-ink w-[24%]">Capability / Dimension</th>
+                <th class="py-4 px-5 font-bold text-white bg-forest w-[22%] border-x border-forestdeep">
+                  <div class="flex items-center justify-between">
+                    <span>VoiceLayer v0.7.0</span>
+                    <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-400/20 text-emerald-200 border border-emerald-300/30">SYMBIONT</span>
+                  </div>
+                  <div class="text-[11px] font-normal text-emerald-100/90 mt-0.5">Drop-In Spatial Voice Layer</div>
+                </th>
+                <th class="py-4 px-4 font-bold text-ink w-[18%]">
+                  <div>Legacy Chatbots</div>
+                  <div class="text-[11px] font-normal text-inkmuted mt-0.5">Intercom, Drift, Zendesk</div>
+                </th>
+                <th class="py-4 px-4 font-bold text-ink w-[18%] border-l border-borderwarm">
+                  <div>Raw Voice AI SDKs</div>
+                  <div class="text-[11px] font-normal text-inkmuted mt-0.5">ElevenLabs, Vapi, Retell</div>
+                </th>
+                <th class="py-4 px-4 font-bold text-ink w-[18%] border-l border-borderwarm">
+                  <div>A11y Overlays</div>
+                  <div class="text-[11px] font-normal text-inkmuted mt-0.5">UserWay, AccessiBe</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-borderwarm text-xs">
+              
+              <!-- Row 1 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Integration Time &amp; Effort
+                  <div class="text-[11px] font-normal text-inkmuted">Time to production on any site</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> 2 Minutes (1 Script Tag)
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Auto-scans DOM + Symbiosis JSON</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-amber-600 font-bold">&#9888;</span> Days to Weeks
+                  <div class="text-[11px] text-inkmuted mt-0.5">Manual KB upload &amp; flow builder</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Weeks to Months
+                  <div class="text-[11px] text-inkmuted mt-0.5">Requires custom frontend + tool wiring</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-emerald-700 font-bold">&#10003;</span> 1 Script Tag
+                  <div class="text-[11px] text-inkmuted mt-0.5">No AI domain or catalog brain</div>
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  UI Footprint &amp; Site Visibility
+                  <div class="text-[11px] font-normal text-inkmuted">How much of the host site stays visible</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> 96% Visible (Version 1 Pill)
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">15% glass tint, 4px blur, click-through</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Blocks Corner / Mobile Screen
+                  <div class="text-[11px] text-inkmuted mt-0.5">Opaque iframe covers CTAs &amp; products</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-amber-600 font-bold">&#9888;</span> DIY UI Required
+                  <div class="text-[11px] text-inkmuted mt-0.5">SDK provides raw audio socket only</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-amber-600 font-bold">&#9888;</span> Heavy Sidebar Drawer
+                  <div class="text-[11px] text-inkmuted mt-0.5">Static accessibility toolbar</div>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Real DOM Action Execution
+                  <div class="text-[11px] font-normal text-inkmuted">Clicks buttons, switches tabs, fills forms</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Native DOM + Host Actions
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Clicks buttons, scrolls, fills &amp; undoes forms</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Text Links Only
+                  <div class="text-[11px] text-inkmuted mt-0.5">Cannot click buttons or operate page UI</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-amber-600 font-bold">&#9888;</span> Manual Function Calling
+                  <div class="text-[11px] text-inkmuted mt-0.5">Must hand-code every button handler</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-amber-600 font-bold">&#9888;</span> Tab / Key Emulation
+                  <div class="text-[11px] text-inkmuted mt-0.5">No natural language intent understanding</div>
+                </td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Post-Action Verification Receipts
+                  <div class="text-[11px] font-normal text-inkmuted">Proves the action actually succeeded</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Built-In Mutation Verification
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Checks DOM/URL/Cart delta + glowing ring</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Prone to Hallucination
+                  <div class="text-[11px] text-inkmuted mt-0.5">Says “Added!” even if button was disabled</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None
+                </td>
+              </tr>
+
+              <!-- Row 5 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Deictic Viewport Awareness
+                  <div class="text-[11px] font-normal text-inkmuted">Understands “How much is this one?”</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Real-Time Viewport + Hover
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Resolves “this one” to active card on screen</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Blind to Screen Position
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Blind to Screen Position
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Focus Node Only
+                </td>
+              </tr>
+
+              <!-- Row 6 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  5-Stream Executive Daily Briefing
+                  <div class="text-[11px] font-normal text-inkmuted">Weather + Bio + 2 Calendars + Take + Buy</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Built-In Briefing Engine
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Triggered on wake or by saying “Update”</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None (Must build from scratch)
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None
+                </td>
+              </tr>
+
+              <!-- Row 7 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Command Latency &amp; Unit Economics
+                  <div class="text-[11px] font-normal text-inkmuted">Speed &amp; cost for common UI commands</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> &lt; 10ms Tier-0 Bypass ($0)
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">75% of commands bypass LLM billing</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-amber-600 font-bold">&#9888;</span> $0.50–$0.99 per resolution
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> $0.10–$0.25 / minute
+                  <div class="text-[11px] text-inkmuted mt-0.5">500–900ms round-trip on every utterance</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-emerald-700 font-bold">&#10003;</span> Local OS TTS
+                </td>
+              </tr>
+
+              <!-- Row 8 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Model Execution Safety Guardrail
+                  <div class="text-[11px] font-normal text-inkmuted">Protection against prompt injection</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> 28 Allowlisted Intents + Jev
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Zero arbitrary model execution authority</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-amber-600 font-bold">&#9888;</span> Prompt-Based Only
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-amber-600 font-bold">&#9888;</span> Raw LLM Function Calling
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-emerald-700 font-bold">&#10003;</span> Deterministic
+                </td>
+              </tr>
+
+              <!-- Row 9 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Multi-User Memory Isolation
+                  <div class="text-[11px] font-normal text-inkmuted">Per-persona storage &amp; instant switching</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Isolated Per-User Keys
+                  <div class="text-[11px] font-normal text-inksec mt-0.5"><code class="font-mono">setUser(id)</code> + voice “forget everything”</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Cookie Session Tied
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> DIY Database Required
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None
+                </td>
+              </tr>
+
+              <!-- Row 10 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Unmet Demand Intelligence Beacon
+                  <div class="text-[11px] font-normal text-inkmuted">Captures zero-result voice searches</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Structured Demand Funnel
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Tracks unmatched SKUs, compares &amp; goals</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-amber-600 font-bold">&#9888;</span> Unstructured Chat Logs
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Raw Transcripts Only
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None
+                </td>
+              </tr>
+
+              <!-- Row 11 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  Clinical, Rx &amp; Crisis Guardrails
+                  <div class="text-[11px] font-normal text-inkmuted">Safe for health, longevity &amp; finance sites</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Built-In Medical/Rx Linter
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Routes Rx to clinician + 911/112 crisis gate</div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Not Built-In
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Not Built-In
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Not Applicable
+                </td>
+              </tr>
+
+              <!-- Row 12 -->
+              <tr class="hover:bg-subtle/80">
+                <td class="py-3.5 px-5 font-semibold text-ink">
+                  W3C WebMCP &amp; Agent Readiness
+                  <div class="text-[11px] font-normal text-inkmuted">Standardized browser agent protocol</div>
+                </td>
+                <td class="py-3.5 px-5 bg-foresttint/60 border-x border-forestborder font-semibold text-forestdeep">
+                  <span class="inline-block w-4 text-emerald-700 font-bold">&#10003;</span> Native WebMCP + <code class="font-mono">llms.txt</code>
+                  <div class="text-[11px] font-normal text-inksec mt-0.5">Reads <code class="font-mono">navigator.modelContext.tools</code></div>
+                </td>
+                <td class="py-3.5 px-4 text-inksec">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Proprietary Silo
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> Server-Side Only
+                </td>
+                <td class="py-3.5 px-4 text-inksec border-l border-borderwarm">
+                  <span class="text-rose-600 font-bold">&#10005;</span> None
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 5: LIVE ON-PAGE SANDBOX (TEST VOICELAYER RIGHT HERE)          -->
+  <!-- ===================================================================== -->
+  <section id="sandbox" class="py-20 border-b border-borderwarm bg-stonewarm/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
+        <div class="max-w-2xl">
+          <div class="font-mono text-xs uppercase tracking-widest text-forest font-semibold mb-2">Interactive Live Sandbox</div>
+          <h2 class="font-serif text-3xl sm:text-4xl font-medium text-ink tracking-tight mb-3">
+            Try VoiceLayer live on this page right now.
+          </h2>
+          <p class="text-sm text-inksec leading-relaxed">
+            The cards below are real DOM elements absorbed by VoiceLayer on this page. Click any voice prompt chip below—or tap the top glass pill and speak—to see VoiceLayer look up prices, read your briefing, and click buttons with glowing verification rings.
+          </p>
+        </div>
+
+        <!-- Cart Counter Badge for Sandbox -->
+        <div class="bg-white px-4 py-3 rounded-2xl border border-borderstrong shadow-sm flex items-center gap-3">
+          <div class="w-8 h-8 rounded-xl bg-foresttint border border-forestborder flex items-center justify-center text-forest font-bold text-xs" id="sandbox-cart-count">3</div>
+          <div>
+            <div class="text-xs font-bold text-ink">Live Demo Cart</div>
+            <div class="text-[11px] font-mono text-inksec" id="sandbox-cart-total">$107.00 &bull; Symbiosis Synced</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Click-to-Run Voice Command Bar -->
+      <div class="bg-white rounded-2xl p-4 border border-borderstrong shadow-sm mb-8 flex flex-wrap items-center gap-2">
+        <span class="text-xs font-bold text-ink mr-2 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+          Run Live Voice Command:
+        </span>
+        <button onclick="runLiveSandboxCommand('update')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-forest text-white hover:bg-forestdeep transition-colors cursor-pointer">
+          🗣️ “Update” (Full Alex Briefing)
+        </button>
+        <button onclick="runLiveSandboxCommand('how much is whey protein')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-foresttint text-forest border border-forestborder hover:bg-forestborder/50 transition-colors cursor-pointer">
+          🗣️ “How much is Whey Protein?”
+        </button>
+        <button onclick="runLiveSandboxCommand('what is pending to take')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-stonewarm text-ink border border-borderstrong hover:bg-borderwarm transition-colors cursor-pointer">
+          🗣️ “What is pending to take?”
+        </button>
+        <button onclick="runLiveSandboxCommand('what is on my calendar')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-stonewarm text-ink border border-borderstrong hover:bg-borderwarm transition-colors cursor-pointer">
+          🗣️ “What is on my calendar?”
+        </button>
+        <button onclick="runLiveSandboxCommand('click add whey to cart')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-bronzetint text-bronze border border-bronzeborder hover:bg-bronzeborder/50 transition-colors cursor-pointer">
+          🗣️ “Click Add Whey to Cart”
+        </button>
+        <button onclick="runLiveSandboxCommand('switch persona')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-stonewarm text-ink border border-borderstrong hover:bg-borderwarm transition-colors cursor-pointer">
+          🗣️ “Switch Persona”
+        </button>
+      </div>
+
+      <!-- Sandbox Live Product Cards (Scanned by VoiceLayer) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Product 1 -->
+        <article class="bg-white rounded-3xl p-6 border border-borderwarm shadow-sm flex flex-col justify-between" data-product-id="prod-whey" data-vl-buy="Whey Protein Isolate (Grass-Fed)">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-foresttint text-forest border border-forestborder">In Stock &bull; 12 Days Left</span>
+              <span class="font-mono text-lg font-bold text-ink">$45.00</span>
+            </div>
+            <h3 class="text-base font-bold text-ink mb-1">Whey Protein Isolate (Grass-Fed)</h3>
+            <p class="text-xs text-inksec leading-relaxed mb-4">
+              Ultra-pure grass-fed whey isolate with cross-flow microfiltration for rapid amino acid kinetics. 30g post-workout within 45 mins after exercise.
+            </p>
+          </div>
+          <button id="btn-add-whey" onclick="addSandboxCart('Whey Protein Isolate (Grass-Fed)', 45, this)" class="w-full py-2.5 px-4 rounded-xl bg-forest hover:bg-forestdeep text-white font-semibold text-xs transition-all cursor-pointer">
+            Add Whey to Cart
+          </button>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="bg-white rounded-3xl p-6 border border-borderwarm shadow-sm flex flex-col justify-between" data-product-id="prod-mag" data-vl-buy="Magnesium Glycinate (Elemental 400mg)">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-foresttint text-forest border border-forestborder">In Stock &bull; 30 Days Left</span>
+              <span class="font-mono text-lg font-bold text-ink">$32.00</span>
+            </div>
+            <h3 class="text-base font-bold text-ink mb-1">Magnesium Glycinate (Elemental 400mg)</h3>
+            <p class="text-xs text-inksec leading-relaxed mb-4">
+              Chelated bisglycinate form for deep parasympathetic recovery, HRV elevation, and sleep architecture optimization without GI distress.
+            </p>
+          </div>
+          <button id="btn-add-mag" onclick="addSandboxCart('Magnesium Glycinate (Elemental 400mg)', 32, this)" class="w-full py-2.5 px-4 rounded-xl bg-forest hover:bg-forestdeep text-white font-semibold text-xs transition-all cursor-pointer">
+            Add Magnesium to Cart
+          </button>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="bg-white rounded-3xl p-6 border border-borderwarm shadow-sm flex flex-col justify-between" data-product-id="prod-elec" data-vl-buy="Electrolyte Balance Complex (3 days left)">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-bronzetint text-bronze border border-bronzeborder">Refill Urgent &bull; 3 Days Left</span>
+              <span class="font-mono text-lg font-bold text-ink">$35.00</span>
+            </div>
+            <h3 class="text-base font-bold text-ink mb-1">Electrolyte Balance Complex</h3>
+            <p class="text-xs text-inksec leading-relaxed mb-4">
+              Clinical hypotonic sodium-potassium-magnesium ratio formulated for Zone 2 endurance rides in high-humidity climates.
+            </p>
+          </div>
+          <button id="btn-add-elec" onclick="addSandboxCart('Electrolyte Balance Complex', 35, this)" class="w-full py-2.5 px-4 rounded-xl bg-bronze hover:opacity-95 text-white font-semibold text-xs transition-all cursor-pointer">
+            Add Electrolytes to Cart
+          </button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 6: 1-LINE DROP-IN CODE & SYMBIOSIS INTEGRATION                -->
+  <!-- ===================================================================== -->
+  <section id="integration" class="py-20 bg-ivory border-b border-borderwarm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        
+        <!-- Left Explanation -->
+        <div class="lg:col-span-5">
+          <div class="font-mono text-xs uppercase tracking-widest text-forest font-semibold mb-2">Developer Integration</div>
+          <h2 class="font-serif text-3xl sm:text-4xl font-medium text-ink tracking-tight mb-4">
+            Drop in 1 script tag. Symbiosis handles the rest.
+          </h2>
+          <p class="text-sm text-inksec leading-relaxed mb-6">
+            VoiceLayer works immediately on any static HTML, React, Next.js, Vue, Shopify, or Webflow site. With zero configuration, it scans your DOM headings, buttons, and product cards. When you pass a <code class="font-mono text-xs bg-stonewarm px-1.5 py-0.5 rounded">window.__VOICELAYER_SYMBIOSIS__</code> object, it unlocks personalized briefings, dual calendars, and custom host actions.
+          </p>
+
+          <div class="space-y-3">
+            <div class="p-4 rounded-2xl bg-white border border-borderwarm">
+              <div class="font-mono text-xs font-bold text-forest mb-1">1. Zero-Config DOM Mode</div>
+              <p class="text-xs text-inksec">Paste the script tag. VoiceLayer scans visible buttons, links, prices, and headings automatically.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-borderwarm">
+              <div class="font-mono text-xs font-bold text-forest mb-1">2. Symbiotic Handshake Mode</div>
+              <p class="text-xs text-inksec">Pass <code class="font-mono">profile</code>, <code class="font-mono">calendar</code>, <code class="font-mono">workCalendar</code>, <code class="font-mono">toTake</code>, <code class="font-mono">toBuy</code>, and <code class="font-mono">actions</code> via JS or JSON script tag.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-borderwarm">
+              <div class="font-mono text-xs font-bold text-bronze mb-1">3. Cloud Edge Ready (Vercel &amp; Cloudflare)</div>
+              <p class="text-xs text-inksec">Stateless edge API routes (<code class="font-mono">/api/voice/*</code>) keep your Deepgram, Grok, and LLM keys 100% server-side.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Code Block -->
+        <div class="lg:col-span-7 bg-[#181716] text-stone-100 rounded-3xl p-6 sm:p-8 shadow-2xl border border-stone-800 font-mono text-xs overflow-x-auto">
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-stone-800">
+            <span class="text-emerald-400 font-semibold">index.html &bull; Version 1 (15% Glass Tint, 4px Blur)</span>
+            <button onclick="copyEmbedSnippet(this)" class="px-3 py-1 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 text-[11px] transition-colors cursor-pointer">
+              Copy Snippet
+            </button>
+          </div>
+<pre id="embed-code" class="leading-relaxed text-[11.5px] text-stone-300 overflow-x-auto"><code>&lt;!-- 1. Load VoiceLayer Styles &amp; Version 1 Glass Config --&gt;
+&lt;link rel="stylesheet" href="https://your-domain.com/voicelayer/voicelayer.min.css"&gt;
+&lt;script&gt;
+  window.VoiceLayerConfig = {
+    mode: 'glass',
+    language: 'en',
+    glass: {
+      dock: 'top',       // Version 1: Compact Floating Top Pill
+      height: 0.16,      // Leaves 96% of the website visible
+      tint: 0.15,        // 15% Glass Tint
+      blur: 4,           // 4px Optical Backdrop Blur
+      hue: 150,          // Botanical Emerald Accent
+      passThrough: true  // Clicks &amp; scroll reach the site underneath
+    },
+    companion: { preset: 'wellness', name: 'Alex' }
+  };
+
+  // 2. Optional: Symbiotic Website-Agent Handshake
+  window.__VOICELAYER_SYMBIOSIS__ = {
+    appName: 'Keel Longevity',
+    userId: 'u1',
+    profile: { name: 'Alex Rivera', tier: 'Peak Endurance Athlete' },
+    weather: { city: 'Miami', tempF: 81, tempC: 27, raining: true, condition: { en: 'overcast' } },
+    calendar: [{ label: 'Dr. Chen follow-up (labs review)', time: '09:00' }],
+    workCalendar: [
+      { label: 'Weekly review — Keel Performance Board', time: '15:00', location: 'Zoom' },
+      { label: 'Zone 2 Active Recovery Ride — 45 min (Low (115-130 BPM))', time: '18:30', location: 'Key Biscayne loop' }
+    ],
+    actions: [
+      { name: 'open_marketplace', phrases: ['open marketplace', 'go to marketplace'], handler: () =&gt; {} }
+    ]
+  };
+&lt;/script&gt;
+&lt;script src="https://your-domain.com/voicelayer/voicelayer.min.js" defer&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- FOOTER                                                                -->
+  <!-- ===================================================================== -->
+  <footer class="py-12 bg-stonewarm text-inksec text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-lg bg-forest flex items-center justify-center text-white font-bold text-xs">VL</div>
+        <span class="font-bold text-ink">VoiceLayer v0.7.0</span>
+        <span class="text-inkmuted">&bull; Symbiotic Voice &amp; Spatial Intelligence Layer</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-6">
+        <a href="/voicelayer/pitch-deck.html" class="hover:text-forest font-semibold">Executive Pitch Deck</a>
+        <a href="/voicelayer/voicelayer_transparent_options.html" class="hover:text-forest font-semibold">Glass Overlay Studio</a>
+        <a href="/voicelayer/demo-glass-top.html" class="hover:text-forest font-semibold">Top Glass Demo</a>
+        <a href="/llms.txt" class="hover:text-forest font-mono">llms.txt</a>
+        <a href="/api/voice/health" class="hover:text-forest font-mono">/api/voice/health</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- LIVE VOICELAYER CONFIGURATION + ALEX MOCK SYMBIOSIS FOR THIS SITE     -->
+  <!-- ===================================================================== -->
+  <script>
+    // Configure live VoiceLayer on this page with Version 1: 15% glass tint and 4px blur
+    window.VoiceLayerConfig = {
+      apiBase: '/api/voice',
+      mode: 'glass',
+      offsetY: 84,
+      language: 'en',
+      bubble: false,
+      glass: {
+        dock: 'top',
+        height: 0.16,
+        blur: 4,
+        tint: 0.15,
+        hue: 150,
+        lite: 'auto',
+        passThrough: true
+      },
+      companion: {
+        preset: 'wellness',
+        name: 'Alex',
+        demo: false
+      }
+    };
+
+    // Populate Symbiosis manifest with the exact Alex Rivera profile & briefing data
+    window.__VOICELAYER_SYMBIOSIS__ = {
+      appName: 'VoiceLayer Flagship Showcase',
+      repo: 'Comandvoice',
+      userId: 'u1',
+      profile: {
+        id: 'u1',
+        name: 'Alex Rivera',
+        role: 'Full-Data Male Endurance Athlete',
+        tier: 'Peak Endurance Athlete',
+        goals: ['VO2 Max Optimization', 'Autonomic HRV Recovery', 'Zone 2 Endurance'],
+        details: {
+          biologicalAge: 25.8,
+          readiness: { score: 72, status: 'warning' },
+          metrics: {
+            sleep: { current: 6.2 },
+            hrv: { current: 45 }
+          },
+          executiveReport: {
+            overallBiologicalAge: 25.8,
+            chronologicalAge: 32
+          },
+          trainingPlan: {
+            todayWorkout: 'Zone 2 Active Recovery Ride',
+            duration: '45 min',
+            intensity: 'Low (115-130 BPM)'
+          },
+          activeRegimen: [
+            {
+              name: 'Whey Protein Isolate (Grass-Fed)',
+              dailyDosage: '30g post-workout',
+              timing: 'Within 45 mins after exercise',
+              daysRemaining: 12
+            },
+            {
+              name: 'Magnesium Glycinate (Elemental 400mg)',
+              dailyDosage: '400mg',
+              timing: '45 mins before bedtime',
+              daysRemaining: 30
+            },
+            {
+              name: 'BPC-157 (Body Protection Compound)',
+              dailyDosage: 'Clinician Consult Required',
+              timing: 'Under Medical Guidance',
+              daysRemaining: 10
+            },
+            {
+              name: 'Electrolyte Balance Complex',
+              dailyDosage: '1 stick pack',
+              timing: 'During endurance sessions',
+              daysRemaining: 3
+            },
+            {
+              name: 'Omega-3 High-EPA 2000mg',
+              dailyDosage: '2000mg',
+              timing: 'Morning with food',
+              daysRemaining: 4
+            }
+          ]
+        }
+      },
+      weather: {
+        city: 'Miami',
+        tempF: 81,
+        tempC: 27,
+        humidity: 48,
+        raining: true,
+        dry: false,
+        condition: { en: 'overcast', es: 'nublado' }
+      },
+      calendar: [
+        { label: 'Dr. Chen follow-up (labs review)', time: '09:00', kind: 'medical' }
+      ],
+      workCalendar: [
+        { label: 'Weekly review — Keel Performance Board', time: '15:00', kind: 'work', location: 'Zoom' },
+        { label: 'Zone 2 Active Recovery Ride — 45 min (Low (115-130 BPM))', time: '18:30', kind: 'training', location: 'Key Biscayne loop' }
+      ],
+      inventory: [
+        {
+          id: 'prod-whey',
+          name: 'Whey Protein Isolate (Grass-Fed)',
+          price: '$45.00',
+          value: 45,
+          inStock: true,
+          category: 'Protein & Recovery',
+          description: 'Ultra-pure grass-fed whey isolate with cross-flow microfiltration for rapid amino acid kinetics.'
+        },
+        {
+          id: 'prod-mag',
+          name: 'Magnesium Glycinate (Elemental 400mg)',
+          price: '$32.00',
+          value: 32,
+          inStock: true,
+          category: 'Sleep & Recovery',
+          description: 'Chelated bisglycinate form for deep parasympathetic recovery and HRV optimization.'
+        },
+        {
+          id: 'prod-elec',
+          name: 'Electrolyte Balance Complex',
+          price: '$35.00',
+          value: 35,
+          inStock: true,
+          category: 'Hydration',
+          description: 'Clinical hypotonic sodium-potassium-magnesium ratio for Zone 2 endurance sessions.'
+        }
+      ],
+      actions: [
+        {
+          id: 'open_marketplace',
+          name: 'open_marketplace',
+          label: 'Open Longevity Marketplace',
+          phrases: ['open marketplace', 'go to marketplace', 'browse supplements'],
+          handler: function () {
+            document.getElementById('sandbox').scrollIntoView({ behavior: 'smooth' });
+            return 'Opened the CuasarX Longevity Marketplace.';
+          }
+        },
+        {
+          id: 'switch_athlete_persona',
+          name: 'switch_athlete_persona',
+          label: 'Switch Active Athlete Persona',
+          phrases: ['switch persona', 'switch athlete', 'switch user'],
+          handler: function () {
+            return 'Switched active profile to Sarah Chen (Female Athlete (Active Cycle Tracking)) with isolated VoiceLayer memory.';
+          }
+        }
+      ]
+    };
+
+    // Interactive Stage Controls
+    function updateHeroGlass() {
+      const tint = Number(document.getElementById('hero-tint').value);
+      const blur = Number(document.getElementById('hero-blur').value);
+      document.getElementById('hero-tint-label').textContent = tint + '%';
+      document.getElementById('hero-blur-label').textContent = blur + 'px';
+      const pill = document.getElementById('hero-glass-pill');
+      pill.style.background = `rgba(251, 250, 248, ${(tint / 100).toFixed(2)})`;
+      pill.style.backdropFilter = `blur(${blur}px)`;
+      pill.style.webkitBackdropFilter = `blur(${blur}px)`;
+    }
+
+    function resetHeroGlass() {
+      document.getElementById('hero-tint').value = 15;
+      document.getElementById('hero-blur').value = 4;
+      updateHeroGlass();
+    }
+
+    function simulateStagePrompt(kind) {
+      const caption = document.getElementById('stage-caption');
+      const badge = document.getElementById('stage-receipt-badge');
+      const exp = document.getElementById('stage-explanation');
+
+      if (kind === 'briefing') {
+        caption.innerHTML = `<strong class="text-forest font-bold">Welcome back, Alex.</strong> Say “update” for your summary. It’s 81°F (27°C), overcast with a chance of rain today. Your biometrics today: Readiness 72/100, Sleep 6.2h, HRV 45ms, Bio-age 25.8y. On your calendar: Dr. Chen follow-up (labs review) (09:00). Work, training &amp; trips: Training: Zone 2 Active Recovery Ride (45 min, Low (115-130 BPM)), Weekly review — Keel Performance Board @ Zoom (15:00) and Zone 2 Active Recovery Ride — 45 min (Low (115-130 BPM)) @ Key Biscayne loop (18:30). Pending to take: Whey Protein Isolate (Grass-Fed) 30g post-workout (Within 45 mins after exercise), Magnesium Glycinate (Elemental 400mg) (45 mins before bedtime) and BPC-157 (Body Protection Compound) Clinician Consult Required (Under Medical Guidance). Pending to buy: BPC-157 (Body Protection Compound) (10 days left), Electrolyte Balance Complex (3 days left) and Omega-3 High-EPA 2000mg (4 days left).`;
+        badge.textContent = 'RECEIPT: briefing_all • VERIFIED';
+        exp.textContent = 'Synthesized 5 live host streams (Weather, Biometrics, 2 Calendars, Regimen To-Take, and Refills To-Buy) in <10ms.';
+      } else if (kind === 'lookup') {
+        caption.innerHTML = `<strong class="text-forest font-bold">Catalog Lookup:</strong> Whey Protein Isolate (Grass-Fed) is $45.00 (in stock). Ultra-pure grass-fed whey isolate with cross-flow microfiltration for rapid amino acid kinetics.`;
+        badge.textContent = 'RECEIPT: inv_price_product • VERIFIED';
+        exp.textContent = 'Queried absorbed host inventory directly—zero hallucination, instant price and stock verification.';
+      } else if (kind === 'action') {
+        caption.innerHTML = `<strong class="text-forest font-bold">Host Action Executed:</strong> Opened the CuasarX Longevity Marketplace.`;
+        badge.textContent = 'RECEIPT: action_open_marketplace • VERIFIED';
+        exp.textContent = 'Triggered registered host action handler hands-free and verified state transition.';
+      } else if (kind === 'calendar') {
+        caption.innerHTML = `<strong class="text-forest font-bold">Dual Calendar:</strong> On your calendar today you have 1 event: Dr. Chen follow-up (labs review) (09:00). On your second calendar: Training: Zone 2 Active Recovery Ride, Weekly review @ Zoom (15:00) and Zone 2 Active Recovery Ride @ Key Biscayne loop (18:30).`;
+        badge.textContent = 'RECEIPT: briefing_calendar • VERIFIED';
+        exp.textContent = 'Read both primary medical appointments and secondary work/training schedule.';
+      } else if (kind === 'persona') {
+        caption.innerHTML = `<strong class="text-forest font-bold">Persona Switched:</strong> Switched active profile to Sarah Chen (Female Athlete (Active Cycle Tracking)) with isolated VoiceLayer memory.`;
+        badge.textContent = 'RECEIPT: action_switch_persona • VERIFIED';
+        exp.textContent = 'Partitioned memory storage to vl_mem_v1_u2 with zero cross-user data leakage.';
+      }
+    }
+
+    function wakeLiveAssistant() {
+      if (window.VoiceLayer) {
+        window.VoiceLayer.show();
+        window.VoiceLayer.wake();
+      }
+    }
+
+    async function runLiveSandboxCommand(cmd) {
+      if (window.VoiceLayer) {
+        window.VoiceLayer.show();
+        await window.VoiceLayer.run(cmd);
+      }
+    }
+
+    let sandboxCount = 3;
+    let sandboxTotal = 107;
+    function addSandboxCart(name, price, btnEl) {
+      sandboxCount += 1;
+      sandboxTotal += price;
+      document.getElementById('sandbox-cart-count').textContent = String(sandboxCount);
+      document.getElementById('sandbox-cart-total').textContent = '$' + sandboxTotal.toFixed(2) + ' • Symbiosis Synced';
+      if (btnEl) {
+        btnEl.classList.add('vl-verified-ring');
+        const orig = btnEl.textContent;
+        btnEl.textContent = '✓ Added to Cart ($' + price + ')';
+        setTimeout(() => {
+          btnEl.classList.remove('vl-verified-ring');
+          btnEl.textContent = orig;
+        }, 2200);
+      }
+      if (window.VoiceLayer && window.VoiceLayer.setCart) {
+        window.VoiceLayer.setCart({ count: sandboxCount, total: '$' + sandboxTotal });
+      }
+    }
+
+    function copyEmbedSnippet(btn) {
+      const code = document.getElementById('embed-code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 1800);
+      });
+    }
+  </script>
+  <script src="/voicelayer/voicelayer.js" defer></script>
+</body>
+</html>

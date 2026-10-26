@@ -56,11 +56,11 @@
     mode: 'assistant',                   // 'assistant' (orb + panel, answers when asked) | 'glass' (full-page glass, speaks first after ONE tap)
     glass: {
       autoOpen: true,                    // show the glass (in its "tap to start" state) on load. It never listens or speaks before that tap.
-      blur: 14,                          // px of backdrop blur (0 = clear glass)
-      tint: 0.22,                        // 0..0.6 darkness of the glass
-      hue: 215,                          // accent hue 0..360 (blue family by default)
-      dock: 'full',                      // 'full' (cover the page) | 'top' (glass band pinned to the TOP of the page; the site below stays visible and usable)
-      height: 0.42,                      // dock:'top' only — band height as a fraction of the viewport (clamped 0.25..0.6)
+      blur: 4,                           // px of backdrop blur (0 = clear glass)
+      tint: 0.15,                        // 0..0.6 darkness of the glass (15% tint)
+      hue: 150,                          // accent hue 0..360
+      dock: 'top',                       // 'full' (cover the page) | 'top' (compact floating glass pill at the TOP of the page)
+      height: 0.18,                      // dock:'top' only — band height as a fraction of the viewport (clamped 0.10..0.6)
       lite: 'auto',                      // 'auto' | true | false  - cheaper rendering on weak devices
       visual: 'line',                    // 'line' (orb + travelling dash-wave under it) | 'radial' (bars around the orb) | 'both'
       flow: 'out',                       // line only: 'out' = voice travels from the centre to both ends | 'right' = travels left to right
@@ -1268,10 +1268,10 @@
       const P = I.cp, cfg = this.cfg;
       await this.load();
       await Briefing.ensureWeather();
-      if (!alive()) return;
-      const name = this.data.name || Profile.get().name || Memory.name() || cfg.name || '';
+      const rawName = this.data.name || (Profile.get && Profile.get().name) || Memory.name() || cfg.name || '';
+      const name = rawName ? rawName.split(' ')[0] : '';
       UI.setDemo(!!(cfg.demo || this.data.demo));
-      if (this.greeted || store.sget(KEYS.cdone)) {
+      if (this.greeted || store.sget(KEYS.cdone) || name) {
         this.greeted = true; this.stage = 'insights'; this.emit('welcome_back');
         const bLine = Briefing.summaryLine();
         return VL.say(P.back(name) + (bLine ? ' ' + bLine : ''));
@@ -2123,7 +2123,7 @@
         userRegimen.forEach(function (r) {
           if (!r || r.takenToday === true || r.taken === true) return;
           const nm = clean(loc(r.name || r.label || ''));
-          const ds = clean(r.dose || r.dosage || '');
+          const ds = clean(r.dose || r.dosage || r.dailyDosage || '');
           const lbl = nm + (ds && nm.indexOf(ds) < 0 ? ' ' + ds : '');
           add(lbl, clean(r.timing || r.time || ''));
         });
@@ -2146,7 +2146,13 @@
       const out = [];
       const add = function (lbl) {
         lbl = clean(lbl); if (!lbl) return;
-        if (!out.some(function (x) { return norm(x.label) === norm(lbl); })) out.push({ label: lbl, text: lbl });
+        const baseNorm = norm(lbl).replace(/\s*\(\d+\s*(days left|días restantes|left|days)\)/gi, '').trim();
+        if (!out.some(function (x) {
+          const xBase = norm(x.label).replace(/\s*\(\d+\s*(days left|días restantes|left|days)\)/gi, '').trim();
+          return xBase === baseNorm;
+        })) {
+          out.push({ label: lbl, text: lbl });
+        }
       };
       const det = (typeof Profile !== 'undefined' && Profile.get && Profile.get().details) || {};
       const userRegimen = Array.isArray(det.activeRegimen) ? det.activeRegimen : (Array.isArray(det.regimen) ? det.regimen : null);
@@ -2988,12 +2994,12 @@
   RadialRenderer.prototype.resize = function () {
     const vw = document.documentElement.clientWidth || window.innerWidth, vh = window.innerHeight || 700;
     const isTop = CONFIG.mode === 'glass' && CONFIG.glass && CONFIG.glass.dock === 'top';
-    const bandH = isTop ? vh * clamp(Number(CONFIG.glass.height) || 0.42, 0.25, 0.6) : vh;
+    const bandH = isTop ? vh * clamp(Number(CONFIG.glass.height) || 0.18, 0.10, 0.6) : vh;
     this.R = isTop
-      ? clamp(Math.round(Math.min(vw * 0.08, bandH * 0.135)), 24, 52)
+      ? clamp(Math.round(Math.min(vw * 0.055, bandH * 0.15)), 18, 34)
       : clamp(Math.round(Math.min(vw * 0.19, vh * (vh < 560 ? 0.10 : 0.13))), 46, 120);
-    this.S = Math.round(this.R * (isTop ? 3.8 : 5));
-    this.W = this.visual === 'radial' ? this.S : Math.max(this.S, Math.round(Math.min(vw * (isTop ? 0.72 : 0.88), isTop ? 560 : 720)));
+    this.S = Math.round(this.R * (isTop ? 2.6 : 5));
+    this.W = this.visual === 'radial' ? this.S : Math.max(this.S, Math.round(Math.min(vw * (isTop ? 0.62 : 0.88), isTop ? 460 : 720)));
     this.dpr = this.lite ? 1 : Math.min(window.devicePixelRatio || 1, 2);
     this.canvas.style.width = this.W + 'px'; this.canvas.style.height = this.S + 'px';
     this.canvas.width = Math.round(this.W * this.dpr); this.canvas.height = Math.round(this.S * this.dpr);
@@ -3657,7 +3663,7 @@
         root.style.setProperty('--vl-tint', String(clamp(Number(CONFIG.glass.tint) || 0, 0, 0.6)));
         root.setAttribute('data-pass', CONFIG.glass.passThrough === false ? 'false' : 'true');
         if (CONFIG.glass.dock === 'top') {
-          const frac = clamp(Number(CONFIG.glass.height) || 0.42, 0.25, 0.6);
+          const frac = clamp(Number(CONFIG.glass.height) || 0.18, 0.10, 0.6);
           root.setAttribute('data-dock', 'top');
           root.style.setProperty('--vl-dock-h', frac * 100 + 'vh');
           root.style.setProperty('--vl-dock-scale', String(frac));
@@ -4436,7 +4442,7 @@
     tn = tn.replace(/\s+(please|thanks|thank you|por favor|gracias)$/, '').trim();
     let m;
     // ---- executive daily briefing: weather, primary calendar, work/training/travel calendar, pending to take, pending to buy ----
-    if (/^(give me (my |the |a )?(daily |morning |quick )?(briefing|update|summary|status)|daily briefing|morning briefing|my briefing|brief me|how is my day( looking)?|whats my status( today)?|what (is |do i have )?pending( today)?|whats pending( today)?|everything( that is)? pending|summary of everything( pending)?|dame (mi |el )?(resumen|informe|briefing)( del dia| diario)?|resumen del dia|como esta mi dia|estado del dia|que tengo pendiente( hoy)?|todo lo pendiente)$/.test(tn))
+    if (/^(give me (my |the |a )?(daily |morning |quick )?(briefing|update|summary|status)|daily briefing|morning briefing|my briefing|brief me|update|my update|summary|my summary|how is my day( looking)?|whats my status( today)?|what (is |do i have )?pending( today)?|whats pending( today)?|everything( that is)? pending|summary of everything( pending)?|dame (mi |el )?(resumen|informe|briefing)( del dia| diario)?|resumen del dia|como esta mi dia|estado del dia|resumen|mi resumen|que tengo pendiente( hoy)?|todo lo pendiente)$/.test(tn))
       return { type: 'briefing', act: 'all', raw: raw };
     if (/^(how is the (weather|day|temperature)|whats the (weather|temperature)( like)?( today)?|what is the (weather|temperature)( today)?|weather( today| report| forecast)?|temperature( today)?|is it (raining|sunny|dry|cold|hot|warm)( or (dry|raining|sunny))?( today| outside| right now)?|raining or dry|temp or raining|que (tiempo|clima) hace( hoy)?|como esta el (clima|tiempo|dia)( hoy)?|cual es la temperatura( hoy)?|esta (lloviendo|seco|soleado)( o (seco|lloviendo))?( hoy)?|llueve hoy|temperatura de hoy)$/.test(tn))
       return { type: 'briefing', act: 'weather', raw: raw };
@@ -5808,7 +5814,7 @@
       else if (act === 'work') text = Briefing.workCalendarText();
       else if (act === 'take') text = Briefing.toTakeText();
       else if (act === 'buy') text = Briefing.toBuyText();
-      else text = Briefing.fullText();
+      else text = Briefing.summaryLine() || Briefing.fullText();
       this.receipt({ action: 'briefing_' + act, label: act, status: 'succeeded', verification: 'read_back' });
       return this.say(text, { verified: true });
     },

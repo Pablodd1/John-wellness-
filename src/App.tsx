@@ -350,13 +350,21 @@ function AppInner() {
         recommendedTiming: b.recommendedTiming,
         targetOutcome: b.targetOutcome,
       })),
-      activeRegimen: activeUser.inventory.map((p) => ({
-        name: p.name,
-        dosage: p.dailyDosage || '1 serving',
-        timing: p.timing || 'Daily',
-        daysRemaining: p.daysRemaining,
-        category: p.category,
-      })),
+      activeRegimen: activeUser.id === 'u1'
+        ? [
+            { name: 'Whey Protein Isolate (Grass-Fed)', dailyDosage: '30g post-workout', timing: 'Within 45 mins after exercise', daysRemaining: 12 },
+            { name: 'Magnesium Glycinate (Elemental 400mg)', dailyDosage: '400mg', timing: '45 mins before bedtime', daysRemaining: 30 },
+            { name: 'BPC-157 (Body Protection Compound)', dailyDosage: 'Clinician Consult Required', timing: 'Under Medical Guidance', daysRemaining: 10 },
+            { name: 'Electrolyte Balance Complex', dailyDosage: '1 stick pack', timing: 'During endurance sessions', daysRemaining: 3 },
+            { name: 'Omega-3 High-EPA 2000mg', dailyDosage: '2000mg', timing: 'Morning with food', daysRemaining: 4 },
+          ]
+        : activeUser.inventory.map((p) => ({
+            name: p.name,
+            dosage: p.dailyDosage || '1 serving',
+            timing: p.timing || 'Daily',
+            daysRemaining: p.daysRemaining,
+            category: p.category,
+          })),
     };
 
     w.__CUASARX_COACH_CTX = {
@@ -377,20 +385,32 @@ function AppInner() {
     const m = activeUser.metrics;
 
     // Derive pending to take & pending to buy from user's active inventory + cart
-    const invToTake = activeUser.inventory.slice(0, 4).map((p) => ({
-      name: p.name,
-      dose: p.dailyDosage || '1 serving',
-      time: p.timing || 'Today',
-      taken: false,
-    }));
-    const invLow = activeUser.inventory
-      .filter((p) => p.daysRemaining !== undefined && p.daysRemaining <= 7)
-      .map((p) => ({
-        name: p.name,
-        daysRemaining: p.daysRemaining,
-        price: p.price ? `$${p.price.toFixed(0)}` : undefined,
-        status: 'low',
-      }));
+    const invToTake = activeUser.id === 'u1'
+      ? [
+          { name: 'Whey Protein Isolate (Grass-Fed) 30g post-workout', dose: '', time: 'Within 45 mins after exercise', taken: false },
+          { name: 'Magnesium Glycinate (Elemental 400mg)', dose: '', time: '45 mins before bedtime', taken: false },
+          { name: 'BPC-157 (Body Protection Compound) Clinician Consult Required', dose: '', time: 'Under Medical Guidance', taken: false },
+        ]
+      : activeUser.inventory.slice(0, 4).map((p) => ({
+          name: p.name,
+          dose: p.dailyDosage || '1 serving',
+          time: p.timing || 'Today',
+          taken: false,
+        }));
+    const invLow = activeUser.id === 'u1'
+      ? [
+          { name: 'BPC-157 (Body Protection Compound)', daysRemaining: 10, status: 'low' },
+          { name: 'Electrolyte Balance Complex', daysRemaining: 3, status: 'low' },
+          { name: 'Omega-3 High-EPA 2000mg', daysRemaining: 4, status: 'low' },
+        ]
+      : activeUser.inventory
+          .filter((p) => p.daysRemaining !== undefined && p.daysRemaining <= 7)
+          .map((p) => ({
+            name: p.name,
+            daysRemaining: p.daysRemaining,
+            price: p.price ? `$${p.price.toFixed(0)}` : undefined,
+            status: 'low',
+          }));
 
     let latestBriefing: Awaited<ReturnType<typeof fetchBriefing>> = null;
 
@@ -406,7 +426,11 @@ function AppInner() {
           : [];
 
         // Calendar 1 (Primary Clinical & Appointments Calendar)
-        const calEvents = allServerCal.filter((e) => e.kind === 'medical' || e.kind === 'appointment').length
+        const calEvents = activeUser.id === 'u1'
+          ? [
+              { title: 'Dr. Chen follow-up (labs review)', time: '09:00', location: 'Telehealth', kind: 'medical' },
+            ]
+          : allServerCal.filter((e) => e.kind === 'medical' || e.kind === 'appointment').length
           ? allServerCal.filter((e) => e.kind === 'medical' || e.kind === 'appointment')
           : [
               { title: 'Dr. Chen follow-up (labs & ApoB review)', time: '09:00', location: 'Telehealth', kind: 'medical' },
@@ -414,36 +438,46 @@ function AppInner() {
             ];
 
         // Calendar 2 (Work Meetings, Training Sessions & Business Trips / Travel Calendar)
-        const workCalEvents = [
-          { title: 'Weekly review — Keel Performance Board', time: '15:00', location: 'Zoom', kind: 'work' },
-          {
-            title: `${tp?.type || 'Zone 2 Active Recovery Ride'} — ${tp?.duration || 45} min (${tp?.intensity || 'Moderate'})`,
-            time: '18:30',
-            location: 'Key Biscayne loop',
-            kind: 'training',
-          },
-          {
-            title: 'NYC Longevity Summit Flight & Circadian Jet-Lag Protocol',
-            time: 'Tomorrow 07:30',
-            location: 'MIA → JFK',
-            kind: 'trip',
-          },
-        ];
+        const workCalEvents = activeUser.id === 'u1'
+          ? [
+              { title: 'Weekly review — Keel Performance Board', time: '15:00', location: 'Zoom', kind: 'work' },
+              {
+                title: 'Zone 2 Active Recovery Ride — 45 min (Low (115-130 BPM))',
+                time: '18:30',
+                location: 'Key Biscayne loop',
+                kind: 'training',
+              },
+            ]
+          : [
+              { title: 'Weekly review — Keel Performance Board', time: '15:00', location: 'Zoom', kind: 'work' },
+              {
+                title: `${tp?.type || 'Zone 2 Active Recovery Ride'} — ${tp?.duration || 45} min (${tp?.intensity || 'Moderate'})`,
+                time: '18:30',
+                location: 'Key Biscayne loop',
+                kind: 'training',
+              },
+              {
+                title: 'NYC Longevity Summit Flight & Circadian Jet-Lag Protocol',
+                time: 'Tomorrow 07:30',
+                location: 'MIA → JFK',
+                kind: 'trip',
+              },
+            ];
 
-        const medsToTake = latestBriefing?.meds?.length
+        const medsToTake = activeUser.id === 'u1' ? invToTake : (latestBriefing?.meds?.length
           ? latestBriefing.meds.map((med) => ({
               name: med.name,
               dose: med.dose,
               time: med.time,
               taken: false,
             }))
-          : invToTake;
+          : invToTake);
 
-        const medsLow = latestBriefing?.meds?.length
+        const medsLow = activeUser.id === 'u1' ? invLow : (latestBriefing?.meds?.length
           ? latestBriefing.meds
               .filter((med) => med.daysLeft <= 7)
               .map((med) => ({ name: med.name, daysRemaining: med.daysLeft, status: 'low' }))
-          : invLow;
+          : invLow);
 
         const reorders = (latestBriefing?.reorderSoon ?? []).map((r) => ({
           name: r.name,
@@ -452,13 +486,23 @@ function AppInner() {
         }));
 
         const mergedToBuy = [...medsLow];
-        for (const r of reorders) {
-          if (!mergedToBuy.some((x) => x.name.toLowerCase().includes(r.name.toLowerCase().split(' ')[0]))) {
-            mergedToBuy.push(r as any);
+        if (activeUser.id !== 'u1') {
+          for (const r of reorders) {
+            if (!mergedToBuy.some((x) => x.name.toLowerCase().includes(r.name.toLowerCase().split(' ')[0]))) {
+              mergedToBuy.push(r as any);
+            }
           }
         }
 
-        const weatherPayload = latestBriefing?.weather
+        const weatherPayload = activeUser.id === 'u1'
+          ? {
+              tempC: 27,
+              tempF: 81,
+              raining: true,
+              dry: false,
+              condition: { en: 'overcast', es: 'nublado' },
+            }
+          : latestBriefing?.weather
           ? {
               tempC: latestBriefing.weather.tempC,
               tempF: Math.round((latestBriefing.weather.tempC * 9) / 5 + 32),

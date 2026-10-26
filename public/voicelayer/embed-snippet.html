@@ -1,0 +1,60 @@
+<!--
+  VoiceLayer — install snippet (v0.6.0)
+  ------------------------------------------------------------------
+  1. Upload voicelayer.js and voicelayer.css to the SAME folder on your host.
+  2. Paste the ONE line below just before </body> on any page (or into your
+     theme / site-builder "custom code" box: WordPress, Wix, Shopify, Squarespace...).
+-->
+
+<script src="https://YOUR-SITE.example/voicelayer/voicelayer.js" defer></script>
+
+<!--
+  OPTIONAL - customise without editing the JS file. Put this ABOVE the line above:
+
+  <script>
+    window.VoiceLayerConfig = {
+      language: 'auto',                   // 'auto' | 'en' | 'es' | 'es-MX' ... (auto = saved choice > <html lang> > browser)
+      languages: ['en', 'es'],            // languages in the switcher
+      greeting: { en: 'Hi! How can I help?', es: 'Hola! En que te ayudo?' },
+      orbPosition: { corner: 'bottom-left', offsetX: 24, offsetY: 24 },
+      apiBase: '/api/voice',              // enables Deepgram (better accuracy, natural voice) + the owner kill switch
+      provider: 'auto',                   // 'auto' | 'browser' | 'deepgram'
+      hotkey: 'Alt+Shift+V',              // bring-back / toggle shortcut ('' = none)
+      bubble: true,                       // one silent, dismissible hint per session
+      enabled: true,                      // false = widget does nothing (static kill switch)
+      debug: false,
+
+      // v0.6.0 — Live Inventory, User Profile, Behavioral & Spatial Intelligence:
+      inventory: { autoScan: true, items: [], url: null },
+      profile: { name: '', tier: '', goals: [], preferences: [] },
+      behavior: { enabled: true, dwellMs: 1200 },
+      actions: [
+        // { id: 'reorder', label: 'Reorder last purchase', phrases: ['reorder my last order'], confirm: true, handler: (ctx) => 'Reordered!' }
+      ],
+      aiAnswer: async function (question, ctx) {
+        // ctx contains { language, page, spatial, inventory, cart, profile, companion }
+        return null;
+      }
+    };
+  </script>
+
+  Or use data attributes on the script tag:
+  <script src="voicelayer.js" data-language="es" data-api="/api/voice" data-corner="bottom-left" defer></script>
+
+  GLASS MODE (full-page or top-docked frosted glass + voice-reactive circle; speaks first after ONE tap):
+
+  <script>
+    window.VoiceLayerConfig = {
+      mode: 'glass',
+      glass: { dock: 'top', height: 0.42, blur: 14, tint: 0.22, hue: 215, lite: 'auto', passThrough: true },
+      companion: { preset: 'wellness',   // 'wellness' | 'training' | 'coaching' | 'support' | 'none'
+                   name: 'Alex', demo: true }   // demo:true = fake data, badged and announced. Remove for real data.
+    };
+  </script>
+  Or: <script src="voicelayer.js" data-mode="glass" data-preset="training" data-name="Alex" data-demo="true" defer></script>
+  Feed real data with VoiceLayer.setSignals({...}), VoiceLayer.setInventory([...]), VoiceLayer.setCart({...}), or VoiceLayer.setProfile({...}).
+  See README.md for full documentation.
+
+  A "bring it back" link anywhere on your page (for visitors who turned it off):
+  <a href="#" data-voicelayer-open>Voice help</a>
+-->

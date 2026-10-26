@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../lib/auth';
 import { fetchRecentEvents, fetchFeedback, fetchMyOrders, fetchRecentErrors, authFetch, InsightEvent, ErrorRow } from '../lib/dataService';
+import { Boxes } from 'lucide-react';
 import { format, formatDistanceToNowStrict } from 'date-fns';
 import {
   BarChart3,
@@ -62,6 +63,7 @@ export function InsightsDashboard() {
   const [loading, setLoading] = useState(true);
   const [refreshedAt, setRefreshedAt] = useState<Date | null>(null);
   const [explainState, setExplainState] = useState<Record<string, { loading: boolean; text?: string; error?: boolean }>>({});
+  const [syncState, setSyncState] = useState<string | null>(null);
 
   const load = async () => {
     setLoading(true);
@@ -341,6 +343,39 @@ export function InsightsDashboard() {
               );
             })}
           </ul>
+        )}
+      </section>
+
+      {/* Supplier fulfillment (Supliful) */}
+      <section aria-labelledby="supplier-heading" className="bg-white p-5 rounded-2xl border border-[#ebe7df] shadow-sm space-y-3">
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <h2 id="supplier-heading" className="text-sm font-bold text-[#181716] flex items-center gap-2">
+            <Boxes className="w-4 h-4 text-[#344a37]" aria-hidden="true" /> Supplier Fulfillment (Supliful)
+          </h2>
+          <button
+            onClick={async () => {
+              setSyncState('loading');
+              try {
+                const res = await authFetch('/api/supliful?action=catalog');
+                const data = await res.json();
+                setSyncState(res.ok ? `Synced — ${data.totalInTable ?? data.synced ?? 0} supplier products on file` : `Sync failed (${data.error ?? res.status})`);
+              } catch { setSyncState('Sync failed — network error'); }
+            }}
+            disabled={syncState === 'loading'}
+            className="btn-stone px-3 py-1.5 text-[11px] inline-flex items-center gap-1.5 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#181716]"
+          >
+            <RefreshCw className={cn('w-3.5 h-3.5', syncState === 'loading' && 'animate-spin')} aria-hidden="true" /> Sync supplier catalog
+          </button>
+        </div>
+        <p className="text-[11px] text-[#5c5851] leading-relaxed">
+          Pulls the Supliful white-label catalog (US fulfillment) into the platform. Marked products can be offered on
+          the marketplace; paid orders containing them are forwarded automatically for packing and shipping.
+        </p>
+        {syncState.startsWith('Synced') && (
+          <p role="status" className="text-[11px] font-bold text-[#2b4530] p-2.5 rounded-lg bg-[#f1f5f2] border border-[#dbe5dc]">{syncState}</p>
+        )}
+        {syncState.startsWith('Sync failed') && (
+          <p role="alert" className="text-[11px] font-bold text-[#8c3232] p-2.5 rounded-lg bg-[#fdf2f2] border border-[#f5d5d5]">{syncState}</p>
         )}
       </section>
 
