@@ -6,6 +6,7 @@ import { IntegrationCenter } from './IntegrationCenter';
 import { OrganSystemModeling } from './OrganSystemModeling';
 import { OrdersAndGoals } from './OrdersAndGoals';
 import { SubscriptionsPanel } from './SubscriptionsPanel';
+import { CalendarPanel } from './CalendarPanel';
 import { 
   User, 
   Sparkles, 
@@ -125,6 +126,9 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
 
       {/* Orders, reorder & goals — real data from the signed-in account */}
       <OrdersAndGoals user={user} onUpdateUser={onUpdateUser} onAddToCart={onAddToCart ?? (() => {})} />
+
+      {/* Visual calendar — dynamic dates, add tasks, synced to briefing & voice */}
+      <CalendarPanel />
 
       {/* Retention commerce: manage auto-deliveries */}
       <SubscriptionsPanel user={user} onAddToCart={onAddToCart ?? (() => {})} products={user.inventory} />
