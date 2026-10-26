@@ -26,6 +26,12 @@ type Symbiosis = {
 
 const uid = () => Math.random().toString(36).slice(2);
 
+/** Symbiosis calendar times may be ISO or human strings ("Tomorrow 07:30") — display either safely. */
+const safeWhen = (raw: string): string => {
+  const d = new Date(raw);
+  return isNaN(d.getTime()) ? raw : format(d, 'EEE HH:mm');
+};
+
 const MOCK_CATALOG_SEARCH = (term: string): Product[] => {
   const t = term.toLowerCase();
   return MOCK_PRODUCTS.filter((p) => p.name.toLowerCase().includes(t)).slice(0, 3);
@@ -75,16 +81,19 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
 
   // ── Tier 1: instant local answers from live platform data ──
   const localAnswer = (q: string): string | null => {
+    try { return localAnswerInner(q); } catch (e) { console.warn('Quick Assist local answer failed, using AI:', e); return null; }
+  };
+
+  const localAnswerInner = (q: string): string | null => {
     const t = q.toLowerCase();
     const S = symbiosis();
 
     if (/(calendar|meeting|schedule|today|agenda|appointment)/.test(t)) {
       const cal = S.calendar ?? [];
       if (!cal.length) return 'Your calendar is clear — nothing scheduled in the next day.';
-      return `You have ${cal.length} upcoming: ` + cal.slice(0, 4).map((e) => {
-        const d = new Date(e.time);
-        return `${e.title} (${format(d, 'EEE HH:mm')}${e.location ? `, ${e.location}` : ''})`;
-      }).join('; ') + '. Say "open profile" to see the calendar.';
+      return `You have ${cal.length} upcoming: ` + cal.slice(0, 4).map((e) =>
+        `${e.title} (${safeWhen(e.time)}${e.location ? `, ${e.location}` : ''})`
+      ).join('; ') + '. Say "open profile" to see the calendar.';
     }
     if (/(take|medication|meds|pill|dose|supplement now)/.test(t)) {
       const take = S.toTake ?? [];
