@@ -112,7 +112,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
         `${e.title} (${safeWhen(e.time)}${e.location ? `, ${e.location}` : ''})`
       ).join('; ') + '. Say "open profile" to see the calendar.';
     }
-    if (/(take|medication|meds|pill|dose|supplement now)/.test(t)) {
+    if (/(meds?|medications?|supplements?|pills?|dose|dosage)|what to take|when to take|pending to take/.test(t)) {
       const take = S.toTake ?? [];
       return take.length
         ? 'On your schedule: ' + take.map((m) => `${m.name}${m.dose ? ` (${m.dose})` : ''}${m.time ? ` at ${m.time}` : ''}`).join('; ') + '.'
