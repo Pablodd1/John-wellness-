@@ -893,7 +893,7 @@ function AppInner() {
   // Auth gate: when the database is configured, a signed-in identity is required.
   if (dbReady && authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#101210] text-xs text-stone-400">
+      <div className="min-h-screen flex items-center justify-center text-xs text-stone-400">
         Checking your session…
       </div>
     );
@@ -909,7 +909,7 @@ function AppInner() {
   }).slice(0, 5);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#101210] text-[#f4f2ec] font-sans pb-16 md:pb-0">
+    <div className="flex flex-col min-h-screen text-[#f4f2ec] font-sans pb-16 md:pb-0">
       
       {/* ======================================================== */}
       {/* 0. SOFT EDITORIAL TOP RIBBON                             */}

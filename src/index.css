@@ -11,6 +11,12 @@
 
   body {
     background-color: #0e100f;
+    background-image:
+      linear-gradient(rgba(10, 14, 11, 0.78), rgba(10, 14, 11, 0.88)),
+      url('/office-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: #f4f2ec;
     font-family: var(--font-sans);
     min-height: 100vh;
