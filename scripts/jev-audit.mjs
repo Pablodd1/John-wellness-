@@ -24,9 +24,10 @@ const MODEL = 'jev-1';
 
 const ROUTES = [
   { name: 'homepage', path: '/', expect: [200] },
-  { name: 'env-diagnostics', path: '/api/env-check', expect: [200] },
   { name: 'coach-endpoint', path: '/api/coach', method: 'GET', expect: [405] }, // 405 = alive & method-guarded
   { name: 'research-endpoint', path: '/api/research', method: 'GET', expect: [405] },
+  { name: 'briefing-endpoint', path: '/api/briefing', method: 'GET', expect: [405] },
+  { name: 'supliful-endpoint', path: '/api/supliful', method: 'GET', expect: [400] },
   { name: 'sitemap', path: '/sitemap.xml', expect: [200] },
   { name: 'robots', path: '/robots.txt', expect: [200] },
 ];
