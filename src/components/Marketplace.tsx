@@ -290,7 +290,7 @@ export function Marketplace({
             <button
               onClick={() => handleAddToCart(executiveBundle)}
               className={cn(
-                "w-full py-2.5 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer",
+                "w-full py-2.5 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer opacity-85",
                 purchasedIds.includes(executiveBundle.id)
                   ? "bg-orange-600 text-white"
                   : "btn-ink"
