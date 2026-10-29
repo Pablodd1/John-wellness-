@@ -971,7 +971,7 @@ function AppInner() {
           </button>
           <button
             onClick={() => setChatOpen(true)}
-            className="text-[10px] text-[#f4f2ec] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+            className="text-[10px] text-[#f4f2ec]/85 hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
           >
             Wellness Assistant
           </button>
@@ -1505,7 +1505,7 @@ function AppInner() {
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
             onClick={() => setChatOpen(true)}
             className={cn(
-              'hidden md:flex fixed right-6 bottom-6 z-40 text-white px-4 py-2.5 rounded-full shadow-lg items-center gap-2 text-xs font-semibold transition-all cursor-pointer',
+              'hidden md:flex fixed right-6 bottom-6 z-40 text-white px-4 py-2.5 rounded-full shadow-lg items-center gap-2 text-xs font-semibold transition-all cursor-pointer opacity-85',
               coachNudge
                 ? 'bg-orange-500 hover:bg-orange-600 ring-2 ring-orange-500 ring-offset-2 animate-pulse'
                 : 'bg-orange-600 hover:bg-orange-500'
