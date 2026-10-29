@@ -32,11 +32,13 @@ export function CuasarLogo({
 
   return (
     <div className={cn("flex items-center gap-2.5 select-none", className)}>
-      {/* Keel & Celestial Axis Geometric Emblem */}
+      {/* Keel & Celestial Axis Geometric Emblem — glass, no solid background */}
       <div className={cn(
         iconSizes[size],
-        "rounded-lg flex items-center justify-center relative overflow-hidden transition-transform",
-        isLight ? "bg-white/[0.06] border border-stone-200 shadow-xs" : "bg-orange-600 text-white shadow-xs"
+        "rounded-lg flex items-center justify-center relative overflow-hidden transition-transform border",
+        isLight
+          ? "bg-white/[0.04] border-white/15 backdrop-blur-md"
+          : "bg-white/[0.06] border-white/15 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
       )}>
         <svg 
           viewBox="0 0 40 40" 
