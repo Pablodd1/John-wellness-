@@ -159,7 +159,7 @@ export default async function handler(req, res) {
       const useDeepSeek = Boolean(deepseekKey);
       const url = useDeepSeek ? 'https://api.deepseek.com/v1/chat/completions' : 'https://api.x.ai/v1/chat/completions';
       const key = useDeepSeek ? deepseekKey : xaiKey;
-      const modelName = useDeepSeek ? 'deepseek-chat' : 'grok-3-mini-fast';
+      const modelName = useDeepSeek ? 'deepseek-chat' : 'grok-4-fast';
 
       const fastRes = await fetch(url, {
         method: 'POST',
