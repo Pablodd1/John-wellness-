@@ -25,6 +25,7 @@ import { CuasarLogo } from './components/CuasarLogo';
 import { ConsentCenter } from './components/ConsentCenter';
 import { TelemedicineVisit } from './components/TelemedicineVisit';
 import { FirstRunConsent } from './components/FirstRunConsent';
+import { FirstVisitOnboarding } from './components/FirstVisitOnboarding';
 import { PerformanceResearch } from './components/PerformanceResearch';
 import { AuthGate } from './components/AuthGate';
 import { AuthProvider, useAuth } from './lib/auth';
@@ -91,11 +92,21 @@ function AppInner() {
   const [catalogSource, setCatalogSource] = useState<'database' | 'demo' | 'checking'>('checking');
   const [activeUser, setActiveUser] = useState<UserProfile>(SYNTHETIC_USERS[0]);
 
+  // First-visit onboarding: once per account, after registration
+  useEffect(() => {
+    if (!authUser) return;
+    const key = 'cx_onboarded_' + authUser.id;
+    try {
+      if (!localStorage.getItem(key)) setShowOnboarding(true);
+    } catch { /* storage unavailable */ }
+  }, [authUser]);
+
   // Catalog connectivity check (products are seeded to match the bundled demo
   // data, so this drives the honest "connected" indicator rather than content).
   const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'cart' | 'research' | 'community' | 'consent' | 'admin' | 'operator' | 'command'>('profile');
   const [marketplaceDepartment, setMarketplaceDepartment] = useState<string>('all');
   const [incomingEvaluation, setIncomingEvaluation] = useState<{ text: string; senderName: string } | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [videoVisit, setVideoVisit] = useState<{ mode: TelemedicineMode; patient: UserProfile } | null>(null);
 
   const openVideoVisit = (mode: TelemedicineMode, patient: UserProfile) => {
@@ -109,9 +120,6 @@ function AppInner() {
   const [emergencyModalOpen, setEmergencyModalOpen] = useState(false);
 
   // Search
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchCategory, setSearchCategory] = useState<string>('All');
-  const [searchFocused, setSearchFocused] = useState<boolean>(false);
 
   // Real device readings (health_readings) — override demo metrics for AI layers
   const [realMetrics, setRealMetrics] = useState<Record<string, { value: number; unit: string; deltaPct: number }> | null>(null);
@@ -909,11 +917,6 @@ function AppInner() {
     return <AuthGate />;
   }
 
-  const searchSuggestions = MOCK_PRODUCTS.filter(p => {
-    if (!searchQuery.trim()) return false;
-    const q = searchQuery.toLowerCase();
-    return p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.description.toLowerCase().includes(q);
-  }).slice(0, 5);
 
   return (
     <div className="flex flex-col min-h-screen text-[#f4f2ec] font-sans pb-16 md:pb-0">
@@ -1008,84 +1011,6 @@ function AppInner() {
             className="cursor-pointer p-1 rounded-lg hover:opacity-90 transition-opacity flex-shrink-0"
           >
             <CuasarLogo size="sm" showSubtitle={true} />
-          </div>
-
-          {/* Soft Minimalist Search Bar */}
-          <div className="flex-1 max-w-2xl mx-1 md:mx-4 relative">
-            <div className="flex items-center h-9 rounded-lg overflow-hidden bg-[#101210] hover:bg-white/[0.05] focus-within:bg-white/[0.06] focus-within:ring-1 focus-within:ring-orange-500 border border-white/10 transition-all">
-              
-              {/* Category Dropdown */}
-              <div className="hidden sm:flex items-center text-xs px-2.5 h-full border-r border-white/10 text-stone-400 font-medium select-none">
-                <select 
-                  value={searchCategory}
-                  onChange={(e) => setSearchCategory(e.target.value)}
-                  className="bg-transparent border-none text-xs font-medium text-[#f4f2ec] focus:outline-none cursor-pointer pr-1"
-                >
-                  <option value="All">All Categories</option>
-                  <option value="Vitamins">Micronutrients</option>
-                  <option value="Executive">Executive Stacks</option>
-                  <option value="Supplements">Nootropics</option>
-                  <option value="Diagnostics">Lab Panels</option>
-                  <option value="Peptides">Peptides (Rx)</option>
-                </select>
-              </div>
-
-              {/* Input */}
-              <input
-                type="text"
-                value={searchQuery}
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search compounds, clinical panels, sleep protocols, peptides..."
-                className="w-full h-full px-3 text-xs text-[#f4f2ec] placeholder-[#9c978d] bg-transparent focus:outline-none"
-              />
-
-              {/* Mic for Voice HPI */}
-              <button 
-                onClick={() => setChatOpen(true)}
-                title="Voice Symptom Intake"
-                className="px-2.5 h-full text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06] flex items-center transition-colors border-l border-white/10 cursor-pointer"
-              >
-                <Mic className="w-3.5 h-3.5" />
-              </button>
-
-              {/* Search button */}
-              <button 
-                onClick={() => {
-                  setActiveTab('marketplace');
-                  if (searchCategory !== 'All') setMarketplaceDepartment(searchCategory.toLowerCase());
-                }}
-                className="bg-orange-600 hover:bg-orange-500 text-white px-3.5 h-full flex items-center justify-center transition-colors flex-shrink-0 cursor-pointer"
-              >
-                <Search className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            {/* Live Autocomplete Dropdown */}
-            {searchFocused && searchSuggestions.length > 0 && (
-              <div className="absolute left-0 right-0 top-full mt-1 bg-white/[0.06] text-[#f4f2ec] rounded-xl shadow-lg border border-white/10 p-1.5 z-50 divide-y divide-[#f4f2ec]">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-stone-500 px-2 py-1">
-                  Matching Protocols &amp; Compounds
-                </div>
-                {searchSuggestions.map(item => (
-                  <div
-                    key={item.id}
-                    onMouseDown={() => {
-                      setSearchQuery(item.name);
-                      setActiveTab('marketplace');
-                    }}
-                    className="p-2 hover:bg-white/[0.05] rounded-lg cursor-pointer flex items-center justify-between text-xs transition-colors"
-                  >
-                    <div>
-                      <span className="font-semibold text-[#f4f2ec] block">{item.name}</span>
-                      <span className="text-[11px] text-stone-400">{item.category} • Grade {item.evidenceData?.grade || 'A'}</span>
-                    </div>
-                    <span className="font-semibold text-[#f4f2ec]">${(item.price || 45.00).toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Persona Switcher */}
@@ -1441,7 +1366,6 @@ function AppInner() {
           <Marketplace 
             user={activeUser} 
             initialDepartment={marketplaceDepartment}
-            searchQuery={searchQuery}
             onAddToCart={handleAddProductsToCart}
             onOpenCart={() => setCartOpen(true)}
             onBuyNow={(prod) => {
@@ -1733,6 +1657,17 @@ function AppInner() {
       {/* 11. FIRST-RUN PRIVACY & CONSENT GATE                      */}
       {/* ======================================================== */}
       <FirstRunConsent />
+
+      {showOnboarding && authUser && (
+        <FirstVisitOnboarding
+          userName={activeUser.name}
+          onFinish={() => {
+            try { localStorage.setItem('cx_onboarded_' + authUser.id, '1'); } catch { /* noop */ }
+            setShowOnboarding(false);
+          }}
+          onNavigate={() => setActiveTab('profile')}
+        />
+      )}
 
       {/* ======================================================== */}
       {/* 12. TESTER FEEDBACK BUTTON (bottom-left, never overlaps   */}

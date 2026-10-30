@@ -38,6 +38,58 @@ export function AdminPatientMonitor({
   onStartVisit?: (patient: UserProfile) => void;
   onNavigateToConsent?: () => void;
 }) {
+  // Admin credential gate — only the practice admin reviews all patients here.
+  // MVP shared passcode; replace with a Supabase role check when roles ship.
+  const ADMIN_PASSCODE = 'KEEL-ADMIN-911';
+  const [adminOk, setAdminOk] = useState(() => {
+    try { return sessionStorage.getItem('cx_admin_gate') === '1'; } catch { return false; }
+  });
+  const [passcode, setPasscode] = useState('');
+  const [gateError, setGateError] = useState<string | null>(null);
+  if (!adminOk) {
+    return (
+      <div className="max-w-md mx-auto px-4 py-16">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-6 space-y-3">
+          <h2 className="text-base font-bold text-[#f4f2ec]">Physician Portal — admin access</h2>
+          <p className="text-xs text-stone-400">
+            This portal shows every patient record for clinical review and telehealth
+            visits. Enter the practice admin passcode to continue.
+          </p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (passcode.trim() === ADMIN_PASSCODE) {
+                try { sessionStorage.setItem('cx_admin_gate', '1'); } catch { /* noop */ }
+                setAdminOk(true);
+              } else {
+                setGateError('Incorrect passcode.');
+              }
+            }}
+            className="space-y-2"
+          >
+            <label htmlFor="admin-passcode" className="block text-[11px] font-bold text-[#f4f2ec]">Admin passcode</label>
+            <input
+              id="admin-passcode"
+              type="password"
+              value={passcode}
+              onChange={(e) => setPasscode(e.target.value)}
+              autoFocus
+              className="w-full px-3 py-2 rounded-lg text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 text-[#f4f2ec]"
+            />
+            {gateError && (
+              <p role="alert" className="text-[11px] text-red-400 font-bold">{gateError}</p>
+            )}
+            <button
+              type="submit"
+              className="w-full py-2.5 rounded-lg font-semibold text-xs btn-ink cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+            >
+              Unlock portal
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
   const { state, isGranted } = useConsent();
   const [patients, setPatients] = useState<UserProfile[]>(SYNTHETIC_USERS);
   const [selectedPatientId, setSelectedPatientId] = useState<string>(SYNTHETIC_USERS[0].id);

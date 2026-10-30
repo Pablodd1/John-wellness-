@@ -486,6 +486,27 @@ export function Marketplace({
           </div>
         </div>
 
+        {/* Search — moved here from the global header */}
+        <div className="flex items-center h-9 rounded-lg overflow-hidden bg-[#101210] border border-white/10 focus-within:ring-1 focus-within:ring-orange-500 transition-all max-w-2xl">
+          <input
+            type="text"
+            value={localSearch}
+            onChange={(e) => setLocalSearch(e.target.value)}
+            placeholder="Search compounds, clinical panels, sleep protocols, peptides..."
+            aria-label="Search the marketplace"
+            className="w-full h-full px-3 text-xs text-[#f4f2ec] placeholder-[#9c978d] bg-transparent focus:outline-none"
+          />
+          {localSearch && (
+            <button
+              onClick={() => setLocalSearch('')}
+              aria-label="Clear search"
+              className="px-2.5 h-full text-stone-400 hover:text-[#f4f2ec] text-xs cursor-pointer"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+
         {localSearch.trim() && (
           <div className="pt-2 border-t border-white/[0.08] flex items-center justify-between text-xs text-stone-400">
             <span>Matching query: <strong>&quot;{localSearch}&quot;</strong> ({filteredProducts.length} items)</span>
