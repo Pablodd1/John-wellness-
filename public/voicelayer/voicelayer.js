@@ -47,7 +47,7 @@
     showLangSwitch: true,
     greeting: '',                        // '' = built-in greeting per language; or a string; or { en: '…', es: '…' }
     speakGreeting: false,                // speak the greeting aloud on first open? (captions always show it)
-    orbPosition: { corner: 'bottom-right', offsetX: 24, offsetY: 24 }, // corner: bottom-right | bottom-left | top-right | top-left
+    orbPosition: { corner: 'bottom-right', offsetX: 24, offsetY: 24 }, // corner: bottom-right | bottom-left | top-right | top-left | center (offsets ignored) — size: orb diameter px (default 60)
     rememberPosition: true,              // remember where the visitor dragged the orb (localStorage)
     listenOnOpen: true,                  // tapping the orb opens the panel AND starts the mic (that tap is the consent gesture). false = open only
     resumeAfterNavigation: true,         // after the assistant navigates, re-open the panel (mic stays OFF)
@@ -175,7 +175,7 @@
   // opened from disk (file://) a relative API path can't work: use browser voice, make no network calls
   if (location.protocol === 'file:' && !/^https?:/i.test(CONFIG.apiBase)) CONFIG.apiBase = '';
 
-  const VERSION = '0.7.0';
+  const VERSION = '0.7.1';
   const STATES = ['idle', 'listening', 'thinking', 'speaking'];
   const log = function () { if (CONFIG.debug) console.log.apply(console, ['[VoiceLayer]'].concat([].slice.call(arguments))); };
 
@@ -3801,7 +3801,7 @@
         const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
         if (!drag.moved && Math.hypot(dx, dy) < 6) return;
         drag.moved = true;
-        const maxX = self.vw() - 60, maxY = self.vh() - 60;
+        const S = self.orbSizePx(), maxX = self.vw() - S, maxY = self.vh() - S;
         const x = clamp(drag.ox + dx, 0, maxX), y = clamp(drag.oy + dy, 0, maxY);
         self.pos = { fx: maxX > 0 ? x / maxX : 0, fy: maxY > 0 ? y / maxY : 0 };
         self.placeOrb(); if (self.open) self.positionPanel();
@@ -4054,42 +4054,50 @@
       this.note.textContent = eng === 'deepgram' ? this.T.privacyDeepgram : this.T.privacyBrowser;
     },
 
+    orbSizePx: function () { return Math.max(36, Number(CONFIG.orbPosition && CONFIG.orbPosition.size) || 60); },
     _cornerPos: function () {
       const o = CONFIG.orbPosition, c = String(o.corner || 'bottom-right');
-      const maxX = Math.max(1, this.vw() - 60), maxY = Math.max(1, this.vh() - 60);
+      if (/center/i.test(c)) { this.pos = { fx: 0.5, fy: 0.5 }; return; }
+      const S = this.orbSizePx();
+      const maxX = Math.max(1, this.vw() - S), maxY = Math.max(1, this.vh() - S);
       const x = /left/.test(c) ? o.offsetX : maxX - o.offsetX, y = /top/.test(c) ? o.offsetY : maxY - o.offsetY;
       this.pos = { fx: clamp(x / maxX, 0, 1), fy: clamp(y / maxY, 0, 1) };
     },
     orbXY: function () {
-      const maxX = Math.max(0, this.vw() - 60), maxY = Math.max(0, this.vh() - 60);
+      const S = this.orbSizePx();
+      const maxX = Math.max(0, this.vw() - S), maxY = Math.max(0, this.vh() - S);
       return { x: Math.round(this.pos.fx * maxX), y: Math.round(this.pos.fy * maxY) };
     },
     placeOrb: function () {
       if (!this.orb) return; const p = this.orbXY();
+      const S = this.orbSizePx();
+      this.orb.style.width = S + 'px'; this.orb.style.height = S + 'px';
+      const ic = this.orb.querySelector('svg');
+      if (ic) { const d = Math.round(S * 0.44) + 'px'; ic.style.width = d; ic.style.height = d; }
       this.orb.style.left = p.x + 'px'; this.orb.style.top = p.y + 'px';
       this.placeTab(); this.placeBubble();
     },
     placeTab: function () {
-      if (!this.tab) return; const p = this.orbXY(), left = (p.x + 30) < this.vw() / 2;
+      if (!this.tab) return; const p = this.orbXY(), left = (p.x + this.orbSizePx() / 2) < this.vw() / 2;
       this.tab.setAttribute('data-side', left ? 'left' : 'right');
       this.tab.style.top = clamp(p.y + 2, 8, Math.max(8, this.vh() - 64)) + 'px';
     },
     placeBubble: function () {
       if (!this.bubble || !this.bubble.classList.contains('show')) return;
-      const vw = this.vw(), vh = this.vh(), p = this.orbXY(), b = this.bubble;
+      const vw = this.vw(), vh = this.vh(), p = this.orbXY(), b = this.bubble, R = this.orbSizePx() / 2;
       b.style.maxWidth = Math.min(280, vw - 24) + 'px';
-      const bw = b.offsetWidth, bh = b.offsetHeight, rightHalf = (p.x + 30) > vw / 2;
-      let x = rightHalf ? p.x + 60 - bw : p.x; x = clamp(x, 8, Math.max(8, vw - bw - 8));
+      const bw = b.offsetWidth, bh = b.offsetHeight, rightHalf = (p.x + R) > vw / 2;
+      let x = rightHalf ? p.x + 2 * R - bw : p.x; x = clamp(x, 8, Math.max(8, vw - bw - 8));
       let y = p.y - bh - 12; if (y < 8) y = Math.min(vh - bh - 8, p.y + 72);
       b.style.left = x + 'px'; b.style.top = y + 'px';
       b.setAttribute('data-tail', rightHalf ? 'right' : 'left'); b.setAttribute('data-below', y > p.y ? 'true' : 'false');
     },
     positionPanel: function () {
       if (!this.panel || this.isMobile()) { if (this.panel) { this.panel.style.left = this.panel.style.top = this.panel.style.width = ''; } return; }
-      const vw = this.vw(), vh = this.vh(), p = this.orbXY();
+      const vw = this.vw(), vh = this.vh(), p = this.orbXY(), R = this.orbSizePx() / 2;
       const pw = Math.min(380, vw - 16); this.panel.style.width = pw + 'px';
       const ph = this.panel.offsetHeight;
-      let x = (p.x + 30) > vw / 2 ? p.x + 60 - pw : p.x; x = clamp(x, 8, Math.max(8, vw - pw - 8));
+      let x = (p.x + R) > vw / 2 ? p.x + 2 * R - pw : p.x; x = clamp(x, 8, Math.max(8, vw - pw - 8));
       let y = p.y - ph - 12, below = false;
       if (y < 8) { y = p.y + 72; below = true; }
       if (y + ph > vh - 8) y = Math.max(8, vh - ph - 8);

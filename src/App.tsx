@@ -19,6 +19,8 @@ import { FeedbackButton } from './components/FeedbackButton';
 import { IntentBanner } from './components/IntentBanner';
 import { PhiChat } from './components/PhiChat';
 import { CartDrawer, CartItem } from './components/CartDrawer';
+import { CartPage } from './components/CartPage';
+import { SubscriptionsPanel } from './components/SubscriptionsPanel';
 import { CuasarLogo } from './components/CuasarLogo';
 import { ConsentCenter } from './components/ConsentCenter';
 import { TelemedicineVisit } from './components/TelemedicineVisit';
@@ -61,7 +63,10 @@ import {
   Video,
   FlaskConical,
   Database,
-  ArrowRight
+  ArrowRight,
+  Compass,
+  Dumbbell,
+  Briefcase
 } from 'lucide-react';
 import { cn } from './lib/utils';
 
@@ -88,7 +93,7 @@ function AppInner() {
 
   // Catalog connectivity check (products are seeded to match the bundled demo
   // data, so this drives the honest "connected" indicator rather than content).
-  const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'research' | 'community' | 'consent' | 'admin' | 'operator' | 'command'>('marketplace');
+  const [activeTab, setActiveTab] = useState<'marketplace' | 'supplements' | 'trends' | 'profile' | 'cart' | 'research' | 'community' | 'consent' | 'admin' | 'operator' | 'command'>('profile');
   const [marketplaceDepartment, setMarketplaceDepartment] = useState<string>('all');
   const [incomingEvaluation, setIncomingEvaluation] = useState<{ text: string; senderName: string } | null>(null);
   const [videoVisit, setVideoVisit] = useState<{ mode: TelemedicineMode; patient: UserProfile } | null>(null);
@@ -151,6 +156,8 @@ function AppInner() {
         setMarketplaceDepartment('all');
       } else if (hash === '#supplements' || hash === '#regimen') {
         setActiveTab('supplements');
+      } else if (hash === '#cart') {
+        setActiveTab('cart');
       } else if (hash === '#trends' || hash === '#biomarkers') {
         setActiveTab('trends');
       } else if (hash === '#profile' || hash === '#dna' || hash === '#labs') {
@@ -1152,53 +1159,44 @@ function AppInner() {
         {/* ======================================================== */}
         <div className="bg-white/[0.05] border-t border-white/10 text-xs px-3 md:px-6 py-1.5 flex items-center justify-between overflow-x-auto scrollbar-none">
           <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
-            
-            <button 
-              onClick={() => { setActiveTab('marketplace'); setMarketplaceDepartment('all'); }}
-              className={cn(
-                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
-                activeTab === 'marketplace' && marketplaceDepartment === 'all' 
-                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
-              )}
-            >
-              <span>Featured Curation</span>
-            </button>
-
-            <button 
-              onClick={navigateToVitamins}
-              className={cn(
-                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
-                activeTab === 'marketplace' && marketplaceDepartment === 'vitamins' 
-                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
-              )}
-            >
-              <span>Micronutrients (#vitamins)</span>
-            </button>
-
-            <button 
-              onClick={() => setActiveTab('supplements')}
-              className={cn(
-                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
-                activeTab === 'supplements' 
-                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
-              )}
-            >
-              <span>Daily Regimens</span>
-            </button>
 
             <button
-              onClick={() => setActiveTab('trends')}
+              onClick={() => setActiveTab('profile')}
+              aria-current={activeTab === 'profile' ? 'page' : undefined}
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
-                activeTab === 'trends'
+                activeTab === 'profile'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
                   : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
-              <span>Lab Telemetry</span>
+              <span>Profile</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('supplements')}
+              aria-current={activeTab === 'supplements' ? 'page' : undefined}
+              className={cn(
+                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
+                activeTab === 'supplements'
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+              )}
+            >
+              <span>My Regimen</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('cart')}
+              aria-current={activeTab === 'cart' ? 'page' : undefined}
+              className={cn(
+                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
+                activeTab === 'cart'
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+              )}
+            >
+              <span>The Cart</span>
             </button>
 
             <button
@@ -1229,20 +1227,9 @@ function AppInner() {
               <span>Quick Assist</span>
             </button>
 
-            <button 
-              onClick={() => setActiveTab('profile')}
-              className={cn(
-                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
-                activeTab === 'profile' 
-                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
-              )}
-            >
-              <span>Organ Longevity (AOSM)</span>
-            </button>
-
             <button
               onClick={() => setActiveTab('community')}
+              aria-current={activeTab === 'community' ? 'page' : undefined}
               className={cn(
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'community'
@@ -1267,28 +1254,55 @@ function AppInner() {
               <span>Privacy &amp; Consent</span>
             </button>
 
-            <button 
+            <button
               onClick={() => setActiveTab('admin')}
+              aria-current={activeTab === 'admin' ? 'page' : undefined}
               className={cn(
                 "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
-                activeTab === 'admin' 
-                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                activeTab === 'admin'
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
                   : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Physician Portal</span>
             </button>
 
-            <button 
+            <button
               onClick={() => setActiveTab('operator')}
+              aria-current={activeTab === 'operator' ? 'page' : undefined}
               className={cn(
                 "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
-                activeTab === 'operator' 
-                  ? "bg-orange-600 text-white font-semibold shadow-xs" 
+                activeTab === 'operator'
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
                   : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
               )}
             >
               <span>Insights</span>
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('marketplace'); setMarketplaceDepartment('all'); }}
+              aria-current={activeTab === 'marketplace' && marketplaceDepartment === 'all' ? 'page' : undefined}
+              className={cn(
+                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
+                activeTab === 'marketplace' && marketplaceDepartment === 'all'
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+              )}
+            >
+              <span>Marketplace</span>
+            </button>
+
+            <button
+              onClick={navigateToVitamins}
+              className={cn(
+                "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
+                activeTab === 'marketplace' && marketplaceDepartment === 'vitamins'
+                  ? "bg-orange-600 text-white font-semibold shadow-xs"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+              )}
+            >
+              <span>Micronutrients (#vitamins)</span>
             </button>
           </div>
 
@@ -1436,7 +1450,21 @@ function AppInner() {
             }}
           />
         )}
-        {activeTab === 'supplements' && <SupplementManager user={activeUser} onAddToCart={handleAddProductsToCart} />}
+        {activeTab === 'supplements' && (
+          <div className="space-y-8 pb-8">
+            <SupplementManager user={activeUser} onAddToCart={handleAddProductsToCart} />
+            <section aria-labelledby="regimen-autodelivery" className="space-y-2">
+              <h2 id="regimen-autodelivery" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+                <Repeat className="w-4 h-4 text-orange-400" aria-hidden="true" />
+                Auto-deliveries &amp; buy more
+              </h2>
+              <p className="text-xs text-stone-400">
+                Bottles running low ship automatically so your daily dose never has a gap — pause or change cadence any time.
+              </p>
+              <SubscriptionsPanel user={activeUser} onAddToCart={handleAddProductsToCart} products={activeUser.inventory} />
+            </section>
+          </div>
+        )}
         {activeTab === 'trends' && (
           <BiomarkerTrends
             user={activeUser}
@@ -1453,14 +1481,103 @@ function AppInner() {
           />
         )}
         {activeTab === 'profile' && (
-          <UserProfileTab
+          <div className="space-y-10 pb-8">
+            {/* PROFILE 1-4: personal info, device connections, readiness vitals,
+               blood panels & medical records — all sub-tabs inside UserProfileTab */}
+            <UserProfileTab
+              user={activeUser}
+              onUpdateUser={handleUpdateUserData}
+              onAddToCart={handleAddProductsToCart}
+              onNavigateToMarketplace={() => {
+                setActiveTab('marketplace');
+                setMarketplaceDepartment('diagnostics');
+              }}
+            />
+
+            {/* PROFILE 5: longitudinal readiness & blood panel telemetry */}
+            <section aria-labelledby="profile-labs" className="space-y-2">
+              <h2 id="profile-labs" className="text-lg font-bold text-[#f4f2ec] font-serif-title flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-orange-400" aria-hidden="true" />
+                Readiness &amp; blood panels over time
+              </h2>
+              <p className="text-xs text-stone-400 max-w-2xl">
+                How your numbers move between draws and devices — the trend matters more than any single reading.
+              </p>
+              <BiomarkerTrends
+                user={activeUser}
+                onAddToCart={handleAddProductsToCart}
+                onNavigateToTab={(tab) => setActiveTab(tab)}
+              />
+            </section>
+
+            {/* PROFILE 6: recommendations tuned to the two lifestyle tracks */}
+            <section aria-labelledby="profile-lifestyle" className="space-y-3">
+              <h2 id="profile-lifestyle" className="text-lg font-bold text-[#f4f2ec] font-serif-title flex items-center gap-2">
+                <Compass className="w-4 h-4 text-orange-400" aria-hidden="true" />
+                Recommendations for your life
+              </h2>
+              <div className="grid gap-3 md:grid-cols-2">
+                <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 space-y-2">
+                  <h3 className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5">
+                    <Dumbbell className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> Athletic performance track
+                  </h3>
+                  <p className="text-[11px] text-stone-400 leading-relaxed">
+                    Train on high-readiness days, protect sleep before hard sessions, keep protein
+                    and creatine steady, and re-test VO2 max and body composition each quarter.
+                  </p>
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      onClick={() => setActiveTab('supplements')}
+                      className="px-3 py-1.5 bg-orange-600 opacity-85 hover:opacity-100 text-white rounded-lg text-[11px] font-semibold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    >
+                      Open my regimen
+                    </button>
+                    <button
+                      onClick={() => { setActiveTab('marketplace'); setMarketplaceDepartment('all'); }}
+                      className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[#f4f2ec] rounded-lg text-[11px] font-semibold hover:bg-white/[0.1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    >
+                      Performance stack
+                    </button>
+                  </div>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 space-y-2">
+                  <h3 className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5">
+                    <Briefcase className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> Busy-professional stress track
+                  </h3>
+                  <p className="text-[11px] text-stone-400 leading-relaxed">
+                    For long work weeks and family load: anchor wake time, evening wind-down,
+                    magnesium at night, HRV as your stress early-warning, and travel-day protocols.
+                  </p>
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      onClick={() => setActiveTab('research')}
+                      className="px-3 py-1.5 bg-orange-600 opacity-85 hover:opacity-100 text-white rounded-lg text-[11px] font-semibold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    >
+                      Stress &amp; sleep research
+                    </button>
+                    <button
+                      onClick={() => { setActiveTab('marketplace'); setMarketplaceDepartment('all'); }}
+                      className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[#f4f2ec] rounded-lg text-[11px] font-semibold hover:bg-white/[0.1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    >
+                      Recovery stack
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'cart' && (
+          <CartPage
             user={activeUser}
-            onUpdateUser={handleUpdateUserData}
+            cartItems={cartItems}
             onAddToCart={handleAddProductsToCart}
-            onNavigateToMarketplace={() => {
-              setActiveTab('marketplace');
-              setMarketplaceDepartment('diagnostics');
-            }}
+            onUpdateQuantity={handleUpdateCartQuantity}
+            onToggleSubscription={handleToggleCartSubscription}
+            onRemoveItem={handleRemoveCartItem}
+            onCheckout={() => setCartOpen(true)}
+            onExplore={() => { setActiveTab('marketplace'); setMarketplaceDepartment('all'); }}
           />
         )}
         {activeTab === 'community' && <CommunityConnect user={activeUser} onEvaluateWithAi={handleEvaluateGroupMessage} />}
@@ -1628,14 +1745,14 @@ function AppInner() {
       {/* ======================================================== */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-white/[0.06] border-t border-white/10 z-40 flex items-center justify-around text-stone-400 px-2">
         <button 
-          onClick={() => setActiveTab('marketplace')}
+          onClick={() => setActiveTab('profile')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'marketplace' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
+            activeTab === 'profile' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
           )}
         >
-          <ShoppingBag className="w-4 h-4" />
-          <span className="text-[10px] mt-0.5 font-medium">Curate</span>
+          <User className="w-4 h-4" />
+          <span className="text-[10px] mt-0.5 font-medium">Profile</span>
         </button>
 
         <button 
@@ -1646,7 +1763,7 @@ function AppInner() {
           )}
         >
           <Pill className="w-4 h-4" />
-          <span className="text-[10px] mt-0.5 font-medium">Regimens</span>
+          <span className="text-[10px] mt-0.5 font-medium">Regimen</span>
         </button>
 
         <button 
@@ -1658,25 +1775,25 @@ function AppInner() {
         </button>
 
         <button 
-          onClick={() => setActiveTab('trends')}
+          onClick={() => setActiveTab('cart')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'trends' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
+            activeTab === 'cart' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
           )}
         >
-          <TrendingUp className="w-4 h-4" />
-          <span className="text-[10px] mt-0.5 font-medium">Labs</span>
+          <ShoppingCart className="w-4 h-4" />
+          <span className="text-[10px] mt-0.5 font-medium">Cart</span>
         </button>
 
         <button 
-          onClick={() => setActiveTab('profile')}
+          onClick={() => setActiveTab('marketplace')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'profile' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
+            activeTab === 'marketplace' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
           )}
         >
-          <User className="w-4 h-4" />
-          <span className="text-[10px] mt-0.5 font-medium">Profile</span>
+          <ShoppingBag className="w-4 h-4" />
+          <span className="text-[10px] mt-0.5 font-medium">Market</span>
         </button>
       </nav>
     </div>
