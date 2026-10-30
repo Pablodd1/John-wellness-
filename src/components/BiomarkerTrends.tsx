@@ -914,7 +914,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                  <h3 className="text-sm font-extrabold text-[#f4f2ec] flex items-center gap-2">
                     <TestTubes className="w-4 h-4 text-orange-400" />
                     Select Blood Panel Biomarker for Longitudinal Trajectory
                   </h3>
@@ -1009,14 +1009,14 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                   <span className="px-2.5 py-0.5 rounded-lg text-white text-[10px] font-extrabold uppercase tracking-wide" style={{ backgroundColor: primaryMarker.color }}>
                     Primary Target
                   </span>
-                  <h3 className="font-black text-lg text-slate-900">
+                  <h3 className="font-black text-lg text-[#f4f2ec]">
                     {primaryMarker.name}
                   </h3>
                   <span className="text-xs font-bold text-slate-500">
                     ({primaryMarker.unit})
                   </span>
                 </div>
-                <p className="text-xs text-slate-600 mt-1 max-w-2xl leading-relaxed">
+                <p className="text-xs text-stone-400 mt-1 max-w-2xl leading-relaxed">
                   {primaryMarker.description}
                 </p>
               </div>
@@ -1300,7 +1300,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-emerald-50 text-orange-400 rounded-xl">
                   <Activity className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Autonomic Nervous System: HRV vs Resting Heart Rate</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">Autonomic Nervous System: HRV vs Resting Heart Rate</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 rMSSD Heart Rate Variability (green area) inversely correlated with Resting Heart Rate (purple line).
@@ -1371,7 +1371,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-orange-500/10 text-orange-500 rounded-xl">
                   <HeartPulse className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Systolic &amp; Diastolic Blood Pressure Dynamics</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">Systolic &amp; Diastolic Blood Pressure Dynamics</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Omron Connect paired telemetry tracking arterial pressure trends over {timeframe} days.
@@ -1425,7 +1425,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-cyan-50 text-cyan-600 rounded-xl">
                   <Zap className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">CGM Continuous Fasting Glucose Stability</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">CGM Continuous Fasting Glucose Stability</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Dexcom G7 telemetry showing glycemic variability and time in target range (70-110 mg/dL).
@@ -1474,7 +1474,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-purple-50 text-purple-600 rounded-xl">
                   <Moon className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Sleep Quality &amp; Deep Stage Duration</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">Sleep Quality &amp; Deep Stage Duration</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Oura Ring Gen 3 bedtime stage telemetry tracking sleep score vs deep sleep minutes.
@@ -1516,7 +1516,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-amber-50 text-amber-600 rounded-xl">
                   <Gauge className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Daily Readiness Score Correlation</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">Daily Readiness Score Correlation</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Calculated multi-variable readiness engine combining WHOOP Strain, Oura Sleep, and HRV.

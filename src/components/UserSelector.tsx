@@ -21,7 +21,7 @@ export function UserSelector({
       >
         <img src={selectedUser.avatar} alt={selectedUser.name} className="w-10 h-10 rounded-full bg-slate-200 border border-slate-300" />
         <div className="flex-1 hidden md:block">
-          <p className="text-sm font-semibold text-slate-900">{selectedUser.name}</p>
+          <p className="text-sm font-semibold text-[#f4f2ec]">{selectedUser.name}</p>
           <p className="text-xs text-slate-500 truncate">{selectedUser.role}</p>
         </div>
         <ChevronDown className="w-4 h-4 text-slate-400 hidden md:block" />
@@ -47,7 +47,7 @@ export function UserSelector({
               >
                 <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full bg-slate-200" />
                 <div>
-                  <p className="text-sm font-medium text-slate-900">{user.name}</p>
+                  <p className="text-sm font-medium text-[#f4f2ec]">{user.name}</p>
                   <p className="text-xs text-slate-500 line-clamp-1">{user.role}</p>
                 </div>
               </button>

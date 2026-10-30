@@ -101,7 +101,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                 "p-1.5 rounded-lg transition-all flex items-center gap-1 text-xs font-bold",
                 isSelected 
                   ? "bg-slate-900 text-white shadow-sm" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-200"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-slate-200"
               )}
             >
               <IconComp className="w-4 h-4" />
@@ -117,7 +117,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+          <h3 className="text-base font-bold text-[#f4f2ec] flex items-center gap-2">
             <Layers className="w-5 h-5 text-orange-500" /> 2D Vector Brand Logo Options
           </h3>
           <p className="text-xs text-slate-500">
@@ -150,7 +150,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                   {/* 2D Logo Container */}
                   <div className={cn(
                     "w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm",
-                    isSelected ? "bg-slate-900 text-amber-400" : "bg-white/[0.06] text-slate-800 border border-slate-200"
+                    isSelected ? "bg-slate-900 text-amber-400" : "bg-white/[0.06] text-[#f4f2ec] border border-slate-200"
                   )}>
                     <IconComp className="w-9 h-9" />
                   </div>
@@ -166,7 +166,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                   )}
                 </div>
 
-                <h4 className="font-extrabold text-slate-900 text-base group-hover:text-orange-500 transition-colors mb-1">
+                <h4 className="font-extrabold text-[#f4f2ec] text-base group-hover:text-orange-500 transition-colors mb-1">
                   {logo.name}
                 </h4>
                 <p className="text-xs font-semibold text-orange-500 mb-2">{logo.subtitle}</p>
@@ -174,7 +174,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
-                <span>Best paired with: <strong className="text-slate-800">{logo.bestForTheme}</strong></span>
+                <span>Best paired with: <strong className="text-stone-300">{logo.bestForTheme}</strong></span>
                 <span className="px-2 py-0.5 bg-slate-100 rounded text-[10px] uppercase font-bold text-slate-600">2D Vector</span>
               </div>
             </div>

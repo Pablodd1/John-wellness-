@@ -275,7 +275,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <h2 className="text-lg font-black text-[#f4f2ec] flex items-center gap-2">
                 <Layers className="w-5 h-5 text-orange-400" />
                 <span>Nine Major Organ Systems Biological Telemetry</span>
               </h2>
@@ -322,7 +322,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                           <Icon className="w-5 h-5" />
                         </div>
                         <div>
-                          <h3 className="font-extrabold text-slate-900 text-sm leading-tight">
+                          <h3 className="font-extrabold text-[#f4f2ec] text-sm leading-tight">
                             {organ.name}
                           </h3>
                           <span className="text-[11px] text-slate-400 font-medium block">
@@ -485,7 +485,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <h2 className="text-lg font-black text-[#f4f2ec] flex items-center gap-2">
                 <Compass className="w-5 h-5 text-orange-500" />
                 <span>Personalized 90-Day Longevity Roadmap</span>
               </h2>
@@ -536,7 +536,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                             {phase.status === 'in_progress' ? 'Active Regimen' : 'Upcoming Phase'}
                           </span>
                         </div>
-                        <h3 className="text-base sm:text-lg font-black text-slate-900">
+                        <h3 className="text-base sm:text-lg font-black text-[#f4f2ec]">
                           {phase.title}
                         </h3>
                         <p className="text-xs text-slate-500">
@@ -635,7 +635,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                   Ref: AOSM-2026-Q3
                 </span>
               </div>
-              <h2 className="text-2xl font-black text-slate-900">
+              <h2 className="text-2xl font-black text-[#f4f2ec]">
                 Executive Healthspan &amp; Biological Reserve Report
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -656,7 +656,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
 
           {/* Top Opportunities Grid */}
           <div className="space-y-3">
-            <h3 className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
+            <h3 className="font-extrabold text-[#f4f2ec] text-sm flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-orange-400" />
               <span>Priority Health Opportunities (AOSM High-Impact Focus)</span>
             </h3>
@@ -687,7 +687,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
 
           {/* Organ Systems Overview Table */}
           <div className="space-y-3 pt-4 border-t border-slate-100">
-            <h3 className="font-extrabold text-slate-900 text-sm">
+            <h3 className="font-extrabold text-[#f4f2ec] text-sm">
               Comprehensive 9-Organ Systems Scorecard
             </h3>
 
@@ -706,8 +706,8 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                 <tbody className="divide-y divide-slate-100">
                   {organSystems.map(s => (
                     <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="py-3 px-3 font-bold text-slate-900">{s.name}</td>
-                      <td className="py-3 px-3 font-black text-slate-800">{s.biologicalAge} yrs</td>
+                      <td className="py-3 px-3 font-bold text-[#f4f2ec]">{s.name}</td>
+                      <td className="py-3 px-3 font-black text-[#f4f2ec]">{s.biologicalAge} yrs</td>
                       <td className="py-3 px-3 font-bold">
                         <span className={cn(
                           "px-2 py-0.5 rounded text-[11px]",
@@ -717,7 +717,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                         </span>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="font-bold text-slate-800">{s.biologicalReservePercent}%</span>
+                        <span className="font-bold text-[#f4f2ec]">{s.biologicalReservePercent}%</span>
                       </td>
                       <td className="py-3 px-3 font-semibold capitalize text-slate-600">{s.agingVelocity}</td>
                       <td className="py-3 px-3 text-slate-600 max-w-[260px] truncate">{s.priorityAction}</td>
@@ -741,13 +741,13 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                 <span className="text-[10px] bg-slate-900 text-white font-extrabold px-2.5 py-0.5 rounded uppercase">
                   AOSM Clinical Telemetry Document
                 </span>
-                <h2 className="text-xl font-black text-slate-900 mt-1">
+                <h2 className="text-xl font-black text-[#f4f2ec] mt-1">
                   Executive Healthspan &amp; 9-Organ Systems Roadmap
                 </h2>
               </div>
               <button 
                 onClick={() => setReportModalOpen(false)}
-                className="p-2 text-slate-400 hover:text-slate-800 rounded-lg hover:bg-slate-100"
+                className="p-2 text-slate-400 hover:text-[#f4f2ec] rounded-lg hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -757,7 +757,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs">
               <div>
                 <span className="text-[10px] text-slate-500 font-bold uppercase">Chronological Age</span>
-                <span className="text-lg font-black text-slate-900 block mt-0.5">{user.age || 42} years</span>
+                <span className="text-lg font-black text-[#f4f2ec] block mt-0.5">{user.age || 42} years</span>
               </div>
               <div>
                 <span className="text-[10px] text-slate-500 font-bold uppercase">Biological Age</span>
@@ -775,7 +775,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
 
             {/* 9 Organ Systems Summary */}
             <div className="space-y-3">
-              <h3 className="font-extrabold text-slate-900 text-sm">
+              <h3 className="font-extrabold text-[#f4f2ec] text-sm">
                 9 Organ Systems Biological Profile
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -822,13 +822,13 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                 <span className="bg-orange-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded uppercase">
                   AOSM Early Access Plan • $399
                 </span>
-                <h3 className="text-lg font-extrabold text-slate-900 mt-1">
+                <h3 className="text-lg font-extrabold text-[#f4f2ec] mt-1">
                   Complete Longevity Assessment Enrollment
                 </h3>
               </div>
               <button 
                 onClick={() => { setEnrollModalOpen(false); setEnrollStep(1); }}
-                className="p-1.5 text-slate-400 hover:text-slate-800 rounded-lg"
+                className="p-1.5 text-slate-400 hover:text-[#f4f2ec] rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -864,7 +864,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
 
                 <div className="flex items-center justify-between pt-2">
                   <div>
-                    <span className="text-2xl font-black text-slate-900">$399</span>
+                    <span className="text-2xl font-black text-[#f4f2ec]">$399</span>
                     <span className="text-slate-400 text-xs ml-1.5 line-through">$599</span>
                   </div>
                   <button
@@ -883,7 +883,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
                 <div className="w-12 h-12 bg-emerald-100 text-orange-500 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <h4 className="text-base font-extrabold text-slate-900">
+                <h4 className="text-base font-extrabold text-[#f4f2ec]">
                   Reservation Confirmed!
                 </h4>
                 <p className="text-slate-600 max-w-sm mx-auto">

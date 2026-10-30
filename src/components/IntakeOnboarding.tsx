@@ -368,14 +368,14 @@ export function IntakeOnboarding({
                 <Heart className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">1. Medical History &amp; Pharmacology</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">1. Medical History &amp; Pharmacology</h3>
                 <p className="text-xs text-slate-500">Chronic conditions, surgical history, medications, peptides &amp; family risks</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Active / Past Chronic Conditions</label>
+                <label className="block font-bold text-stone-300 mb-1">Active / Past Chronic Conditions</label>
                 <input
                   type="text"
                   value={diagForm.medicalHistory?.chronicConditions.join(', ') || ''}
@@ -392,7 +392,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Prescription Medications, HRT/TRT &amp; Peptides</label>
+                <label className="block font-bold text-stone-300 mb-1">Prescription Medications, HRT/TRT &amp; Peptides</label>
                 <input
                   type="text"
                   value={diagForm.medicalHistory?.medicationsPeptides.join(', ') || ''}
@@ -409,7 +409,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Family Medical History Flags</label>
+                <label className="block font-bold text-stone-300 mb-1">Family Medical History Flags</label>
                 <input
                   type="text"
                   value={diagForm.medicalHistory?.familyHistory.join(', ') || ''}
@@ -426,7 +426,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Allergies &amp; Food Intolerances</label>
+                <label className="block font-bold text-stone-300 mb-1">Allergies &amp; Food Intolerances</label>
                 <input
                   type="text"
                   value={diagForm.medicalHistory?.allergies.join(', ') || ''}
@@ -451,14 +451,14 @@ export function IntakeOnboarding({
                 <Zap className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">2. Sport, Athletic Discipline &amp; Movement</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">2. Sport, Athletic Discipline &amp; Movement</h3>
                 <p className="text-xs text-slate-500">Training load, primary athletic focus, Zone 2 hours &amp; active injuries</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Primary Discipline</label>
+                <label className="block font-bold text-stone-300 mb-1">Primary Discipline</label>
                 <input
                   type="text"
                   value={diagForm.sportsProfile?.primaryDiscipline || ''}
@@ -472,7 +472,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Total Weekly Training (Hours)</label>
+                <label className="block font-bold text-stone-300 mb-1">Total Weekly Training (Hours)</label>
                 <input
                   type="number"
                   step="0.5"
@@ -486,7 +486,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Zone 2 Cardio Hours/Week</label>
+                <label className="block font-bold text-stone-300 mb-1">Zone 2 Cardio Hours/Week</label>
                 <input
                   type="number"
                   step="0.5"
@@ -500,7 +500,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Active Injuries / Soreness</label>
+                <label className="block font-bold text-stone-300 mb-1">Active Injuries / Soreness</label>
                 <input
                   type="text"
                   value={diagForm.sportsProfile?.activeInjuries.join(', ') || ''}
@@ -522,14 +522,14 @@ export function IntakeOnboarding({
                 <Brain className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">3. Stress Levels, Psychology &amp; Mental Performance</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">3. Stress Levels, Psychology &amp; Mental Performance</h3>
                 <p className="text-xs text-slate-500">Perceived stress scale (PSS), burnout score, cognitive fatigue &amp; rumination</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Perceived Stress Rating (1-10)</label>
+                <label className="block font-bold text-stone-300 mb-1">Perceived Stress Rating (1-10)</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="range"
@@ -549,7 +549,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Burnout Severity Index</label>
+                <label className="block font-bold text-stone-300 mb-1">Burnout Severity Index</label>
                 <select
                   value={diagForm.psychologicalProfile?.burnoutIndex || 'Low'}
                   onChange={(e) => setDiagForm({
@@ -565,7 +565,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Cognitive Fatigue / Brain Fog (1-10)</label>
+                <label className="block font-bold text-stone-300 mb-1">Cognitive Fatigue / Brain Fog (1-10)</label>
                 <input
                   type="number"
                   min="1"
@@ -580,7 +580,7 @@ export function IntakeOnboarding({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Sleep-Onset Rumination / Anxiety</label>
+                <label className="block font-bold text-stone-300 mb-1">Sleep-Onset Rumination / Anxiety</label>
                 <button
                   type="button"
                   onClick={() => setDiagForm({
@@ -607,14 +607,14 @@ export function IntakeOnboarding({
                 <Dna className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">4. Gold-Standard Diagnostic Testing &amp; Biomarkers</h3>
+                <h3 className="font-extrabold text-base text-[#f4f2ec]">4. Gold-Standard Diagnostic Testing &amp; Biomarkers</h3>
                 <p className="text-xs text-slate-500">DEXA scan, comprehensive blood panel, EKG findings, VO2 Max &amp; wearable baselines</p>
               </div>
             </div>
 
             {/* Sub-block A: DEXA & Body Composition */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
+              <h4 className="text-xs font-extrabold text-[#f4f2ec] flex items-center gap-1.5 uppercase tracking-wider">
                 <Scale className="w-4 h-4 text-orange-400" /> DEXA Scan Body Composition
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
@@ -674,7 +674,7 @@ export function IntakeOnboarding({
 
             {/* Sub-block B: Blood Panel */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
+              <h4 className="text-xs font-extrabold text-[#f4f2ec] flex items-center gap-1.5 uppercase tracking-wider">
                 <Dna className="w-4 h-4 text-orange-500" /> Comprehensive Longevity Blood Panel
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
@@ -809,7 +809,7 @@ export function IntakeOnboarding({
 
             {/* Sub-block C: Clinical Diagnostics & Wearables */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
+              <h4 className="text-xs font-extrabold text-[#f4f2ec] flex items-center gap-1.5 uppercase tracking-wider">
                 <Heart className="w-4 h-4 text-rose-600" /> EKG Findings, VO2 Max &amp; Wearables
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
@@ -921,7 +921,7 @@ export function IntakeOnboarding({
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
               <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Conversational Engine</span>
-              <h3 className="text-xl font-bold text-slate-900">Interactive Voice Intake with Phi</h3>
+              <h3 className="text-xl font-bold text-[#f4f2ec]">Interactive Voice Intake with Phi</h3>
             </div>
             <div className="text-xs text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 font-bold">
               Question {currentStepIndex + 1} of {BASE_QUESTIONS.length}
@@ -1008,7 +1008,7 @@ export function IntakeOnboarding({
                 {pendingFacts.map(fact => (
                   <div key={fact.id} className="bg-white/[0.06] p-4 rounded-xl border border-orange-500/15 shadow-sm space-y-1">
                     <span className="text-[10px] uppercase font-bold text-orange-500/100 tracking-wider">{fact.category}</span>
-                    <p className="text-sm font-semibold text-slate-900">"{fact.value}"</p>
+                    <p className="text-sm font-semibold text-[#f4f2ec]">"{fact.value}"</p>
                   </div>
                 ))}
               </div>
@@ -1017,7 +1017,7 @@ export function IntakeOnboarding({
                 <button
                   type="button"
                   onClick={() => setShowingConfirmation(false)}
-                  className="flex-1 py-2.5 bg-white/[0.06] border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl"
+                  className="flex-1 py-2.5 bg-white/[0.06] border border-slate-200 hover:bg-slate-50 text-stone-300 text-xs font-semibold rounded-xl"
                 >
                   Edit / Re-answer
                 </button>
@@ -1040,7 +1040,7 @@ export function IntakeOnboarding({
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
               <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Analytical Synthesis</span>
-              <h3 className="text-xl font-bold text-slate-900">Baseline Diagnostic Health &amp; Athletic Report</h3>
+              <h3 className="text-xl font-bold text-[#f4f2ec]">Baseline Diagnostic Health &amp; Athletic Report</h3>
             </div>
             <span className="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold flex items-center gap-1">
               <Check className="w-3.5 h-3.5" /> Data Completeness: 100%
@@ -1051,7 +1051,7 @@ export function IntakeOnboarding({
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Cardiometabolic Index</span>
-              <div className="text-2xl font-black text-slate-900 flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
                 92 <span className="text-xs text-slate-400 font-normal">/ 100</span>
               </div>
               <p className="text-[11px] text-orange-400 font-bold">ApoB {diagForm.bloodwork?.apoB || 78} mg/dL • Optimal</p>
@@ -1059,7 +1059,7 @@ export function IntakeOnboarding({
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Athletic Engine (VO2 Max)</span>
-              <div className="text-2xl font-black text-slate-900 flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
                 {diagForm.diagnostics?.vo2Max || 51.5} <span className="text-xs text-slate-400 font-normal">mL/kg/min</span>
               </div>
               <p className="text-[11px] text-orange-500 font-bold">Top 5% for Age &amp; Gender</p>
@@ -1067,7 +1067,7 @@ export function IntakeOnboarding({
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Psychophysiological Stress</span>
-              <div className="text-2xl font-black text-slate-900 flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
                 {diagForm.psychologicalProfile?.perceivedStressScore || 7} <span className="text-xs text-slate-400 font-normal">/ 10</span>
               </div>
               <p className="text-[11px] text-amber-600 font-bold">Burnout: {diagForm.psychologicalProfile?.burnoutIndex || 'Moderate'}</p>
@@ -1075,7 +1075,7 @@ export function IntakeOnboarding({
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">DEXA Lean Mass Index</span>
-              <div className="text-2xl font-black text-slate-900 flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
                 {diagForm.dexa?.bodyFatPercent || 14.2}% <span className="text-xs text-slate-400 font-normal">Fat</span>
               </div>
               <p className="text-[11px] text-orange-400 font-bold">VAT: {diagForm.dexa?.visceralFatGrams || 340}g (Low Risk)</p>
@@ -1086,17 +1086,17 @@ export function IntakeOnboarding({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             {/* Left: Medical & Diagnostic Summary */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+              <h4 className="font-bold text-xs text-[#f4f2ec] uppercase tracking-wider flex items-center gap-1.5">
                 <Heart className="w-4 h-4 text-rose-600" /> Medical &amp; Clinical Diagnostics Baseline
               </h4>
-              <ul className="space-y-2 text-xs text-slate-700">
+              <ul className="space-y-2 text-xs text-stone-300">
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">EKG Status:</span>
-                  <strong className="text-slate-900">{diagForm.diagnostics?.ekgFindings}</strong>
+                  <strong className="text-[#f4f2ec]">{diagForm.diagnostics?.ekgFindings}</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Prescription / Peptides:</span>
-                  <strong className="text-slate-900">{diagForm.medicalHistory?.medicationsPeptides.join(', ')}</strong>
+                  <strong className="text-[#f4f2ec]">{diagForm.medicalHistory?.medicationsPeptides.join(', ')}</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">hs-CRP Inflammation:</span>
@@ -1104,24 +1104,24 @@ export function IntakeOnboarding({
                 </li>
                 <li className="flex justify-between pb-1">
                   <span className="text-slate-500">Free Testosterone:</span>
-                  <strong className="text-slate-900">{diagForm.bloodwork?.testosteroneFree} pg/mL</strong>
+                  <strong className="text-[#f4f2ec]">{diagForm.bloodwork?.testosteroneFree} pg/mL</strong>
                 </li>
               </ul>
             </div>
 
             {/* Right: Sports & Psychology Summary */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+              <h4 className="font-bold text-xs text-[#f4f2ec] uppercase tracking-wider flex items-center gap-1.5">
                 <Zap className="w-4 h-4 text-amber-600" /> Sports &amp; Psychological Performance
               </h4>
-              <ul className="space-y-2 text-xs text-slate-700">
+              <ul className="space-y-2 text-xs text-stone-300">
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Primary Discipline:</span>
-                  <strong className="text-slate-900">{diagForm.sportsProfile?.primaryDiscipline}</strong>
+                  <strong className="text-[#f4f2ec]">{diagForm.sportsProfile?.primaryDiscipline}</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Weekly Training Volume:</span>
-                  <strong className="text-slate-900">{diagForm.sportsProfile?.weeklyHours}h ({diagForm.sportsProfile?.zone2WeeklyHours}h Zone 2)</strong>
+                  <strong className="text-[#f4f2ec]">{diagForm.sportsProfile?.weeklyHours}h ({diagForm.sportsProfile?.zone2WeeklyHours}h Zone 2)</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Cognitive Fatigue Score:</span>

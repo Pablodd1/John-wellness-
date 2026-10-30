@@ -218,8 +218,8 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
             <div className="bg-emerald-900/10 border border-orange-500/30 p-4 rounded-2xl text-xs text-emerald-950 flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-extrabold block text-slate-900">Multimodal Intake &amp; Bio-Data Harvester</span>
-                <p className="text-slate-600 mt-0.5">
+                <span className="font-extrabold block text-[#f4f2ec]">Multimodal Intake &amp; Bio-Data Harvester</span>
+                <p className="text-stone-400 mt-0.5">
                   Fill out or refine your comprehensive athletic, cardiovascular, metabolic, and psychological diagnostic facts below. You can use voice intake, text, or file uploads to populate missing fields automatically.
                 </p>
               </div>
@@ -238,11 +238,11 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="space-y-4"
           >
-            <div className="bg-text-orange-300/10 border border-orange-500/100/30 p-4 rounded-2xl text-xs text-orange-950 flex items-start gap-3">
-              <Database className="w-5 h-5 text-indigo-700 flex-shrink-0 mt-0.5" />
+            <div className="bg-orange-300/10 border border-orange-500/30 p-4 rounded-2xl text-xs  flex items-start gap-3">
+              <Database className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-extrabold block text-slate-900">Real-Time Bio-Telemetry &amp; Device Pairing</span>
-                <p className="text-slate-600 mt-0.5">
+                <span className="font-extrabold block text-[#f4f2ec]">Real-Time Bio-Telemetry &amp; Device Pairing</span>
+                <p className="text-stone-400 mt-0.5">
                   Manage your WHOOP, Oura Ring, Dexcom CGM, Omron Blood Pressure, and Apple Health live data feeds.
                 </p>
               </div>
@@ -273,7 +273,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
               >
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-orange-500/10 text-indigo-700 rounded-xl">
+                    <div className="p-2 bg-orange-500/10 text-orange-400 rounded-xl">
                       <Activity className="w-5 h-5" />
                     </div>
                     <div>
@@ -361,7 +361,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
               transition={{ duration: 0.4, delay: 0.2 }}
               className="bg-white/[0.06] p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4"
             >
-              <h3 className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
+              <h3 className="font-extrabold text-[#f4f2ec] text-sm flex items-center gap-2">
                 <Dna className="w-4 h-4 text-orange-500" />
                 Medical History &amp; Active Biohacking Regimen
               </h3>

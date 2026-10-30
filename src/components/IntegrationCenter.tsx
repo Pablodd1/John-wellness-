@@ -75,7 +75,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Database className="w-6 h-6 text-orange-500" />
-            <h2 className="text-2xl font-bold text-slate-900">Multimodal Integration Center</h2>
+            <h2 className="text-2xl font-bold text-[#f4f2ec]">Multimodal Integration Center</h2>
           </div>
           <p className="text-slate-500 text-sm">
             Sync wearables, medical lab PDFs, and AI chat logs to build a unified physiological dataset.
@@ -97,7 +97,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
         <div className="bg-white/[0.06] p-5 rounded-2xl border border-slate-200 shadow-sm">
           <span className="text-xs text-slate-500 block mb-1 font-medium">Active Connected Devices</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">{connectedCount}</span>
+            <span className="text-3xl font-extrabold text-[#f4f2ec]">{connectedCount}</span>
             <span className="text-xs text-slate-400">/ {wearables.length} sources</span>
           </div>
         </div>
@@ -113,7 +113,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
         <div className="bg-white/[0.06] p-5 rounded-2xl border border-slate-200 shadow-sm">
           <span className="text-xs text-slate-500 block mb-1 font-medium">Documents & AI Imports</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">{documents.length}</span>
+            <span className="text-3xl font-extrabold text-[#f4f2ec]">{documents.length}</span>
             <span className="text-xs text-slate-400">files extracted</span>
           </div>
         </div>
@@ -121,7 +121,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
 
       {/* Wearables Grid */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-slate-900">Wearable & Biometric Connectors</h3>
+        <h3 className="text-lg font-semibold text-[#f4f2ec]">Wearable & Biometric Connectors</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {wearables.map(wearable => (
@@ -142,7 +142,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
                       <Activity className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 text-base">{wearable.name}</h4>
+                      <h4 className="font-bold text-[#f4f2ec] text-base">{wearable.name}</h4>
                       <span className="text-xs text-slate-400">Last synced: {wearable.lastSynced}</span>
                     </div>
                   </div>
@@ -164,7 +164,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
                 <div className="space-y-2 mt-4 text-xs">
                   <div className="flex justify-between text-slate-600">
                     <span>Records Imported:</span>
-                    <span className="font-semibold text-slate-900">{wearable.recordsCount}</span>
+                    <span className="font-semibold text-[#f4f2ec]">{wearable.recordsCount}</span>
                   </div>
 
                   {wearable.connected && (
@@ -195,7 +195,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
 
       {/* Document & Health Record Upload */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-slate-900">Medical PDFs, Bloodwork & AI Imports</h3>
+        <h3 className="text-lg font-semibold text-[#f4f2ec]">Medical PDFs, Bloodwork & AI Imports</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Upload Dropzone */}
@@ -217,7 +217,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
             <div className="p-3 bg-white/[0.06] text-orange-500 rounded-full shadow-sm mb-3">
               <UploadCloud className="w-6 h-6" />
             </div>
-            <h4 className="text-sm font-bold text-slate-900 mb-1">Upload Laboratory & Medical Files</h4>
+            <h4 className="text-sm font-bold text-[#f4f2ec] mb-1">Upload Laboratory & Medical Files</h4>
             <p className="text-xs text-slate-500 mb-3">
               PDF blood panels, DEXA Scans, DNA/Genetics, Gut Bacteria, Heavy Metals, or chat history.
             </p>
@@ -233,7 +233,7 @@ export function IntegrationCenter({ user }: { user: UserProfile }) {
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
-                    <h5 className="text-sm font-bold text-slate-900">{doc.name}</h5>
+                    <h5 className="text-sm font-bold text-[#f4f2ec]">{doc.name}</h5>
                     <p className="text-xs text-slate-400">Uploaded {doc.uploadDate} • {doc.factsExtracted} clinical facts extracted</p>
                   </div>
                 </div>

@@ -150,7 +150,7 @@ export function AdminPatientMonitor({
           {onNavigateToConsent && (
             <button
               onClick={onNavigateToConsent}
-              className="text-[11px] font-bold text-slate-700 hover:bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
+              className="text-[11px] font-bold text-stone-300 hover:bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
             >
               Open Privacy &amp; Consent Center
             </button>
@@ -246,7 +246,7 @@ export function AdminPatientMonitor({
                     "p-4 rounded-3xl border transition-all cursor-pointer space-y-3",
                     isSelected 
                       ? "bg-slate-900 text-white border-slate-800 shadow-md ring-2 ring-orange-500" 
-                      : "bg-white/[0.06] text-slate-800 border-slate-200 hover:border-slate-300 hover:bg-slate-50/80 shadow-sm"
+                      : "bg-white/[0.06] text-[#f4f2ec] border-slate-200 hover:border-slate-300 hover:bg-slate-50/80 shadow-sm"
                   )}
                 >
                   <div className="flex items-center justify-between">
@@ -257,7 +257,7 @@ export function AdminPatientMonitor({
                         className="w-11 h-11 rounded-2xl bg-slate-100 border border-slate-200 p-0.5 object-cover"
                       />
                       <div>
-                        <h4 className={cn("font-extrabold text-sm", isSelected ? "text-white" : "text-slate-900")}>
+                        <h4 className={cn("font-extrabold text-sm", isSelected ? "text-white" : "text-[#f4f2ec]")}>
                           {patient.name}
                         </h4>
                         <p className={cn("text-[11px]", isSelected ? "text-slate-300" : "text-slate-500")}>
@@ -330,7 +330,7 @@ export function AdminPatientMonitor({
                       {selectedPatient.lifestylePersona}
                     </span>
                   </div>
-                  <h3 className="font-black text-xl text-slate-900">{selectedPatient.name}</h3>
+                  <h3 className="font-black text-xl text-[#f4f2ec]">{selectedPatient.name}</h3>
                   <p className="text-xs text-slate-500">{selectedPatient.role} • {selectedPatient.age} yrs • {selectedPatient.gender}</p>
                 </div>
               </div>
@@ -356,25 +356,25 @@ export function AdminPatientMonitor({
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                 <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100">
                   <span className="text-slate-400 text-[10px] font-bold block">HRV (24h)</span>
-                  <span className="text-lg font-black text-slate-900">{selectedPatient.metrics.hrv.current} ms</span>
+                  <span className="text-lg font-black text-[#f4f2ec]">{selectedPatient.metrics.hrv.current} ms</span>
                   <span className="text-[10px] text-orange-400 font-bold block">Target: &gt;60 ms</span>
                 </div>
 
                 <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100">
                   <span className="text-slate-400 text-[10px] font-bold block">Resting Heart Rate</span>
-                  <span className="text-lg font-black text-slate-900">{selectedPatient.metrics.rhr.current} bpm</span>
+                  <span className="text-lg font-black text-[#f4f2ec]">{selectedPatient.metrics.rhr.current} bpm</span>
                   <span className="text-[10px] text-orange-400 font-bold block">Athletic Norm</span>
                 </div>
 
                 <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100">
                   <span className="text-slate-400 text-[10px] font-bold block">Blood Pressure</span>
-                  <span className="text-lg font-black text-slate-900">118 / 76</span>
+                  <span className="text-lg font-black text-[#f4f2ec]">118 / 76</span>
                   <span className="text-[10px] text-orange-400 font-bold block">Normotensive</span>
                 </div>
 
                 <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100">
                   <span className="text-slate-400 text-[10px] font-bold block">Fasting Glucose</span>
-                  <span className="text-lg font-black text-slate-900">92 mg/dL</span>
+                  <span className="text-lg font-black text-[#f4f2ec]">92 mg/dL</span>
                   <span className="text-[10px] text-cyan-600 font-bold block">CGM In Range</span>
                 </div>
               </div>

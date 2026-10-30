@@ -841,7 +841,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50" aria-live="polite">
         {!aiConsented && (
           <div className="bg-white/[0.06] border border-slate-200 rounded-2xl p-4 shadow-sm space-y-3" role="status">
-            <div className="flex items-center gap-2 text-slate-800">
+            <div className="flex items-center gap-2 text-stone-300">
               <ShieldCheck className="w-5 h-5 text-orange-500" aria-hidden="true" />
               <h3 className="text-sm font-bold">AI analysis is paused — your consent is needed first</h3>
             </div>
@@ -876,7 +876,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
                 onChange={(e) => setAiAckChecked(e.target.checked)}
                 className="accent-orange-500 w-4 h-4 mt-0.5"
               />
-              <span className="text-[11px] text-slate-800">I understand what will be shared and I consent to AI analysis of my health data.</span>
+              <span className="text-[11px] text-stone-300">I understand what will be shared and I consent to AI analysis of my health data.</span>
             </label>
 
             <div className="flex items-center gap-2">
@@ -909,7 +909,7 @@ export function PhiChat({ user, incomingEvaluation, activeLogoId = 'delta', onCl
               <div className={cn(
                 "px-4 py-3 rounded-2xl text-xs leading-relaxed relative group shadow-sm transition-all",
                 isBot 
-                  ? "bg-white/[0.06] text-slate-900 border border-slate-200/80 rounded-tl-sm" 
+                  ? "bg-white/[0.06] text-[#f4f2ec] border border-slate-200/80 rounded-tl-sm" 
                   : isHpiIntake
                     ? "bg-gradient-to-r from-slate-900 to-orange-950 text-white border border-orange-500/100/40 rounded-tr-sm"
                     : "bg-slate-900 text-white rounded-tr-sm"

@@ -179,7 +179,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
                   <img src={msg.avatar} alt={msg.senderName} className="w-10 h-10 rounded-2xl bg-slate-100 object-cover border border-slate-200" />
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-slate-900 text-xs sm:text-sm">{msg.senderName}</h4>
+                      <h4 className="font-bold text-[#f4f2ec] text-xs sm:text-sm">{msg.senderName}</h4>
                       {msg.category && (
                         <span className={cn(
                           "text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider",
@@ -201,7 +201,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
               </div>
 
               {/* Message Content */}
-              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-normal bg-slate-50/70 p-3 rounded-xl border border-slate-100">
+              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-normal bg-slate-100 p-3 rounded-xl border border-slate-100">
                 {msg.text}
               </p>
 
