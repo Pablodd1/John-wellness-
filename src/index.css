@@ -1,12 +1,21 @@
 @import "tailwindcss";
 
+/* Owner tune-down: orange ~20% less bright across the palette */
+@theme {
+  --color-orange-300: #f0a878;
+  --color-orange-400: #ef8a3c;
+  --color-orange-500: #e2660f;
+  --color-orange-600: #c9550d;
+  --color-orange-700: #a8470b;
+}
+
 @layer base {
   :root {
-    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
     --font-serif: 'Newsreader', Georgia, serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --accent: #f97316;
-    --accent-soft: #fb923c;
+    --accent: #e2660f;
+    --accent-soft: #ef8a3c;
   }
 
   body {
@@ -24,7 +33,7 @@
     letter-spacing: -0.012em;
   }
 
-  ::selection { background: rgba(249, 115, 22, 0.35); color: #fff; }
+  ::selection { background: rgba(226, 102, 15, 0.35); color: #fff; }
 }
 
 /* Dark glass scrollbars */
@@ -51,17 +60,17 @@
 
 /* ── Buttons ── */
 .btn-ink {
-  background: linear-gradient(180deg, #f97316, #ea580c);
+  background: linear-gradient(180deg, #e2660f, #c9550d);
   color: #fff;
-  border: 1px solid rgba(249, 115, 22, 0.6);
+  border: 1px solid rgba(226, 102, 15, 0.6);
   font-weight: 700;
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.25);
+  box-shadow: 0 4px 16px rgba(226, 102, 15, 0.22);
   transition: all 0.15s ease;
 }
 .btn-ink:hover {
-  background: linear-gradient(180deg, #fb923c, #f97316);
-  box-shadow: 0 6px 22px rgba(249, 115, 22, 0.4);
+  background: linear-gradient(180deg, #ef8a3c, #e2660f);
+  box-shadow: 0 6px 22px rgba(226, 102, 15, 0.35);
 }
 
 .btn-subtle {
@@ -115,3 +124,10 @@
 }
 
 .font-serif-title { font-family: var(--font-serif); }
+
+
+/* ── Calmer typography (owner: less overwhelming, more human) ── */
+.font-black { font-weight: 700; }
+.font-extrabold { font-weight: 600; }
+body { letter-spacing: 0; }
+h1, h2, h3, h4 { letter-spacing: -0.01em; font-weight: 700; }
