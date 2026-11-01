@@ -202,7 +202,7 @@ export function AdminPatientMonitor({
           {onNavigateToConsent && (
             <button
               onClick={onNavigateToConsent}
-              className="text-[11px] font-bold text-stone-300 hover:bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
+              className="text-[11px] font-bold text-stone-300 hover:bg-white/[0.06] px-2.5 py-1 rounded-lg border border-white/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
             >
               Open Privacy &amp; Consent Center
             </button>
@@ -298,7 +298,7 @@ export function AdminPatientMonitor({
                     "p-4 rounded-3xl border transition-all cursor-pointer space-y-3",
                     isSelected 
                       ? "bg-slate-900 text-white border-slate-800 shadow-md ring-2 ring-orange-500" 
-                      : "bg-white/[0.06] text-[#f4f2ec] border-slate-200 hover:border-slate-300 hover:bg-slate-50/80 shadow-sm"
+                      : "bg-white/[0.06] text-[#f4f2ec] border-slate-200 hover:border-white/20 hover:bg-white/[0.1] shadow-sm"
                   )}
                 >
                   <div className="flex items-center justify-between">

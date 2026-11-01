@@ -1017,7 +1017,7 @@ export function IntakeOnboarding({
                 <button
                   type="button"
                   onClick={() => setShowingConfirmation(false)}
-                  className="flex-1 py-2.5 bg-white/[0.06] border border-slate-200 hover:bg-slate-50 text-stone-300 text-xs font-semibold rounded-xl"
+                  className="flex-1 py-2.5 bg-white/[0.06] border border-white/10 hover:bg-white/[0.1] text-stone-300 text-xs font-semibold rounded-xl"
                 >
                   Edit / Re-answer
                 </button>

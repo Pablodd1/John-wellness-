@@ -246,8 +246,8 @@ export function Marketplace({
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-stone-400">
-            <div className="flex items-center gap-2 bg-white/80 px-3 py-1.5 rounded-md border border-white/10 font-mono text-[11px] font-medium text-[#f4f2ec]">
-              <Clock className="w-3.5 h-3.5 text-amber-300" />
+            <div className="flex items-center gap-2 bg-white/[0.06] px-3 py-1.5 rounded-md border border-white/10 font-mono text-[11px] font-medium text-[#f4f2ec]">
+              <Clock className="w-3.5 h-3.5 text-amber-400" />
               <span>Curated window closes in {String(timeLeft.hours).padStart(2, '0')}h : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}s</span>
             </div>
 

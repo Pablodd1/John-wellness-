@@ -747,7 +747,7 @@ export function OrganSystemModeling({ user, onNavigateToMarketplace }: OrganSyst
               </div>
               <button 
                 onClick={() => setReportModalOpen(false)}
-                className="p-2 text-slate-400 hover:text-[#f4f2ec] rounded-lg hover:bg-slate-100"
+                className="p-2 text-slate-400 hover:text-[#f4f2ec] rounded-lg hover:bg-white/[0.06]"
               >
                 <X className="w-5 h-5" />
               </button>

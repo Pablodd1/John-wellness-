@@ -84,7 +84,7 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
               "px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1",
               currentTheme === t.id 
                 ? "bg-slate-900 text-white shadow-sm" 
-                : "text-stone-400 hover:text-[#f4f2ec] hover:bg-slate-200/60"
+                : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
             )}
           >
             <span className={cn("w-2 h-2 rounded-full", t.accentColor)} />

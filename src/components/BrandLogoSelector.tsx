@@ -101,7 +101,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                 "p-1.5 rounded-lg transition-all flex items-center gap-1 text-xs font-bold",
                 isSelected 
                   ? "bg-slate-900 text-white shadow-sm" 
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-slate-200"
+                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
               )}
             >
               <IconComp className="w-4 h-4" />
