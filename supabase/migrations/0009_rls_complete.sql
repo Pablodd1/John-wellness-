@@ -48,11 +48,13 @@ create policy "insert feedback" on public.feedback
 -- supplier_products / supplier_orders: no client policies at all —
 -- service role only (bypasses RLS).
 
+
 -- ------------------------------------------------------------
 -- Loyalty RPC hardening (applied live 2026-11-03):
 -- SECURITY DEFINER + executable by authenticated meant any signed-in
--- user could mint points for ANY account. Now: client callers may
--- only adjust their own balance; anon has no execute at all.
+-- user could mint points for ANY account. NOTE: inside SECURITY DEFINER
+-- current_user is the owner, so privilege comes from the JWT role claim.
+-- Client callers may only adjust their OWN balance; anon has no execute.
 -- ------------------------------------------------------------
 create or replace function public.add_loyalty_points(p_user uuid, p_delta integer)
 returns void
@@ -60,8 +62,10 @@ language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  v_role text := coalesce(current_setting('request.jwt.claims', true)::json->>'role', '');
 begin
-  if current_user not in ('postgres', 'service_role')
+  if v_role not in ('service_role', 'supabase_admin')
      and auth.uid() is distinct from p_user then
     raise exception 'loyalty: you can only adjust your own balance';
   end if;
