@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
-/* Owner tune-down: orange ~20% less bright across the palette */
+/* TRIAL: blue accent — orange tokens remapped to a blue scale.
+   Original orange palette kept in the comment for one-line revert:
+   orange-300 #f0a878 · 400 #ef8a3c · 500 #e2660f · 600 #c9550d · 700 #a8470b */
 @theme {
-  --color-orange-300: #f0a878;
-  --color-orange-400: #ef8a3c;
-  --color-orange-500: #e2660f;
-  --color-orange-600: #c9550d;
-  --color-orange-700: #a8470b;
+  --color-orange-300: #93c5fd;
+  --color-orange-400: #60a5fa;
+  --color-orange-500: #3b82f6;
+  --color-orange-600: #2563eb;
+  --color-orange-700: #1d4ed8;
 }
 
 @layer base {
@@ -14,8 +16,8 @@
     --font-sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
     --font-serif: 'Newsreader', Georgia, serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --accent: #e2660f;
-    --accent-soft: #ef8a3c;
+    --accent: #3b82f6;
+    --accent-soft: #60a5fa;
   }
 
   body {
@@ -33,7 +35,7 @@
     letter-spacing: -0.012em;
   }
 
-  ::selection { background: rgba(226, 102, 15, 0.35); color: #fff; }
+  ::selection { background: rgba(59, 130, 246, 0.35); color: #fff; }
 }
 
 /* Dark glass scrollbars */
@@ -53,24 +55,24 @@
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 .soft-card:hover {
-  border-color: rgba(249, 115, 22, 0.35);
+  border-color: rgba(59, 130, 246, 0.35);
   background: rgba(255, 255, 255, 0.07);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(249,115,22,0.06);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(59,130,246,0.06);
 }
 
 /* ── Buttons ── */
 .btn-ink {
-  background: linear-gradient(180deg, #e2660f, #c9550d);
+  background: linear-gradient(180deg, #3b82f6, #2563eb);
   color: #fff;
-  border: 1px solid rgba(226, 102, 15, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.6);
   font-weight: 700;
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(226, 102, 15, 0.22);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.22);
   transition: all 0.15s ease;
 }
 .btn-ink:hover {
-  background: linear-gradient(180deg, #ef8a3c, #e2660f);
-  box-shadow: 0 6px 22px rgba(226, 102, 15, 0.35);
+  background: linear-gradient(180deg, #60a5fa, #3b82f6);
+  box-shadow: 0 6px 22px rgba(59, 130, 246, 0.35);
 }
 
 .btn-subtle {
