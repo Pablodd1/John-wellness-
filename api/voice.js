@@ -178,6 +178,33 @@ export default async function handler(req, res) {
         }
       } catch {}
     }
+    // Groq unset or failed — try xAI Grok (same key family as the coach cascade)
+    if (xaiKey) {
+      try {
+        const sys = `You are Quasar Keel, a warm, human, concierge voice assistant embedded on top of the host website. Answer concisely in 1-3 spoken sentences using the provided live context. Context: ${JSON.stringify(ctx).slice(0, 6000)}`;
+        const r = await fetch('https://api.x.ai/v1/chat/completions', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${xaiKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'grok-4-fast',
+            temperature: 0.3,
+            max_tokens: 220,
+            messages: [
+              { role: 'system', content: sys },
+              { role: 'user', content: question },
+            ],
+          }),
+        });
+        if (r.ok) {
+          const data = await r.json();
+          const text = data.choices?.[0]?.message?.content?.trim();
+          if (text) {
+            res.status(200).json({ text, provider: 'grok', model: 'grok-4-fast' });
+            return;
+          }
+        }
+      } catch {}
+    }
     res.status(200).json({ text: '', provider: 'local' });
     return;
   }
