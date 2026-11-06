@@ -468,16 +468,16 @@ button:focus-visible, input:focus-visible {
 .vl-glass[data-card="true"] .vl-g-hint { display: none; }
 
 /* ── bottom: captions · card · typed input · controls ── */
-.vl-g-bottom { width: min(100%, 640px); margin: 0 auto; display: flex; flex-direction: column; align-items: stretch; gap: 8px; pointer-events: none; }
+.vl-g-bottom { width: min(100%, 900px); margin: 0 auto; display: flex; flex-direction: column; align-items: stretch; gap: 8px; pointer-events: none; }
 .vl-g-bottom > * { pointer-events: auto; }
 .vl-g-user, .vl-g-interim, .vl-g-line { margin: 0; text-align: center; text-shadow: 0 1px 14px rgba(0,8,30,.9); pointer-events: none; }
-.vl-g-user { font-size: 13px; color: #a8c4ff; font-style: italic; }
+.vl-g-user { font-size: 14px; color: #a8c4ff; font-style: italic; }
 .vl-g-user:empty, .vl-g-interim:empty, .vl-g-line:empty { display: none; }
-.vl-g-interim { font-size: 14px; color: #cfe0ff; font-style: italic; }
+.vl-g-interim { font-size: 16px; color: #cfe0ff; font-style: italic; }
 .vl-g-line {
-  font-size: clamp(16px, 2.1vw, 21px); line-height: 1.4; font-weight: 500; padding: 10px 16px; border-radius: 18px; align-self: center; max-width: 100%;
+  font-size: clamp(19px, 2.6vw, 27px); line-height: 1.38; font-weight: 500; padding: 10px 16px; border-radius: 18px; align-self: center; max-width: 100%;
   background: rgba(8,16,44,.42); border: 1px solid rgba(170,200,255,.18); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  max-height: 22vh; overflow-y: auto; pointer-events: auto;
+  max-height: 34vh; overflow-y: auto; pointer-events: auto;
 }
 .vl-g-line[data-kind="sys"] { font-size: 13px; color: #b9cbf1; background: transparent; border-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
 
