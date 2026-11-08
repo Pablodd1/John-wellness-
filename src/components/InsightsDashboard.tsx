@@ -136,6 +136,21 @@ export function InsightsDashboard() {
 
   const dbConnected = events.length > 0 || feedback.length > 0 || orderCount !== null;
 
+  if (loading) {
+    return (
+      <div className="space-y-4" aria-busy="true" aria-label="Loading insights">
+        <div className="bg-white/[0.06] p-6 rounded-3xl border border-white/10 h-24 animate-pulse" />
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div className="bg-white/[0.05] h-20 rounded-2xl border border-white/10 animate-pulse" />
+          <div className="bg-white/[0.05] h-20 rounded-2xl border border-white/10 animate-pulse" />
+          <div className="bg-white/[0.05] h-20 rounded-2xl border border-white/10 animate-pulse" />
+        </div>
+        <div className="bg-white/[0.05] h-64 rounded-2xl border border-white/10 animate-pulse" />
+        <span className="sr-only">Loading insights data…</span>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}

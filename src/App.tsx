@@ -1406,6 +1406,30 @@ function AppInner() {
         )}
         {activeTab === 'profile' && (
           <div className="space-y-10 pb-8">
+            {/* Reorder nudge — the regimen math surfaced at login */}
+            {(() => {
+              const low = (activeUser.inventory || [])
+                .filter((p) => typeof p.daysRemaining === 'number' && p.daysRemaining <= 7)
+                .sort((a, b) => (a.daysRemaining ?? 0) - (b.daysRemaining ?? 0));
+              if (low.length === 0) return null;
+              return (
+                <button
+                  onClick={() => setActiveTab('cart')}
+                  className="w-full flex items-center justify-between gap-3 p-3 rounded-xl border border-amber-500/25 bg-amber-500/10 hover:bg-amber-500/15 transition-colors text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                >
+                  <span className="flex items-center gap-2 text-xs font-semibold text-amber-300">
+                    <AlertTriangle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+                    {low[0].daysRemaining === 0
+                      ? low[0].name + ' runs out today'
+                      : low[0].name + ' runs out in ' + low[0].daysRemaining + ' days'}
+                    {low.length > 1 && <span className="text-amber-300/70 font-normal">+{low.length - 1} more running low</span>}
+                  </span>
+                  <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1 flex-shrink-0">
+                    Review cart <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                  </span>
+                </button>
+              );
+            })()}
             {/* PROFILE 1-4: personal info, device connections, readiness vitals,
                blood panels & medical records — all sub-tabs inside UserProfileTab */}
             <UserProfileTab

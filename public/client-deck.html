@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>CuasarX Longevity By Keel — Client Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e100f; --card: rgba(255,255,255,.05); --line: rgba(255,255,255,.1);
+    --text: #f4f2ec; --dim: #a8a29a; --accent: #3b82f6; --accent-soft: rgba(59,130,246,.14);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--ink); color: var(--text);
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    min-height: 100vh; overflow: hidden;
+  }
+  .slide {
+    display: none; min-height: 100vh; padding: clamp(24px, 6vh, 72px) clamp(20px, 8vw, 120px);
+    flex-direction: column; justify-content: center; max-width: 1100px; margin: 0 auto;
+  }
+  .slide.active { display: flex; }
+  h1 { font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: clamp(34px, 6vw, 64px); line-height: 1.08; letter-spacing: -.01em; }
+  h2 { font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: clamp(26px, 4vw, 42px); margin-bottom: 22px; }
+  .kicker { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+  p.lead { font-size: clamp(16px, 2vw, 20px); color: var(--dim); line-height: 1.55; max-width: 640px; margin-top: 18px; }
+  .cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-top: 30px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; backdrop-filter: blur(10px); }
+  .card b { display: block; font-size: 15px; margin-bottom: 6px; }
+  .card span { font-size: 13.5px; color: var(--dim); line-height: 1.5; }
+  .num { font-family: 'Newsreader', serif; font-size: 34px; color: var(--accent); margin-bottom: 8px; display: block; }
+  .steps { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 16px; align-items: baseline; }
+  .step i { font-style: normal; color: var(--accent); font-weight: 700; font-size: 13px; min-width: 22px; }
+  .step div b { font-size: 15px; display: block; }
+  .step div span { font-size: 13.5px; color: var(--dim); line-height: 1.45; }
+  .footer { position: fixed; bottom: 18px; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 clamp(20px, 8vw, 120px); font-size: 12px; color: var(--dim); }
+  .footer .nav { display: flex; gap: 10px; align-items: center; }
+  .footer button { background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 6px 14px; font-size: 13px; cursor: pointer; font-family: inherit; }
+  .footer button:hover { border-color: var(--accent); }
+  .lang { position: fixed; top: 18px; right: clamp(20px, 8vw, 120px); display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .lang button { background: transparent; border: 0; color: var(--dim); padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; font-weight: 600; }
+  .lang button.on { background: var(--accent-soft); color: var(--text); }
+  [data-lang] { display: none; }
+  html[lang="en"] [data-lang="en"] { display: block; }
+  html[lang="es"] [data-lang="es"] { display: block; }
+  html[lang="en"] .en-inline { display: inline; }
+  html[lang="es"] .es-inline { display: inline; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
+  .brand .mark { width: 34px; height: 34px; border-radius: 10px; background: var(--accent-soft); border: 1px solid var(--line); display: grid; place-items: center; font-family: 'Newsreader', serif; font-size: 18px; color: var(--accent); }
+  .brand span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+  .tag { display: inline-block; background: var(--accent-soft); border: 1px solid rgba(59,130,246,.3); color: #93c5fd; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; margin-bottom: 14px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 26px; }
+  @media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="lang" role="group" aria-label="Language">
+  <button id="lang-en" class="on" onclick="setLang('en')">EN</button>
+  <button id="lang-es" onclick="setLang('es')">ES</button>
+</div>
+
+<!-- 1 · COVER -->
+<section class="slide active" id="s1">
+  <div class="brand"><div class="mark">C</div><span>CuasarX Longevity By Keel</span></div>
+  <div data-lang="en">
+    <div class="kicker">Client Overview</div>
+    <h1>Personal longevity,<br>made simple.</h1>
+    <p class="lead">One platform where your clients track their health, follow their daily regimen, and reorder what they need — guided by a voice assistant that knows their data.</p>
+  </div>
+  <div data-lang="es">
+    <div class="kicker">Presentación para Clientes</div>
+    <h1>Longevidad personal,<br>hecha simple.</h1>
+    <p class="lead">Una plataforma donde sus clientes siguen su salud, cumplen su régimen diario y reordenan lo que necesitan — guiados por un asistente de voz que conoce sus datos.</p>
+  </div>
+</section>
+
+<!-- 2 · THE PROBLEM -->
+<section class="slide" id="s2">
+  <div data-lang="en">
+    <div class="kicker">The Problem</div>
+    <h2>Health data everywhere, action nowhere.</h2>
+    <div class="cards">
+      <div class="card"><b>Scattered information</b><span>Bloodwork, wearables and supplements live in different places. Nobody sees the full picture.</span></div>
+      <div class="card"><b>Guesswork regimens</b><span>Clients forget doses, run out of bottles, and never know what to buy next.</span></div>
+      <div class="card"><b>No continuity</b><span>Between visits, nothing keeps them on track — results fade.</span></div>
+    </div>
+  </div>
+  <div data-lang="es">
+    <div class="kicker">El Problema</div>
+    <h2>Datos de salud por todas partes, acción en ninguna.</h2>
+    <div class="cards">
+      <div class="card"><b>Información dispersa</b><span>Análisis, dispositivos y suplementos viven separados. Nadie ve el panorama completo.</span></div>
+      <div class="card"><b>Régimen a ciegas</b><span>Los clientes olvidan dosis, se quedan sin producto y no saben qué comprar después.</span></div>
+      <div class="card"><b>Sin continuidad</b><span>Entre consultas, nada los mantiene en rumbo — los resultados se pierden.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · WHAT IT IS -->
+<section class="slide" id="s3">
+  <div data-lang="en">
+    <div class="kicker">The Platform</div>
+    <h2>Four things, one place.</h2>
+    <div class="cards">
+      <div class="card"><span class="num">01</span><b>Profile & health record</b><span>Wearables connected (Whoop, Oura, CGM), blood panels, medical history — one private record the client owns.</span></div>
+      <div class="card"><span class="num">02</span><b>Daily regimen</b><span>What to take, when, and how much is left in every bottle — with one-tap refills.</span></div>
+      <div class="card"><span class="num">03</span><b>Curated marketplace</b><span>Clinician-grade supplements and diagnostics, matched to each client's goals and labs.</span></div>
+      <div class="card"><span class="num">04</span><b>Voice assistant</b><span>They speak, it answers — readiness, reminders, reorders — using their own live data.</span></div>
+    </div>
+  </div>
+  <div data-lang="es">
+    <div class="kicker">La Plataforma</div>
+    <h2>Cuatro cosas, un solo lugar.</h2>
+    <div class="cards">
+      <div class="card"><span class="num">01</span><b>Perfil e historia de salud</b><span>Dispositivos conectados (Whoop, Oura, CGM), análisis de sangre, historia médica — un expediente privado que el cliente posee.</span></div>
+      <div class="card"><span class="num">02</span><b>Régimen diario</b><span>Qué tomar, cuándo y cuánto queda en cada envase — con reposición de un toque.</span></div>
+      <div class="card"><span class="num">03</span><b>Tienda curada</b><span>Suplementos y diagnósticos de grado clínico, emparejados con las metas y análisis de cada cliente.</span></div>
+      <div class="card"><span class="num">04</span><b>Asistente de voz</b><span>Hablan, él responde — preparación, recordatorios, reposición — usando sus datos en vivo.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · HOW IT WORKS -->
+<section class="slide" id="s4">
+  <div data-lang="en">
+    <div class="kicker">How It Works</div>
+    <h2>The client journey.</h2>
+    <div class="steps">
+      <div class="step"><i>1</i><div><b>Onboarding</b><span>A guided first visit: connect devices, complete health history — voice or form.</span></div></div>
+      <div class="step"><i>2</i><div><b>Understand</b><span>Blood panels and wearable trends become clear targets: vitamin D, inflammation, sleep, recovery.</span></div></div>
+      <div class="step"><i>3</i><div><b>Follow the plan</b><span>A daily regimen with doses and times. The platform counts every bottle down automatically.</span></div></div>
+      <div class="step"><i>4</i><div><b>Never run out</b><span>When a bottle nears empty, it appears in The Cart — one tap to reorder, auto-delivery optional.</span></div></div>
+      <div class="step"><i>5</i><div><b>Review with the expert</b><span>A shareable medical summary and video visits keep the professional in the loop.</span></div></div>
+    </div>
+  </div>
+  <div data-lang="es">
+    <div class="kicker">Cómo Funciona</div>
+    <h2>El recorrido del cliente.</h2>
+    <div class="steps">
+      <div class="step"><i>1</i><div><b>Onboarding</b><span>Una primera visita guiada: conectar dispositivos, completar la historia de salud — por voz o formulario.</span></div></div>
+      <div class="step"><i>2</i><div><b>Entender</b><span>Análisis y tendencias se convierten en metas claras: vitamina D, inflamación, sueño, recuperación.</span></div></div>
+      <div class="step"><i>3</i><div><b>Seguir el plan</b><span>Un régimen diario con dosis y horarios. La plataforma descuenta cada envase automáticamente.</span></div></div>
+      <div class="step"><i>4</i><div><b>Nunca quedarse sin</b><span>Cuando un envase se agota, aparece en El Carrito — un toque para reordenar, entrega automática opcional.</span></div></div>
+      <div class="step"><i>5</i><div><b>Revisión con el experto</b><span>Un resumen médico compartible y video-consultas mantienen al profesional informado.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · BENEFITS FOR THEIR CLIENTS -->
+<section class="slide" id="s5">
+  <div data-lang="en">
+    <div class="kicker">Why It Matters</div>
+    <h2>What their clients get.</h2>
+    <div class="two">
+      <div class="card"><span class="num">↑</span><b>Adherence that finally holds</b><span>Daily reminders, visible progress and automatic refills — the three reasons plans fail, solved.</span></div>
+      <div class="card"><span class="num">◆</span><b>One honest picture</b><span>Every reading from every device, tracked over time with real trend lines — not snapshots.</span></div>
+      <div class="card"><span class="num">◉</span><b>Zero friction</b><span>Speak, don't type. Ask "what should I take now?" and get an answer from their own data.</span></div>
+      <div class="card"><span class="num">✓</span><b>Privacy by design</b><span>Granular consent controls, HIPAA-aligned authorization, data never sold.</span></div>
+    </div>
+  </div>
+  <div data-lang="es">
+    <div class="kicker">Por Qué Importa</div>
+    <h2>Lo que sus clientes obtienen.</h2>
+    <div class="two">
+      <div class="card"><span class="num">↑</span><b>Adherencia que por fin se cumple</b><span>Recordatorios diarios, progreso visible y reposición automática — las tres razones de fracaso, resueltas.</span></div>
+      <div class="card"><span class="num">◆</span><b>Un panorama honesto</b><span>Cada lectura de cada dispositivo, con tendencias reales en el tiempo — no fotos sueltas.</span></div>
+      <div class="card"><span class="num">◉</span><b>Cero fricción</b><span>Hablen, no escriban. Pregunten "¿qué tomo ahora?" y reciban la respuesta desde sus propios datos.</span></div>
+      <div class="card"><span class="num">✓</span><b>Privacidad por diseño</b><span>Controles de consentimiento granulares, autorización alineada a HIPAA, datos nunca vendidos.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · FOR THE PRACTICE / CLOSE -->
+<section class="slide" id="s6">
+  <div data-lang="en">
+    <div class="tag">Pilot Ready</div>
+    <h2>Simple to start.</h2>
+    <p class="lead">Live today with a working demo: onboarding, regimen tracking, marketplace checkout, voice assistant and clinician review portal.</p>
+    <div class="steps" style="margin-top:26px">
+      <div class="step"><i>→</i><div><b>See it live</b><span>john-wellness.vercel.app — demo account provided.</span></div></div>
+      <div class="step"><i>→</i><div><b>Pilot with your clients</b><span>A guided group of 10–20 clients, your brand, your protocols.</span></div></div>
+      <div class="step"><i>→</i><div><b>Measure together</b><span>Adherence, reorders and biomarker trends — visible from day one.</span></div></div>
+    </div>
+  </div>
+  <div data-lang="es">
+    <div class="tag">Listo para Piloto</div>
+    <h2>Simple de empezar.</h2>
+    <p class="lead">Vivo hoy con una demo funcional: onboarding, seguimiento del régimen, compra en la tienda, asistente de voz y portal de revisión profesional.</p>
+    <div class="steps" style="margin-top:26px">
+      <div class="step"><i>→</i><div><b>Véanlo en vivo</b><span>john-wellness.vercel.app — cuenta demo disponible.</span></div></div>
+      <div class="step"><i>→</i><div><b>Piloto con sus clientes</b><span>Un grupo guiado de 10–20 clientes, su marca, sus protocolos.</span></div></div>
+      <div class="step"><i>→</i><div><b>Midan juntos</b><span>Adherencia, recompras y tendencias de biomarcadores — visibles desde el día uno.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <span class="en-inline">CuasarX Longevity By Keel · Private overview</span>
+  <span class="es-inline">CuasarX Longevity By Keel · Presentación privada</span>
+  <div class="nav">
+    <button onclick="go(-1)" aria-label="Previous">←</button>
+    <span id="counter">1 / 6</span>
+    <button onclick="go(1)" aria-label="Next">→</button>
+  </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let i = 0;
+  function show(n) {
+    slides.forEach((s, k) => s.classList.toggle('active', k === n));
+    document.getElementById('counter').textContent = (n + 1) + ' / ' + slides.length;
+  }
+  function go(d) { i = Math.min(slides.length - 1, Math.max(0, i + d)); show(i); }
+  function setLang(l) {
+    document.documentElement.lang = l;
+    document.getElementById('lang-en').classList.toggle('on', l === 'en');
+    document.getElementById('lang-es').classList.toggle('on', l === 'es');
+  }
+  addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') go(1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(-1);
+  });
+  addEventListener('click', (e) => { if (e.target.classList.contains('slide')) go(1); });
+  show(0);
+</script>
+</body>
+</html>

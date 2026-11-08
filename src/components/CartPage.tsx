@@ -131,9 +131,24 @@ export function CartPage({
             </span>
           </h2>
           {pending.length > 0 && (
-            <span className="text-[11px] font-mono text-stone-400">
-              Suggested order ≈ ${pendingEstimate.toFixed(0)}
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-[11px] font-mono text-stone-400">
+                Suggested order ≈ ${pendingEstimate.toFixed(0)}
+              </span>
+              <button
+                onClick={() => {
+                  pending
+                    .filter((p) => !inCart(p.product.id))
+                    .forEach((p) => {
+                      onAddToCart([p.product]);
+                      onUpdateQuantity(p.product.id, p.suggestedQty);
+                    });
+                }}
+                className="px-3 py-1.5 bg-orange-600 opacity-85 hover:opacity-100 hover:bg-orange-500 text-white rounded-lg text-[11px] font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+              >
+                Add all to cart ({pending.filter((p) => !inCart(p.product.id)).length})
+              </button>
+            </div>
           )}
         </div>
 
