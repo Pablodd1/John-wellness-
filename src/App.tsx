@@ -20,6 +20,7 @@ import { IntentBanner } from './components/IntentBanner';
 import { PhiChat } from './components/PhiChat';
 import { CartDrawer, CartItem } from './components/CartDrawer';
 import { CartPage } from './components/CartPage';
+import { KeelPacks } from './components/KeelPacks';
 import { SubscriptionsPanel } from './components/SubscriptionsPanel';
 import { CuasarLogo } from './components/CuasarLogo';
 import { ConsentCenter } from './components/ConsentCenter';
@@ -1376,6 +1377,7 @@ function AppInner() {
         )}
         {activeTab === 'supplements' && (
           <div className="space-y-8 pb-8">
+            <KeelPacks user={activeUser} onAddToCart={handleAddProductsToCart} />
             <SupplementManager user={activeUser} onAddToCart={handleAddProductsToCart} />
             <section aria-labelledby="regimen-autodelivery" className="space-y-2">
               <h2 id="regimen-autodelivery" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
