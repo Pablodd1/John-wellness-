@@ -4,6 +4,7 @@ import { UserProfile, Product } from '../types';
 import { IntakeOnboarding } from './IntakeOnboarding';
 import { IntegrationCenter } from './IntegrationCenter';
 import { OrganSystemModeling } from './OrganSystemModeling';
+import { HumanAvatar } from './HumanAvatar';
 import { OrdersAndGoals } from './OrdersAndGoals';
 import { SubscriptionsPanel } from './SubscriptionsPanel';
 import { CalendarPanel } from './CalendarPanel';
@@ -54,10 +55,10 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <img 
-                src={user.avatar} 
-                alt={user.name} 
-                className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-white border border-[#d7e5e1] p-1 object-cover"
+              <HumanAvatar
+                name={user.name}
+                size={72}
+                className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-white border border-[#d7e5e1] p-1"
               />
               <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-orange-600 text-white flex items-center justify-center text-[9px] font-bold">
                 ✓

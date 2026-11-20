@@ -1,4 +1,5 @@
 import React from 'react';
+import { HumanAvatar } from './HumanAvatar';
 import { UserProfile } from '../types';
 import { SYNTHETIC_USERS } from '../data';
 import { isSupabaseConfigured } from '../lib/supabase';
@@ -146,7 +147,7 @@ export function OperatorDashboard({ activeUser }: { activeUser: UserProfile }) {
           {SYNTHETIC_USERS.map((user) => (
             <div key={user.id} className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-xs space-y-3">
               <div className="flex items-center gap-3">
-                <img src={user.avatar} alt={user.name} className="w-10 h-10 rounded-full bg-white object-cover" />
+                <HumanAvatar name={user.name} size={40} className="w-10 h-10 rounded-full" />
                 <div>
                   <h4 className="font-bold text-[#12211d] text-xs">{user.name}</h4>
                   <p className="text-[11px] text-stone-400">{user.role}</p>

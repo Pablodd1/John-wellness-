@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { HumanAvatar } from './HumanAvatar';
 import { SYNTHETIC_USERS } from '../data';
 import { UserProfile } from '../types';
 import { useConsent, PRIVACY_POLICY_VERSION } from '../lib/consent';
@@ -303,11 +304,7 @@ export function AdminPatientMonitor({
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <img 
-                        src={patient.avatar} 
-                        alt={patient.name} 
-                        className="w-11 h-11 rounded-2xl bg-slate-100 border border-slate-200 p-0.5 object-cover"
-                      />
+                      <HumanAvatar name={patient.name} size={44} className="w-11 h-11 rounded-2xl border border-slate-200 p-0.5" />
                       <div>
                         <h4 className={cn("font-extrabold text-sm", isSelected ? "text-white" : "text-[#12211d]")}>
                           {patient.name}
@@ -368,11 +365,7 @@ export function AdminPatientMonitor({
             {/* Selected Patient Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div className="flex items-center gap-4">
-                <img 
-                  src={selectedPatient.avatar} 
-                  alt={selectedPatient.name} 
-                  className="w-14 h-14 rounded-2xl bg-slate-900 border-2 border-orange-500 p-0.5 object-cover"
-                />
+                <HumanAvatar name={selectedPatient.name} size={56} className="w-14 h-14 rounded-2xl border-2 border-orange-500 p-0.5" />
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="px-2 py-0.5 bg-emerald-50 text-orange-500 font-extrabold text-[10px] rounded border border-emerald-200">

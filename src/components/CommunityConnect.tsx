@@ -3,6 +3,7 @@ import { UserProfile, PeerMatch } from '../types';
 import { MOCK_PEER_MATCHES } from '../data';
 import { Users, Flame, MapPin, Calendar, Clock, Sparkles, CheckCircle2, MessageSquare, Briefcase, Zap, ShieldAlert, Bot } from 'lucide-react';
 import { GroupChat } from './GroupChat';
+import { HumanAvatar } from './HumanAvatar';
 
 interface CommunityConnectProps {
   user: UserProfile;
@@ -84,7 +85,7 @@ export function CommunityConnect({ user, onEvaluateWithAi = () => {} }: Communit
           {/* Persona Context Card */}
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <img src={user.avatar} alt={user.name} className="w-12 h-12 rounded-full border-2 border-orange-500/100" />
+              <HumanAvatar name={user.name} size={48} className="w-12 h-12 rounded-full border-2 border-orange-500/100" />
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-[#12211d] text-sm">{user.name}</h3>
@@ -140,7 +141,7 @@ export function CommunityConnect({ user, onEvaluateWithAi = () => {} }: Communit
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">
                       <div className="relative">
-                        <img src={peer.avatar} alt={peer.name} className="w-12 h-12 rounded-2xl bg-slate-100 object-cover" />
+                        <HumanAvatar name={peer.name} size={48} className="w-12 h-12 rounded-2xl" />
                         <span className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-white ${peer.onlineStatus === 'active' ? 'bg-orange-500' : 'bg-amber-500'}`} />
                       </div>
                       <div>

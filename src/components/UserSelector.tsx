@@ -1,4 +1,5 @@
 import React from 'react';
+import { HumanAvatar } from './HumanAvatar';
 import { UserProfile } from '../types';
 import { SYNTHETIC_USERS } from '../data';
 import { Users, ChevronDown } from 'lucide-react';
@@ -19,7 +20,7 @@ export function UserSelector({
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 transition-colors w-full text-left"
       >
-        <img src={selectedUser.avatar} alt={selectedUser.name} className="w-10 h-10 rounded-full bg-slate-200 border border-slate-300" />
+        <HumanAvatar name={selectedUser.name} size={40} className="w-10 h-10 rounded-full border border-slate-300" />
         <div className="flex-1 hidden md:block">
           <p className="text-sm font-semibold text-[#12211d]">{selectedUser.name}</p>
           <p className="text-xs text-slate-500 truncate">{selectedUser.role}</p>
@@ -45,7 +46,7 @@ export function UserSelector({
                   selectedUser.id === user.id ? "border-orange-500/100 bg-orange-500/10/50" : "border-transparent"
                 )}
               >
-                <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full bg-slate-200" />
+                <HumanAvatar name={user.name} size={32} className="w-8 h-8 rounded-full" />
                 <div>
                   <p className="text-sm font-medium text-[#12211d]">{user.name}</p>
                   <p className="text-xs text-slate-500 line-clamp-1">{user.role}</p>
