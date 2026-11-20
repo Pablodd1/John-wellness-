@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>CuasarX — Theme Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #0a0b0a; color: #f4f2ec; font-family: 'Source Sans 3', system-ui, sans-serif; padding: 32px clamp(16px, 4vw, 64px); }
+  header.page { max-width: 1200px; margin: 0 auto 28px; }
+  header.page h1 { font-family: 'Newsreader', serif; font-weight: 500; font-size: clamp(26px, 4vw, 40px); }
+  header.page p { color: #a8a29a; font-size: 14px; margin-top: 6px; }
+  .grid { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr)); max-width: 1240px; margin: 0 auto; padding-bottom: 60px; }
+  .option { border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+  .option .label { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 18px; background: rgba(255,255,255,.03); }
+  .option .label b { font-size: 14px; }
+  .option .label span { font-size: 11px; color: #a8a29a; letter-spacing: .04em; }
+
+  /* ---- mockup shell (same structure for every theme) ---- */
+  .mock { padding: 22px 22px 26px; min-height: 430px; display: flex; flex-direction: column; gap: 14px; }
+  .nav { display: flex; gap: 14px; align-items: center; font-size: 12px; }
+  .nav .logo { font-weight: 700; letter-spacing: .08em; font-size: 11px; }
+  .nav .tab { padding: 5px 12px; border-radius: 8px; }
+  .hero h2 { font-size: 26px; line-height: 1.1; letter-spacing: -.01em; }
+  .hero p { font-size: 12.5px; line-height: 1.5; margin-top: 6px; max-width: 46ch; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat { padding: 12px 14px; border-radius: 12px; }
+  .stat b { display: block; font-size: 19px; }
+  .stat span { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+  .packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .pack { padding: 12px; border-radius: 12px; font-size: 11px; }
+  .pack b { display: block; font-size: 12px; margin-bottom: 3px; }
+  .cta { display: flex; gap: 10px; margin-top: auto; }
+  .cta .btn { padding: 10px 18px; border-radius: 10px; font-size: 12.5px; font-weight: 600; }
+  .cta .btn.ghost { background: transparent; }
+
+  /* ============ 1 · KEEL NOIR (current) ============ */
+  .t-noir { background: radial-gradient(120% 100% at 50% 0%, #14171a 0%, #0e100f 60%); color: #f4f2ec; font-family: 'Source Sans 3', sans-serif; }
+  .t-noir .nav .tab.on { background: #2563eb; color: #fff; }
+  .t-noir .nav .tab { color: #a8a29a; }
+  .t-noir .hero h2 { font-family: 'Newsreader', serif; color: #f4f2ec; }
+  .t-noir .hero p { color: #a8a29a; }
+  .t-noir .stat, .t-noir .pack { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: #f4f2ec; backdrop-filter: blur(10px); }
+  .t-noir .stat span, .t-noir .pack small { color: #a8a29a; }
+  .t-noir .btn.main { background: linear-gradient(180deg, #3b82f6, #2563eb); color: #fff; }
+
+  /* ============ 2 · GOLDEN HOUR (light spa) ============ */
+  .t-gold { background: #faf6ee; color: #2c2620; font-family: 'Fraunces', serif; }
+  .t-gold .nav .tab.on { background: #2c2620; color: #faf6ee; border-radius: 999px; }
+  .t-gold .nav .tab { color: #8a7f70; }
+  .t-gold .hero h2 { font-family: 'Fraunces', serif; color: #2c2620; }
+  .t-gold .hero p { color: #8a7f70; font-family: 'Source Sans 3', sans-serif; }
+  .t-gold .stat, .t-gold .pack { background: #fff; border: 1px solid #e8dfd0; color: #2c2620; box-shadow: 0 1px 2px rgba(60,45,20,.05); }
+  .t-gold .stat span, .t-gold .pack small { color: #a3784a; }
+  .t-gold .pack b { color: #2c2620; }
+  .t-gold .btn.main { background: #b8863b; color: #fff; }
+  .t-gold .btn.ghost { border: 1px solid #d9cbb4; color: #2c2620; }
+  .t-gold .nav .logo, .t-gold .stat b { font-family: 'Fraunces', serif; }
+
+  /* ============ 3 · CLINICAL MINT (light medical) ============ */
+  .t-mint { background: #f4f8f7; color: #12211d; font-family: 'DM Sans', sans-serif; }
+  .t-mint .nav .tab.on { background: #0f9d76; color: #fff; }
+  .t-mint .nav .tab { color: #5f7772; }
+  .t-mint .hero h2 { font-family: 'DM Sans', sans-serif; font-weight: 700; color: #12211d; }
+  .t-mint .hero p { color: #5f7772; }
+  .t-mint .stat, .t-mint .pack { background: #fff; border: 1px solid #d7e5e1; color: #12211d; }
+  .t-mint .stat span, .t-mint .pack small { color: #0f9d76; }
+  .t-mint .btn.main { background: #0f9d76; color: #fff; }
+  .t-mint .btn.ghost { border: 1px solid #c4d8d2; color: #12211d; }
+  .t-mint .nav .logo { color: #0f9d76; }
+
+  /* ============ 4 · CARBON EMBER (dark warm) ============ */
+  .t-ember { background: radial-gradient(130% 110% at 50% 0%, #201812 0%, #12100e 65%); color: #f5ede2; font-family: 'Source Sans 3', sans-serif; }
+  .t-ember .nav .tab.on { background: #e2660f; color: #fff; }
+  .t-ember .nav .tab { color: #b3a692; }
+  .t-ember .hero h2 { font-family: 'Fraunces', serif; color: #f5ede2; }
+  .t-ember .hero p { color: #b3a692; }
+  .t-ember .stat, .t-ember .pack { background: rgba(245, 237, 226,.05); border: 1px solid rgba(245, 237, 226,.1); color: #f5ede2; backdrop-filter: blur(10px); }
+  .t-ember .stat span, .t-ember .pack small { color: #e2874f; }
+  .t-ember .btn.main { background: linear-gradient(180deg, #ef8a3c, #e2660f); color: #fff; }
+
+  /* ============ 5 · AURORA VIOLET (premium dark) ============ */
+  .t-violet { background: radial-gradient(140% 120% at 60% 0%, #1d1b3a 0%, #0f0e20 70%); color: #eceafb; font-family: 'DM Sans', sans-serif; }
+  .t-violet .nav .tab.on { background: #8b5cf6; color: #fff; }
+  .t-violet .nav .tab { color: #9d97c4; }
+  .t-violet .hero h2 { font-family: 'DM Sans', sans-serif; font-weight: 700; background: linear-gradient(90deg, #c4b5fd, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .t-violet .hero p { color: #9d97c4; }
+  .t-violet .stat, .t-violet .pack { background: rgba(139, 92, 246,.07); border: 1px solid rgba(139, 92, 246,.2); color: #eceafb; }
+  .t-violet .stat span, .t-violet .pack small { color: #a78bfa; }
+  .t-violet .btn.main { background: linear-gradient(180deg, #8b5cf6, #7c3aed); color: #fff; }
+</style>
+</head>
+<body>
+<header class="page">
+  <h1>Five theme directions</h1>
+  <p>The same screen — profile, stats, AM/MID/PM packs, CTA — in five visual languages. Pick one and it applies across the whole platform.</p>
+</header>
+<div class="grid">
+
+  <div class="option">
+    <div class="label"><b>1 · Keel Noir</b><span>current — dark glass · blue · humanist serif</span></div>
+    <div class="mock t-noir">
+      <div class="nav"><span class="logo">CUASARX</span><span class="tab on">Profile</span><span class="tab">My Regimen</span><span class="tab">The Cart</span><span class="tab">Marketplace</span></div>
+      <div class="hero"><h2>Good morning, Alex.</h2><p>Readiness 72 — solid training day. One bottle runs out in 3 days.</p></div>
+      <div class="stats">
+        <div class="stat"><span>Readiness</span><b>72</b></div>
+        <div class="stat"><span>HRV</span><b>48 ms</b></div>
+        <div class="stat"><span>Sleep</span><b>7.2 h</b></div>
+      </div>
+      <div class="packs">
+        <div class="pack"><b>MY AM</b><small>Wake · energy</small></div>
+        <div class="pack"><b>MY MID</b><small>Midday · meals</small></div>
+        <div class="pack"><b>MY PM</b><small>Evening · sleep</small></div>
+      </div>
+      <div class="cta"><span class="btn main">Review my packs</span><span class="btn ghost">See trends</span></div>
+    </div>
+  </div>
+
+  <div class="option">
+    <div class="label"><b>2 · Golden Hour</b><span>light spa · ivory &amp; gold · editorial serif</span></div>
+    <div class="mock t-gold">
+      <div class="nav"><span class="logo">CuasarX</span><span class="tab on">Profile</span><span class="tab">My Regimen</span><span class="tab">The Cart</span><span class="tab">Marketplace</span></div>
+      <div class="hero"><h2>Good morning, Alex.</h2><p>Readiness 72 — solid training day. One bottle runs out in 3 days.</p></div>
+      <div class="stats">
+        <div class="stat"><span>Readiness</span><b>72</b></div>
+        <div class="stat"><span>HRV</span><b>48 ms</b></div>
+        <div class="stat"><span>Sleep</span><b>7.2 h</b></div>
+      </div>
+      <div class="packs">
+        <div class="pack"><b>MY AM</b><small>Wake · energy</small></div>
+        <div class="pack"><b>MY MID</b><small>Midday · meals</small></div>
+        <div class="pack"><b>MY PM</b><small>Evening · sleep</small></div>
+      </div>
+      <div class="cta"><span class="btn main">Review my packs</span><span class="btn ghost">See trends</span></div>
+    </div>
+  </div>
+
+  <div class="option">
+    <div class="label"><b>3 · Clinical Mint</b><span>light medical · white &amp; mint · clean sans</span></div>
+    <div class="mock t-mint">
+      <div class="nav"><span class="logo">CUASARX</span><span class="tab on">Profile</span><span class="tab">My Regimen</span><span class="tab">The Cart</span><span class="tab">Marketplace</span></div>
+      <div class="hero"><h2>Good morning, Alex.</h2><p>Readiness 72 — solid training day. One bottle runs out in 3 days.</p></div>
+      <div class="stats">
+        <div class="stat"><span>Readiness</span><b>72</b></div>
+        <div class="stat"><span>HRV</span><b>48 ms</b></div>
+        <div class="stat"><span>Sleep</span><b>7.2 h</b></div>
+      </div>
+      <div class="packs">
+        <div class="pack"><b>MY AM</b><small>Wake · energy</small></div>
+        <div class="pack"><b>MY MID</b><small>Midday · meals</small></div>
+        <div class="pack"><b>MY PM</b><small>Evening · sleep</small></div>
+      </div>
+      <div class="cta"><span class="btn main">Review my packs</span><span class="btn ghost">See trends</span></div>
+    </div>
+  </div>
+
+  <div class="option">
+    <div class="label"><b>4 · Carbon Ember</b><span>dark warm · charcoal &amp; ember orange · serif titles</span></div>
+    <div class="mock t-ember">
+      <div class="nav"><span class="logo">CUASARX</span><span class="tab on">Profile</span><span class="tab">My Regimen</span><span class="tab">The Cart</span><span class="tab">Marketplace</span></div>
+      <div class="hero"><h2>Good morning, Alex.</h2><p>Readiness 72 — solid training day. One bottle runs out in 3 days.</p></div>
+      <div class="stats">
+        <div class="stat"><span>Readiness</span><b>72</b></div>
+        <div class="stat"><span>HRV</span><b>48 ms</b></div>
+        <div class="stat"><span>Sleep</span><b>7.2 h</b></div>
+      </div>
+      <div class="packs">
+        <div class="pack"><b>MY AM</b><small>Wake · energy</small></div>
+        <div class="pack"><b>MY MID</b><small>Midday · meals</small></div>
+        <div class="pack"><b>MY PM</b><small>Evening · sleep</small></div>
+      </div>
+      <div class="cta"><span class="btn main">Review my packs</span><span class="btn ghost">See trends</span></div>
+    </div>
+  </div>
+
+  <div class="option">
+    <div class="label"><b>5 · Aurora Violet</b><span>premium dark · indigo &amp; violet · gradient headline</span></div>
+    <div class="mock t-violet">
+      <div class="nav"><span class="logo">CUASARX</span><span class="tab on">Profile</span><span class="tab">My Regimen</span><span class="tab">The Cart</span><span class="tab">Marketplace</span></div>
+      <div class="hero"><h2>Good morning, Alex.</h2><p>Readiness 72 — solid training day. One bottle runs out in 3 days.</p></div>
+      <div class="stats">
+        <div class="stat"><span>Readiness</span><b>72</b></div>
+        <div class="stat"><span>HRV</span><b>48 ms</b></div>
+        <div class="stat"><span>Sleep</span><b>7.2 h</b></div>
+      </div>
+      <div class="packs">
+        <div class="pack"><b>MY AM</b><small>Wake · energy</small></div>
+        <div class="pack"><b>MY MID</b><small>Midday · meals</small></div>
+        <div class="pack"><b>MY PM</b><small>Evening · sleep</small></div>
+      </div>
+      <div class="cta"><span class="btn main">Review my packs</span><span class="btn ghost">See trends</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
