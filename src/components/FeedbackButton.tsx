@@ -57,8 +57,8 @@ export function FeedbackButton({ page }: { page: string }) {
     setResult({ persisted: res.persisted, notice: res.error });
   };
 
-  const input = 'w-full px-3 py-2 rounded-lg text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]';
-  const label = 'block text-[11px] font-bold text-[#f4f2ec] mb-1';
+  const input = 'w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white';
+  const label = 'block text-[11px] font-bold text-[#12211d] mb-1';
 
   return (
     <>
@@ -80,16 +80,16 @@ export function FeedbackButton({ page }: { page: string }) {
             aria-modal="true"
             aria-labelledby="feedback-title"
             tabIndex={-1}
-            className="bg-white/[0.06] rounded-t-2xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl border border-white/10 space-y-4 focus:outline-none"
+            className="bg-white rounded-t-2xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl border border-[#d7e5e1] space-y-4 focus:outline-none"
           >
             <div className="flex items-center justify-between">
-              <h2 id="feedback-title" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
-                <MessageSquarePlus className="w-4 h-4 text-red-400" aria-hidden="true" /> Comments &amp; Reviews
+              <h2 id="feedback-title" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
+                <MessageSquarePlus className="w-4 h-4 text-red-600" aria-hidden="true" /> Comments &amp; Reviews
               </h2>
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close feedback form"
-                className="p-1.5 text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.05] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                className="p-1.5 text-stone-400 hover:text-[#12211d] hover:bg-white rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -128,7 +128,7 @@ export function FeedbackButton({ page }: { page: string }) {
                         className="p-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
                       >
                         <Star
-                          className={cn('w-6 h-6 transition-colors', rating !== null && value <= rating ? 'fill-[#b8860b] text-[#b8860b]' : 'text-[#dedad0]')}
+                          className={cn('w-6 h-6 transition-colors', rating !== null && value <= rating ? 'fill-[#b8860b] text-[#b8860b]' : 'text-[#5f7772]')}
                           aria-hidden="true"
                         />
                       </button>
@@ -138,7 +138,7 @@ export function FeedbackButton({ page }: { page: string }) {
 
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label htmlFor="fb-name" className={label}>Name <span className="text-red-400">*</span></label>
+                    <label htmlFor="fb-name" className={label}>Name <span className="text-red-600">*</span></label>
                     <input id="fb-name" className={input} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
                   </div>
                   <div>
@@ -148,7 +148,7 @@ export function FeedbackButton({ page }: { page: string }) {
                 </div>
 
                 <div>
-                  <label htmlFor="fb-message" className={label}>What should we keep, fix, or change? <span className="text-red-400">*</span></label>
+                  <label htmlFor="fb-message" className={label}>What should we keep, fix, or change? <span className="text-red-600">*</span></label>
                   <textarea
                     id="fb-message"
                     rows={4}
@@ -160,7 +160,7 @@ export function FeedbackButton({ page }: { page: string }) {
                 </div>
 
                 {error && (
-                  <p role="alert" className="text-[11px] text-red-400 font-bold flex items-center gap-1.5">
+                  <p role="alert" className="text-[11px] text-red-600 font-bold flex items-center gap-1.5">
                     <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" /> {error}
                   </p>
                 )}

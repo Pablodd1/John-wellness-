@@ -123,7 +123,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
   });
 
   return (
-    <div className="bg-white/[0.06] rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[650px] overflow-hidden">
+    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[650px] overflow-hidden">
       {/* Group Chat Header */}
       <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -170,7 +170,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
             <div 
               key={msg.id} 
               className={cn(
-                "p-4 rounded-2xl border transition-all space-y-3 bg-white/[0.06] shadow-sm",
+                "p-4 rounded-2xl border transition-all space-y-3 bg-white shadow-sm",
                 isUser ? "border-orange-500/25 ring-1 ring-orange-500/100/20" : "border-slate-200 hover:border-slate-300"
               )}
             >
@@ -179,7 +179,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
                   <img src={msg.avatar} alt={msg.senderName} className="w-10 h-10 rounded-2xl bg-slate-100 object-cover border border-slate-200" />
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-[#f4f2ec] text-xs sm:text-sm">{msg.senderName}</h4>
+                      <h4 className="font-bold text-[#12211d] text-xs sm:text-sm">{msg.senderName}</h4>
                       {msg.category && (
                         <span className={cn(
                           "text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider",
@@ -233,7 +233,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
       </div>
 
       {/* Group Chat Input Bar */}
-      <div className="p-4 border-t border-slate-200 bg-white/[0.06]">
+      <div className="p-4 border-t border-slate-200 bg-white">
         <form onSubmit={handleSendMessage} className="space-y-2">
           <div className="relative flex items-center">
             <input
@@ -241,7 +241,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Ask a question or share a protocol insight with the biohacking community..."
-              className="w-full pl-4 pr-24 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm focus:outline-none focus:border-orange-500/100 focus:bg-white/[0.06] transition-all"
+              className="w-full pl-4 pr-24 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm focus:outline-none focus:border-orange-500/100 focus:bg-white transition-all"
             />
             <button
               type="submit"

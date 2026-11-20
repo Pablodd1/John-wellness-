@@ -67,7 +67,7 @@ export function FirstVisitOnboarding({
         role="dialog"
         aria-modal="true"
         aria-labelledby="onboarding-title"
-        className="bg-white/[0.06] rounded-2xl max-w-lg w-full p-6 shadow-xl border border-white/10 space-y-4"
+        className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-[#d7e5e1] space-y-4"
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export function FirstVisitOnboarding({
               <Icon className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
-              <h2 id="onboarding-title" className="text-base font-bold text-[#f4f2ec]">
+              <h2 id="onboarding-title" className="text-base font-bold text-[#12211d]">
                 {current.title}
               </h2>
               <p className="text-[11px] text-stone-400">
@@ -86,7 +86,7 @@ export function FirstVisitOnboarding({
           <button
             onClick={onFinish}
             aria-label="Skip onboarding"
-            className="p-1 text-stone-500 hover:text-[#f4f2ec] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="p-1 text-stone-500 hover:text-[#12211d] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
           >
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -96,7 +96,7 @@ export function FirstVisitOnboarding({
 
         {current.key === 'review' && (
           <div>
-            <label htmlFor="onboarding-comment" className="block text-[11px] font-bold text-[#f4f2ec] mb-1">
+            <label htmlFor="onboarding-comment" className="block text-[11px] font-bold text-[#12211d] mb-1">
               Your comment (optional)
             </label>
             <textarea
@@ -105,7 +105,7 @@ export function FirstVisitOnboarding({
               onChange={(e) => setComment(e.target.value)}
               rows={3}
               placeholder="e.g. knee injury from 2023, prefer plant-based options…"
-              className="w-full px-3 py-2 rounded-lg text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06] text-[#f4f2ec]"
+              className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white text-[#12211d]"
             />
           </div>
         )}

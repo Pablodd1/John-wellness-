@@ -24,7 +24,7 @@ export const THEMES: {
     name: 'Smart Marketplace & Personal Biohack',
     tagline: 'Custom E-Commerce & 1-Click Biometric Subscriptions',
     previewBg: 'bg-[#0f172a] border-orange-500',
-    previewCard: 'bg-white/[0.06] text-[#f4f2ec] border-slate-200',
+    previewCard: 'bg-white text-[#12211d] border-slate-200',
     accentColor: 'bg-orange-400 text-white',
     badge: 'Personal Biohack',
     description: 'High-performance bespoke e-commerce layout with midnight slate navigation (#0f172a), bio-emerald instant checkout, and responsive mobile bottom dock.'
@@ -34,7 +34,7 @@ export const THEMES: {
     name: 'Titanium Precision',
     tagline: 'Modern Executive Light',
     previewBg: 'bg-slate-100 border-slate-200',
-    previewCard: 'bg-white/[0.06] text-[#f4f2ec] border-slate-200',
+    previewCard: 'bg-white text-[#12211d] border-slate-200',
     accentColor: 'bg-orange-500',
     badge: 'Clean Light',
     description: 'Ultra-crisp light canvas with slate-900 typography, indigo focus rings, and high contrast data tables.'
@@ -54,7 +54,7 @@ export const THEMES: {
     name: 'Nordic Emerald',
     tagline: 'Organic Biohacking & Circadian Flow',
     previewBg: 'bg-emerald-950/20 border-emerald-200',
-    previewCard: 'bg-white/[0.06] text-emerald-950 border-emerald-100',
+    previewCard: 'bg-white text-emerald-950 border-emerald-100',
     accentColor: 'bg-orange-400',
     badge: 'Calm Wellness',
     description: 'Soothing sage tones (#f2f7f4) with deep forest green accents, optimized for parasympathetic recovery.'
@@ -84,7 +84,7 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
               "px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1",
               currentTheme === t.id 
                 ? "bg-slate-900 text-white shadow-sm" 
-                : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
+                : "text-stone-400 hover:text-[#12211d] hover:bg-white"
             )}
           >
             <span className={cn("w-2 h-2 rounded-full", t.accentColor)} />
@@ -99,7 +99,7 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-bold text-[#f4f2ec] flex items-center gap-2">
+          <h3 className="text-base font-bold text-[#12211d] flex items-center gap-2">
             <Palette className="w-5 h-5 text-orange-500" /> Global Modern Visual Design Themes
           </h3>
           <p className="text-xs text-slate-500">
@@ -118,8 +118,8 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
               className={cn(
                 "relative p-4 rounded-2xl border text-left transition-all flex flex-col justify-between space-y-3 cursor-pointer group hover:scale-[1.02]",
                 isSelected
-                  ? "border-orange-500 ring-2 ring-orange-500/20 shadow-md bg-white/[0.06]"
-                  : "border-slate-200 bg-slate-50/50 hover:bg-white/[0.06] hover:border-slate-300"
+                  ? "border-orange-500 ring-2 ring-orange-500/20 shadow-md bg-white"
+                  : "border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300"
               )}
             >
               <div>
@@ -134,7 +134,7 @@ export function ThemeSelector({ currentTheme, onSelectTheme, compact = false }: 
                   )}
                 </div>
 
-                <h4 className="font-bold text-[#f4f2ec] text-sm group-hover:text-orange-500 transition-colors">
+                <h4 className="font-bold text-[#12211d] text-sm group-hover:text-orange-500 transition-colors">
                   {theme.name}
                 </h4>
                 <p className="text-[11px] font-medium text-slate-500 mb-2">{theme.tagline}</p>

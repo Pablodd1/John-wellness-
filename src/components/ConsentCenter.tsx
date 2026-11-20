@@ -59,13 +59,13 @@ function ConsentToggle({
       onClick={onChange}
       className={cn(
         'relative inline-flex h-6 w-11 flex-shrink-0 items-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed',
-        granted ? 'bg-orange-500 border-orange-500' : 'bg-[#dedad0] border-white/20'
+        granted ? 'bg-orange-500 border-orange-500' : 'bg-[#5f7772] border-[#c9ddd7]'
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          'inline-block h-[18px] w-[18px] transform rounded-full bg-white/[0.06] shadow transition-transform',
+          'inline-block h-[18px] w-[18px] transform rounded-full bg-white shadow transition-transform',
           granted ? 'translate-x-[24px]' : 'translate-x-[3px]'
         )}
       />
@@ -104,14 +104,14 @@ export function ConsentCenter({
   return (
     <div className="space-y-6 max-w-5xl">
       {/* Header */}
-      <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-sm">
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#d7e5e1] shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="flex items-start gap-3">
             <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/25">
               <ShieldCheck className="w-6 h-6 text-orange-400" aria-hidden="true" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#f4f2ec]">Privacy &amp; Consent Center</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#12211d]">Privacy &amp; Consent Center</h1>
               <p className="text-xs text-stone-400 mt-1 max-w-2xl leading-relaxed">
                 You decide what happens with your health information. Every purpose below is off until you turn it on,
                 you can withdraw any consent at any time, and every change is written to your audit log.
@@ -132,7 +132,7 @@ export function ConsentCenter({
         </div>
 
         {(needsPolicyReview || staleCount > 0) && (
-          <div className="mt-4 p-3.5 bg-amber-500/10 border border-amber-500/25 rounded-xl text-xs text-amber-300 flex items-start gap-2">
+          <div className="mt-4 p-3.5 bg-amber-500/10 border border-amber-500/25 rounded-xl text-xs text-amber-700 flex items-start gap-2">
             <ShieldAlert className="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <span>
               {needsPolicyReview && 'Our privacy notice was updated — acknowledge it below before further use. '}
@@ -142,26 +142,26 @@ export function ConsentCenter({
         )}
 
         <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-          <div className="p-3 bg-white/[0.05] rounded-xl border border-white/10">
+          <div className="p-3 bg-white rounded-xl border border-[#d7e5e1]">
             <span className="text-[10px] uppercase font-bold text-stone-400 block">Purposes enabled</span>
-            <span className="text-lg font-bold text-[#f4f2ec]">{grantedCount} / {CONSENT_PURPOSES.length}</span>
+            <span className="text-lg font-bold text-[#12211d]">{grantedCount} / {CONSENT_PURPOSES.length}</span>
           </div>
-          <div className="p-3 bg-white/[0.05] rounded-xl border border-white/10">
+          <div className="p-3 bg-white rounded-xl border border-[#d7e5e1]">
             <span className="text-[10px] uppercase font-bold text-stone-400 block">HIPAA authorization</span>
-            <span className={cn("text-sm font-bold", state.hipaaAuthorization ? "text-orange-400" : "text-amber-300")}>
+            <span className={cn("text-sm font-bold", state.hipaaAuthorization ? "text-orange-400" : "text-amber-700")}>
               {state.hipaaAuthorization ? 'On file' : 'None signed'}
             </span>
           </div>
-          <div className="p-3 bg-white/[0.05] rounded-xl border border-white/10">
+          <div className="p-3 bg-white rounded-xl border border-[#d7e5e1]">
             <span className="text-[10px] uppercase font-bold text-stone-400 block">Audit events</span>
-            <span className="text-lg font-bold text-[#f4f2ec]">{state.audit.length}</span>
+            <span className="text-lg font-bold text-[#12211d]">{state.audit.length}</span>
           </div>
         </div>
       </div>
 
       {/* Consent Purposes */}
       <section aria-labelledby="purposes-heading" className="space-y-3">
-        <h2 id="purposes-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2 px-1">
+        <h2 id="purposes-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2 px-1">
           <Database className="w-4 h-4 text-orange-400" aria-hidden="true" /> Data-Use Purposes
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -172,13 +172,13 @@ export function ConsentCenter({
               <div
                 key={purpose.id}
                 className={cn(
-                  'bg-white/[0.06] p-5 rounded-2xl border shadow-sm space-y-3',
-                  stale ? 'border-amber-500/25' : 'border-white/10'
+                  'bg-white p-5 rounded-2xl border shadow-sm space-y-3',
+                  stale ? 'border-amber-500/25' : 'border-[#d7e5e1]'
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-sm font-bold text-[#f4f2ec]">{purpose.title}</h3>
+                    <h3 className="text-sm font-bold text-[#12211d]">{purpose.title}</h3>
                     {purpose.optional ? (
                       <span className="badge-neutral mt-1">Optional</span>
                     ) : (
@@ -196,7 +196,7 @@ export function ConsentCenter({
                 <p className="text-xs text-stone-400 leading-relaxed">{purpose.summary}</p>
 
                 <div className="text-[11px] space-y-1.5">
-                  <span className="font-bold text-[#f4f2ec] block">What this uses:</span>
+                  <span className="font-bold text-[#12211d] block">What this uses:</span>
                   <ul className="space-y-0.5">
                     {purpose.dataUsed.map(item => (
                       <li key={item} className="text-stone-400 flex items-center gap-1.5">
@@ -205,7 +205,7 @@ export function ConsentCenter({
                     ))}
                   </ul>
                   <p className="text-stone-400 pt-1">
-                    <span className="font-bold text-[#f4f2ec]">If you turn this off: </span>
+                    <span className="font-bold text-[#12211d]">If you turn this off: </span>
                     {purpose.offConsequence}
                   </p>
                 </div>
@@ -217,7 +217,7 @@ export function ConsentCenter({
                       {state.records[purpose.id].grantedAt && format(new Date(state.records[purpose.id].grantedAt!), 'MMM d, yyyy HH:mm')}
                     </span>
                   ) : state.records[purpose.id].withdrawnAt ? (
-                    <span className="text-red-400 font-bold flex items-center gap-1">
+                    <span className="text-red-600 font-bold flex items-center gap-1">
                       <Ban className="w-3 h-3" aria-hidden="true" /> Withdrawn{' '}
                       {format(new Date(state.records[purpose.id].withdrawnAt!), 'MMM d, yyyy HH:mm')}
                     </span>
@@ -233,14 +233,14 @@ export function ConsentCenter({
       </section>
 
       {/* HIPAA Authorization */}
-      <section aria-labelledby="hipaa-heading" className="bg-white/[0.06] p-6 rounded-2xl border border-white/10 shadow-sm space-y-4">
+      <section aria-labelledby="hipaa-heading" className="bg-white p-6 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/25">
-              <FileSignature className="w-5 h-5 text-amber-300" aria-hidden="true" />
+              <FileSignature className="w-5 h-5 text-amber-700" aria-hidden="true" />
             </div>
             <div>
-              <h2 id="hipaa-heading" className="text-sm font-bold text-[#f4f2ec]">Authorization to Disclose Health Information (HIPAA)</h2>
+              <h2 id="hipaa-heading" className="text-sm font-bold text-[#12211d]">Authorization to Disclose Health Information (HIPAA)</h2>
               <p className="text-xs text-stone-400 mt-1 max-w-2xl leading-relaxed">
                 Required before we share your protected health information with anyone outside your care team —
                 another clinic, your insurer, or a legal party. You specify who, what, why, and until when.
@@ -253,13 +253,13 @@ export function ConsentCenter({
           <div className="space-y-3">
             <div className="p-4 bg-orange-500/10 border border-orange-500/25 rounded-xl space-y-2 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
-                <div><span className="font-bold text-[#f4f2ec] block text-[10px] uppercase">Disclose to</span><span className="text-orange-300">{state.hipaaAuthorization.recipient}</span></div>
-                <div><span className="font-bold text-[#f4f2ec] block text-[10px] uppercase">Purpose</span><span className="text-orange-300">{state.hipaaAuthorization.purpose}</span></div>
-                <div><span className="font-bold text-[#f4f2ec] block text-[10px] uppercase">Signed by</span><span className="text-orange-300">{state.hipaaAuthorization.signedName} — {format(new Date(state.hipaaAuthorization.signedAt), 'MMM d, yyyy')}</span></div>
-                <div><span className="font-bold text-[#f4f2ec] block text-[10px] uppercase">Expires</span><span className="text-orange-300">{format(new Date(state.hipaaAuthorization.expiresOn), 'MMM d, yyyy')}</span></div>
+                <div><span className="font-bold text-[#12211d] block text-[10px] uppercase">Disclose to</span><span className="text-orange-300">{state.hipaaAuthorization.recipient}</span></div>
+                <div><span className="font-bold text-[#12211d] block text-[10px] uppercase">Purpose</span><span className="text-orange-300">{state.hipaaAuthorization.purpose}</span></div>
+                <div><span className="font-bold text-[#12211d] block text-[10px] uppercase">Signed by</span><span className="text-orange-300">{state.hipaaAuthorization.signedName} — {format(new Date(state.hipaaAuthorization.signedAt), 'MMM d, yyyy')}</span></div>
+                <div><span className="font-bold text-[#12211d] block text-[10px] uppercase">Expires</span><span className="text-orange-300">{format(new Date(state.hipaaAuthorization.expiresOn), 'MMM d, yyyy')}</span></div>
               </div>
               <div>
-                <span className="font-bold text-[#f4f2ec] block text-[10px] uppercase">Information covered</span>
+                <span className="font-bold text-[#12211d] block text-[10px] uppercase">Information covered</span>
                 <div className="flex flex-wrap gap-1.5 mt-1">
                   {state.hipaaAuthorization.informationScope.map(item => (
                     <span key={item} className="badge-clinical">{item}</span>
@@ -270,7 +270,7 @@ export function ConsentCenter({
             {!confirmRevoke ? (
               <button
                 onClick={() => setConfirmRevoke(true)}
-                className="text-xs font-bold text-red-400 hover:bg-red-500/10 px-3 py-1.5 rounded-lg border border-red-500/25 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 cursor-pointer"
+                className="text-xs font-bold text-red-600 hover:bg-red-500/10 px-3 py-1.5 rounded-lg border border-red-500/25 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 cursor-pointer"
               >
                 Revoke this authorization
               </button>
@@ -285,7 +285,7 @@ export function ConsentCenter({
                 </button>
                 <button
                   onClick={() => setConfirmRevoke(false)}
-                  className="px-3 py-1.5 bg-white/[0.06] border border-white/15 hover:bg-white/[0.05] font-bold rounded-lg text-[#f4f2ec] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 cursor-pointer"
+                  className="px-3 py-1.5 bg-white border border-[#d7e5e1] hover:bg-white font-bold rounded-lg text-[#12211d] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -303,19 +303,19 @@ export function ConsentCenter({
       </section>
 
       {/* Telehealth status */}
-      <section aria-labelledby="telehealth-heading" className="bg-white/[0.06] p-6 rounded-2xl border border-white/10 shadow-sm space-y-3">
+      <section aria-labelledby="telehealth-heading" className="bg-white p-6 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-3">
         <div className="flex items-start gap-3">
           <div className="p-2 bg-orange-500/10 rounded-lg border border-orange-500/25">
             <Video className="w-5 h-5 text-orange-400" aria-hidden="true" />
           </div>
           <div className="flex-1">
-            <h2 id="telehealth-heading" className="text-sm font-bold text-[#f4f2ec]">Telehealth Informed Consent</h2>
+            <h2 id="telehealth-heading" className="text-sm font-bold text-[#12211d]">Telehealth Informed Consent</h2>
             <p className="text-xs text-stone-400 mt-1 leading-relaxed max-w-2xl">
               Many US states require informed consent before receiving care by telemedicine. Your status:{' '}
               {isGranted('telehealth') ? (
                 <span className="font-bold text-orange-400">on file — video visits are enabled.</span>
               ) : (
-                <span className="font-bold text-amber-300">not on file — you will be asked to review and sign before joining a visit.</span>
+                <span className="font-bold text-amber-700">not on file — you will be asked to review and sign before joining a visit.</span>
               )}
             </p>
           </div>
@@ -331,14 +331,14 @@ export function ConsentCenter({
       </section>
 
       {/* Privacy Rights */}
-      <section aria-labelledby="rights-heading" className="bg-white/[0.06] p-6 rounded-2xl border border-white/10 shadow-sm space-y-4">
-        <h2 id="rights-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+      <section aria-labelledby="rights-heading" className="bg-white p-6 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-4">
+        <h2 id="rights-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
           <Gavel className="w-4 h-4 text-orange-400" aria-hidden="true" /> Your Privacy Rights
         </h2>
 
-        <div className="flex items-start justify-between gap-4 p-4 bg-white/[0.05] rounded-xl border border-white/10">
+        <div className="flex items-start justify-between gap-4 p-4 bg-white rounded-xl border border-[#d7e5e1]">
           <div>
-            <span className="text-xs font-bold text-[#f4f2ec] block">Do Not Sell or Share My Personal Information</span>
+            <span className="text-xs font-bold text-[#12211d] block">Do Not Sell or Share My Personal Information</span>
             <span className="text-[11px] text-stone-400 block mt-0.5">Opt out under the CPRA and similar state laws. Cross-context behavioral advertising and data sales are stopped.</span>
           </div>
           <ConsentToggle
@@ -349,8 +349,8 @@ export function ConsentCenter({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="p-4 border border-white/10 rounded-xl space-y-2">
-            <span className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5"><Download className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> Export my data</span>
+          <div className="p-4 border border-[#d7e5e1] rounded-xl space-y-2">
+            <span className="text-xs font-bold text-[#12211d] flex items-center gap-1.5"><Download className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> Export my data</span>
             <p className="text-[11px] text-stone-400 leading-relaxed">Download everything this app holds about you — profile, metrics, and your full consent ledger — as a machine-readable JSON file.</p>
             <button
               onClick={() => exportData(user)}
@@ -361,7 +361,7 @@ export function ConsentCenter({
           </div>
 
           <div className="p-4 border border-red-500/25 rounded-xl space-y-2 bg-red-500/[0.06]">
-            <span className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5"><Trash2 className="w-3.5 h-3.5 text-red-400" aria-hidden="true" /> Delete my data</span>
+            <span className="text-xs font-bold text-[#12211d] flex items-center gap-1.5"><Trash2 className="w-3.5 h-3.5 text-red-600" aria-hidden="true" /> Delete my data</span>
             <p className="text-[11px] text-stone-400 leading-relaxed">
               {state.deletionRequestedAt ? (
                 <>Request recorded {format(new Date(state.deletionRequestedAt), 'MMM d, yyyy HH:mm')}. In production, erasure completes within 30 days except what we must retain by law. You can still withdraw specific purposes meanwhile.</>
@@ -374,7 +374,7 @@ export function ConsentCenter({
             ) : !confirmDelete ? (
               <button
                 onClick={() => setConfirmDelete(true)}
-                className="px-3 py-1.5 text-xs font-bold text-red-400 border border-red-500/25 hover:bg-red-500/10 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 cursor-pointer"
+                className="px-3 py-1.5 text-xs font-bold text-red-600 border border-red-500/25 hover:bg-red-500/10 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 cursor-pointer"
               >
                 Request deletion
               </button>
@@ -388,7 +388,7 @@ export function ConsentCenter({
                 </button>
                 <button
                   onClick={() => setConfirmDelete(false)}
-                  className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-xs font-bold rounded-lg text-[#f4f2ec] hover:bg-white/[0.05] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 cursor-pointer"
+                  className="px-3 py-1.5 bg-white border border-[#d7e5e1] text-xs font-bold rounded-lg text-[#12211d] hover:bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -399,23 +399,23 @@ export function ConsentCenter({
       </section>
 
       {/* Audit Log */}
-      <section aria-labelledby="audit-heading" className="bg-white/[0.06] p-6 rounded-2xl border border-white/10 shadow-sm space-y-3">
-        <h2 id="audit-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+      <section aria-labelledby="audit-heading" className="bg-white p-6 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-3">
+        <h2 id="audit-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
           <History className="w-4 h-4 text-orange-400" aria-hidden="true" /> Consent Audit Log
           <span className="badge-neutral">{state.audit.length} events</span>
         </h2>
         {state.audit.length === 0 ? (
-          <p className="text-xs text-stone-400 p-4 bg-white/[0.05] rounded-xl border border-white/10">
+          <p className="text-xs text-stone-400 p-4 bg-white rounded-xl border border-[#d7e5e1]">
             No events yet. Every grant, withdrawal, signature, export, and deletion request will appear here with a timestamp.
           </p>
         ) : (
           <ul className="space-y-2 max-h-96 overflow-y-auto pr-1">
             {state.audit.map(event => (
-              <li key={event.id} className="p-3 bg-white/[0.05] rounded-xl border border-white/10 flex items-start gap-3 text-xs">
+              <li key={event.id} className="p-3 bg-white rounded-xl border border-[#d7e5e1] flex items-start gap-3 text-xs">
                 <span className={cn(
                   'p-1.5 rounded-lg flex-shrink-0',
                   event.action === 'withdrawn' || event.action === 'deletion_requested' || event.action === 'authorization_revoked'
-                    ? 'bg-red-500/10 text-red-400'
+                    ? 'bg-red-500/10 text-red-600'
                     : 'bg-orange-500/10 text-orange-400'
                 )}>
                   {event.action === 'withdrawn' || event.action === 'authorization_revoked' ? <X className="w-3 h-3" aria-hidden="true" /> :
@@ -427,7 +427,7 @@ export function ConsentCenter({
                    <Check className="w-3 h-3" aria-hidden="true" />}
                 </span>
                 <div className="min-w-0">
-                  <span className="font-bold text-[#f4f2ec] block capitalize">{event.action.replace(/_/g, ' ')}</span>
+                  <span className="font-bold text-[#12211d] block capitalize">{event.action.replace(/_/g, ' ')}</span>
                   <span className="text-stone-400 leading-relaxed block">{event.detail}</span>
                   <span className="text-[10px] text-stone-400 block mt-0.5 font-mono">
                     {format(new Date(event.ts), 'MMM d, yyyy HH:mm:ss')} • {formatDistanceToNowStrict(new Date(event.ts))} ago • subject: {event.subject.replace(/_/g, ' ')}
@@ -511,16 +511,16 @@ function HipaaAuthorizationModal({
         aria-modal="true"
         aria-labelledby="hipaa-modal-title"
         tabIndex={-1}
-        className="bg-white/[0.06] rounded-2xl max-w-xl w-full p-6 shadow-xl border border-white/10 space-y-4 max-h-[90vh] overflow-y-auto focus:outline-none"
+        className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-xl border border-[#d7e5e1] space-y-4 max-h-[90vh] overflow-y-auto focus:outline-none"
       >
         <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-          <h2 id="hipaa-modal-title" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
-            <FileSignature className="w-4 h-4 text-amber-300" aria-hidden="true" /> Authorization to Use &amp; Disclose Protected Health Information
+          <h2 id="hipaa-modal-title" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
+            <FileSignature className="w-4 h-4 text-amber-700" aria-hidden="true" /> Authorization to Use &amp; Disclose Protected Health Information
           </h2>
           <button
             onClick={onClose}
             aria-label="Close authorization form"
-            className="p-1.5 text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.05] rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 cursor-pointer"
+            className="p-1.5 text-stone-400 hover:text-[#12211d] hover:bg-white rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 cursor-pointer"
           >
             <X className="w-4 h-4" aria-hidden="true" />
           </button>
@@ -528,22 +528,22 @@ function HipaaAuthorizationModal({
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label htmlFor="hipaa-recipient" className="block font-bold text-[#f4f2ec] mb-1">Disclose to (person or organization) <span className="text-red-400">*</span></label>
+            <label htmlFor="hipaa-recipient" className="block font-bold text-[#12211d] mb-1">Disclose to (person or organization) <span className="text-red-600">*</span></label>
             <input
               id="hipaa-recipient"
               type="text"
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               placeholder="e.g. Dr. Miriam Chen, Austin Cardiology Associates"
-              className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
+              className="w-full px-3 py-2 rounded-lg border border-[#d7e5e1] bg-white text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
             />
           </div>
 
           <fieldset>
-            <legend className="font-bold text-[#f4f2ec] mb-1.5">Information to disclose <span className="text-red-400">*</span></legend>
+            <legend className="font-bold text-[#12211d] mb-1.5">Information to disclose <span className="text-red-600">*</span></legend>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {HIPAA_SCOPE_OPTIONS.map(item => (
-                <label key={item} className="flex items-center gap-2 p-2 rounded-lg border border-white/10 hover:bg-white/[0.05] cursor-pointer text-[#f4f2ec]">
+                <label key={item} className="flex items-center gap-2 p-2 rounded-lg border border-[#d7e5e1] hover:bg-white cursor-pointer text-[#12211d]">
                   <input
                     type="checkbox"
                     checked={scope.includes(item)}
@@ -557,12 +557,12 @@ function HipaaAuthorizationModal({
           </fieldset>
 
           <div>
-            <label htmlFor="hipaa-purpose" className="block font-bold text-[#f4f2ec] mb-1">Purpose of disclosure <span className="text-red-400">*</span></label>
+            <label htmlFor="hipaa-purpose" className="block font-bold text-[#12211d] mb-1">Purpose of disclosure <span className="text-red-600">*</span></label>
             <select
               id="hipaa-purpose"
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06] cursor-pointer"
+              className="w-full px-3 py-2 rounded-lg border border-[#d7e5e1] bg-white text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white cursor-pointer"
             >
               {HIPAA_PURPOSE_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
             </select>
@@ -573,25 +573,25 @@ function HipaaAuthorizationModal({
                 onChange={(e) => setOtherPurpose(e.target.value)}
                 aria-label="Describe the other purpose"
                 placeholder="Describe the purpose…"
-                className="mt-2 w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
+                className="mt-2 w-full px-3 py-2 rounded-lg border border-[#d7e5e1] bg-white text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
               />
             )}
           </div>
 
           <div>
-            <label htmlFor="hipaa-expiry" className="block font-bold text-[#f4f2ec] mb-1">Expires on <span className="text-red-400">*</span></label>
+            <label htmlFor="hipaa-expiry" className="block font-bold text-[#12211d] mb-1">Expires on <span className="text-red-600">*</span></label>
             <input
               id="hipaa-expiry"
               type="date"
               value={expiresOn}
               onChange={(e) => setExpiresOn(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06] cursor-pointer"
+              className="w-full px-3 py-2 rounded-lg border border-[#d7e5e1] bg-white text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white cursor-pointer"
             />
           </div>
 
           <div>
-            <label htmlFor="hipaa-signature" className="block font-bold text-[#f4f2ec] mb-1">
-              Electronic signature (type your full name as it appears on your profile: {user.name}) <span className="text-red-400">*</span>
+            <label htmlFor="hipaa-signature" className="block font-bold text-[#12211d] mb-1">
+              Electronic signature (type your full name as it appears on your profile: {user.name}) <span className="text-red-600">*</span>
             </label>
             <input
               id="hipaa-signature"
@@ -600,17 +600,17 @@ function HipaaAuthorizationModal({
               onChange={(e) => setSignature(e.target.value)}
               placeholder="Your full legal name"
               autoComplete="name"
-              className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
+              className="w-full px-3 py-2 rounded-lg border border-[#d7e5e1] bg-white text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
             />
           </div>
 
-          <div className="p-3 bg-white/[0.05] border border-white/10 rounded-lg text-[11px] text-stone-400 space-y-1">
-            <p><span className="font-bold text-[#f4f2ec]">Your rights:</span> You may revoke this authorization at any time in writing through the Privacy Center. Revocation stops future disclosures but cannot recall information already released. Treatment, payment, and health-care operations may proceed without this authorization as permitted by law.</p>
-            <p><span className="font-bold text-[#f4f2ec]">Redisclosure:</span> Information disclosed under this authorization may be redisclosed by the recipient and no longer protected by federal privacy rules.</p>
+          <div className="p-3 bg-white border border-[#d7e5e1] rounded-lg text-[11px] text-stone-400 space-y-1">
+            <p><span className="font-bold text-[#12211d]">Your rights:</span> You may revoke this authorization at any time in writing through the Privacy Center. Revocation stops future disclosures but cannot recall information already released. Treatment, payment, and health-care operations may proceed without this authorization as permitted by law.</p>
+            <p><span className="font-bold text-[#12211d]">Redisclosure:</span> Information disclosed under this authorization may be redisclosed by the recipient and no longer protected by federal privacy rules.</p>
           </div>
 
           {error && (
-            <p role="alert" className="text-[11px] text-red-400 font-bold flex items-center gap-1.5">
+            <p role="alert" className="text-[11px] text-red-600 font-bold flex items-center gap-1.5">
               <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" /> {error}
             </p>
           )}

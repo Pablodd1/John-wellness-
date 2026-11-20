@@ -308,7 +308,7 @@ const MARKER_DEFINITIONS: Record<MarkerKey, MarkerMetadata> = {
     optimalRange: '75 - 90 mg/dL',
     minOptimal: 75,
     maxOptimal: 90,
-    color: '#3b82f6', // Blue
+    color: '#0f9d76', // Blue
     gradientId: 'glucoseGrad',
     direction: 'lower_is_better',
     description: 'Morning serum glucose level indicating baseline hepatic gluconeogenesis and insulin-mediated glucose clearance.',
@@ -582,7 +582,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="bg-white/[0.06] text-[#f4f2ec] p-6 sm:p-7 rounded-2xl border border-white/10 space-y-4"
+        className="bg-white text-[#12211d] p-6 sm:p-7 rounded-2xl border border-[#d7e5e1] space-y-4"
       >
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
@@ -598,7 +598,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               </span>
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-bold text-[#f4f2ec] tracking-tight flex items-center gap-2 font-serif-title">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#12211d] tracking-tight flex items-center gap-2 font-serif-title">
               Biomarker Progress &amp; Serial Lab Tracking
             </h2>
             <p className="text-xs text-stone-400 max-w-3xl leading-relaxed">
@@ -607,24 +607,24 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
           </div>
 
           {/* Health Score Pill */}
-          <div className="bg-white/[0.05] px-3.5 py-2.5 rounded-xl border border-white/10 flex items-center gap-2.5 self-start lg:self-auto">
+          <div className="bg-white px-3.5 py-2.5 rounded-xl border border-[#d7e5e1] flex items-center gap-2.5 self-start lg:self-auto">
             <div className="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-300 flex items-center justify-center font-bold">
               <CheckCircle2 className="w-4 h-4" />
             </div>
             <div>
               <span className="text-[10px] text-stone-500 uppercase font-semibold block">Biomarker Health Score</span>
-              <span className="text-xs font-bold text-[#f4f2ec]">96 / 100 (Optimal Tier)</span>
+              <span className="text-xs font-bold text-[#12211d]">96 / 100 (Optimal Tier)</span>
             </div>
           </div>
         </div>
 
         {/* Highlight Summary Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-white/[0.08]">
-          <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+          <div className="bg-white p-3 rounded-xl border border-[#d7e5e1]">
             <span className="text-[10px] uppercase font-semibold text-stone-500 tracking-wider flex items-center gap-1">
               <Droplets className="w-3 h-3 text-orange-400" /> 25-OH Vitamin D
             </span>
-            <div className="text-lg font-bold text-[#f4f2ec] mt-0.5 flex items-baseline gap-1">
+            <div className="text-lg font-bold text-[#12211d] mt-0.5 flex items-baseline gap-1">
               72.8 <span className="text-[11px] text-stone-500 font-normal">ng/mL</span>
               <span className="badge-clinical text-[10px] ml-1">
                 +113%
@@ -633,11 +633,11 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             <p className="text-[10px] text-stone-500 mt-0.5">Target: 50-80 ng/mL • Optimal</p>
           </div>
 
-          <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+          <div className="bg-white p-3 rounded-xl border border-[#d7e5e1]">
             <span className="text-[10px] uppercase font-semibold text-stone-500 tracking-wider flex items-center gap-1">
-              <Flame className="w-3 h-3 text-amber-300" /> hs-CRP Inflammation
+              <Flame className="w-3 h-3 text-amber-700" /> hs-CRP Inflammation
             </span>
-            <div className="text-lg font-bold text-[#f4f2ec] mt-0.5 flex items-baseline gap-1">
+            <div className="text-lg font-bold text-[#12211d] mt-0.5 flex items-baseline gap-1">
               0.28 <span className="text-[11px] text-stone-500 font-normal">mg/L</span>
               <span className="badge-clinical text-[10px] ml-1">
                 -88%
@@ -646,11 +646,11 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             <p className="text-[10px] text-stone-500 mt-0.5">Target: &lt;0.5 mg/L • Ultra-Low</p>
           </div>
 
-          <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+          <div className="bg-white p-3 rounded-xl border border-[#d7e5e1]">
             <span className="text-[10px] uppercase font-semibold text-stone-500 tracking-wider flex items-center gap-1">
               <Heart className="w-3 h-3 text-orange-400" /> Atherogenic ApoB
             </span>
-            <div className="text-lg font-bold text-[#f4f2ec] mt-0.5 flex items-baseline gap-1">
+            <div className="text-lg font-bold text-[#12211d] mt-0.5 flex items-baseline gap-1">
               68 <span className="text-[11px] text-stone-500 font-normal">mg/dL</span>
               <span className="badge-clinical text-[10px] ml-1">
                 -35%
@@ -659,11 +659,11 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             <p className="text-[10px] text-stone-500 mt-0.5">Target: &lt;70 mg/dL • Optimal</p>
           </div>
 
-          <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+          <div className="bg-white p-3 rounded-xl border border-[#d7e5e1]">
             <span className="text-[10px] uppercase font-semibold text-stone-500 tracking-wider flex items-center gap-1">
               <Activity className="w-3 h-3 text-stone-400" /> Fasting Insulin
             </span>
-            <div className="text-lg font-bold text-[#f4f2ec] mt-0.5 flex items-baseline gap-1">
+            <div className="text-lg font-bold text-[#12211d] mt-0.5 flex items-baseline gap-1">
               3.9 <span className="text-[11px] text-stone-500 font-normal">uIU/mL</span>
               <span className="badge-clinical text-[10px] ml-1">
                 -50%
@@ -685,7 +685,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'blood_panel_progress'
                 ? "bg-orange-600 text-white"
-                : "bg-white/[0.06] text-stone-400 border border-white/10 hover:bg-white/[0.05]"
+                : "bg-white text-stone-400 border border-[#d7e5e1] hover:bg-white"
             )}
           >
             <TestTubes className="w-3.5 h-3.5" /> 
@@ -698,7 +698,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'hrv_rhr'
                 ? "bg-orange-600 text-white"
-                : "bg-white/[0.06] text-stone-400 border border-white/10 hover:bg-white/[0.05]"
+                : "bg-white text-stone-400 border border-[#d7e5e1] hover:bg-white"
             )}
           >
             <Activity className="w-3.5 h-3.5" /> HRV &amp; Resting HR
@@ -710,7 +710,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'blood_pressure'
                 ? "bg-orange-600 text-white"
-                : "bg-white/[0.06] text-stone-400 border border-white/10 hover:bg-white/[0.05]"
+                : "bg-white text-stone-400 border border-[#d7e5e1] hover:bg-white"
             )}
           >
             <HeartPulse className="w-3.5 h-3.5" /> Blood Pressure
@@ -722,7 +722,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'glucose'
                 ? "bg-orange-600 text-white"
-                : "bg-white/[0.06] text-stone-400 border border-white/10 hover:bg-white/[0.05]"
+                : "bg-white text-stone-400 border border-[#d7e5e1] hover:bg-white"
             )}
           >
             <Zap className="w-3.5 h-3.5" /> Fasting CGM
@@ -734,7 +734,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'sleep'
                 ? "bg-orange-600 text-white"
-                : "bg-white/[0.06] text-stone-400 border border-white/10 hover:bg-white/[0.05]"
+                : "bg-white text-stone-400 border border-[#d7e5e1] hover:bg-white"
             )}
           >
             <Moon className="w-3.5 h-3.5" /> Sleep Architecture
@@ -746,7 +746,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
               activeMetricView === 'readiness'
                 ? "bg-orange-600 text-white"
-                : "bg-white/[0.06] text-stone-400 border border-white/10 hover:bg-white/[0.05]"
+                : "bg-white text-stone-400 border border-[#d7e5e1] hover:bg-white"
             )}
           >
             <Gauge className="w-3.5 h-3.5" /> Daily Readiness
@@ -761,7 +761,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               onClick={() => setTimeframe(7)}
               className={cn(
                 "px-2.5 py-1 rounded-xl text-xs font-bold transition-all",
-                timeframe === 7 ? "bg-white/[0.06] text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
+                timeframe === 7 ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
               )}
             >
               7d
@@ -770,7 +770,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               onClick={() => setTimeframe(30)}
               className={cn(
                 "px-2.5 py-1 rounded-xl text-xs font-bold transition-all",
-                timeframe === 30 ? "bg-white/[0.06] text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
+                timeframe === 30 ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
               )}
             >
               30d
@@ -779,7 +779,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               onClick={() => setTimeframe(90)}
               className={cn(
                 "px-2.5 py-1 rounded-xl text-xs font-bold transition-all",
-                timeframe === 90 ? "bg-white/[0.06] text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
+                timeframe === 90 ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
               )}
             >
               90d
@@ -803,7 +803,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             className="space-y-6"
           >
             {/* DYNAMIC BIOMARKER DEFICIENCY & ONE-CLICK ADD ALL ACTION BANNER */}
-            <div className="bg-white/[0.05] text-[#f4f2ec] p-5 sm:p-6 rounded-2xl border border-white/10 space-y-4">
+            <div className="bg-white text-[#12211d] p-5 sm:p-6 rounded-2xl border border-[#d7e5e1] space-y-4">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="space-y-2 max-w-2xl">
                   <div className="flex flex-wrap items-center gap-2">
@@ -815,7 +815,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                     </span>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-bold text-[#f4f2ec] tracking-tight">
+                  <h3 className="text-base sm:text-lg font-bold text-[#12211d] tracking-tight">
                     Targeted Regimen Stack Based on Your 6-Month Bloodwork
                   </h3>
                   <p className="text-xs text-stone-400 leading-relaxed">
@@ -824,12 +824,12 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 </div>
 
                 {/* One-Click Add All Action Box */}
-                <div className="bg-white/[0.06] p-4 rounded-xl border border-white/10 flex flex-col justify-between gap-2.5 w-full lg:w-76 flex-shrink-0">
+                <div className="bg-white p-4 rounded-xl border border-[#d7e5e1] flex flex-col justify-between gap-2.5 w-full lg:w-76 flex-shrink-0">
                   <div className="flex items-baseline justify-between border-b border-white/[0.08] pb-2">
                     <div>
                       <span className="text-xs text-stone-400 block">Complete Protocol ({allTargetedSupplements.length} items):</span>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-[#f4f2ec]">${bundleDiscountedPrice}</span>
+                        <span className="text-xl font-bold text-[#12211d]">${bundleDiscountedPrice}</span>
                         <span className="text-xs text-stone-500 line-through font-mono">${totalBundlePrice.toFixed(2)}</span>
                       </div>
                     </div>
@@ -867,7 +867,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                     {onNavigateToTab && (
                       <button 
                         onClick={() => onNavigateToTab('supplements')}
-                        className="text-[#f4f2ec] hover:underline font-medium flex items-center gap-0.5 cursor-pointer"
+                        className="text-[#12211d] hover:underline font-medium flex items-center gap-0.5 cursor-pointer"
                       >
                         View Regimen <ChevronRight className="w-3 h-3" />
                       </button>
@@ -877,16 +877,16 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               </div>
 
               {/* Targeted Supplement Quick Pills */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-3 border-t border-white/10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-3 border-t border-[#d7e5e1]">
                 {allTargetedSupplements.slice(0, 4).map(s => {
                   const isItemAdded = addedSuppIds.includes(s.id);
                   return (
                     <div 
                       key={s.id}
-                      className="p-2.5 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-between gap-2 text-xs"
+                      className="p-2.5 rounded-lg bg-white border border-[#d7e5e1] flex items-center justify-between gap-2 text-xs"
                     >
                       <div className="overflow-hidden">
-                        <span className="font-semibold text-[#f4f2ec] block truncate text-[11px]">{s.name}</span>
+                        <span className="font-semibold text-[#12211d] block truncate text-[11px]">{s.name}</span>
                         <span className="text-[10px] text-stone-400 truncate block">{s.targetedDeficiency}</span>
                       </div>
                       <button
@@ -910,11 +910,11 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.1 }}
-              className="bg-white/[0.06] p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3"
+              className="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-sm font-extrabold text-[#f4f2ec] flex items-center gap-2">
+                  <h3 className="text-sm font-extrabold text-[#12211d] flex items-center gap-2">
                     <TestTubes className="w-4 h-4 text-orange-400" />
                     Select Blood Panel Biomarker for Longitudinal Trajectory
                   </h3>
@@ -987,7 +987,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                         <span className={cn(
                           "text-[10px] font-extrabold px-1 rounded",
                           mIsGood 
-                            ? (isSelected ? "bg-orange-500/30 text-emerald-300" : "bg-emerald-100 text-emerald-800")
+                            ? (isSelected ? "bg-orange-500/30 text-emerald-700" : "bg-emerald-100 text-emerald-800")
                             : (isSelected ? "bg-rose-500/30 text-rose-300" : "bg-rose-100 text-rose-800")
                         )}>
                           {mDeltaPct > 0 ? `+${mDeltaPct}%` : `${mDeltaPct}%`}
@@ -1000,7 +1000,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
             </motion.div>
 
           {/* Core Recharts Visualization Card */}
-          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
             
             {/* Chart Header Info */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
@@ -1009,7 +1009,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                   <span className="px-2.5 py-0.5 rounded-lg text-white text-[10px] font-extrabold uppercase tracking-wide" style={{ backgroundColor: primaryMarker.color }}>
                     Primary Target
                   </span>
-                  <h3 className="font-black text-lg text-[#f4f2ec]">
+                  <h3 className="font-black text-lg text-[#12211d]">
                     {primaryMarker.name}
                   </h3>
                   <span className="text-xs font-bold text-slate-500">
@@ -1192,7 +1192,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                   return (
                     <div 
                       key={supp.id}
-                      className="p-3.5 bg-white/[0.06] rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-2 hover:border-emerald-300 transition-colors"
+                      className="p-3.5 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-2 hover:border-emerald-300 transition-colors"
                     >
                       <div>
                         <div className="flex items-start justify-between gap-2">
@@ -1292,7 +1292,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
+          className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
             <div>
@@ -1300,7 +1300,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-emerald-50 text-orange-400 rounded-xl">
                   <Activity className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">Autonomic Nervous System: HRV vs Resting Heart Rate</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">Autonomic Nervous System: HRV vs Resting Heart Rate</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 rMSSD Heart Rate Variability (green area) inversely correlated with Resting Heart Rate (purple line).
@@ -1363,7 +1363,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
+          className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
             <div>
@@ -1371,7 +1371,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-orange-500/10 text-orange-500 rounded-xl">
                   <HeartPulse className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">Systolic &amp; Diastolic Blood Pressure Dynamics</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">Systolic &amp; Diastolic Blood Pressure Dynamics</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Omron Connect paired telemetry tracking arterial pressure trends over {timeframe} days.
@@ -1417,7 +1417,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
+          className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
             <div>
@@ -1425,7 +1425,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-cyan-50 text-cyan-600 rounded-xl">
                   <Zap className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">CGM Continuous Fasting Glucose Stability</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">CGM Continuous Fasting Glucose Stability</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Dexcom G7 telemetry showing glycemic variability and time in target range (70-110 mg/dL).
@@ -1466,7 +1466,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
+          className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
             <div>
@@ -1474,7 +1474,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-purple-50 text-purple-600 rounded-xl">
                   <Moon className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">Sleep Quality &amp; Deep Stage Duration</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">Sleep Quality &amp; Deep Stage Duration</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Oura Ring Gen 3 bedtime stage telemetry tracking sleep score vs deep sleep minutes.
@@ -1508,7 +1508,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
+          className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
             <div>
@@ -1516,7 +1516,7 @@ export function BiomarkerTrends({ user, onAddToCart, onNavigateToTab }: Biomarke
                 <div className="p-2 bg-amber-50 text-amber-600 rounded-xl">
                   <Gauge className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">Daily Readiness Score Correlation</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">Daily Readiness Score Correlation</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Calculated multi-variable readiness engine combining WHOOP Strain, Oura Sleep, and HRV.

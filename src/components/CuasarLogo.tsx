@@ -37,8 +37,8 @@ export function CuasarLogo({
         iconSizes[size],
         "rounded-lg flex items-center justify-center relative overflow-hidden transition-transform border",
         isLight
-          ? "bg-white/[0.04] border-white/15 backdrop-blur-md"
-          : "bg-white/[0.06] border-white/15 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+          ? "bg-white border-[#d7e5e1] backdrop-blur-md"
+          : "bg-white border-[#d7e5e1] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
       )}>
         <svg 
           viewBox="0 0 40 40" 
@@ -49,7 +49,7 @@ export function CuasarLogo({
           {/* Outer Diamond Keel Orbit */}
           <path 
             d="M20 4L34 20L20 36L6 20L20 4Z" 
-            stroke={isLight ? "#f4f2ec" : "#f5f3ec"} 
+            stroke={isLight ? "#12211d" : "#f5f3ec"} 
             strokeWidth="1.75" 
             strokeLinejoin="round"
             opacity="0.85"
@@ -60,7 +60,7 @@ export function CuasarLogo({
             y1="8" 
             x2="20" 
             y2="32" 
-            stroke={isLight ? "#f4f2ec" : "#f5f3ec"} 
+            stroke={isLight ? "#12211d" : "#f5f3ec"} 
             strokeWidth="2" 
             strokeLinecap="round"
           />
@@ -79,7 +79,7 @@ export function CuasarLogo({
             cx="20" 
             cy="20" 
             r="3" 
-            fill={isLight ? "#f4f2ec" : "#ffffff"} 
+            fill={isLight ? "#12211d" : "#ffffff"} 
           />
           {/* Subtle 4-Point Focal Rays */}
           <circle 
@@ -103,7 +103,7 @@ export function CuasarLogo({
           <span className={cn(
             "font-extrabold tracking-tight font-sans",
             textSizes[size],
-            isLight ? "text-white" : "text-[#f4f2ec]"
+            isLight ? "text-white" : "text-[#12211d]"
           )}>
             CUASAR<span className="font-serif italic font-bold">X</span>
           </span>

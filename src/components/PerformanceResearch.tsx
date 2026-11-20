@@ -44,8 +44,8 @@ function GradeBadge({ grade }: { grade: ResearchGrade }) {
       className={cn(
         'inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold border flex-shrink-0',
         grade === 'A' && 'bg-orange-500/10 text-orange-300 border-orange-500/25',
-        grade === 'B' && 'bg-amber-500/10 text-amber-300 border-amber-500/25',
-        grade === 'C' && 'bg-white/[0.05] text-stone-400 border-white/10'
+        grade === 'B' && 'bg-amber-500/10 text-amber-700 border-amber-500/25',
+        grade === 'C' && 'bg-white text-stone-400 border-[#d7e5e1]'
       )}
     >
       Grade {grade}
@@ -55,20 +55,20 @@ function GradeBadge({ grade }: { grade: ResearchGrade }) {
 
 function FindingCard({ finding }: { finding: ResearchFinding }) {
   return (
-    <article className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm space-y-3 flex flex-col">
+    <article className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-3 flex flex-col">
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="p-1.5 bg-white/[0.05] border border-white/10 rounded-lg text-orange-400 flex-shrink-0">
+          <span className="p-1.5 bg-white border border-[#d7e5e1] rounded-lg text-orange-400 flex-shrink-0">
             {CATEGORY_ICONS[finding.category]}
           </span>
-          <h3 className="text-sm font-bold text-[#f4f2ec] leading-snug">{finding.name}</h3>
+          <h3 className="text-sm font-bold text-[#12211d] leading-snug">{finding.name}</h3>
         </div>
         <GradeBadge grade={finding.grade} />
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold">
-        <span className="px-2 py-0.5 rounded-md bg-white/[0.05] border border-white/10 text-stone-400">{finding.category}</span>
-        <span className="px-2 py-0.5 rounded-md bg-white/[0.05] border border-white/10 text-stone-400">
+        <span className="px-2 py-0.5 rounded-md bg-white border border-[#d7e5e1] text-stone-400">{finding.category}</span>
+        <span className="px-2 py-0.5 rounded-md bg-white border border-[#d7e5e1] text-stone-400">
           {finding.level === 'both' ? 'Rec + Pro athletes' : finding.level === 'recreational' ? 'Recreational' : 'Professional'}
         </span>
       </div>
@@ -79,17 +79,17 @@ function FindingCard({ finding }: { finding: ResearchFinding }) {
 
       <p className="text-xs text-stone-400 leading-relaxed">{finding.summary}</p>
 
-      <div className="text-[11px] text-[#f4f2ec]">
+      <div className="text-[11px] text-[#12211d]">
         <span className="font-bold block mb-0.5">Protocol:</span>
         <span className="text-stone-400 leading-relaxed">{finding.dose}</span>
       </div>
 
       <div className="text-[11px]">
-        <span className="font-bold text-[#f4f2ec] block mb-0.5">Caveats &amp; honesty notes:</span>
+        <span className="font-bold text-[#12211d] block mb-0.5">Caveats &amp; honesty notes:</span>
         <ul className="space-y-1">
           {finding.caveats.map((caveat) => (
             <li key={caveat} className="text-stone-400 leading-relaxed flex gap-1.5">
-              <span className="text-amber-300 flex-shrink-0" aria-hidden="true">•</span> {caveat}
+              <span className="text-amber-700 flex-shrink-0" aria-hidden="true">•</span> {caveat}
             </li>
           ))}
         </ul>
@@ -163,13 +163,13 @@ export function PerformanceResearch() {
   return (
     <div className="space-y-6 max-w-6xl">
       {/* Header */}
-      <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-sm space-y-4">
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#d7e5e1] shadow-sm space-y-4">
         <div className="flex items-start gap-3">
           <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/25">
             <FlaskConical className="w-6 h-6 text-orange-400" aria-hidden="true" />
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-[#f4f2ec]">Performance Research Base</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-[#12211d]">Performance Research Base</h1>
             <p className="text-xs text-stone-400 mt-1 max-w-3xl leading-relaxed">
               Training methods and ergogenic aids for recreational and professional athletes, compiled from human
               trials — meta-analyses, systematic reviews, and position stands (ISSN, IOC, AIS) — with effect sizes,
@@ -180,27 +180,27 @@ export function PerformanceResearch() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
           {(['A', 'B', 'C'] as ResearchGrade[]).map((grade) => (
-            <div key={grade} className="flex items-start gap-2 p-2.5 rounded-xl border border-white/10 bg-white/[0.05]">
+            <div key={grade} className="flex items-start gap-2 p-2.5 rounded-xl border border-[#d7e5e1] bg-white">
               <GradeBadge grade={grade} />
               <span className="text-stone-400 leading-relaxed">{RESEARCH_GRADE_LEGEND[grade]}</span>
             </div>
           ))}
         </div>
 
-        <p className="text-[11px] text-red-400 flex items-start gap-1.5 p-2.5 rounded-xl border border-red-500/25 bg-red-500/10">
+        <p className="text-[11px] text-red-600 flex items-start gap-1.5 p-2.5 rounded-xl border border-red-500/25 bg-red-500/10">
           <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" aria-hidden="true" />
           <span>Educational information, not medical advice. Talk to a physician or sports dietitian before starting supplements — and if you compete, verify every product against the WADA Prohibited List and prefer batch-tested certification. Telehealth is not for emergencies: call 911.</span>
         </p>
       </div>
 
       {/* AI live brief */}
-      <section aria-labelledby="ai-brief-heading" className="bg-white/[0.06] p-6 rounded-2xl border border-white/10 shadow-sm space-y-4">
+      <section aria-labelledby="ai-brief-heading" className="bg-white p-6 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-4">
         <div className="flex items-start gap-3">
           <div className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/25">
-            <Sparkles className="w-5 h-5 text-amber-300" aria-hidden="true" />
+            <Sparkles className="w-5 h-5 text-amber-700" aria-hidden="true" />
           </div>
           <div>
-            <h2 id="ai-brief-heading" className="text-sm font-bold text-[#f4f2ec]">Live AI Research Brief</h2>
+            <h2 id="ai-brief-heading" className="text-sm font-bold text-[#12211d]">Live AI Research Brief</h2>
             <p className="text-[11px] text-stone-400 mt-0.5 leading-relaxed max-w-2xl">
               Ask a question and a secure AI service (with live web search) will summarize the current
               human-trial literature for you. Your questions are processed safely on our servers — never in your browser.
@@ -209,8 +209,8 @@ export function PerformanceResearch() {
         </div>
 
         {!aiConsented && (
-          <div className="p-4 rounded-xl border border-white/10 bg-white/[0.05] space-y-3" role="status">
-            <p className="text-xs text-[#f4f2ec] font-bold">AI processing consent required</p>
+          <div className="p-4 rounded-xl border border-[#d7e5e1] bg-white space-y-3" role="status">
+            <p className="text-xs text-[#12211d] font-bold">AI processing consent required</p>
             <p className="text-[11px] text-stone-400 leading-relaxed">
               Live briefs send your question (plus, if you type them in, health details) to an AI service. Under this
               app's rules of engagement, nothing is sent until you allow it. The curated research base below works
@@ -220,20 +220,20 @@ export function PerformanceResearch() {
               type="button"
               aria-expanded={aiDisclosureOpen}
               onClick={() => setAiDisclosureOpen((open) => !open)}
-              className="flex items-center gap-1.5 text-[11px] font-bold text-orange-400 bg-white/[0.06] border border-orange-500/25 px-2.5 py-1.5 rounded-lg hover:bg-orange-500/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+              className="flex items-center gap-1.5 text-[11px] font-bold text-orange-400 bg-white border border-orange-500/25 px-2.5 py-1.5 rounded-lg hover:bg-orange-500/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
             >
               What would be shared?
               {aiDisclosureOpen ? <ChevronUp className="w-3 h-3" aria-hidden="true" /> : <ChevronDown className="w-3 h-3" aria-hidden="true" />}
             </button>
             {aiDisclosureOpen && (
-              <p className="text-[11px] text-stone-400 leading-relaxed bg-white/[0.06] border border-white/10 rounded-lg p-3">
+              <p className="text-[11px] text-stone-400 leading-relaxed bg-white border border-[#d7e5e1] rounded-lg p-3">
                 Your typed question, plus any health details you include in it, are sent through this app's server to
                 Google Gemini with web search enabled. No profile metrics are attached automatically. You can withdraw
                 consent anytime in Privacy &amp; Consent.
               </p>
             )}
             <div className="flex flex-wrap items-center gap-2">
-              <label className="flex items-center gap-2 text-[11px] text-[#f4f2ec] cursor-pointer">
+              <label className="flex items-center gap-2 text-[11px] text-[#12211d] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={aiAckChecked}
@@ -256,7 +256,7 @@ export function PerformanceResearch() {
 
         {aiConsented && (
           <div className="space-y-2.5">
-            <label htmlFor="brief-prompt" className="block text-[11px] font-bold text-[#f4f2ec]">
+            <label htmlFor="brief-prompt" className="block text-[11px] font-bold text-[#12211d]">
               Your research question <span className="font-normal text-stone-400">(e.g. "best evidence-based stack for a recreational cyclist training 6 h/week")</span>
             </label>
             <textarea
@@ -266,7 +266,7 @@ export function PerformanceResearch() {
               onChange={(e) => setBriefPrompt(e.target.value)}
               maxLength={2000}
               placeholder="Ask about training methods, ergogenic aids, or protocols…"
-              className="w-full px-3 py-2 rounded-xl border border-white/10 bg-[#101210] text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
+              className="w-full px-3 py-2 rounded-xl border border-[#d7e5e1] bg-white text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
             />
             <div className="flex items-center justify-between gap-3">
               <span className="text-[10px] text-stone-400">
@@ -285,20 +285,20 @@ export function PerformanceResearch() {
 
             {briefState === 'loading' && (
               <p role="status" className="text-[11px] text-stone-400 flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full border-2 border-white/15 border-t-[#344a37] animate-spin inline-block" aria-hidden="true" />
+                <span className="w-3 h-3 rounded-full border-2 border-[#d7e5e1] border-t-[#344a37] animate-spin inline-block" aria-hidden="true" />
                 Searching the literature with live web grounding…
               </p>
             )}
 
             {briefState === 'unconfigured' && (
-              <p role="status" className="text-[11px] text-amber-300 font-semibold p-3 rounded-xl border border-amber-500/25 bg-amber-500/10">
+              <p role="status" className="text-[11px] text-amber-700 font-semibold p-3 rounded-xl border border-amber-500/25 bg-amber-500/10">
                 Live AI isn't configured on this deployment (no server-side GEMINI_API_KEY set). Nothing was sent.
                 The curated research base below is fully available — it contains the core evidence base either way.
               </p>
             )}
 
             {briefState === 'error' && (
-              <p role="alert" className="text-[11px] text-red-400 font-semibold p-3 rounded-xl border border-red-500/25 bg-red-500/10">
+              <p role="alert" className="text-[11px] text-red-600 font-semibold p-3 rounded-xl border border-red-500/25 bg-red-500/10">
                 The live brief service returned an error. Nothing about your question was stored — try again, or use the curated base below.
               </p>
             )}
@@ -309,10 +309,10 @@ export function PerformanceResearch() {
                   <span className="font-bold uppercase tracking-wider">Live brief — verify before relying on it</span>
                   {brief.generatedAt && <span>{formatDistanceToNowStrict(new Date(brief.generatedAt))} ago</span>}
                 </div>
-                <p className="text-xs text-[#f4f2ec] leading-relaxed whitespace-pre-wrap">{brief.brief}</p>
+                <p className="text-xs text-[#12211d] leading-relaxed whitespace-pre-wrap">{brief.brief}</p>
                 {brief.sources.length > 0 && (
                   <div>
-                    <span className="text-[11px] font-bold text-[#f4f2ec] block mb-1">Grounding sources:</span>
+                    <span className="text-[11px] font-bold text-[#12211d] block mb-1">Grounding sources:</span>
                     <ul className="space-y-1">
                       {brief.sources.map((source, index) => (
                         <li key={`${source.uri}-${index}`} className="text-[11px]">
@@ -331,7 +331,7 @@ export function PerformanceResearch() {
       </section>
 
       {/* Filters */}
-      <section aria-label="Filter the research base" className="bg-white/[0.06] p-4 rounded-2xl border border-white/10 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
+      <section aria-label="Filter the research base" className="bg-white p-4 rounded-2xl border border-[#d7e5e1] shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
           <label htmlFor="research-search" className="sr-only">Search the research base</label>
           <Search className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
@@ -341,7 +341,7 @@ export function PerformanceResearch() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search: creatine, sleep, VO2max…"
-            className="w-full pl-9 pr-3 py-2 rounded-xl text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
+            className="w-full pl-9 pr-3 py-2 rounded-xl text-xs bg-white border border-[#d7e5e1] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
           />
         </div>
 
@@ -356,7 +356,7 @@ export function PerformanceResearch() {
                 'px-2.5 py-1.5 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500',
                 categoryFilter === category
                   ? 'bg-orange-600 text-white border-orange-600'
-                  : 'bg-white/[0.06] text-stone-400 border-white/15 hover:bg-white/[0.05]'
+                  : 'bg-white text-stone-400 border-[#d7e5e1] hover:bg-white'
               )}
             >
               {category === 'all' ? 'All topics' : category}
@@ -365,23 +365,23 @@ export function PerformanceResearch() {
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="level-filter" className="text-[11px] font-bold text-[#f4f2ec]">Level</label>
+          <label htmlFor="level-filter" className="text-[11px] font-bold text-[#12211d]">Level</label>
           <select
             id="level-filter"
             value={levelFilter}
             onChange={(e) => setLevelFilter(e.target.value as 'all' | AthleteLevel)}
-            className="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-[#101210] border border-white/10 text-[#f4f2ec] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
+            className="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-white border border-[#d7e5e1] text-[#12211d] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
           >
             <option value="all">All athletes</option>
             <option value="recreational">Recreational</option>
             <option value="professional">Professional</option>
           </select>
-          <label htmlFor="grade-filter" className="text-[11px] font-bold text-[#f4f2ec] ml-1">Grade</label>
+          <label htmlFor="grade-filter" className="text-[11px] font-bold text-[#12211d] ml-1">Grade</label>
           <select
             id="grade-filter"
             value={gradeFilter}
             onChange={(e) => setGradeFilter(e.target.value as 'all' | ResearchGrade)}
-            className="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-[#101210] border border-white/10 text-[#f4f2ec] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
+            className="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-white border border-[#d7e5e1] text-[#12211d] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
           >
             <option value="all">All</option>
             <option value="A">A</option>
@@ -394,7 +394,7 @@ export function PerformanceResearch() {
       {/* Findings grid */}
       <section aria-label="Research findings">
         {filtered.length === 0 ? (
-          <p className="text-xs text-stone-400 p-6 bg-white/[0.06] rounded-2xl border border-white/10 text-center">
+          <p className="text-xs text-stone-400 p-6 bg-white rounded-2xl border border-[#d7e5e1] text-center">
             No entries match those filters. Clear the search or widen the filters to see the full base.
           </p>
         ) : (
@@ -407,8 +407,8 @@ export function PerformanceResearch() {
       {/* Framework / anti-doping panel */}
       <section aria-labelledby="framework-heading" className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {Object.values(RESEARCH_FRAMEWORK_NOTES).map((note) => (
-          <div key={note.title} className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm space-y-2">
-            <h3 id="framework-heading" className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5">
+          <div key={note.title} className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-2">
+            <h3 id="framework-heading" className="text-xs font-bold text-[#12211d] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-orange-400" aria-hidden="true" /> {note.title}
             </h3>
             <p className="text-[11px] text-stone-400 leading-relaxed">{note.body}</p>

@@ -269,13 +269,13 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
   return (
     <div className="max-w-2xl mx-auto flex flex-col h-[calc(100vh-190px)] min-h-[480px]">
       {/* Header */}
-      <div className="flex items-center justify-between pb-3 border-b border-white/10">
+      <div className="flex items-center justify-between pb-3 border-b border-[#d7e5e1]">
         <div className="flex items-center gap-2.5">
           <span className="p-2 rounded-xl bg-orange-500/15 border border-orange-500/25">
             <Zap className="w-4 h-4 text-orange-400" aria-hidden="true" />
           </span>
           <div>
-            <h1 className="text-sm font-bold text-[#f4f2ec]">Quick Assist</h1>
+            <h1 className="text-sm font-bold text-[#12211d]">Quick Assist</h1>
             <p className="text-[10px] text-stone-500">Connected to everything — calendar, meds, orders, readings, catalog</p>
           </div>
         </div>
@@ -299,7 +299,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
               'max-w-[85%] px-3.5 py-2.5 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap',
               m.role === 'user'
                 ? 'bg-orange-600 text-white rounded-br-sm'
-                : 'bg-white/[0.06] border border-white/10 text-[#f4f2ec] rounded-bl-sm'
+                : 'bg-white border border-[#d7e5e1] text-[#12211d] rounded-bl-sm'
             )}>
               {m.text}
               <span className={cn('block mt-1 text-[9px]', m.role === 'user' ? 'text-white/60' : 'text-stone-500')}>
@@ -310,7 +310,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
         ))}
         {busy && (
           <div className="flex justify-start">
-            <div className="px-3.5 py-2.5 rounded-2xl bg-white/[0.06] border border-white/10 text-xs text-stone-400 inline-flex items-center gap-2">
+            <div className="px-3.5 py-2.5 rounded-2xl bg-white border border-[#d7e5e1] text-xs text-stone-400 inline-flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" aria-hidden="true" />
               Checking your data…
             </div>
@@ -325,7 +325,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
           <button
             key={c}
             onClick={() => ask(c)}
-            className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/[0.05] border border-white/10 text-stone-300 hover:bg-white/10 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white border border-[#d7e5e1] text-stone-300 hover:bg-white/10 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
           >
             {c}
           </button>
@@ -335,7 +335,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
       {/* Input */}
       <form
         onSubmit={(e) => { e.preventDefault(); const v = input; setInput(''); ask(v); }}
-        className="flex items-center gap-2 p-2 rounded-2xl bg-white/[0.05] border border-white/10 focus-within:border-orange-500/40 transition-colors"
+        className="flex items-center gap-2 p-2 rounded-2xl bg-white border border-[#d7e5e1] focus-within:border-orange-500/40 transition-colors"
       >
         <button
           type="button"
@@ -354,7 +354,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={listening ? 'Listening…' : 'Ask anything, or command: "open insights"…'}
-          className="flex-1 bg-transparent text-xs text-[#f4f2ec] placeholder-stone-500 focus:outline-none"
+          className="flex-1 bg-transparent text-xs text-[#12211d] placeholder-stone-500 focus:outline-none"
         />
         <button
           type="submit"
@@ -365,7 +365,7 @@ export function CommandCenter({ userName, onNavigate, onAddToCart }: Props) {
           <Send className="w-4 h-4" aria-hidden="true" />
         </button>
       </form>
-      {micError && <p role="alert" className="text-[10px] text-amber-400 font-semibold pt-1.5">{micError}</p>}
+      {micError && <p role="alert" className="text-[10px] text-amber-700 font-semibold pt-1.5">{micError}</p>}
       <p className="text-[9px] text-stone-600 pt-1.5 flex items-center gap-1">
         <CornerDownLeft className="w-3 h-3" aria-hidden="true" />
         Instant answers from your data · AI for open questions · commands like "open insights" or "add magnesium to cart"

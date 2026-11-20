@@ -920,19 +920,19 @@ function AppInner() {
 
 
   return (
-    <div className="flex flex-col min-h-screen text-[#f4f2ec] font-sans pb-16 md:pb-0">
+    <div className="flex flex-col min-h-screen text-[#12211d] font-sans pb-16 md:pb-0">
       
       {/* ======================================================== */}
       {/* 0. SOFT EDITORIAL TOP RIBBON                             */}
       {/* ======================================================== */}
-      <div className="bg-white/[0.04] text-stone-400 text-[11px] px-4 py-1.5 border-b border-white/10 flex items-center justify-between select-none">
+      <div className="bg-white text-stone-400 text-[11px] px-4 py-1.5 border-b border-[#d7e5e1] flex items-center justify-between select-none">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1.5 font-medium">
             <Truck className="w-3.5 h-3.5 text-orange-400" /> Complimentary cold-chain courier on orders $99+
           </span>
-          <span className="hidden lg:inline text-[#dedad0]">|</span>
+          <span className="hidden lg:inline text-[#5f7772]">|</span>
           <span className="hidden lg:flex items-center gap-1 text-stone-400">
-            <Clock className="w-3.5 h-3.5 text-amber-300" /> Order within <strong className="text-[#f4f2ec] font-semibold">2h 45m</strong> for next-morning delivery
+            <Clock className="w-3.5 h-3.5 text-amber-700" /> Order within <strong className="text-[#12211d] font-semibold">2h 45m</strong> for next-morning delivery
           </span>
         </div>
 
@@ -941,8 +941,8 @@ function AppInner() {
             className={cn(
               'hidden xl:inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[10px] font-bold',
               catalogSource === 'database' && 'bg-orange-500/10 text-orange-300 border-orange-500/25',
-              catalogSource === 'demo' && 'bg-amber-500/10 text-amber-300 border-amber-500/25',
-              catalogSource === 'checking' && 'bg-white/[0.05] text-stone-400 border-white/10'
+              catalogSource === 'demo' && 'bg-amber-500/10 text-amber-700 border-amber-500/25',
+              catalogSource === 'checking' && 'bg-white text-stone-400 border-[#d7e5e1]'
             )}
             role="status"
           >
@@ -952,24 +952,24 @@ function AppInner() {
           {authUser ? (
             <span className="text-stone-400 flex items-center gap-2">
               <span className="hidden sm:inline" title={authEmail ?? undefined}>
-                <strong className="text-[#f4f2ec] font-semibold">{activeUser.name}</strong>
+                <strong className="text-[#12211d] font-semibold">{activeUser.name}</strong>
                 <span className="text-[10px] text-stone-500"> · {authEmail}</span>
               </span>
               <button
                 onClick={() => signOut()}
-                className="text-[10px] text-[#f4f2ec] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+                className="text-[10px] text-[#12211d] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
               >
                 Sign out
               </button>
             </span>
           ) : (
             <span className="text-stone-400">
-              Active Persona: <strong className="text-[#f4f2ec] font-semibold">{activeUser.name}</strong>
+              Active Persona: <strong className="text-[#12211d] font-semibold">{activeUser.name}</strong>
             </span>
           )}
           <button
             onClick={() => openVideoVisit('patient', activeUser)}
-            className="text-[10px] text-[#f4f2ec] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer inline-flex items-center gap-1"
+            className="text-[10px] text-[#12211d] hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer inline-flex items-center gap-1"
           >
             <Video className="w-3 h-3" aria-hidden="true" /> Video Visit
           </button>
@@ -982,7 +982,7 @@ function AppInner() {
           </button>
           <button
             onClick={() => setChatOpen(true)}
-            className="text-[10px] text-[#f4f2ec]/85 hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+            className="text-[10px] text-[#12211d]/85 hover:text-black font-semibold underline underline-offset-2 transition-colors cursor-pointer"
           >
             Wellness Assistant
           </button>
@@ -992,7 +992,7 @@ function AppInner() {
       {/* ======================================================== */}
       {/* 1. MINIMALIST MAIN HEADER (With CuasarX Logo)            */}
       {/* ======================================================== */}
-      <header className="bg-white/[0.06] sticky top-0 z-50 border-b border-white/10">
+      <header className="bg-white sticky top-0 z-50 border-b border-[#d7e5e1]">
         
         {/* Main Row */}
         <div className="max-w-[1540px] mx-auto px-3 md:px-6 py-2.5 flex items-center justify-between gap-3 md:gap-5">
@@ -1000,7 +1000,7 @@ function AppInner() {
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 text-[#f4f2ec] hover:bg-white/[0.05] rounded-lg flex items-center transition-colors"
+            className="md:hidden p-1.5 text-[#12211d] hover:bg-white rounded-lg flex items-center transition-colors"
             title="Open Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -1015,19 +1015,19 @@ function AppInner() {
           </div>
 
           {/* Persona Switcher */}
-          <div className="relative group p-1 hover:bg-white/[0.05] rounded-lg cursor-pointer transition-colors flex-shrink-0">
+          <div className="relative group p-1 hover:bg-white rounded-lg cursor-pointer transition-colors flex-shrink-0">
             <div className="text-left leading-tight">
               <span className="text-[10px] text-stone-500 block font-medium">Profile</span>
-              <span className="text-xs font-semibold text-[#f4f2ec] flex items-center gap-1">
+              <span className="text-xs font-semibold text-[#12211d] flex items-center gap-1">
                 {activeUser.name.split(' ')[0]} <ChevronDown className="w-3 h-3 text-stone-500 group-hover:rotate-180 transition-transform" />
               </span>
             </div>
 
             {/* Dropdown */}
-            <div className="absolute right-0 top-full mt-1.5 w-60 bg-white/[0.06] text-[#f4f2ec] rounded-xl shadow-xl border border-white/10 p-2.5 hidden group-hover:block z-50 animate-in fade-in">
+            <div className="absolute right-0 top-full mt-1.5 w-60 bg-white text-[#12211d] rounded-xl shadow-xl border border-[#d7e5e1] p-2.5 hidden group-hover:block z-50 animate-in fade-in">
               <div className="border-b border-white/[0.08] pb-2 mb-2">
                 <span className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider block">Active Member</span>
-                <span className="text-xs font-bold text-[#f4f2ec] block">{activeUser.name}</span>
+                <span className="text-xs font-bold text-[#12211d] block">{activeUser.name}</span>
                 <span className="text-[11px] text-orange-400 font-medium">{activeUser.lifestylePersona}</span>
               </div>
               <span className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider block mb-1">Switch Persona:</span>
@@ -1038,7 +1038,7 @@ function AppInner() {
                     onClick={() => setActiveUser(u)}
                     className={cn(
                       "w-full text-left p-1.5 rounded-lg text-xs font-medium flex items-center justify-between transition-colors",
-                      activeUser.id === u.id ? "bg-white/[0.04] text-[#f4f2ec] font-semibold" : "hover:bg-white/[0.05] text-stone-400"
+                      activeUser.id === u.id ? "bg-white text-[#12211d] font-semibold" : "hover:bg-white text-stone-400"
                     )}
                   >
                     <span>{u.name}</span>
@@ -1060,10 +1060,10 @@ function AppInner() {
           {/* Subscriptions / Regimen Shortcut */}
           <div 
             onClick={() => setActiveTab('supplements')}
-            className="hidden md:flex flex-col p-1 hover:bg-white/[0.05] rounded-lg cursor-pointer transition-colors flex-shrink-0 text-left leading-tight"
+            className="hidden md:flex flex-col p-1 hover:bg-white rounded-lg cursor-pointer transition-colors flex-shrink-0 text-left leading-tight"
           >
             <span className="text-[10px] text-stone-500 font-medium">Daily</span>
-            <span className="text-xs font-semibold text-[#f4f2ec] flex items-center gap-1">
+            <span className="text-xs font-semibold text-[#12211d] flex items-center gap-1">
               <Repeat className="w-3 h-3 text-stone-400" /> Regimens
             </span>
           </div>
@@ -1076,14 +1076,14 @@ function AppInner() {
           >
             <ShoppingCart className="w-4 h-4 text-white" />
             <span className="text-xs font-semibold">{totalCartCount}</span>
-            <span className="hidden sm:inline text-xs font-mono text-[#dedad0]">(${totalCartAmount.toFixed(0)})</span>
+            <span className="hidden sm:inline text-xs font-mono text-[#5f7772]">(${totalCartAmount.toFixed(0)})</span>
           </button>
         </div>
 
         {/* ======================================================== */}
         {/* 2. SUB-NAVIGATION DEPARTMENT ROW                         */}
         {/* ======================================================== */}
-        <div className="bg-white/[0.05] border-t border-white/10 text-xs px-3 md:px-6 py-1.5 flex items-center justify-between overflow-x-auto scrollbar-none">
+        <div className="bg-white border-t border-[#d7e5e1] text-xs px-3 md:px-6 py-1.5 flex items-center justify-between overflow-x-auto scrollbar-none">
           <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
 
             <button
@@ -1093,7 +1093,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'profile'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>Profile</span>
@@ -1106,7 +1106,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'supplements'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>My Regimen</span>
@@ -1119,7 +1119,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'cart'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>The Cart</span>
@@ -1132,7 +1132,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'research'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <FlaskConical className="w-3 h-3" aria-hidden="true" />
@@ -1146,7 +1146,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'command'
                   ? "bg-[#f97316] text-white font-semibold shadow-xs"
-                  : "text-[#5c5851] hover:text-[#181716] hover:bg-[#eeebe3]"
+                  : "text-[#5c5851] hover:text-[#12211d] hover:bg-[#eef4f2]"
               )}
             >
               <Zap className="w-3 h-3" aria-hidden="true" />
@@ -1160,7 +1160,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'community'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>Peer Network</span>
@@ -1173,7 +1173,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'consent'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <Shield className="w-3 h-3" aria-hidden="true" />
@@ -1187,7 +1187,7 @@ function AppInner() {
                 "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
                 activeTab === 'admin'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>Physician Portal</span>
@@ -1200,7 +1200,7 @@ function AppInner() {
                 "flex items-center gap-1 px-2.5 py-1 rounded-md transition-all font-medium cursor-pointer",
                 activeTab === 'operator'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>Insights</span>
@@ -1213,7 +1213,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'marketplace' && marketplaceDepartment === 'all'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>Marketplace</span>
@@ -1225,7 +1225,7 @@ function AppInner() {
                 "px-2.5 py-1 rounded-md transition-all font-medium flex items-center gap-1.5 cursor-pointer",
                 activeTab === 'marketplace' && marketplaceDepartment === 'vitamins'
                   ? "bg-orange-600 text-white font-semibold shadow-xs"
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.04]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <span>Micronutrients (#vitamins)</span>
@@ -1236,15 +1236,15 @@ function AppInner() {
           <div className="flex items-center gap-2 flex-shrink-0 pl-2">
             <button
               onClick={() => setEmergencyModalOpen(true)}
-              className="px-2 py-1 text-red-400 hover:bg-red-500/10 rounded text-[11px] font-semibold transition-colors cursor-pointer flex items-center gap-1"
+              className="px-2 py-1 text-red-600 hover:bg-red-500/10 rounded text-[11px] font-semibold transition-colors cursor-pointer flex items-center gap-1"
             >
-              <AlertTriangle className="w-3 h-3 text-red-400" />
+              <AlertTriangle className="w-3 h-3 text-red-600" />
               <span>Safety Guide</span>
             </button>
 
             <button
               onClick={() => setChatOpen(!chatOpen)}
-              className="px-2.5 py-1 bg-white/[0.06] hover:bg-white/[0.05] text-[#f4f2ec] border border-white/15 rounded text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              className="px-2.5 py-1 bg-white hover:bg-white text-[#12211d] border border-[#d7e5e1] rounded text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
             >
               <MessageSquare className="w-3 h-3 text-stone-400" />
               <span>CuasarX AI</span>
@@ -1275,16 +1275,16 @@ function AppInner() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 bottom-0 left-0 w-80 max-w-[85vw] bg-white/[0.06] z-50 shadow-xl flex flex-col overflow-y-auto border-r border-white/10"
+              className="fixed top-0 bottom-0 left-0 w-80 max-w-[85vw] bg-white z-50 shadow-xl flex flex-col overflow-y-auto border-r border-[#d7e5e1]"
             >
               <div className="p-4 flex items-center justify-between border-b border-white/[0.08]">
                 <CuasarLogo size="sm" showSubtitle={true} />
-                <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-stone-400 hover:text-[#f4f2ec]">
+                <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-stone-400 hover:text-[#12211d]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="p-4 space-y-4 text-xs text-[#f4f2ec] flex-1">
+              <div className="p-4 space-y-4 text-xs text-[#12211d] flex-1">
                 <div>
                   <h4 className="font-semibold text-xs uppercase tracking-wider text-stone-500 mb-2">
                     Departments
@@ -1314,7 +1314,7 @@ function AppInner() {
                           }}
                           className={cn(
                             "w-full flex items-center justify-between p-2 rounded-lg text-left transition-colors font-medium",
-                            active ? "bg-white/[0.04] text-[#f4f2ec] font-semibold" : "hover:bg-white/[0.05] text-stone-400"
+                            active ? "bg-white text-[#12211d] font-semibold" : "hover:bg-white text-stone-400"
                           )}
                         >
                           <span>{item.label}</span>
@@ -1344,7 +1344,7 @@ function AppInner() {
                         onClick={() => { setActiveUser(u); setMobileMenuOpen(false); }}
                         className={cn(
                           "w-full text-left p-2 rounded-lg text-xs font-medium flex items-center justify-between",
-                          activeUser.id === u.id ? "bg-orange-600 text-white font-semibold" : "hover:bg-white/[0.05] text-stone-400"
+                          activeUser.id === u.id ? "bg-orange-600 text-white font-semibold" : "hover:bg-white text-stone-400"
                         )}
                       >
                         <span>{u.name}</span>
@@ -1380,7 +1380,7 @@ function AppInner() {
             <KeelPacks user={activeUser} onAddToCart={handleAddProductsToCart} />
             <SupplementManager user={activeUser} onAddToCart={handleAddProductsToCart} />
             <section aria-labelledby="regimen-autodelivery" className="space-y-2">
-              <h2 id="regimen-autodelivery" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+              <h2 id="regimen-autodelivery" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
                 <Repeat className="w-4 h-4 text-orange-400" aria-hidden="true" />
                 Auto-deliveries &amp; buy more
               </h2>
@@ -1419,14 +1419,14 @@ function AppInner() {
                   onClick={() => setActiveTab('cart')}
                   className="w-full flex items-center justify-between gap-3 p-3 rounded-xl border border-amber-500/25 bg-amber-500/10 hover:bg-amber-500/15 transition-colors text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                 >
-                  <span className="flex items-center gap-2 text-xs font-semibold text-amber-300">
+                  <span className="flex items-center gap-2 text-xs font-semibold text-amber-700">
                     <AlertTriangle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                     {low[0].daysRemaining === 0
                       ? low[0].name + ' runs out today'
                       : low[0].name + ' runs out in ' + low[0].daysRemaining + ' days'}
-                    {low.length > 1 && <span className="text-amber-300/70 font-normal">+{low.length - 1} more running low</span>}
+                    {low.length > 1 && <span className="text-amber-700/70 font-normal">+{low.length - 1} more running low</span>}
                   </span>
-                  <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1 flex-shrink-0">
+                  <span className="text-[11px] font-bold text-amber-700 flex items-center gap-1 flex-shrink-0">
                     Review cart <ArrowRight className="w-3 h-3" aria-hidden="true" />
                   </span>
                 </button>
@@ -1446,7 +1446,7 @@ function AppInner() {
 
             {/* PROFILE 5: longitudinal readiness & blood panel telemetry */}
             <section aria-labelledby="profile-labs" className="space-y-2">
-              <h2 id="profile-labs" className="text-lg font-bold text-[#f4f2ec] font-serif-title flex items-center gap-2">
+              <h2 id="profile-labs" className="text-lg font-bold text-[#12211d] font-serif-title flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-orange-400" aria-hidden="true" />
                 Readiness &amp; blood panels over time
               </h2>
@@ -1462,13 +1462,13 @@ function AppInner() {
 
             {/* PROFILE 6: recommendations tuned to the two lifestyle tracks */}
             <section aria-labelledby="profile-lifestyle" className="space-y-3">
-              <h2 id="profile-lifestyle" className="text-lg font-bold text-[#f4f2ec] font-serif-title flex items-center gap-2">
+              <h2 id="profile-lifestyle" className="text-lg font-bold text-[#12211d] font-serif-title flex items-center gap-2">
                 <Compass className="w-4 h-4 text-orange-400" aria-hidden="true" />
                 Recommendations for your life
               </h2>
               <div className="grid gap-3 md:grid-cols-2">
-                <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 space-y-2">
-                  <h3 className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5">
+                <div className="rounded-xl border border-[#d7e5e1] bg-white p-4 space-y-2">
+                  <h3 className="text-xs font-bold text-[#12211d] flex items-center gap-1.5">
                     <Dumbbell className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> Athletic performance track
                   </h3>
                   <p className="text-[11px] text-stone-400 leading-relaxed">
@@ -1484,14 +1484,14 @@ function AppInner() {
                     </button>
                     <button
                       onClick={() => { setActiveTab('marketplace'); setMarketplaceDepartment('all'); }}
-                      className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[#f4f2ec] rounded-lg text-[11px] font-semibold hover:bg-white/[0.1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                      className="px-3 py-1.5 bg-white border border-[#d7e5e1] text-[#12211d] rounded-lg text-[11px] font-semibold hover:bg-[#e6f1ee] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                     >
                       Performance stack
                     </button>
                   </div>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 space-y-2">
-                  <h3 className="text-xs font-bold text-[#f4f2ec] flex items-center gap-1.5">
+                <div className="rounded-xl border border-[#d7e5e1] bg-white p-4 space-y-2">
+                  <h3 className="text-xs font-bold text-[#12211d] flex items-center gap-1.5">
                     <Briefcase className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> Busy-professional stress track
                   </h3>
                   <p className="text-[11px] text-stone-400 leading-relaxed">
@@ -1507,7 +1507,7 @@ function AppInner() {
                     </button>
                     <button
                       onClick={() => { setActiveTab('marketplace'); setMarketplaceDepartment('all'); }}
-                      className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[#f4f2ec] rounded-lg text-[11px] font-semibold hover:bg-white/[0.1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                      className="px-3 py-1.5 bg-white border border-[#d7e5e1] text-[#12211d] rounded-lg text-[11px] font-semibold hover:bg-[#e6f1ee] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                     >
                       Recovery stack
                     </button>
@@ -1578,7 +1578,7 @@ function AppInner() {
                 : 'bg-orange-600 hover:bg-orange-500'
             )}
           >
-            <Mic className={cn('w-3.5 h-3.5', coachNudge ? 'text-white' : 'text-[#dedad0]')} aria-hidden="true" />
+            <Mic className={cn('w-3.5 h-3.5', coachNudge ? 'text-white' : 'text-[#5f7772]')} aria-hidden="true" />
             <span>{coachNudge ? 'Quasar Keel has a suggestion — chat now' : 'CuasarX AI'}</span>
           </motion.button>
         )}
@@ -1594,7 +1594,7 @@ function AppInner() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed right-0 top-0 bottom-0 w-full sm:w-96 md:w-[420px] bg-white/[0.06] z-50 shadow-2xl border-l border-white/10 overflow-hidden"
+            className="fixed right-0 top-0 bottom-0 w-full sm:w-96 md:w-[420px] bg-white z-50 shadow-2xl border-l border-[#d7e5e1] overflow-hidden"
           >
             <PhiChat 
               user={activeUser} 
@@ -1615,24 +1615,24 @@ function AppInner() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white/[0.06] rounded-2xl max-w-lg w-full p-6 shadow-xl border border-white/10 space-y-4"
+              className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-[#d7e5e1] space-y-4"
             >
               <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2 text-red-400">
+                <div className="flex items-center gap-2 text-red-600">
                   <AlertTriangle className="w-5 h-5" />
-                  <h3 className="font-bold text-sm text-[#f4f2ec]">
+                  <h3 className="font-bold text-sm text-[#12211d]">
                     Clinical Safety &amp; Emergency Protocol
                   </h3>
                 </div>
                 <button 
                   onClick={() => setEmergencyModalOpen(false)}
-                  className="p-1 text-stone-500 hover:text-[#f4f2ec] rounded"
+                  className="p-1 text-stone-500 hover:text-[#12211d] rounded"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="bg-red-500/10 border border-red-500/25 p-3.5 rounded-xl text-xs text-red-400 space-y-1">
+              <div className="bg-red-500/10 border border-red-500/25 p-3.5 rounded-xl text-xs text-red-600 space-y-1">
                 <p className="font-semibold">
                   For acute symptoms including severe chest pain, shortness of breath, sudden numbness, or loss of consciousness:
                 </p>
@@ -1642,17 +1642,17 @@ function AppInner() {
               </div>
 
               <div className="space-y-2 text-xs text-stone-400">
-                <span className="font-semibold text-[#f4f2ec] block">Emergency Resources:</span>
+                <span className="font-semibold text-[#12211d] block">Emergency Resources:</span>
                 <div className="space-y-1.5">
-                  <div className="p-2.5 bg-white/[0.05] rounded-lg border border-white/10 flex items-center justify-between">
+                  <div className="p-2.5 bg-white rounded-lg border border-[#d7e5e1] flex items-center justify-between">
                     <span>Immediate Emergency Dispatch:</span>
                     <a href="tel:911" className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded font-semibold flex items-center gap-1 text-xs">
                       <PhoneCall className="w-3 h-3" /> Call 911
                     </a>
                   </div>
-                  <div className="p-2.5 bg-white/[0.05] rounded-lg border border-white/10 flex items-center justify-between">
+                  <div className="p-2.5 bg-white rounded-lg border border-[#d7e5e1] flex items-center justify-between">
                     <span>24/7 Clinical Triage Line:</span>
-                    <span className="font-mono font-semibold text-[#f4f2ec]">1-800-BIO-HACK</span>
+                    <span className="font-mono font-semibold text-[#12211d]">1-800-BIO-HACK</span>
                   </div>
                 </div>
               </div>
@@ -1704,12 +1704,12 @@ function AppInner() {
       {/* ======================================================== */}
       {/* 9. MOBILE BOTTOM NAVIGATION DOCK                         */}
       {/* ======================================================== */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-white/[0.06] border-t border-white/10 z-40 flex items-center justify-around text-stone-400 px-2">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-white border-t border-[#d7e5e1] z-40 flex items-center justify-around text-stone-400 px-2">
         <button 
           onClick={() => setActiveTab('profile')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'profile' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
+            activeTab === 'profile' ? "text-[#12211d] font-bold" : "hover:text-[#12211d]"
           )}
         >
           <User className="w-4 h-4" />
@@ -1720,7 +1720,7 @@ function AppInner() {
           onClick={() => setActiveTab('supplements')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'supplements' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
+            activeTab === 'supplements' ? "text-[#12211d] font-bold" : "hover:text-[#12211d]"
           )}
         >
           <Pill className="w-4 h-4" />
@@ -1739,7 +1739,7 @@ function AppInner() {
           onClick={() => setActiveTab('cart')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'cart' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
+            activeTab === 'cart' ? "text-[#12211d] font-bold" : "hover:text-[#12211d]"
           )}
         >
           <ShoppingCart className="w-4 h-4" />
@@ -1750,7 +1750,7 @@ function AppInner() {
           onClick={() => setActiveTab('marketplace')}
           className={cn(
             "flex flex-col items-center justify-center flex-1 py-1 transition-colors",
-            activeTab === 'marketplace' ? "text-[#f4f2ec] font-bold" : "hover:text-[#f4f2ec]"
+            activeTab === 'marketplace' ? "text-[#12211d] font-bold" : "hover:text-[#12211d]"
           )}
         >
           <ShoppingBag className="w-4 h-4" />

@@ -52,12 +52,12 @@ const URGENCY_STYLES: Record<Urgency, { label: string; badge: string; reason: st
   },
   soon: {
     label: 'Buy soon',
-    badge: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    badge: 'bg-amber-500/15 text-amber-700 border-amber-500/30',
     reason: 'Low supply — order in the next few days to avoid a gap',
   },
   plan: {
     label: 'Plan ahead',
-    badge: 'bg-white/[0.08] text-stone-300 border-white/15',
+    badge: 'bg-white text-stone-300 border-[#d7e5e1]',
     reason: 'Enough for about two more weeks — time to reorder',
   },
 };
@@ -110,7 +110,7 @@ export function CartPage({
     <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 space-y-6 pb-20 md:pb-8">
       {/* Header */}
       <div>
-        <h1 className="text-xl sm:text-2xl font-bold text-[#f4f2ec] font-serif-title flex items-center gap-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-[#12211d] font-serif-title flex items-center gap-2">
           <ShoppingCart className="w-5 h-5 text-orange-400" aria-hidden="true" />
           The Cart
         </h1>
@@ -123,7 +123,7 @@ export function CartPage({
       {/* ---- SECTION 1: PENDING TO BUY (from regimen dosage & bottle remaining) ---- */}
       <section aria-labelledby="pending-buy-heading" className="space-y-3">
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <h2 id="pending-buy-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+          <h2 id="pending-buy-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-orange-400" aria-hidden="true" />
             Pending to buy
             <span className="text-[11px] font-medium text-stone-400">
@@ -153,9 +153,9 @@ export function CartPage({
         </div>
 
         {pending.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+          <div className="rounded-xl border border-[#d7e5e1] bg-white p-6 text-center">
             <CheckCircle2 className="w-6 h-6 text-orange-300 mx-auto mb-2" aria-hidden="true" />
-            <p className="text-xs font-semibold text-[#f4f2ec]">Nothing is running low</p>
+            <p className="text-xs font-semibold text-[#12211d]">Nothing is running low</p>
             <p className="text-[11px] text-stone-400 mt-1 max-w-sm mx-auto">
               Every bottle in your regimen has more than three weeks of supply at your
               current dose. We'll surface refills here as the count drops.
@@ -169,12 +169,12 @@ export function CartPage({
               return (
                 <div
                   key={product.id}
-                  className="rounded-xl border border-white/10 bg-white/[0.05] p-4 flex flex-col gap-2"
+                  className="rounded-xl border border-[#d7e5e1] bg-white p-4 flex flex-col gap-2"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <span className="badge-clinical text-[10px]">{product.category}</span>
-                      <h3 className="text-xs font-semibold text-[#f4f2ec] leading-snug mt-1">
+                      <h3 className="text-xs font-semibold text-[#12211d] leading-snug mt-1">
                         {product.name}
                       </h3>
                     </div>
@@ -194,7 +194,7 @@ export function CartPage({
                         {product.timing}
                       </span>
                     )}
-                    <span className="flex items-center gap-1 font-semibold text-[#f4f2ec]">
+                    <span className="flex items-center gap-1 font-semibold text-[#12211d]">
                       <AlertTriangle className="w-3 h-3 text-orange-400" aria-hidden="true" />
                       {days} {days === 1 ? 'day' : 'days'} left
                     </span>
@@ -203,7 +203,7 @@ export function CartPage({
                   <p className="text-[11px] text-stone-400">{style.reason}</p>
 
                   <div className="flex items-center justify-between pt-1 mt-auto">
-                    <span className="text-xs font-bold text-[#f4f2ec]">
+                    <span className="text-xs font-bold text-[#12211d]">
                       ${(product.price || 49).toFixed(2)}
                       <span className="text-[10px] font-medium text-stone-400 ml-1">
                         × {suggestedQty} suggested
@@ -231,7 +231,7 @@ export function CartPage({
 
       {/* ---- SECTION 2: LIVE CART ---- */}
       <section aria-labelledby="live-cart-heading" className="space-y-3">
-        <h2 id="live-cart-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+        <h2 id="live-cart-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
           <ShoppingBag className="w-4 h-4 text-orange-400" aria-hidden="true" />
           Your cart
           <span className="text-[11px] font-medium text-stone-400">
@@ -240,9 +240,9 @@ export function CartPage({
         </h2>
 
         {cartItems.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+          <div className="rounded-xl border border-[#d7e5e1] bg-white p-6 text-center">
             <ShoppingBag className="w-6 h-6 text-stone-500 mx-auto mb-2" aria-hidden="true" />
-            <p className="text-xs font-semibold text-[#f4f2ec]">Your cart is empty</p>
+            <p className="text-xs font-semibold text-[#12211d]">Your cart is empty</p>
             <p className="text-[11px] text-stone-400 mt-1 mb-4">
               Add refills from the pending list above, or browse the full catalog.
             </p>
@@ -254,7 +254,7 @@ export function CartPage({
             </button>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-white/[0.05] divide-y divide-white/[0.06]">
+          <div className="rounded-xl border border-[#d7e5e1] bg-white divide-y divide-white/[0.06]">
             {cartItems.map((item) => {
               const base = item.product.price || 49;
               const price = item.isSubscription ? base * 0.85 : base;
@@ -263,12 +263,12 @@ export function CartPage({
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <span className="badge-clinical text-[10px]">{item.product.category}</span>
-                      <h3 className="text-xs font-semibold text-[#f4f2ec] leading-snug mt-1">
+                      <h3 className="text-xs font-semibold text-[#12211d] leading-snug mt-1">
                         {item.product.name}
                       </h3>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <span className="text-xs font-bold text-[#f4f2ec]">
+                      <span className="text-xs font-bold text-[#12211d]">
                         ${(price * item.quantity).toFixed(2)}
                       </span>
                       {item.isSubscription && (
@@ -278,19 +278,19 @@ export function CartPage({
                   </div>
 
                   <div className="flex items-center justify-between flex-wrap gap-2">
-                    <div className="flex items-center border border-white/10 rounded-md bg-white/[0.06] overflow-hidden">
+                    <div className="flex items-center border border-[#d7e5e1] rounded-md bg-white overflow-hidden">
                       <button
                         onClick={() => onUpdateQuantity(item.product.id, Math.max(1, item.quantity - 1))}
                         aria-label={`Decrease quantity of ${item.product.name}`}
-                        className="p-1.5 hover:bg-white/[0.04] text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                        className="p-1.5 hover:bg-white text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                       >
                         <Minus className="w-3 h-3" aria-hidden="true" />
                       </button>
-                      <span className="px-3 text-xs font-mono text-[#f4f2ec]">{item.quantity}</span>
+                      <span className="px-3 text-xs font-mono text-[#12211d]">{item.quantity}</span>
                       <button
                         onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
                         aria-label={`Increase quantity of ${item.product.name}`}
-                        className="p-1.5 hover:bg-white/[0.04] text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                        className="p-1.5 hover:bg-white text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                       >
                         <Plus className="w-3 h-3" aria-hidden="true" />
                       </button>
@@ -303,7 +303,7 @@ export function CartPage({
                         onChange={(e) => onToggleSubscription(item.product.id, e.target.checked, item.frequency)}
                         className="w-3.5 h-3.5 accent-orange-500 rounded"
                       />
-                      <span className="text-[11px] font-medium text-[#f4f2ec] flex items-center gap-1">
+                      <span className="text-[11px] font-medium text-[#12211d] flex items-center gap-1">
                         <Repeat className="w-3 h-3 text-stone-400" aria-hidden="true" />
                         Auto-delivery (save 15%)
                       </span>
@@ -311,7 +311,7 @@ export function CartPage({
 
                     <button
                       onClick={() => onRemoveItem(item.product.id)}
-                      className="text-stone-500 hover:text-red-400 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
+                      className="text-stone-500 hover:text-red-600 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
                     >
                       <Trash2 className="w-3 h-3" aria-hidden="true" />
                       Remove
@@ -328,7 +328,7 @@ export function CartPage({
                   <Truck className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
                   {freeShipping ? 'Cold-chain shipping: free' : 'Free cold-chain shipping at $99'}
                 </span>
-                <span className="font-semibold text-[#f4f2ec]">Subtotal ${subtotal.toFixed(2)}</span>
+                <span className="font-semibold text-[#12211d]">Subtotal ${subtotal.toFixed(2)}</span>
               </div>
               <button
                 onClick={onCheckout}

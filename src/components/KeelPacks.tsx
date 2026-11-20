@@ -91,7 +91,7 @@ export function KeelPacks({ user, onAddToCart }: { user: UserProfile; onAddToCar
     <section aria-labelledby="keel-packs-heading" className="space-y-3">
       <div className="flex items-end justify-between flex-wrap gap-2">
         <div>
-          <h2 id="keel-packs-heading" className="text-lg font-bold text-[#f4f2ec] font-serif-title flex items-center gap-2">
+          <h2 id="keel-packs-heading" className="text-lg font-bold text-[#12211d] font-serif-title flex items-center gap-2">
             <Luggage className="w-4 h-4 text-orange-400" aria-hidden="true" />
             My AM · MID · PM KEEL Packs
           </h2>
@@ -102,8 +102,8 @@ export function KeelPacks({ user, onAddToCart }: { user: UserProfile; onAddToCar
         </div>
         <span className={cn(
           'text-[10px] font-bold px-2 py-1 rounded-full border',
-          mode === 'live' ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25'
-            : 'bg-white/[0.06] text-stone-400 border-white/10'
+          mode === 'live' ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/25'
+            : 'bg-white text-stone-400 border-[#d7e5e1]'
         )}>
           {mode === 'live' ? 'OK Capsule · live' : mode === 'demo' ? 'Preview · fulfillment on onboarding' : 'Checking…'}
         </span>
@@ -117,11 +117,11 @@ export function KeelPacks({ user, onAddToCart }: { user: UserProfile; onAddToCar
             <div key={pack.key} className="soft-card p-4 flex flex-col gap-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2.5">
-                  <span className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/10 grid place-items-center">
+                  <span className="w-9 h-9 rounded-xl bg-white border border-[#d7e5e1] grid place-items-center">
                     <Icon className="w-4 h-4 text-orange-300" aria-hidden="true" />
                   </span>
                   <div>
-                    <h3 className="text-sm font-bold text-[#f4f2ec] tracking-wide">{pack.label}</h3>
+                    <h3 className="text-sm font-bold text-[#12211d] tracking-wide">{pack.label}</h3>
                     <span className="text-[11px] text-stone-400">{pack.tagline}</span>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export function KeelPacks({ user, onAddToCart }: { user: UserProfile; onAddToCar
                   className={cn(
                     'px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all cursor-pointer',
                     isAdded
-                      ? 'bg-white/[0.06] text-orange-300 border border-orange-500/25'
+                      ? 'bg-white text-orange-300 border border-orange-500/25'
                       : 'bg-orange-600 opacity-85 hover:opacity-100 hover:bg-orange-500 text-white'
                   )}
                 >

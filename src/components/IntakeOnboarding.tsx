@@ -282,7 +282,7 @@ export function IntakeOnboarding({
               <span className="px-2.5 py-0.5 rounded-md bg-orange-500/100/20 text-indigo-300 border border-orange-500/100/30 text-[10px] font-extrabold uppercase tracking-wider">
                 JohnMatrix &amp; CuasarX AI Intake
               </span>
-              <span className="px-2.5 py-0.5 rounded-md bg-orange-500/20 text-emerald-300 border border-orange-500/30 text-[10px] font-bold">
+              <span className="px-2.5 py-0.5 rounded-md bg-orange-500/20 text-emerald-700 border border-orange-500/30 text-[10px] font-bold">
                 Medical-Grade Baseline Engine
               </span>
             </div>
@@ -342,7 +342,7 @@ export function IntakeOnboarding({
             <button
               type="button"
               onClick={() => loadPreset(PRESET_ATHLETE)}
-              className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-300 rounded-lg font-bold border border-slate-700 transition-colors flex items-center gap-1"
+              className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-700 rounded-lg font-bold border border-slate-700 transition-colors flex items-center gap-1"
             >
               <Zap className="w-3 h-3" /> Peak Endurance Athlete Preset
             </button>
@@ -362,13 +362,13 @@ export function IntakeOnboarding({
         <form onSubmit={handleSaveForm} className="space-y-6">
           
           {/* SECTION 1: MEDICAL HISTORY & PHARMACOLOGY */}
-          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
               <div className="p-2.5 bg-rose-50 text-rose-600 rounded-2xl">
                 <Heart className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">1. Medical History &amp; Pharmacology</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">1. Medical History &amp; Pharmacology</h3>
                 <p className="text-xs text-slate-500">Chronic conditions, surgical history, medications, peptides &amp; family risks</p>
               </div>
             </div>
@@ -445,13 +445,13 @@ export function IntakeOnboarding({
           </div>
 
           {/* SECTION 2: SPORTS PERFORMANCE & ATHLETIC PROFILE */}
-          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
               <div className="p-2.5 bg-amber-50 text-amber-600 rounded-2xl">
                 <Zap className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">2. Sport, Athletic Discipline &amp; Movement</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">2. Sport, Athletic Discipline &amp; Movement</h3>
                 <p className="text-xs text-slate-500">Training load, primary athletic focus, Zone 2 hours &amp; active injuries</p>
               </div>
             </div>
@@ -516,13 +516,13 @@ export function IntakeOnboarding({
           </div>
 
           {/* SECTION 3: STRESS LEVELS & PSYCHOLOGY */}
-          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
               <div className="p-2.5 bg-orange-500/10 text-orange-500 rounded-2xl">
                 <Brain className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">3. Stress Levels, Psychology &amp; Mental Performance</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">3. Stress Levels, Psychology &amp; Mental Performance</h3>
                 <p className="text-xs text-slate-500">Perceived stress scale (PSS), burnout score, cognitive fatigue &amp; rumination</p>
               </div>
             </div>
@@ -601,20 +601,20 @@ export function IntakeOnboarding({
           </div>
 
           {/* SECTION 4: BASELINE DIAGNOSTICS - DEXA, BLOODWORK, EKG & ANTHROPOMETRICS */}
-          <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
             <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
               <div className="p-2.5 bg-emerald-50 text-orange-400 rounded-2xl">
                 <Dna className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-[#f4f2ec]">4. Gold-Standard Diagnostic Testing &amp; Biomarkers</h3>
+                <h3 className="font-extrabold text-base text-[#12211d]">4. Gold-Standard Diagnostic Testing &amp; Biomarkers</h3>
                 <p className="text-xs text-slate-500">DEXA scan, comprehensive blood panel, EKG findings, VO2 Max &amp; wearable baselines</p>
               </div>
             </div>
 
             {/* Sub-block A: DEXA & Body Composition */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="text-xs font-extrabold text-[#f4f2ec] flex items-center gap-1.5 uppercase tracking-wider">
+              <h4 className="text-xs font-extrabold text-[#12211d] flex items-center gap-1.5 uppercase tracking-wider">
                 <Scale className="w-4 h-4 text-orange-400" /> DEXA Scan Body Composition
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
@@ -628,7 +628,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, bodyFatPercent: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -641,7 +641,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, leanMassKg: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -653,7 +653,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, visceralFatGrams: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -666,7 +666,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       dexa: { ...diagForm.dexa!, boneDensityZScore: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
               </div>
@@ -674,7 +674,7 @@ export function IntakeOnboarding({
 
             {/* Sub-block B: Blood Panel */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="text-xs font-extrabold text-[#f4f2ec] flex items-center gap-1.5 uppercase tracking-wider">
+              <h4 className="text-xs font-extrabold text-[#12211d] flex items-center gap-1.5 uppercase tracking-wider">
                 <Dna className="w-4 h-4 text-orange-500" /> Comprehensive Longevity Blood Panel
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
@@ -687,7 +687,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, apoB: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -700,7 +700,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, hsCRP: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -712,7 +712,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, fastingGlucose: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -725,7 +725,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, hba1c: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -738,7 +738,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, fastingInsulin: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -750,7 +750,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, vitaminD: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -763,7 +763,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, testosteroneFree: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -776,7 +776,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, cortisolAM: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -788,7 +788,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, altAst: e.target.value }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -801,7 +801,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       bloodwork: { ...diagForm.bloodwork!, tsh: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
               </div>
@@ -809,7 +809,7 @@ export function IntakeOnboarding({
 
             {/* Sub-block C: Clinical Diagnostics & Wearables */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="text-xs font-extrabold text-[#f4f2ec] flex items-center gap-1.5 uppercase tracking-wider">
+              <h4 className="text-xs font-extrabold text-[#12211d] flex items-center gap-1.5 uppercase tracking-wider">
                 <Heart className="w-4 h-4 text-rose-600" /> EKG Findings, VO2 Max &amp; Wearables
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
@@ -822,7 +822,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       diagnostics: { ...diagForm.diagnostics!, ekgFindings: e.target.value }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -835,7 +835,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       diagnostics: { ...diagForm.diagnostics!, vo2Max: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -847,7 +847,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, rhrBpm: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -859,7 +859,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, hrvMs: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -872,7 +872,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, weightKg: parseFloat(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -884,7 +884,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, heightCm: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
@@ -896,7 +896,7 @@ export function IntakeOnboarding({
                       ...diagForm,
                       anthropometrics: { ...diagForm.anthropometrics!, sleepEfficiencyPercent: parseInt(e.target.value) || 0 }
                     })}
-                    className="w-full px-3 py-2 bg-white/[0.06] border border-slate-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
               </div>
@@ -917,11 +917,11 @@ export function IntakeOnboarding({
 
       {/* MODE 2: CONVERSATIONAL VOICE INTAKE */}
       {intakeMode === 'voice' && (
-        <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
               <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Conversational Engine</span>
-              <h3 className="text-xl font-bold text-[#f4f2ec]">Interactive Voice Intake with Phi</h3>
+              <h3 className="text-xl font-bold text-[#12211d]">Interactive Voice Intake with Phi</h3>
             </div>
             <div className="text-xs text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 font-bold">
               Question {currentStepIndex + 1} of {BASE_QUESTIONS.length}
@@ -941,7 +941,7 @@ export function IntakeOnboarding({
             </div>
 
             <div className="flex items-center gap-2 text-xs font-medium px-3 py-1 bg-slate-800/80 rounded-full border border-slate-700 text-indigo-300">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-700" />
               {isSpeaking ? "Phi is Speaking..." : isListening ? "Listening to your response..." : "Phi Ready"}
             </div>
 
@@ -1006,9 +1006,9 @@ export function IntakeOnboarding({
 
               <div className="space-y-3">
                 {pendingFacts.map(fact => (
-                  <div key={fact.id} className="bg-white/[0.06] p-4 rounded-xl border border-orange-500/15 shadow-sm space-y-1">
+                  <div key={fact.id} className="bg-white p-4 rounded-xl border border-orange-500/15 shadow-sm space-y-1">
                     <span className="text-[10px] uppercase font-bold text-orange-500/100 tracking-wider">{fact.category}</span>
-                    <p className="text-sm font-semibold text-[#f4f2ec]">"{fact.value}"</p>
+                    <p className="text-sm font-semibold text-[#12211d]">"{fact.value}"</p>
                   </div>
                 ))}
               </div>
@@ -1017,7 +1017,7 @@ export function IntakeOnboarding({
                 <button
                   type="button"
                   onClick={() => setShowingConfirmation(false)}
-                  className="flex-1 py-2.5 bg-white/[0.06] border border-white/10 hover:bg-white/[0.1] text-stone-300 text-xs font-semibold rounded-xl"
+                  className="flex-1 py-2.5 bg-white border border-[#d7e5e1] hover:bg-[#e6f1ee] text-stone-300 text-xs font-semibold rounded-xl"
                 >
                   Edit / Re-answer
                 </button>
@@ -1036,11 +1036,11 @@ export function IntakeOnboarding({
 
       {/* MODE 3: BASELINE COMPARATIVE REPORT & ANALYTICS */}
       {intakeMode === 'report' && (
-        <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
               <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Analytical Synthesis</span>
-              <h3 className="text-xl font-bold text-[#f4f2ec]">Baseline Diagnostic Health &amp; Athletic Report</h3>
+              <h3 className="text-xl font-bold text-[#12211d]">Baseline Diagnostic Health &amp; Athletic Report</h3>
             </div>
             <span className="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold flex items-center gap-1">
               <Check className="w-3.5 h-3.5" /> Data Completeness: 100%
@@ -1051,7 +1051,7 @@ export function IntakeOnboarding({
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Cardiometabolic Index</span>
-              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#12211d] flex items-baseline gap-1">
                 92 <span className="text-xs text-slate-400 font-normal">/ 100</span>
               </div>
               <p className="text-[11px] text-orange-400 font-bold">ApoB {diagForm.bloodwork?.apoB || 78} mg/dL • Optimal</p>
@@ -1059,7 +1059,7 @@ export function IntakeOnboarding({
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Athletic Engine (VO2 Max)</span>
-              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#12211d] flex items-baseline gap-1">
                 {diagForm.diagnostics?.vo2Max || 51.5} <span className="text-xs text-slate-400 font-normal">mL/kg/min</span>
               </div>
               <p className="text-[11px] text-orange-500 font-bold">Top 5% for Age &amp; Gender</p>
@@ -1067,7 +1067,7 @@ export function IntakeOnboarding({
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Psychophysiological Stress</span>
-              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#12211d] flex items-baseline gap-1">
                 {diagForm.psychologicalProfile?.perceivedStressScore || 7} <span className="text-xs text-slate-400 font-normal">/ 10</span>
               </div>
               <p className="text-[11px] text-amber-600 font-bold">Burnout: {diagForm.psychologicalProfile?.burnoutIndex || 'Moderate'}</p>
@@ -1075,7 +1075,7 @@ export function IntakeOnboarding({
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">DEXA Lean Mass Index</span>
-              <div className="text-2xl font-black text-[#f4f2ec] flex items-baseline gap-1">
+              <div className="text-2xl font-black text-[#12211d] flex items-baseline gap-1">
                 {diagForm.dexa?.bodyFatPercent || 14.2}% <span className="text-xs text-slate-400 font-normal">Fat</span>
               </div>
               <p className="text-[11px] text-orange-400 font-bold">VAT: {diagForm.dexa?.visceralFatGrams || 340}g (Low Risk)</p>
@@ -1086,17 +1086,17 @@ export function IntakeOnboarding({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             {/* Left: Medical & Diagnostic Summary */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="font-bold text-xs text-[#f4f2ec] uppercase tracking-wider flex items-center gap-1.5">
+              <h4 className="font-bold text-xs text-[#12211d] uppercase tracking-wider flex items-center gap-1.5">
                 <Heart className="w-4 h-4 text-rose-600" /> Medical &amp; Clinical Diagnostics Baseline
               </h4>
               <ul className="space-y-2 text-xs text-stone-300">
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">EKG Status:</span>
-                  <strong className="text-[#f4f2ec]">{diagForm.diagnostics?.ekgFindings}</strong>
+                  <strong className="text-[#12211d]">{diagForm.diagnostics?.ekgFindings}</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Prescription / Peptides:</span>
-                  <strong className="text-[#f4f2ec]">{diagForm.medicalHistory?.medicationsPeptides.join(', ')}</strong>
+                  <strong className="text-[#12211d]">{diagForm.medicalHistory?.medicationsPeptides.join(', ')}</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">hs-CRP Inflammation:</span>
@@ -1104,24 +1104,24 @@ export function IntakeOnboarding({
                 </li>
                 <li className="flex justify-between pb-1">
                   <span className="text-slate-500">Free Testosterone:</span>
-                  <strong className="text-[#f4f2ec]">{diagForm.bloodwork?.testosteroneFree} pg/mL</strong>
+                  <strong className="text-[#12211d]">{diagForm.bloodwork?.testosteroneFree} pg/mL</strong>
                 </li>
               </ul>
             </div>
 
             {/* Right: Sports & Psychology Summary */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-              <h4 className="font-bold text-xs text-[#f4f2ec] uppercase tracking-wider flex items-center gap-1.5">
+              <h4 className="font-bold text-xs text-[#12211d] uppercase tracking-wider flex items-center gap-1.5">
                 <Zap className="w-4 h-4 text-amber-600" /> Sports &amp; Psychological Performance
               </h4>
               <ul className="space-y-2 text-xs text-stone-300">
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Primary Discipline:</span>
-                  <strong className="text-[#f4f2ec]">{diagForm.sportsProfile?.primaryDiscipline}</strong>
+                  <strong className="text-[#12211d]">{diagForm.sportsProfile?.primaryDiscipline}</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Weekly Training Volume:</span>
-                  <strong className="text-[#f4f2ec]">{diagForm.sportsProfile?.weeklyHours}h ({diagForm.sportsProfile?.zone2WeeklyHours}h Zone 2)</strong>
+                  <strong className="text-[#12211d]">{diagForm.sportsProfile?.weeklyHours}h ({diagForm.sportsProfile?.zone2WeeklyHours}h Zone 2)</strong>
                 </li>
                 <li className="flex justify-between border-b border-slate-200/80 pb-1.5">
                   <span className="text-slate-500">Cognitive Fatigue Score:</span>

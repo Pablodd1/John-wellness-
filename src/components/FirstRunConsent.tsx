@@ -45,9 +45,9 @@ export function FirstRunConsent() {
   };
 
   const optionalToggle = (label: string, info: typeof aiInfo, value: boolean | null, setter: (v: boolean) => void) => (
-    <div className="flex items-start justify-between gap-4 p-3.5 rounded-xl border border-white/10 bg-white/[0.05]">
+    <div className="flex items-start justify-between gap-4 p-3.5 rounded-xl border border-[#d7e5e1] bg-white">
       <div className="min-w-0">
-        <span className="text-xs font-bold text-[#f4f2ec] block">{label} <span className="font-normal text-stone-400">— optional</span></span>
+        <span className="text-xs font-bold text-[#12211d] block">{label} <span className="font-normal text-stone-400">— optional</span></span>
         <span className="text-[11px] text-stone-400 block mt-0.5 leading-relaxed">{info.summary}</span>
       </div>
       <div className="flex items-center gap-1.5 flex-shrink-0" role="group" aria-label={`${label} choose yes or no`}>
@@ -58,7 +58,7 @@ export function FirstRunConsent() {
           onClick={() => setter(true)}
           className={cn(
             'px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500',
-            value === true ? 'bg-orange-500 text-white border-orange-500' : 'bg-white/[0.06] text-stone-400 border-white/15 hover:bg-white/[0.05]'
+            value === true ? 'bg-orange-500 text-white border-orange-500' : 'bg-white text-stone-400 border-[#d7e5e1] hover:bg-white'
           )}
         >
           Yes
@@ -70,7 +70,7 @@ export function FirstRunConsent() {
           onClick={() => setter(false)}
           className={cn(
             'px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500',
-            value === false ? 'bg-orange-600 text-white border-orange-600' : 'bg-white/[0.06] text-stone-400 border-white/15 hover:bg-white/[0.05]'
+            value === false ? 'bg-orange-600 text-white border-orange-600' : 'bg-white text-stone-400 border-[#d7e5e1] hover:bg-white'
           )}
         >
           No
@@ -87,14 +87,14 @@ export function FirstRunConsent() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="firstrun-title"
-          className="bg-white/[0.06] rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8"
+          className="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8"
         >
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/25">
               <ShieldCheck className="w-6 h-6 text-orange-400" aria-hidden="true" />
             </div>
             <div>
-              <h1 id="firstrun-title" className="text-lg font-bold text-[#f4f2ec]">Your data, your rules</h1>
+              <h1 id="firstrun-title" className="text-lg font-bold text-[#12211d]">Your data, your rules</h1>
               <span className="text-[11px] text-stone-400 font-mono">Privacy notice &amp; terms of engagement • v{PRIVACY_POLICY_VERSION}</span>
             </div>
           </div>
@@ -104,7 +104,7 @@ export function FirstRunConsent() {
             your data. The short version:
           </p>
 
-          <ul className="text-xs text-[#f4f2ec] space-y-2" aria-label="Summary of our data practices">
+          <ul className="text-xs text-[#12211d] space-y-2" aria-label="Summary of our data practices">
             <li className="flex gap-2.5">
               <Check className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
               <span><strong>Everything is off by default.</strong> Each data use (AI analysis, wearable sync, research, community sharing, marketing) is a separate choice you control in the Privacy &amp; Consent center.</span>
@@ -124,26 +124,26 @@ export function FirstRunConsent() {
           </ul>
 
           <div className="space-y-2">
-            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-white/10 cursor-pointer hover:bg-white/[0.05]">
+            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-[#d7e5e1] cursor-pointer hover:bg-white">
               <input type="checkbox" checked={privacyAck} onChange={(e) => setPrivacyAck(e.target.checked)} className="accent-orange-500 w-4 h-4 mt-0.5" />
-              <span className="text-xs text-[#f4f2ec]">I have read and understand the <strong>Privacy Notice</strong>, including what data the app collects and my rights to access, export, correct, and delete it.</span>
+              <span className="text-xs text-[#12211d]">I have read and understand the <strong>Privacy Notice</strong>, including what data the app collects and my rights to access, export, correct, and delete it.</span>
             </label>
-            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-white/10 cursor-pointer hover:bg-white/[0.05]">
+            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-[#d7e5e1] cursor-pointer hover:bg-white">
               <input type="checkbox" checked={termsAck} onChange={(e) => setTermsAck(e.target.checked)} className="accent-orange-500 w-4 h-4 mt-0.5" />
-              <span className="text-xs text-[#f4f2ec]">I accept the <strong>Terms of Engagement</strong>: wellness support, not medical care; not for emergencies (call 911); clinicians may communicate through the app.</span>
+              <span className="text-xs text-[#12211d]">I accept the <strong>Terms of Engagement</strong>: wellness support, not medical care; not for emergencies (call 911); clinicians may communicate through the app.</span>
             </label>
           </div>
 
           <div className="space-y-2">
-            <span className="text-xs font-bold text-[#f4f2ec] block">Choose now or later — both are fine:</span>
+            <span className="text-xs font-bold text-[#12211d] block">Choose now or later — both are fine:</span>
             {optionalToggle('AI Clinical Analysis', aiInfo, aiChoice, setAiChoice)}
             {optionalToggle('Product Analytics', analyticsInfo, analyticsChoice, setAnalyticsChoice)}
             {optionalToggle('Product & Marketing Communications', marketingInfo, marketingChoice, setMarketingChoice)}
           </div>
 
           <div>
-            <label htmlFor="firstrun-signature" className="block font-bold text-xs text-[#f4f2ec] mb-1">
-              Electronic signature <span className="text-red-400">*</span>
+            <label htmlFor="firstrun-signature" className="block font-bold text-xs text-[#12211d] mb-1">
+              Electronic signature <span className="text-red-600">*</span>
             </label>
             <input
               id="firstrun-signature"
@@ -152,12 +152,12 @@ export function FirstRunConsent() {
               onChange={(e) => setSignature(e.target.value)}
               autoComplete="name"
               placeholder="Your full name"
-              className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
+              className="w-full px-3 py-2 rounded-lg border border-[#d7e5e1] bg-white text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
             />
           </div>
 
           {error && (
-            <p role="alert" className="text-[11px] text-red-400 font-bold flex items-center gap-1.5">
+            <p role="alert" className="text-[11px] text-red-600 font-bold flex items-center gap-1.5">
               <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" /> {error}
             </p>
           )}

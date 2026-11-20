@@ -1,78 +1,73 @@
 @import "tailwindcss";
 
-/* TRIAL: blue accent — orange tokens remapped to a blue scale.
-   Original orange palette kept in the comment for one-line revert:
-   orange-300 #f0a878 · 400 #ef8a3c · 500 #e2660f · 600 #c9550d · 700 #a8470b */
+/* THEME: Clinical Mint — light medical (white · mint · clean sans) */
 @theme {
-  --color-orange-300: #93c5fd;
-  --color-orange-400: #60a5fa;
-  --color-orange-500: #3b82f6;
-  --color-orange-600: #2563eb;
-  --color-orange-700: #1d4ed8;
+  --color-orange-300: #17936f;
+  --color-orange-400: #0f9d76;
+  --color-orange-500: #0f9d76;
+  --color-orange-600: #0d8a67;
+  --color-orange-700: #0a7256;
+  /* secondary text scale → green-gray */
+  --color-stone-200: #243b35;
+  --color-stone-300: #3f5a54;
+  --color-stone-400: #5f7772;
+  --color-stone-500: #748c86;
+  --color-stone-600: #55716b;
 }
 
 @layer base {
   :root {
-    --font-sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    --font-sans: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
     --font-serif: 'Newsreader', Georgia, serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --accent: #3b82f6;
-    --accent-soft: #60a5fa;
+    --accent: #0f9d76;
+    --accent-soft: #34b787;
   }
 
   body {
-    background-color: #0e100f;
-    background-image:
-      linear-gradient(rgba(10, 14, 11, 0.78), rgba(10, 14, 11, 0.88)),
-      url('/office-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #f4f2ec;
+    background-color: #f4f8f7;
+    color: #12211d;
     font-family: var(--font-sans);
     min-height: 100vh;
     overflow-x: hidden;
-    letter-spacing: -0.012em;
+    letter-spacing: -0.006em;
   }
 
-  ::selection { background: rgba(59, 130, 246, 0.35); color: #fff; }
+  ::selection { background: rgba(15, 157, 118, 0.25); color: #12211d; }
 }
 
 /* Dark glass scrollbars */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #0e100f; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.24); }
+::-webkit-scrollbar-track { background: #eef4f2; }
+::-webkit-scrollbar-thumb { background: #c9ddd7; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a9c6bf; }
 
 /* ── Glass card system ── */
 .soft-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid #d7e5e1;
   border-radius: 14px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-shadow: 0 1px 3px rgba(18, 33, 29, 0.06);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .soft-card:hover {
-  border-color: rgba(59, 130, 246, 0.35);
-  background: rgba(255, 255, 255, 0.07);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(59,130,246,0.06);
+  border-color: #0f9d76;
+  box-shadow: 0 6px 20px rgba(18, 33, 29, 0.08);
 }
 
 /* ── Buttons ── */
 .btn-ink {
-  background: linear-gradient(180deg, #3b82f6, #2563eb);
+  background: linear-gradient(180deg, #12a87f, #0d8a67);
   color: #fff;
-  border: 1px solid rgba(59, 130, 246, 0.6);
-  font-weight: 700;
+  border: 1px solid rgba(15, 157, 118, 0.6);
+  font-weight: 600;
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.22);
+  box-shadow: 0 2px 8px rgba(15, 157, 118, 0.25);
   transition: all 0.15s ease;
 }
 .btn-ink:hover {
-  background: linear-gradient(180deg, #60a5fa, #3b82f6);
-  box-shadow: 0 6px 22px rgba(59, 130, 246, 0.35);
+  background: linear-gradient(180deg, #17b589, #12a87f);
+  box-shadow: 0 4px 12px rgba(15, 157, 118, 0.35);
 }
 
 .btn-subtle {

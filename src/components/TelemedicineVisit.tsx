@@ -338,7 +338,7 @@ export function TelemedicineVisit({
       ctx.beginPath();
       ctx.arc(w / 2, 300 + bobbing, 86, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = '#f4f2ec';
+      ctx.fillStyle = '#12211d';
       ctx.font = 'bold 64px system-ui, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -438,12 +438,12 @@ export function TelemedicineVisit({
         aria-modal="true"
         aria-label={`Telemedicine video visit with ${remoteName}`}
         tabIndex={-1}
-        className="h-full flex flex-col focus:outline-none text-[#f4f2ec]"
+        className="h-full flex flex-col focus:outline-none text-[#12211d]"
       >
         <p className="sr-only" role="status">{phaseStatus[phase]}</p>
 
         {/* Header */}
-        <header className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/10">
+        <header className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-[#d7e5e1]">
           <div className="flex items-center gap-3 min-w-0">
             <div className="p-2 rounded-xl bg-white/10">
               <Video className="w-4 h-4" aria-hidden="true" />
@@ -478,7 +478,7 @@ export function TelemedicineVisit({
             <div className="h-full overflow-y-auto flex items-start sm:items-center justify-center p-4">
               <form
                 onSubmit={handleConsentSubmit}
-                className="bg-white/[0.06] text-[#f4f2ec] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4"
+                className="bg-white text-[#12211d] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4"
               >
                 <div className="flex items-center gap-2 text-orange-400">
                   <ShieldCheck className="w-5 h-5" aria-hidden="true" />
@@ -493,27 +493,27 @@ export function TelemedicineVisit({
                   <ul className="space-y-1.5" aria-label="Key points of the telehealth consent">
                     <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> Telehealth uses video/audio technology — quality can vary and connections may drop or delay.</li>
                     <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> The visit is not recorded. Your clinician documents notes in your chart as with an in-person visit.</li>
-                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-red-400">Telehealth is not for emergencies.</strong> For chest pain, breathing trouble, or any emergency, hang up and call 911.</span></li>
+                    <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-red-600">Telehealth is not for emergencies.</strong> For chest pain, breathing trouble, or any emergency, hang up and call 911.</span></li>
                     <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> You may withdraw consent at any time — before or during a visit — and switch to in-person care without penalty.</li>
                     <li className="flex gap-2"><Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" /> This demo runs entirely on your device: camera and microphone streams never leave your computer.</li>
                   </ul>
                 </div>
 
-                <label className="flex items-start gap-2.5 p-3 rounded-xl border border-white/10 bg-white/[0.05] cursor-pointer">
+                <label className="flex items-start gap-2.5 p-3 rounded-xl border border-[#d7e5e1] bg-white cursor-pointer">
                   <input
                     type="checkbox"
                     checked={consentChecked}
                     onChange={(e) => setConsentChecked(e.target.checked)}
                     className="accent-orange-500 w-4 h-4 mt-0.5"
                   />
-                  <span className="text-xs text-[#f4f2ec] font-medium">
+                  <span className="text-xs text-[#12211d] font-medium">
                     I have read and accept this telehealth informed consent, including the emergency guidance above.
                   </span>
                 </label>
 
                 <div>
-                  <label htmlFor="visit-signature" className="block font-bold text-xs text-[#f4f2ec] mb-1">
-                    Electronic signature <span className="text-red-400">*</span>
+                  <label htmlFor="visit-signature" className="block font-bold text-xs text-[#12211d] mb-1">
+                    Electronic signature <span className="text-red-600">*</span>
                   </label>
                   <input
                     id="visit-signature"
@@ -521,13 +521,13 @@ export function TelemedicineVisit({
                     value={signature}
                     onChange={(e) => setSignature(e.target.value)}
                     autoComplete="name"
-                    className="w-full px-3 py-2 rounded-lg border border-white/10 bg-[#101210] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#d7e5e1] bg-white text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
                   />
                   <span className="text-[10px] text-stone-400 block mt-1">Typing your full name adopts and signs this consent electronically.</span>
                 </div>
 
                 {consentError && (
-                  <p role="alert" className="text-[11px] text-red-400 font-bold flex items-center gap-1.5">
+                  <p role="alert" className="text-[11px] text-red-600 font-bold flex items-center gap-1.5">
                     <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" /> {consentError}
                   </p>
                 )}
@@ -551,13 +551,13 @@ export function TelemedicineVisit({
             </div>
           ) : (
             <div className="h-full flex items-center justify-center p-4">
-              <div className="bg-white/[0.06] text-[#f4f2ec] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-                <div className="flex items-center gap-2 text-amber-300">
+              <div className="bg-white text-[#12211d] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+                <div className="flex items-center gap-2 text-amber-700">
                   <AlertTriangle className="w-5 h-5" aria-hidden="true" />
                   <h3 className="text-sm font-bold">Patient consent required before connecting</h3>
                 </div>
                 <p className="text-xs text-stone-400 leading-relaxed">
-                  <strong className="text-[#f4f2ec]">{patient.name}</strong> has no telehealth informed consent on file.
+                  <strong className="text-[#12211d]">{patient.name}</strong> has no telehealth informed consent on file.
                   You cannot connect until the patient reviews and signs the consent on their own device — you cannot
                   sign on their behalf.
                 </p>
@@ -586,7 +586,7 @@ export function TelemedicineVisit({
           {/* ---------- WAITING ROOM ---------- */}
           {phase === 'waiting' && (
             <div className="h-full flex flex-col items-center justify-center p-4 gap-5">
-              <div className="relative w-full max-w-2xl aspect-video bg-[#141b17] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+              <div className="relative w-full max-w-2xl aspect-video bg-[#141b17] rounded-2xl overflow-hidden border border-[#d7e5e1] shadow-2xl">
                 <video
                   ref={localVideoRef}
                   autoPlay
@@ -605,7 +605,7 @@ export function TelemedicineVisit({
                 <span className="absolute bottom-2.5 left-3 text-[10px] font-bold bg-black/50 px-2 py-1 rounded-md">You ({mode === 'clinician' ? 'clinician' : 'patient'})</span>
               </div>
 
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 max-w-2xl w-full space-y-3">
+              <div className="bg-white/5 border border-[#d7e5e1] rounded-2xl p-4 sm:p-5 max-w-2xl w-full space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-white/70">Device check</h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <li className="flex items-center gap-2 text-white/85">
@@ -625,7 +625,7 @@ export function TelemedicineVisit({
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleClose}
-                  className="px-4 py-2.5 rounded-full border border-white/25 hover:bg-white/10 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
+                  className="px-4 py-2.5 rounded-full border border-[#c9ddd7] hover:bg-white/10 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
                 >
                   Leave
                 </button>
@@ -642,7 +642,7 @@ export function TelemedicineVisit({
           {/* ---------- CONNECTING / IN CALL ---------- */}
           {inCall && (
             <div className="h-full p-3 sm:p-5">
-              <div className="relative h-full max-w-5xl mx-auto rounded-2xl overflow-hidden bg-[#141b17] border border-white/10 shadow-2xl">
+              <div className="relative h-full max-w-5xl mx-auto rounded-2xl overflow-hidden bg-[#141b17] border border-[#d7e5e1] shadow-2xl">
                 {/* Live Daily.co video when a real room was created */}
                 {dailyRoomUrl && dailyState !== 'failed' && (
                   <div ref={dailyContainerRef} className="absolute inset-0" aria-label="Live video call frame" />
@@ -683,7 +683,7 @@ export function TelemedicineVisit({
                 )}
 
                 {/* Local PiP */}
-                <div className="absolute bottom-3 right-3 w-32 sm:w-44 aspect-video rounded-xl overflow-hidden border border-white/20 bg-[#0d1210] shadow-lg">
+                <div className="absolute bottom-3 right-3 w-32 sm:w-44 aspect-video rounded-xl overflow-hidden border border-[#c9ddd7] bg-[#0d1210] shadow-lg">
                   <video
                     ref={localVideoRef}
                     autoPlay
@@ -707,7 +707,7 @@ export function TelemedicineVisit({
           {/* ---------- ENDED ---------- */}
           {phase === 'ended' && (
             <div className="h-full flex items-center justify-center p-4">
-              <div className="bg-white/[0.06] text-[#f4f2ec] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+              <div className="bg-white text-[#12211d] rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
                 <div className="flex items-center gap-2 text-orange-400">
                   <Check className="w-5 h-5" aria-hidden="true" />
                   <h3 className="text-sm font-bold">Visit ended</h3>
@@ -736,7 +736,7 @@ export function TelemedicineVisit({
         {/* Controls (visible during connecting / in call). The Daily frame
             manages its own mic/cam, so device controls are hidden in that mode. */}
         {inCall && (
-          <footer className="flex items-center justify-center gap-2.5 sm:gap-3.5 px-4 py-4 border-t border-white/10">
+          <footer className="flex items-center justify-center gap-2.5 sm:gap-3.5 px-4 py-4 border-t border-[#d7e5e1]">
             {dailyState !== 'active' && (
               <>
             <button

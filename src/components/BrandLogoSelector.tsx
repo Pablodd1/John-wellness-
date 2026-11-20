@@ -101,7 +101,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                 "p-1.5 rounded-lg transition-all flex items-center gap-1 text-xs font-bold",
                 isSelected 
                   ? "bg-slate-900 text-white shadow-sm" 
-                  : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
+                  : "text-stone-400 hover:text-[#12211d] hover:bg-white"
               )}
             >
               <IconComp className="w-4 h-4" />
@@ -117,7 +117,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-bold text-[#f4f2ec] flex items-center gap-2">
+          <h3 className="text-base font-bold text-[#12211d] flex items-center gap-2">
             <Layers className="w-5 h-5 text-orange-500" /> 2D Vector Brand Logo Options
           </h3>
           <p className="text-xs text-slate-500">
@@ -141,8 +141,8 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
               className={cn(
                 "p-6 rounded-3xl border text-left transition-all flex flex-col justify-between space-y-4 cursor-pointer group hover:shadow-md",
                 isSelected
-                  ? "border-orange-500 ring-2 ring-orange-500/20 bg-white/[0.06] shadow-sm"
-                  : "border-slate-200 bg-slate-50/60 hover:bg-white/[0.06] hover:border-slate-300"
+                  ? "border-orange-500 ring-2 ring-orange-500/20 bg-white shadow-sm"
+                  : "border-slate-200 bg-slate-50/60 hover:bg-white hover:border-slate-300"
               )}
             >
               <div>
@@ -150,7 +150,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                   {/* 2D Logo Container */}
                   <div className={cn(
                     "w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm",
-                    isSelected ? "bg-slate-900 text-amber-400" : "bg-white/[0.06] text-[#f4f2ec] border border-slate-200"
+                    isSelected ? "bg-slate-900 text-amber-700" : "bg-white text-[#12211d] border border-slate-200"
                   )}>
                     <IconComp className="w-9 h-9" />
                   </div>
@@ -166,7 +166,7 @@ export function BrandLogoSelector({ activeLogoId, onSelectLogo, compact = false 
                   )}
                 </div>
 
-                <h4 className="font-extrabold text-[#f4f2ec] text-base group-hover:text-orange-500 transition-colors mb-1">
+                <h4 className="font-extrabold text-[#12211d] text-base group-hover:text-orange-500 transition-colors mb-1">
                   {logo.name}
                 </h4>
                 <p className="text-xs font-semibold text-orange-500 mb-2">{logo.subtitle}</p>

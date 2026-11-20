@@ -107,9 +107,9 @@ export function CalendarPanel() {
   const cell = 'min-h-[52px] p-1.5 text-center rounded-lg transition-colors';
 
   return (
-    <section aria-labelledby="cal-heading" className="bg-white/[0.05] border border-white/10 rounded-2xl p-5 shadow-sm space-y-4 backdrop-blur-xl">
+    <section aria-labelledby="cal-heading" className="bg-white border border-[#d7e5e1] rounded-2xl p-5 shadow-sm space-y-4 backdrop-blur-xl">
       <div className="flex items-center justify-between gap-2 flex-wrap">
-        <h2 id="cal-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+        <h2 id="cal-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
           <CalendarDays className="w-4 h-4 text-orange-400" aria-hidden="true" /> My Calendar
           <span className="text-[10px] font-normal text-stone-500">— synced to your briefing &amp; voice assistant</span>
         </h2>
@@ -131,7 +131,7 @@ export function CalendarPanel() {
         >
           <ChevronLeft className="w-4 h-4" aria-hidden="true" />
         </button>
-        <span className="text-sm font-bold text-[#f4f2ec]" aria-live="polite">{format(month, 'MMMM yyyy')}</span>
+        <span className="text-sm font-bold text-[#12211d]" aria-live="polite">{format(month, 'MMMM yyyy')}</span>
         <button
           onClick={() => setMonth(addMonths(month, 1))}
           aria-label="Next month"
@@ -160,7 +160,7 @@ export function CalendarPanel() {
                 className={cn(
                   cell,
                   'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500',
-                  dim ? 'text-stone-600' : 'text-[#f4f2ec] hover:bg-white/10',
+                  dim ? 'text-stone-600' : 'text-[#12211d] hover:bg-white/10',
                   isSelected && 'bg-orange-600/25 ring-1 ring-orange-500',
                   isToday(day) && !isSelected && 'ring-1 ring-white/30'
                 )}
@@ -179,44 +179,44 @@ export function CalendarPanel() {
 
       {/* Add task form */}
       {adding && (
-        <form onSubmit={addEvent} className="p-3.5 rounded-xl border border-white/10 bg-white/[0.04] space-y-2.5">
+        <form onSubmit={addEvent} className="p-3.5 rounded-xl border border-[#d7e5e1] bg-white space-y-2.5">
           <div>
-            <label htmlFor="cal-title" className="block text-[11px] font-bold text-[#f4f2ec] mb-1">Task or event <span className="text-red-400">*</span></label>
+            <label htmlFor="cal-title" className="block text-[11px] font-bold text-[#12211d] mb-1">Task or event <span className="text-red-600">*</span></label>
             <input
               id="cal-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Bloodwork at the lab"
-              className="w-full px-3 py-2 rounded-lg text-xs bg-white/[0.04] border border-white/10 text-[#f4f2ec] placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] text-[#12211d] placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label htmlFor="cal-date" className="block text-[11px] font-bold text-[#f4f2ec] mb-1">Date</label>
-              <input id="cal-date" type="text" value={format(selected, 'MMM d, yyyy')} readOnly aria-readonly="true" className="w-full px-3 py-2 rounded-lg text-xs bg-white/[0.02] border border-white/10 text-stone-400 cursor-default" />
+              <label htmlFor="cal-date" className="block text-[11px] font-bold text-[#12211d] mb-1">Date</label>
+              <input id="cal-date" type="text" value={format(selected, 'MMM d, yyyy')} readOnly aria-readonly="true" className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] text-stone-400 cursor-default" />
             </div>
             <div>
-              <label htmlFor="cal-time" className="block text-[11px] font-bold text-[#f4f2ec] mb-1">Time</label>
-              <input id="cal-time" type="time" value={time} onChange={(e) => setTime(e.target.value)} className="w-full px-3 py-2 rounded-lg text-xs bg-white/[0.04] border border-white/10 text-[#f4f2ec] focus:outline-none focus:ring-2 focus:ring-orange-500" />
+              <label htmlFor="cal-time" className="block text-[11px] font-bold text-[#12211d] mb-1">Time</label>
+              <input id="cal-time" type="time" value={time} onChange={(e) => setTime(e.target.value)} className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] text-[#12211d] focus:outline-none focus:ring-2 focus:ring-orange-500" />
             </div>
             <div>
-              <label htmlFor="cal-kind" className="block text-[11px] font-bold text-[#f4f2ec] mb-1">Type</label>
-              <select id="cal-kind" value={kind} onChange={(e) => setKind(e.target.value as CalEvent['kind'])} className="w-full px-3 py-2 rounded-lg text-xs bg-white/[0.04] border border-white/10 text-[#f4f2ec] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer">
+              <label htmlFor="cal-kind" className="block text-[11px] font-bold text-[#12211d] mb-1">Type</label>
+              <select id="cal-kind" value={kind} onChange={(e) => setKind(e.target.value as CalEvent['kind'])} className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] text-[#12211d] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer">
                 {KIND_OPTIONS.map((k) => <option key={k.value} value={k.value}>{k.label}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label htmlFor="cal-loc" className="block text-[11px] font-bold text-[#f4f2ec] mb-1">Location <span className="font-normal text-stone-500">(optional)</span></label>
+            <label htmlFor="cal-loc" className="block text-[11px] font-bold text-[#12211d] mb-1">Location <span className="font-normal text-stone-500">(optional)</span></label>
             <input
               id="cal-loc"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="e.g. Telehealth, gym, office"
-              className="w-full px-3 py-2 rounded-lg text-xs bg-white/[0.04] border border-white/10 text-[#f4f2ec] placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] text-[#12211d] placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
-          {error && <p role="alert" className="text-[11px] text-red-400 font-bold">{error}</p>}
+          {error && <p role="alert" className="text-[11px] text-red-600 font-bold">{error}</p>}
           <div className="flex items-center justify-end gap-2">
             <button type="button" onClick={() => { setAdding(false); setError(null); }} className="btn-stone px-3 py-1.5 text-[11px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">Cancel</button>
             <button type="submit" disabled={busy} className="btn-ink px-4 py-1.5 text-[11px] inline-flex items-center gap-1.5 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0e100f]">
@@ -232,16 +232,16 @@ export function CalendarPanel() {
         {events === null ? (
           <p className="text-xs text-stone-400">Loading your events…</p>
         ) : selectedEvents.length === 0 ? (
-          <p className="text-xs text-stone-400 p-3 bg-white/[0.03] rounded-xl border border-white/[0.08]">
+          <p className="text-xs text-stone-400 p-3 bg-white rounded-xl border border-white/[0.08]">
             Nothing scheduled this day. Click "Add task" — it appears in your briefing and the voice assistant reads it out.
           </p>
         ) : (
           <ul className="space-y-1.5">
             {selectedEvents.map((e) => (
-              <li key={e.id} className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-xs">
+              <li key={e.id} className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white border border-white/[0.08] text-xs">
                 <span className={cn('w-2 h-2 rounded-full flex-shrink-0', KIND_DOT[e.kind])} aria-hidden="true" />
                 <span className="font-mono text-[11px] text-stone-400">{format(new Date(e.starts_at), 'HH:mm')}</span>
-                <span className="font-semibold text-[#f4f2ec] flex-1 min-w-0 truncate">{e.title}</span>
+                <span className="font-semibold text-[#12211d] flex-1 min-w-0 truncate">{e.title}</span>
                 {e.location && (
                   <span className="text-[10px] text-stone-500 inline-flex items-center gap-0.5 flex-shrink-0">
                     <MapPin className="w-3 h-3" aria-hidden="true" /> {e.location}
@@ -250,7 +250,7 @@ export function CalendarPanel() {
                 <button
                   onClick={() => removeEvent(e.id)}
                   aria-label={`Delete ${e.title}`}
-                  className="p-1 rounded-lg text-stone-500 hover:text-red-400 hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                  className="p-1 rounded-lg text-stone-500 hover:text-red-600 hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
                 >
                   <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>

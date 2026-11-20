@@ -140,11 +140,11 @@ export function SupplementManager({
     <div className="space-y-6 pb-12">
       
       {/* Top Header */}
-      <div className="bg-white/[0.06] p-5 md:p-6 rounded-2xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white p-5 md:p-6 rounded-2xl border border-[#d7e5e1] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Pill className="w-5 h-5 text-[#f4f2ec]" />
-            <h1 className="text-lg font-bold text-[#f4f2ec] tracking-tight">
+            <Pill className="w-5 h-5 text-[#12211d]" />
+            <h1 className="text-lg font-bold text-[#12211d] tracking-tight">
               Daily Regimens &amp; Auto-Delivery Subscriptions
             </h1>
           </div>
@@ -154,12 +154,12 @@ export function SupplementManager({
         </div>
 
         {/* Tab switcher */}
-        <div className="flex items-center bg-white/[0.05] p-1 rounded-xl flex-wrap gap-1 border border-white/10">
+        <div className="flex items-center bg-white p-1 rounded-xl flex-wrap gap-1 border border-[#d7e5e1]">
           <button
             onClick={() => setActiveTab('daily')}
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer",
-              activeTab === 'daily' ? "bg-white/[0.06] text-[#f4f2ec] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#f4f2ec]"
+              activeTab === 'daily' ? "bg-white text-[#12211d] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#12211d]"
             )}
           >
             <Calendar className="w-3.5 h-3.5 text-orange-400" />
@@ -169,7 +169,7 @@ export function SupplementManager({
             onClick={() => setActiveTab('inventory')}
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer",
-              activeTab === 'inventory' ? "bg-white/[0.06] text-[#f4f2ec] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#f4f2ec]"
+              activeTab === 'inventory' ? "bg-white text-[#12211d] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#12211d]"
             )}
           >
             <Pill className="w-3.5 h-3.5 text-orange-400" />
@@ -179,27 +179,27 @@ export function SupplementManager({
             onClick={() => setActiveTab('burnrate')}
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer",
-              activeTab === 'burnrate' ? "bg-white/[0.06] text-[#f4f2ec] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#f4f2ec]"
+              activeTab === 'burnrate' ? "bg-white text-[#12211d] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#12211d]"
             )}
           >
-            <TrendingDown className="w-3.5 h-3.5 text-amber-300" />
+            <TrendingDown className="w-3.5 h-3.5 text-amber-700" />
             Burn-Rate Forecast
           </button>
           <button
             onClick={() => setActiveTab('biohacking')}
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer",
-              activeTab === 'biohacking' ? "bg-white/[0.06] text-[#f4f2ec] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#f4f2ec]"
+              activeTab === 'biohacking' ? "bg-white text-[#12211d] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#12211d]"
             )}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-700" />
             Lifestyle Cards
           </button>
           <button
             onClick={() => setActiveTab('peptides_knowledge')}
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer",
-              activeTab === 'peptides_knowledge' ? "bg-white/[0.06] text-[#f4f2ec] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#f4f2ec]"
+              activeTab === 'peptides_knowledge' ? "bg-white text-[#12211d] font-semibold shadow-2xs" : "text-stone-400 hover:text-[#12211d]"
             )}
           >
             <BookOpen className="w-3.5 h-3.5 text-orange-400" />
@@ -212,10 +212,10 @@ export function SupplementManager({
       {lowStockItems.length > 0 && (
         <div className="bg-amber-500/10 border border-amber-500/25 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-4 h-4 text-amber-300 flex-shrink-0 mt-0.5" />
+            <AlertTriangle className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs font-bold text-amber-300">Supply Notice ({lowStockItems.length} items running low)</h4>
-              <p className="text-[11px] text-amber-300 mt-0.5">
+              <h4 className="text-xs font-bold text-amber-700">Supply Notice ({lowStockItems.length} items running low)</h4>
+              <p className="text-[11px] text-amber-700 mt-0.5">
                 {lowStockItems.map(item => `${item.name} (~${item.daysRemaining} days left)`).join(', ')}. 
                 Auto-replenishment ensures continuous protocol adherence.
               </p>
@@ -241,13 +241,13 @@ export function SupplementManager({
       {/* TAB 1: DAILY TRACKER */}
       {activeTab === 'daily' && (
         <div className="space-y-6">
-          <div className="bg-white/[0.06] p-4 rounded-xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="bg-white p-4 rounded-xl border border-[#d7e5e1] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/25 text-orange-300 flex items-center justify-center font-bold text-sm font-mono">
                 {adherenceRate}%
               </div>
               <div>
-                <h3 className="text-xs font-bold text-[#f4f2ec]">Today&apos;s Protocol Adherence</h3>
+                <h3 className="text-xs font-bold text-[#12211d]">Today&apos;s Protocol Adherence</h3>
                 <p className="text-[11px] text-stone-400">
                   {completedCount} of {totalScheduleItems} planned formulations logged for today.
                 </p>
@@ -266,8 +266,8 @@ export function SupplementManager({
             {/* Morning */}
             <div className="soft-card p-4 space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#f4f2ec] uppercase tracking-wider">
-                  <Sun className="w-3.5 h-3.5 text-amber-300" />
+                <div className="flex items-center gap-2 text-xs font-bold text-[#12211d] uppercase tracking-wider">
+                  <Sun className="w-3.5 h-3.5 text-amber-700" />
                   <span>Morning Fasted</span>
                 </div>
                 <span className="text-[10px] text-stone-500 font-mono">07:00 - 09:00 AM</span>
@@ -282,12 +282,12 @@ export function SupplementManager({
                       onClick={() => handleToggleCheckoff(item.id)}
                       className={cn(
                         "p-2.5 rounded-lg border transition-all cursor-pointer flex items-start gap-2.5 select-none text-xs",
-                        isDone ? "bg-orange-500/10 border-orange-500/25 text-orange-300" : "bg-white/[0.05] hover:bg-white/[0.04] border-white/10 text-[#f4f2ec]"
+                        isDone ? "bg-orange-500/10 border-orange-500/25 text-orange-300" : "bg-white hover:bg-white border-[#d7e5e1] text-[#12211d]"
                       )}
                     >
                       <div className={cn(
                         "w-4 h-4 rounded flex items-center justify-center mt-0.5 transition-colors",
-                        isDone ? "bg-orange-600 text-white" : "border border-white/15 bg-white/[0.06]"
+                        isDone ? "bg-orange-600 text-white" : "border border-[#d7e5e1] bg-white"
                       )}>
                         {isDone && <Check className="w-3 h-3" />}
                       </div>
@@ -306,7 +306,7 @@ export function SupplementManager({
             {/* Midday */}
             <div className="soft-card p-4 space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#f4f2ec] uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#12211d] uppercase tracking-wider">
                   <Activity className="w-3.5 h-3.5 text-orange-400" />
                   <span>Midday / Pre-Workout</span>
                 </div>
@@ -322,12 +322,12 @@ export function SupplementManager({
                       onClick={() => handleToggleCheckoff(item.id)}
                       className={cn(
                         "p-2.5 rounded-lg border transition-all cursor-pointer flex items-start gap-2.5 select-none text-xs",
-                        isDone ? "bg-orange-500/10 border-orange-500/25 text-orange-300" : "bg-white/[0.05] hover:bg-white/[0.04] border-white/10 text-[#f4f2ec]"
+                        isDone ? "bg-orange-500/10 border-orange-500/25 text-orange-300" : "bg-white hover:bg-white border-[#d7e5e1] text-[#12211d]"
                       )}
                     >
                       <div className={cn(
                         "w-4 h-4 rounded flex items-center justify-center mt-0.5 transition-colors",
-                        isDone ? "bg-orange-600 text-white" : "border border-white/15 bg-white/[0.06]"
+                        isDone ? "bg-orange-600 text-white" : "border border-[#d7e5e1] bg-white"
                       )}>
                         {isDone && <Check className="w-3 h-3" />}
                       </div>
@@ -346,7 +346,7 @@ export function SupplementManager({
             {/* Evening */}
             <div className="soft-card p-4 space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#f4f2ec] uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#12211d] uppercase tracking-wider">
                   <Clock className="w-3.5 h-3.5 text-stone-400" />
                   <span>Evening Sleep Prep</span>
                 </div>
@@ -362,12 +362,12 @@ export function SupplementManager({
                       onClick={() => handleToggleCheckoff(item.id)}
                       className={cn(
                         "p-2.5 rounded-lg border transition-all cursor-pointer flex items-start gap-2.5 select-none text-xs",
-                        isDone ? "bg-orange-500/10 border-orange-500/25 text-orange-300" : "bg-white/[0.05] hover:bg-white/[0.04] border-white/10 text-[#f4f2ec]"
+                        isDone ? "bg-orange-500/10 border-orange-500/25 text-orange-300" : "bg-white hover:bg-white border-[#d7e5e1] text-[#12211d]"
                       )}
                     >
                       <div className={cn(
                         "w-4 h-4 rounded flex items-center justify-center mt-0.5 transition-colors",
-                        isDone ? "bg-orange-600 text-white" : "border border-white/15 bg-white/[0.06]"
+                        isDone ? "bg-orange-600 text-white" : "border border-[#d7e5e1] bg-white"
                       )}>
                         {isDone && <Check className="w-3 h-3" />}
                       </div>
@@ -390,7 +390,7 @@ export function SupplementManager({
       {activeTab === 'inventory' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-[#f4f2ec]">Active Formulations &amp; Inventory</h3>
+            <h3 className="text-sm font-bold text-[#12211d]">Active Formulations &amp; Inventory</h3>
             <button 
               onClick={() => setShowAddModal(true)}
               className="px-3 py-1.5 btn-subtle text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
@@ -422,12 +422,12 @@ export function SupplementManager({
                       {product.timing && <span className="flex items-center gap-1 text-[11px]"><Clock className="w-3 h-3" /> {product.timing}</span>}
                     </div>
 
-                    <h4 className="text-sm font-semibold text-[#f4f2ec] mb-1">{product.name}</h4>
+                    <h4 className="text-sm font-semibold text-[#12211d] mb-1">{product.name}</h4>
                     <p className="text-xs text-stone-400 mb-2 leading-relaxed">{product.description}</p>
 
                     {product.dailyDosage && (
-                      <div className="bg-white/[0.05] p-2 rounded-lg border border-white/10 text-xs text-stone-400 mb-2">
-                        <span className="font-semibold text-[#f4f2ec]">Dosage: </span>
+                      <div className="bg-white p-2 rounded-lg border border-[#d7e5e1] text-xs text-stone-400 mb-2">
+                        <span className="font-semibold text-[#12211d]">Dosage: </span>
                         {product.dailyDosage}
                       </div>
                     )}
@@ -440,11 +440,11 @@ export function SupplementManager({
                       <div className="mb-3">
                         <div className="flex justify-between text-xs mb-1 font-medium">
                           <span className="text-stone-500">Supply Status</span>
-                          <span className={isLow ? "text-amber-300 font-semibold" : "text-stone-400"}>
+                          <span className={isLow ? "text-amber-700 font-semibold" : "text-stone-400"}>
                             ~{product.daysRemaining} days remaining ({product.unitsInStock || 30} units)
                           </span>
                         </div>
-                        <div className="h-1.5 w-full bg-white/[0.08] rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-white rounded-full overflow-hidden">
                           <div 
                             className={cn("h-full rounded-full transition-all", isLow ? "bg-[#785328]" : "bg-orange-600")} 
                             style={{ width: `${Math.min(100, (product.daysRemaining / 30) * 100)}%` }}
@@ -456,7 +456,7 @@ export function SupplementManager({
                     )}
 
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-[#f4f2ec]">${(product.price || 29.99).toFixed(2)}</span>
+                      <span className="text-sm font-bold text-[#12211d]">${(product.price || 29.99).toFixed(2)}</span>
                       <button
                         onClick={() => handleReorder(product)}
                         className={cn(
@@ -499,7 +499,7 @@ export function SupplementManager({
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-sm font-bold text-[#f4f2ec]">Lifestyle &amp; Circadian Protocols</h3>
+              <h3 className="text-sm font-bold text-[#12211d]">Lifestyle &amp; Circadian Protocols</h3>
               <p className="text-xs text-stone-400">Non-pharmacological protocols integrated into today&apos;s recovery plan.</p>
             </div>
             <div className="flex items-center gap-1.5 flex-wrap">
@@ -509,7 +509,7 @@ export function SupplementManager({
                   onClick={() => setSelectedCategory(cat)}
                   className={cn(
                     "px-2.5 py-1 text-xs rounded-lg transition-all font-medium cursor-pointer",
-                    selectedCategory === cat ? "bg-orange-600 text-white" : "bg-white/[0.05] text-stone-400 border border-white/10 hover:bg-white/[0.04]"
+                    selectedCategory === cat ? "bg-orange-600 text-white" : "bg-white text-stone-400 border border-[#d7e5e1] hover:bg-white"
                   )}
                 >
                   {cat}
@@ -528,8 +528,8 @@ export function SupplementManager({
                       <span className="badge-clinical">{card.category}</span>
                       <span className="text-[10px] font-mono text-stone-500">{card.evidenceGrade}</span>
                     </div>
-                    <h4 className="text-xs font-bold text-[#f4f2ec]">{card.title}</h4>
-                    <div className="bg-white/[0.05] p-2.5 rounded-lg border border-white/10 text-xs text-stone-400 font-mono my-2">
+                    <h4 className="text-xs font-bold text-[#12211d]">{card.title}</h4>
+                    <div className="bg-white p-2.5 rounded-lg border border-[#d7e5e1] text-xs text-stone-400 font-mono my-2">
                       {card.protocol}
                     </div>
                     <div className="text-xs text-stone-400 space-y-1">
@@ -546,7 +546,7 @@ export function SupplementManager({
       {/* TAB 5: SAFETY */}
       {activeTab === 'peptides_knowledge' && (
         <div className="space-y-4">
-          <div className="bg-red-500/10 border border-red-500/25 p-4 rounded-xl text-xs text-red-400 space-y-1">
+          <div className="bg-red-500/10 border border-red-500/25 p-4 rounded-xl text-xs text-red-600 space-y-1">
             <h4 className="font-bold text-sm">Clinical Safety Framework for Peptides</h4>
             <p>
               AI systems are restricted from prescribing unmonitored peptide injection protocols without physician review. High-risk compounds require clinical laboratory screening and authorization.
@@ -563,9 +563,9 @@ export function SupplementManager({
                   )}>
                     {prod.category} • {prod.riskLevel.toUpperCase()} RISK
                   </span>
-                  <span className="text-xs font-semibold text-[#f4f2ec]">${(prod.price || 30.00).toFixed(2)}</span>
+                  <span className="text-xs font-semibold text-[#12211d]">${(prod.price || 30.00).toFixed(2)}</span>
                 </div>
-                <h4 className="text-xs font-bold text-[#f4f2ec]">{prod.name}</h4>
+                <h4 className="text-xs font-bold text-[#12211d]">{prod.name}</h4>
                 <p className="text-xs text-stone-400">{prod.description}</p>
                 <EvidenceGrade product={prod} compact={false} />
               </div>
@@ -577,33 +577,33 @@ export function SupplementManager({
       {/* Add Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white/[0.06] rounded-2xl max-w-md w-full p-6 shadow-xl border border-white/10 space-y-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-[#d7e5e1] space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
-              <h3 className="text-sm font-bold text-[#f4f2ec]">Log Custom Formulation</h3>
-              <button onClick={() => setShowAddModal(false)} className="p-1 text-stone-500 hover:text-[#f4f2ec]">
+              <h3 className="text-sm font-bold text-[#12211d]">Log Custom Formulation</h3>
+              <button onClick={() => setShowAddModal(false)} className="p-1 text-stone-500 hover:text-[#12211d]">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleCreateSupplement} className="space-y-3">
               <div>
-                <label className="text-xs font-semibold text-[#f4f2ec] block mb-1">Compound Name</label>
+                <label className="text-xs font-semibold text-[#12211d] block mb-1">Compound Name</label>
                 <input 
                   type="text" 
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="e.g. Nicotinamide Riboside (NR)" 
-                  className="w-full px-3 py-1.5 border border-white/15 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500" 
+                  className="w-full px-3 py-1.5 border border-[#d7e5e1] rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500" 
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-[#f4f2ec] block mb-1">Category</label>
+                <label className="text-xs font-semibold text-[#12211d] block mb-1">Category</label>
                 <select 
                   value={newCategory}
                   onChange={(e) => setNewCategory(e.target.value as any)}
-                  className="w-full px-3 py-1.5 border border-white/15 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  className="w-full px-3 py-1.5 border border-[#d7e5e1] rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500"
                 >
                   <option value="Nutrition">Nutrition</option>
                   <option value="Recovery">Recovery</option>
@@ -614,32 +614,32 @@ export function SupplementManager({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-[#f4f2ec] block mb-1">Stock (Units)</label>
+                  <label className="text-xs font-semibold text-[#12211d] block mb-1">Stock (Units)</label>
                   <input 
                     type="number" 
                     value={newStock}
                     onChange={(e) => setNewStock(Number(e.target.value))}
-                    className="w-full px-3 py-1.5 border border-white/15 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500" 
+                    className="w-full px-3 py-1.5 border border-[#d7e5e1] rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500" 
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-[#f4f2ec] block mb-1">Dosage</label>
+                  <label className="text-xs font-semibold text-[#12211d] block mb-1">Dosage</label>
                   <input 
                     type="text" 
                     value={newDosage}
                     onChange={(e) => setNewDosage(e.target.value)}
                     placeholder="e.g. 500mg daily" 
-                    className="w-full px-3 py-1.5 border border-white/15 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500" 
+                    className="w-full px-3 py-1.5 border border-[#d7e5e1] rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500" 
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-[#f4f2ec] block mb-1">Timing Window</label>
+                <label className="text-xs font-semibold text-[#12211d] block mb-1">Timing Window</label>
                 <select 
                   value={newTiming}
                   onChange={(e) => setNewTiming(e.target.value)}
-                  className="w-full px-3 py-1.5 border border-white/15 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  className="w-full px-3 py-1.5 border border-[#d7e5e1] rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500"
                 >
                   <option value="Morning">Morning (Fasted)</option>
                   <option value="Midday">Midday (With Meal)</option>

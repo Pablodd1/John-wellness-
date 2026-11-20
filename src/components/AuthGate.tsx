@@ -54,17 +54,17 @@ export function AuthGate() {
     }
   };
 
-  const field = 'w-full pl-9 pr-3 py-2.5 rounded-xl text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]';
+  const field = 'w-full pl-9 pr-3 py-2.5 rounded-xl text-xs bg-white border border-[#d7e5e1] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white';
 
   return (
     <div className="min-h-screen flex items-start justify-center p-4 pt-[38vh] pb-12">
-      <div className="bg-white/[0.06] rounded-3xl border border-white/10 shadow-sm p-6 sm:p-8 w-full max-w-md space-y-5">
+      <div className="bg-white rounded-3xl border border-[#d7e5e1] shadow-sm p-6 sm:p-8 w-full max-w-md space-y-5">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/25">
             <ShieldCheck className="w-6 h-6 text-orange-400" aria-hidden="true" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-[#f4f2ec]">
+            <h1 className="text-lg font-bold text-[#12211d]">
               {mode === 'signin' ? 'Sign in to your account' : 'Create your account'}
             </h1>
             <p className="text-[11px] text-stone-400 leading-relaxed">
@@ -122,7 +122,7 @@ export function AuthGate() {
           </div>
 
           {error && (
-            <p role="alert" className="text-[11px] text-red-400 font-bold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10">
+            <p role="alert" className="text-[11px] text-red-600 font-bold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10">
               {error}
             </p>
           )}
@@ -155,12 +155,12 @@ export function AuthGate() {
         <button
           type="button"
           onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setError(null); setNotice(null); }}
-          className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#f4f2ec] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
+          className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#12211d] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
         >
           {mode === 'signin' ? 'No account yet? Create one' : 'Already have an account? Sign in'}
         </button>
 
-        <p className="text-[10px] text-stone-400 flex items-start gap-1.5 p-2.5 rounded-lg bg-white/[0.05] border border-white/10">
+        <p className="text-[10px] text-stone-400 flex items-start gap-1.5 p-2.5 rounded-lg bg-white border border-[#d7e5e1]">
           <Database className="w-3 h-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
           <span>Your account is protected: information is sent over an encrypted connection, and each member can only ever see their own information.</span>
         </p>

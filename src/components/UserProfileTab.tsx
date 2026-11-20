@@ -49,7 +49,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="bg-white/[0.06] text-[#f4f2ec] p-6 sm:p-7 rounded-2xl border border-white/10 space-y-5"
+        className="bg-white text-[#12211d] p-6 sm:p-7 rounded-2xl border border-[#d7e5e1] space-y-5"
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
@@ -57,7 +57,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
               <img 
                 src={user.avatar} 
                 alt={user.name} 
-                className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-white/[0.05] border border-white/10 p-1 object-cover"
+                className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-white border border-[#d7e5e1] p-1 object-cover"
               />
               <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-orange-600 text-white flex items-center justify-center text-[9px] font-bold">
                 ✓
@@ -73,7 +73,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
                   {user.lifestylePersona}
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-[#f4f2ec] flex items-center gap-2 font-serif-title">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#12211d] flex items-center gap-2 font-serif-title">
                 {user.name}
               </h2>
               <p className="text-xs text-stone-400 mt-0.5">
@@ -83,14 +83,14 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
           </div>
 
           {/* Data Completeness Gauge */}
-          <div className="bg-white/[0.05] p-3.5 rounded-xl border border-white/10 min-w-[200px]">
+          <div className="bg-white p-3.5 rounded-xl border border-[#d7e5e1] min-w-[200px]">
             <div className="flex items-center justify-between text-xs font-semibold mb-1">
               <span className="text-stone-400 flex items-center gap-1.5">
                 <Gauge className="w-3.5 h-3.5 text-orange-400" /> Intake Completeness
               </span>
-              <span className="text-[#f4f2ec] font-bold">{user.dataCompleteness}%</span>
+              <span className="text-[#12211d] font-bold">{user.dataCompleteness}%</span>
             </div>
-            <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-white rounded-full overflow-hidden">
               <div 
                 className="h-full bg-orange-600 rounded-full transition-all duration-500"
                 style={{ width: `${user.dataCompleteness}%` }}
@@ -112,12 +112,12 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
           ].map((vital) => (
             <div 
               key={vital.label}
-              className="bg-white/[0.05] p-3 rounded-xl border border-white/10"
+              className="bg-white p-3 rounded-xl border border-[#d7e5e1]"
             >
               <span className="text-stone-500 text-[10px] uppercase font-semibold block">{vital.label}</span>
               <div className="flex items-baseline justify-between mt-0.5">
-                <span className="text-base font-bold text-[#f4f2ec]">{vital.value}</span>
-                <span className="text-[10px] text-stone-400 bg-white/[0.06] px-1.5 py-0.2 rounded border border-white/10">{vital.badge}</span>
+                <span className="text-base font-bold text-[#12211d]">{vital.value}</span>
+                <span className="text-[10px] text-stone-400 bg-white px-1.5 py-0.2 rounded border border-[#d7e5e1]">{vital.badge}</span>
               </div>
             </div>
           ))}
@@ -134,14 +134,14 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
       <SubscriptionsPanel user={user} onAddToCart={onAddToCart ?? (() => {})} products={user.inventory} />
 
       {/* Primary Sub-Tab Selector Navigation */}
-      <div className="flex flex-wrap gap-1.5 p-1 bg-white/[0.05] rounded-xl border border-white/10">
+      <div className="flex flex-wrap gap-1.5 p-1 bg-white rounded-xl border border-[#d7e5e1]">
         <button
           onClick={() => setActiveSubTab('aosm')}
           className={cn(
             "flex-1 min-w-[180px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'aosm'
               ? "bg-orange-600 text-white"
-              : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
+              : "text-stone-400 hover:text-[#12211d] hover:bg-white"
           )}
         >
           <Dna className="w-3.5 h-3.5" />
@@ -154,7 +154,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
             "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'intake'
               ? "bg-orange-600 text-white"
-              : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
+              : "text-stone-400 hover:text-[#12211d] hover:bg-white"
           )}
         >
           <Sparkles className="w-3.5 h-3.5" />
@@ -167,7 +167,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
             "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'integrations'
               ? "bg-orange-600 text-white"
-              : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
+              : "text-stone-400 hover:text-[#12211d] hover:bg-white"
           )}
         >
           <Database className="w-3.5 h-3.5" />
@@ -180,7 +180,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
             "flex-1 min-w-[150px] px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
             activeSubTab === 'diagnostic_summary'
               ? "bg-orange-600 text-white"
-              : "text-stone-400 hover:text-[#f4f2ec] hover:bg-white/[0.06]"
+              : "text-stone-400 hover:text-[#12211d] hover:bg-white"
           )}
         >
           <FileText className="w-3.5 h-3.5" />
@@ -218,7 +218,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
             <div className="bg-emerald-900/10 border border-orange-500/30 p-4 rounded-2xl text-xs text-emerald-950 flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-extrabold block text-[#f4f2ec]">Multimodal Intake &amp; Bio-Data Harvester</span>
+                <span className="font-extrabold block text-[#12211d]">Multimodal Intake &amp; Bio-Data Harvester</span>
                 <p className="text-stone-400 mt-0.5">
                   Fill out or refine your comprehensive athletic, cardiovascular, metabolic, and psychological diagnostic facts below. You can use voice intake, text, or file uploads to populate missing fields automatically.
                 </p>
@@ -241,7 +241,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
             <div className="bg-orange-300/10 border border-orange-500/30 p-4 rounded-2xl text-xs  flex items-start gap-3">
               <Database className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-extrabold block text-[#f4f2ec]">Real-Time Bio-Telemetry &amp; Device Pairing</span>
+                <span className="font-extrabold block text-[#12211d]">Real-Time Bio-Telemetry &amp; Device Pairing</span>
                 <p className="text-stone-400 mt-0.5">
                   Manage your WHOOP, Oura Ring, Dexcom CGM, Omron Blood Pressure, and Apple Health live data feeds.
                 </p>
@@ -269,7 +269,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.05 }}
-                className="bg-white/[0.06] p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4"
+                className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4"
               >
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div className="flex items-center gap-2">
@@ -313,7 +313,7 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="bg-white/[0.06] p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4"
+                className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4"
               >
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div className="flex items-center gap-2">
@@ -359,9 +359,9 @@ export function UserProfileTab({ user, onUpdateUser, onAddToCart, onNavigateToMa
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="bg-white/[0.06] p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4"
+              className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4"
             >
-              <h3 className="font-extrabold text-[#f4f2ec] text-sm flex items-center gap-2">
+              <h3 className="font-extrabold text-[#12211d] text-sm flex items-center gap-2">
                 <Dna className="w-4 h-4 text-orange-500" />
                 Medical History &amp; Active Biohacking Regimen
               </h3>

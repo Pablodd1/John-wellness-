@@ -208,20 +208,20 @@ export function CartDrawer({
                 'px-2 py-0.5 rounded-md border',
                 active ? 'bg-orange-600 text-white border-orange-600'
                   : done ? 'bg-orange-500/10 text-orange-300 border-orange-500/25'
-                  : 'bg-white/[0.06] text-stone-400 border-white/10'
+                  : 'bg-white text-stone-400 border-[#d7e5e1]'
               )}
             >
               {i + 1}. {labels[s]}
             </span>
-            {i < 2 && <span className="text-[#dedad0]" aria-hidden="true">›</span>}
+            {i < 2 && <span className="text-[#5f7772]" aria-hidden="true">›</span>}
           </li>
         );
       })}
     </ol>
   );
 
-  const input = 'w-full px-3 py-2 rounded-lg text-xs bg-[#101210] border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white/[0.06]';
-  const label = 'block text-[11px] font-bold text-[#f4f2ec] mb-1';
+  const input = 'w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#d7e5e1] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white';
+  const label = 'block text-[11px] font-bold text-[#12211d] mb-1';
 
   return (
     <>
@@ -246,7 +246,7 @@ export function CartDrawer({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 240 }}
-              className="fixed right-0 top-0 bottom-0 w-full sm:w-[460px] bg-white/[0.06] z-50 shadow-2xl flex flex-col border-l border-white/10 overflow-hidden focus:outline-none"
+              className="fixed right-0 top-0 bottom-0 w-full sm:w-[460px] bg-white z-50 shadow-2xl flex flex-col border-l border-[#d7e5e1] overflow-hidden focus:outline-none"
             >
               {/* Header */}
               <div className="p-4 flex items-center justify-between border-b border-white/[0.08] flex-shrink-0 gap-2">
@@ -256,7 +256,7 @@ export function CartDrawer({
                   <button
                     onClick={() => (step !== 'cart' ? setStep('cart') : onClose())}
                     aria-label="Close cart"
-                    className="p-1 text-stone-500 hover:text-[#f4f2ec] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    className="p-1 text-stone-500 hover:text-[#12211d] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                   >
                     <X className="w-5 h-5" aria-hidden="true" />
                   </button>
@@ -266,20 +266,20 @@ export function CartDrawer({
               {/* ---- ADDRESS STEP ---- */}
               {step === 'address' && (
                 <form onSubmit={handleAddressContinue} className="flex-1 overflow-y-auto p-4 space-y-3">
-                  <h3 className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+                  <h3 className="text-sm font-bold text-[#12211d] flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-orange-400" aria-hidden="true" /> Delivery address
                   </h3>
 
                   <div>
-                    <label htmlFor="co-name" className={label}>Full name <span className="text-red-400">*</span></label>
+                    <label htmlFor="co-name" className={label}>Full name <span className="text-red-600">*</span></label>
                     <input id="co-name" className={input} value={fullName} onChange={(e) => setFullName(e.target.value)} autoComplete="name" />
                   </div>
                   <div>
-                    <label htmlFor="co-email" className={label}>Email for order updates <span className="text-red-400">*</span></label>
+                    <label htmlFor="co-email" className={label}>Email for order updates <span className="text-red-600">*</span></label>
                     <input id="co-email" type="email" className={input} value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
                   </div>
                   <div>
-                    <label htmlFor="co-street" className={label}>Street address <span className="text-red-400">*</span></label>
+                    <label htmlFor="co-street" className={label}>Street address <span className="text-red-600">*</span></label>
                     <input id="co-street" className={input} value={street} onChange={(e) => setStreet(e.target.value)} autoComplete="address-line1" placeholder="450 Mission St" />
                   </div>
                   <div>
@@ -288,21 +288,21 @@ export function CartDrawer({
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     <div className="col-span-1">
-                      <label htmlFor="co-city" className={label}>City <span className="text-red-400">*</span></label>
+                      <label htmlFor="co-city" className={label}>City <span className="text-red-600">*</span></label>
                       <input id="co-city" className={input} value={city} onChange={(e) => setCity(e.target.value)} autoComplete="address-level2" />
                     </div>
                     <div>
-                      <label htmlFor="co-state" className={label}>State <span className="text-red-400">*</span></label>
+                      <label htmlFor="co-state" className={label}>State <span className="text-red-600">*</span></label>
                       <input id="co-state" className={input} value={stateCode} onChange={(e) => setStateCode(e.target.value)} autoComplete="address-level1" placeholder="TX" />
                     </div>
                     <div>
-                      <label htmlFor="co-zip" className={label}>ZIP <span className="text-red-400">*</span></label>
+                      <label htmlFor="co-zip" className={label}>ZIP <span className="text-red-600">*</span></label>
                       <input id="co-zip" className={input} value={zip} onChange={(e) => setZip(e.target.value)} autoComplete="postal-code" placeholder="78701" inputMode="numeric" />
                     </div>
                   </div>
 
                   {addressError && (
-                    <p role="alert" className="text-[11px] text-red-400 font-bold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10">{addressError}</p>
+                    <p role="alert" className="text-[11px] text-red-600 font-bold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10">{addressError}</p>
                   )}
 
                   <button
@@ -314,7 +314,7 @@ export function CartDrawer({
                   <button
                     type="button"
                     onClick={() => setStep('cart')}
-                    className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#f4f2ec] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
+                    className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#12211d] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
                   >
                     ← Back to cart
                   </button>
@@ -324,11 +324,11 @@ export function CartDrawer({
               {/* ---- PAYMENT STEP (SIMULATED) ---- */}
               {step === 'payment' && (
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  <h3 className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+                  <h3 className="text-sm font-bold text-[#12211d] flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-orange-400" aria-hidden="true" /> Payment
                   </h3>
 
-                  <p className="text-[11px] text-amber-300 font-semibold p-3 rounded-xl border border-amber-500/25 bg-amber-500/10 flex items-start gap-2">
+                  <p className="text-[11px] text-amber-700 font-semibold p-3 rounded-xl border border-amber-500/25 bg-amber-500/10 flex items-start gap-2">
                     <FlaskConical className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <span>
                       <strong>Test mode — no real charge.</strong> Stripe isn't connected yet, so this checkout runs a
@@ -337,8 +337,8 @@ export function CartDrawer({
                     </span>
                   </p>
 
-                  <div className="p-4 rounded-xl border border-white/10 bg-white/[0.05] space-y-2" aria-label="Simulated card details">
-                    <span className="text-[11px] font-bold text-[#f4f2ec] block">Simulated card on file</span>
+                  <div className="p-4 rounded-xl border border-[#d7e5e1] bg-white space-y-2" aria-label="Simulated card details">
+                    <span className="text-[11px] font-bold text-[#12211d] block">Simulated card on file</span>
                     <div className="flex items-center gap-2 text-xs font-mono text-stone-400">
                       <CreditCard className="w-4 h-4 text-stone-500" aria-hidden="true" />
                       <span>•••• •••• •••• 4242</span>
@@ -349,8 +349,8 @@ export function CartDrawer({
                     </div>
                   </div>
 
-                  <div className="space-y-1 text-xs text-stone-400 border-t border-white/10 pt-3">
-                    <div className="flex justify-between"><span>Items ({itemsCount})</span><span className="font-semibold text-[#f4f2ec]">${subtotal.toFixed(2)}</span></div>
+                  <div className="space-y-1 text-xs text-stone-400 border-t border-[#d7e5e1] pt-3">
+                    <div className="flex justify-between"><span>Items ({itemsCount})</span><span className="font-semibold text-[#12211d]">${subtotal.toFixed(2)}</span></div>
                     {appliedDiscount > 0 && (
                       <div className="flex justify-between text-orange-300 font-medium"><span>Discount ({(appliedDiscount * 100).toFixed(0)}%)</span><span>-${discountAmount.toFixed(2)}</span></div>
                     )}
@@ -374,7 +374,7 @@ export function CartDrawer({
                       <p className="text-[10px] text-stone-400 mt-1">Earn 1 loyalty point per $1 — 100 pts = $5 off a future order.</p>
                     )}
 
-                    <div className="flex justify-between text-sm font-bold text-[#f4f2ec] pt-2 border-t border-white/10">
+                    <div className="flex justify-between text-sm font-bold text-[#12211d] pt-2 border-t border-[#d7e5e1]">
                       <span>Total (simulated)</span><span className="text-base">${grandTotal.toFixed(2)}</span>
                     </div>
                   </div>
@@ -387,13 +387,13 @@ export function CartDrawer({
                     {placing ? (
                       <span>Saving your order…</span>
                     ) : (
-                      <><Zap className="w-3.5 h-3.5 text-[#dedad0]" aria-hidden="true" /> Place order — simulated payment</>
+                      <><Zap className="w-3.5 h-3.5 text-[#5f7772]" aria-hidden="true" /> Place order — simulated payment</>
                     )}
                   </button>
                   <button
                     onClick={() => setStep('address')}
                     disabled={placing}
-                    className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#f4f2ec] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded disabled:opacity-50"
+                    className="w-full text-[11px] font-semibold text-stone-400 hover:text-[#12211d] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded disabled:opacity-50"
                   >
                     ← Back to address
                   </button>
@@ -404,7 +404,7 @@ export function CartDrawer({
               {step === 'cart' && (
                 <>
                   {/* Free Shipping Line */}
-                  <div className="bg-white/[0.05] border-b border-white/10 px-4 py-2.5 flex-shrink-0">
+                  <div className="bg-white border-b border-[#d7e5e1] px-4 py-2.5 flex-shrink-0">
                     <div className="flex items-center justify-between text-xs mb-1">
                       <span className="text-stone-400 flex items-center gap-1.5">
                         <Truck className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
@@ -418,7 +418,7 @@ export function CartDrawer({
                         ${subtotal.toFixed(0)} / ${shippingThreshold}
                       </span>
                     </div>
-                    <div className="w-full bg-white/[0.08] h-1 rounded-full overflow-hidden" aria-hidden="true">
+                    <div className="w-full bg-white h-1 rounded-full overflow-hidden" aria-hidden="true">
                       <div
                         className="bg-orange-600 h-full rounded-full transition-all duration-300"
                         style={{ width: `${Math.min(100, (subtotal / shippingThreshold) * 100)}%` }}
@@ -427,11 +427,11 @@ export function CartDrawer({
                   </div>
 
                   {/* Items List */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-[#f4f2ec]">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-[#e2ece8]">
                     {cartItems.length === 0 ? (
                       <div className="h-full flex flex-col items-center justify-center text-center p-8 text-stone-500">
-                        <ShoppingBag className="w-8 h-8 text-[#dedad0] mb-2" aria-hidden="true" />
-                        <h3 className="text-sm font-semibold text-[#f4f2ec] mb-1">Your cart is empty</h3>
+                        <ShoppingBag className="w-8 h-8 text-[#5f7772] mb-2" aria-hidden="true" />
+                        <h3 className="text-sm font-semibold text-[#12211d] mb-1">Your cart is empty</h3>
                         <p className="text-xs text-stone-400 max-w-xs mb-4">
                           Select protocols, clinical micronutrients, or diagnostic panels to begin.
                         </p>
@@ -455,13 +455,13 @@ export function CartDrawer({
                                     {item.product.category}
                                   </span>
                                 </div>
-                                <h4 className="text-xs font-semibold text-[#f4f2ec] leading-snug">
+                                <h4 className="text-xs font-semibold text-[#12211d] leading-snug">
                                   {item.product.name}
                                 </h4>
                               </div>
 
                               <div className="text-right flex-shrink-0">
-                                <span className="text-xs font-bold text-[#f4f2ec]">
+                                <span className="text-xs font-bold text-[#12211d]">
                                   ${(price * item.quantity).toFixed(2)}
                                 </span>
                                 {item.isSubscription && (
@@ -473,7 +473,7 @@ export function CartDrawer({
                             </div>
 
                             {/* Subscription Cadence Selector */}
-                            <div className="bg-white/[0.05] p-2 rounded-lg border border-white/10 flex items-center justify-between text-xs">
+                            <div className="bg-white p-2 rounded-lg border border-[#d7e5e1] flex items-center justify-between text-xs">
                               <label className="flex items-center gap-2 cursor-pointer select-none">
                                 <input
                                   type="checkbox"
@@ -481,7 +481,7 @@ export function CartDrawer({
                                   onChange={(e) => onToggleSubscription(item.product.id, e.target.checked, item.frequency)}
                                   className="w-3.5 h-3.5 accent-orange-500 rounded"
                                 />
-                                <span className="text-[11px] font-medium text-[#f4f2ec] flex items-center gap-1">
+                                <span className="text-[11px] font-medium text-[#12211d] flex items-center gap-1">
                                   <Repeat className="w-3 h-3 text-stone-400" aria-hidden="true" />
                                   Auto-Delivery (Save 15%)
                                 </span>
@@ -492,7 +492,7 @@ export function CartDrawer({
                                   value={item.frequency}
                                   onChange={(e) => onToggleSubscription(item.product.id, true, e.target.value as CartItem['frequency'])}
                                   aria-label={`Delivery frequency for ${item.product.name}`}
-                                  className="text-[11px] bg-white/[0.06] border border-white/15 rounded px-1.5 py-0.5 text-[#f4f2ec] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
+                                  className="text-[11px] bg-white border border-[#d7e5e1] rounded px-1.5 py-0.5 text-[#12211d] focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
                                 >
                                   <option value="30">Every 30 Days</option>
                                   <option value="45">Every 45 Days</option>
@@ -503,21 +503,21 @@ export function CartDrawer({
 
                             {/* Quantity & Remove */}
                             <div className="flex items-center justify-between pt-0.5">
-                              <div className="flex items-center border border-white/10 rounded-md bg-white/[0.06] overflow-hidden">
+                              <div className="flex items-center border border-[#d7e5e1] rounded-md bg-white overflow-hidden">
                                 <button
                                   onClick={() => onUpdateQuantity(item.product.id, Math.max(1, item.quantity - 1))}
                                   aria-label={`Decrease quantity of ${item.product.name}`}
-                                  className="p-1 hover:bg-white/[0.04] text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                                  className="p-1 hover:bg-white text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                                 >
                                   <Minus className="w-3 h-3" aria-hidden="true" />
                                 </button>
-                                <span className="px-2.5 text-xs font-mono text-[#f4f2ec]" aria-live="polite">
+                                <span className="px-2.5 text-xs font-mono text-[#12211d]" aria-live="polite">
                                   {item.quantity}
                                 </span>
                                 <button
                                   onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
                                   aria-label={`Increase quantity of ${item.product.name}`}
-                                  className="p-1 hover:bg-white/[0.04] text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                                  className="p-1 hover:bg-white text-stone-400 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                                 >
                                   <Plus className="w-3 h-3" aria-hidden="true" />
                                 </button>
@@ -525,7 +525,7 @@ export function CartDrawer({
 
                               <button
                                 onClick={() => onRemoveItem(item.product.id)}
-                                className="text-stone-500 hover:text-red-400 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
+                                className="text-stone-500 hover:text-red-600 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
                               >
                                 <Trash2 className="w-3 h-3" aria-hidden="true" />
                                 <span>Remove</span>
@@ -539,7 +539,7 @@ export function CartDrawer({
 
                   {/* Footer */}
                   {cartItems.length > 0 && (
-                    <div className="bg-white/[0.05] border-t border-white/10 p-4 space-y-3 flex-shrink-0">
+                    <div className="bg-white border-t border-[#d7e5e1] p-4 space-y-3 flex-shrink-0">
                       <form onSubmit={handleApplyPromo} className="flex gap-2">
                         <div className="relative flex-1">
                           <label htmlFor="promo-input" className="sr-only">Promo code</label>
@@ -550,7 +550,7 @@ export function CartDrawer({
                             value={promoCode}
                             onChange={(e) => setPromoCode(e.target.value)}
                             placeholder="Promo: LONGEVITY20"
-                            className="w-full pl-8 pr-2 py-1.5 text-xs bg-white/[0.06] border border-white/15 rounded-lg uppercase placeholder:normal-case focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono"
+                            className="w-full pl-8 pr-2 py-1.5 text-xs bg-white border border-[#d7e5e1] rounded-lg uppercase placeholder:normal-case focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono"
                           />
                         </div>
                         <button
@@ -564,7 +564,7 @@ export function CartDrawer({
                       {promoMessage && (
                         <p className={cn(
                           "text-[11px] font-medium",
-                          appliedDiscount > 0 ? "text-orange-300" : "text-red-400"
+                          appliedDiscount > 0 ? "text-orange-300" : "text-red-600"
                         )} role="status">
                           {promoMessage}
                         </p>
@@ -573,7 +573,7 @@ export function CartDrawer({
                       <div className="space-y-1 text-xs text-stone-400">
                         <div className="flex justify-between">
                           <span>Subtotal</span>
-                          <span className="font-semibold text-[#f4f2ec]">${subtotal.toFixed(2)}</span>
+                          <span className="font-semibold text-[#12211d]">${subtotal.toFixed(2)}</span>
                         </div>
                         {appliedDiscount > 0 && (
                           <div className="flex justify-between text-orange-300 font-medium">
@@ -589,14 +589,14 @@ export function CartDrawer({
                           <span>Estimated Tax</span>
                           <span>${estimatedTax.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between text-sm font-bold text-[#f4f2ec] pt-2 border-t border-white/10">
+                        <div className="flex justify-between text-sm font-bold text-[#12211d] pt-2 border-t border-[#d7e5e1]">
                           <span>Total Due</span>
                           <span className="text-base">${grandTotal.toFixed(2)}</span>
                         </div>
                       </div>
 
                       {!authUser ? (
-                        <p className="text-[11px] text-red-400 font-semibold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10 text-center">
+                        <p className="text-[11px] text-red-600 font-semibold p-2.5 rounded-lg border border-red-500/25 bg-red-500/10 text-center">
                           Sign in to place an order — your cart needs an account so it's saved and tracked.
                         </p>
                       ) : (
@@ -634,49 +634,49 @@ export function CartDrawer({
               role="dialog"
               aria-modal="true"
               aria-labelledby="order-confirm-title"
-              className="bg-white/[0.06] rounded-2xl max-w-md w-full p-6 shadow-xl border border-white/10 space-y-4"
+              className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-[#d7e5e1] space-y-4"
             >
               <div className="w-10 h-10 bg-orange-500/10 text-orange-300 rounded-xl flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
               </div>
 
               <div className="text-center space-y-1">
-                <h3 id="order-confirm-title" className="text-base font-bold text-[#f4f2ec]">
+                <h3 id="order-confirm-title" className="text-base font-bold text-[#12211d]">
                   Order placed
                 </h3>
                 <p className="text-xs text-stone-400">
                   Your order was saved and set to <strong>processing</strong>. Fulfillment is simulated in this MVP —
                   nothing ships and <strong>no charge was made</strong>.
                 </p>
-                <div className="inline-block bg-white/[0.05] text-[#f4f2ec] text-xs font-mono font-semibold px-2.5 py-0.5 rounded-md mt-1 border border-white/10">
+                <div className="inline-block bg-white text-[#12211d] text-xs font-mono font-semibold px-2.5 py-0.5 rounded-md mt-1 border border-[#d7e5e1]">
                   Order #{orderConfirmed.orderNumber}
                 </div>
               </div>
 
-              <div className="bg-white/[0.05] rounded-xl p-3.5 border border-white/10 space-y-2 text-xs">
+              <div className="bg-white rounded-xl p-3.5 border border-[#d7e5e1] space-y-2 text-xs">
                 <div className="flex items-start gap-2">
                   <MapPin className="w-3.5 h-3.5 text-stone-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
                   <span className="text-stone-400">{orderConfirmed.address}</span>
                 </div>
-                <div className="flex justify-between pt-2 border-t border-white/10">
+                <div className="flex justify-between pt-2 border-t border-[#d7e5e1]">
                   <span className="text-stone-400">Items:</span>
-                  <span className="font-semibold text-[#f4f2ec]">{orderConfirmed.itemsCount}</span>
+                  <span className="font-semibold text-[#12211d]">{orderConfirmed.itemsCount}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-stone-400">Payment:</span>
-                  <span className="font-semibold text-amber-300">Simulated (test mode)</span>
+                  <span className="font-semibold text-amber-700">Simulated (test mode)</span>
                 </div>
-                <div className="flex justify-between font-bold text-[#f4f2ec] pt-1 border-t border-white/10">
+                <div className="flex justify-between font-bold text-[#12211d] pt-1 border-t border-[#d7e5e1]">
                   <span>Order total:</span>
                   <span>${orderConfirmed.total}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-stone-400">Saved to database:</span>
-                  <span className={cn('font-semibold', orderConfirmed.persisted ? 'text-orange-300' : 'text-red-400')}>
+                  <span className={cn('font-semibold', orderConfirmed.persisted ? 'text-orange-300' : 'text-red-600')}>
                     {orderConfirmed.persisted ? 'Yes — visible on your account' : 'No — demo mode only'}
                   </span>
                 </div>
-                <div className="flex justify-between pt-1 border-t border-white/10">
+                <div className="flex justify-between pt-1 border-t border-[#d7e5e1]">
                   <span className="text-stone-400">Loyalty points:</span>
                   <span className="font-semibold text-orange-300">
                     {orderConfirmed.pointsRedeemed > 0 ? `−${orderConfirmed.pointsRedeemed} redeemed • ` : ''}+{orderConfirmed.pointsEarned} earned
@@ -685,13 +685,13 @@ export function CartDrawer({
                 {orderConfirmed.subscriptionsStarted > 0 && (
                   <div className="flex justify-between">
                     <span className="text-stone-400">Auto-deliveries started:</span>
-                    <span className="font-semibold text-[#f4f2ec]">{orderConfirmed.subscriptionsStarted} — manage them in Profile</span>
+                    <span className="font-semibold text-[#12211d]">{orderConfirmed.subscriptionsStarted} — manage them in Profile</span>
                   </div>
                 )}
               </div>
 
               {orderConfirmed.notice && (
-                <p role="status" className="text-[11px] text-amber-300 p-2.5 rounded-lg border border-amber-500/25 bg-amber-500/10">
+                <p role="status" className="text-[11px] text-amber-700 p-2.5 rounded-lg border border-amber-500/25 bg-amber-500/10">
                   {orderConfirmed.notice}
                 </p>
               )}

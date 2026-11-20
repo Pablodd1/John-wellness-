@@ -139,13 +139,13 @@ export function InsightsDashboard() {
   if (loading) {
     return (
       <div className="space-y-4" aria-busy="true" aria-label="Loading insights">
-        <div className="bg-white/[0.06] p-6 rounded-3xl border border-white/10 h-24 animate-pulse" />
+        <div className="bg-white p-6 rounded-3xl border border-[#d7e5e1] h-24 animate-pulse" />
         <div className="grid gap-3 sm:grid-cols-3">
-          <div className="bg-white/[0.05] h-20 rounded-2xl border border-white/10 animate-pulse" />
-          <div className="bg-white/[0.05] h-20 rounded-2xl border border-white/10 animate-pulse" />
-          <div className="bg-white/[0.05] h-20 rounded-2xl border border-white/10 animate-pulse" />
+          <div className="bg-white h-20 rounded-2xl border border-[#d7e5e1] animate-pulse" />
+          <div className="bg-white h-20 rounded-2xl border border-[#d7e5e1] animate-pulse" />
+          <div className="bg-white h-20 rounded-2xl border border-[#d7e5e1] animate-pulse" />
         </div>
-        <div className="bg-white/[0.05] h-64 rounded-2xl border border-white/10 animate-pulse" />
+        <div className="bg-white h-64 rounded-2xl border border-[#d7e5e1] animate-pulse" />
         <span className="sr-only">Loading insights data…</span>
       </div>
     );
@@ -154,13 +154,13 @@ export function InsightsDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white/[0.06] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#d7e5e1] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-start gap-3">
           <div className="p-2.5 bg-orange-500/10 rounded-xl border border-orange-500/25">
             <BarChart3 className="w-6 h-6 text-orange-400" aria-hidden="true" />
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-[#f4f2ec]">Insights — Tester Analytics</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-[#12211d]">Insights — Tester Analytics</h1>
             <p className="text-xs text-stone-400 mt-1 max-w-2xl leading-relaxed">
               Live first-party data: how testers move through the platform, what they click, what they buy, and what
               they tell us. Recorded only from sessions where analytics consent is on.
@@ -182,7 +182,7 @@ export function InsightsDashboard() {
       </div>
 
       {!dbConnected && !loading && (
-        <p className="text-xs text-amber-300 p-4 rounded-xl border border-amber-500/25 bg-amber-500/10 flex items-center gap-2">
+        <p className="text-xs text-amber-700 p-4 rounded-xl border border-amber-500/25 bg-amber-500/10 flex items-center gap-2">
           <Database className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
           No analytics data is reachable. Either the database isn't connected in this build, or no tester sessions with
           analytics consent have been recorded yet.
@@ -198,22 +198,22 @@ export function InsightsDashboard() {
           { icon: MessageSquarePlus, label: 'Feedback items', value: String(feedback.length) },
           { icon: Star, label: 'Avg rating', value: stats.avgRating ?? '—' },
         ].map((kpi) => (
-          <div key={kpi.label} className="bg-white/[0.06] p-4 rounded-2xl border border-white/10 shadow-sm">
+          <div key={kpi.label} className="bg-white p-4 rounded-2xl border border-[#d7e5e1] shadow-sm">
             <span className="text-[10px] uppercase font-bold text-stone-400 flex items-center gap-1.5">
               <kpi.icon className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" /> {kpi.label}
             </span>
-            <span className="text-2xl font-bold text-[#f4f2ec] mt-1 block">{kpi.value}</span>
+            <span className="text-2xl font-bold text-[#12211d] mt-1 block">{kpi.value}</span>
           </div>
         ))}
       </div>
 
       {/* Events per day */}
-      <section aria-labelledby="events-chart-heading" className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm">
-        <h2 id="events-chart-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2 mb-3">
+      <section aria-labelledby="events-chart-heading" className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm">
+        <h2 id="events-chart-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2 mb-3">
           <Activity className="w-4 h-4 text-orange-400" aria-hidden="true" /> Events per day
         </h2>
         {stats.byDay.length === 0 ? (
-          <p className="text-xs text-stone-400 p-4 bg-white/[0.05] rounded-xl border border-white/10">
+          <p className="text-xs text-stone-400 p-4 bg-white rounded-xl border border-[#d7e5e1]">
             No events yet. Once testers enable "Product Analytics" in Privacy &amp; Consent and use the app, activity appears here.
           </p>
         ) : (
@@ -233,8 +233,8 @@ export function InsightsDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Top events */}
-        <section aria-labelledby="top-events-heading" className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm">
-          <h2 id="top-events-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2 mb-3">
+        <section aria-labelledby="top-events-heading" className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm">
+          <h2 id="top-events-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2 mb-3">
             <MousePointerClick className="w-4 h-4 text-orange-400" aria-hidden="true" /> Top events
           </h2>
           {stats.topEvents.length === 0 ? (
@@ -243,8 +243,8 @@ export function InsightsDashboard() {
             <ul className="space-y-2">
               {stats.topEvents.map(([name, count]) => (
                 <li key={name} className="flex items-center gap-3 text-xs">
-                  <span className="w-40 font-semibold text-[#f4f2ec] capitalize truncate">{name.replace(/_/g, ' ')}</span>
-                  <div className="flex-1 h-2 bg-white/[0.04] rounded-full overflow-hidden" aria-hidden="true">
+                  <span className="w-40 font-semibold text-[#12211d] capitalize truncate">{name.replace(/_/g, ' ')}</span>
+                  <div className="flex-1 h-2 bg-white rounded-full overflow-hidden" aria-hidden="true">
                     <div
                       className="h-full rounded-full"
                       style={{
@@ -253,7 +253,7 @@ export function InsightsDashboard() {
                       }}
                     />
                   </div>
-                  <span className="font-mono font-bold text-[#f4f2ec] w-10 text-right">{count}</span>
+                  <span className="font-mono font-bold text-[#12211d] w-10 text-right">{count}</span>
                 </li>
               ))}
             </ul>
@@ -261,8 +261,8 @@ export function InsightsDashboard() {
         </section>
 
         {/* Sessions */}
-        <section aria-labelledby="sessions-heading" className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm">
-          <h2 id="sessions-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2 mb-3">
+        <section aria-labelledby="sessions-heading" className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm">
+          <h2 id="sessions-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2 mb-3">
             <Users className="w-4 h-4 text-orange-400" aria-hidden="true" /> Recent sessions
           </h2>
           {stats.sessionsList.length === 0 ? (
@@ -270,18 +270,18 @@ export function InsightsDashboard() {
           ) : (
             <ul className="space-y-2 max-h-72 overflow-y-auto pr-1">
               {stats.sessionsList.map((s) => (
-                <li key={s.sessionId} className="p-3 bg-white/[0.05] rounded-xl border border-white/10 text-xs">
+                <li key={s.sessionId} className="p-3 bg-white rounded-xl border border-[#d7e5e1] text-xs">
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-mono text-[10px] text-stone-400 truncate">{s.sessionId}</span>
                     <span className={cn(
                       'px-1.5 py-0.5 rounded text-[9px] font-bold uppercase',
-                      s.signedIn ? 'bg-orange-500/10 text-orange-300' : 'bg-white/[0.05] text-stone-400'
+                      s.signedIn ? 'bg-orange-500/10 text-orange-300' : 'bg-white text-stone-400'
                     )}>
                       {s.signedIn ? 'Signed in' : 'Anonymous'}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mt-1 text-stone-400">
-                    <span className="font-bold text-[#f4f2ec]">{s.count} events</span>
+                    <span className="font-bold text-[#12211d]">{s.count} events</span>
                     <span>•</span>
                     <span>last: {s.lastActivity}</span>
                   </div>
@@ -296,14 +296,14 @@ export function InsightsDashboard() {
       </div>
 
       {/* Health: error monitoring */}
-      <section aria-labelledby="health-heading" className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm space-y-3">
-        <h2 id="health-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
-          <ShieldAlert className={cn('w-4 h-4', errors.length > 0 ? 'text-red-400' : 'text-orange-400')} aria-hidden="true" />
+      <section aria-labelledby="health-heading" className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-3">
+        <h2 id="health-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
+          <ShieldAlert className={cn('w-4 h-4', errors.length > 0 ? 'text-red-600' : 'text-orange-400')} aria-hidden="true" />
           Platform Health — Errors
           <span className={cn('badge-neutral', errors.length > 0 && 'badge-flag')}>{errors.length} recent</span>
         </h2>
         {errors.length === 0 ? (
-          <p className="text-xs text-stone-400 p-4 bg-white/[0.05] rounded-xl border border-white/10">
+          <p className="text-xs text-stone-400 p-4 bg-white rounded-xl border border-[#d7e5e1]">
             No errors captured. Client crashes, unhandled rejections, and render failures land here automatically with
             stack traces and the affected session.
           </p>
@@ -312,13 +312,13 @@ export function InsightsDashboard() {
             {errors.map((err) => {
               const state = explainState[err.id];
               return (
-                <li key={err.id} className="p-3.5 bg-white/[0.05] rounded-xl border border-white/10 space-y-2">
+                <li key={err.id} className="p-3.5 bg-white rounded-xl border border-[#d7e5e1] space-y-2">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <span className={cn(
                       'px-1.5 py-0.5 rounded text-[9px] font-bold uppercase border',
-                      err.kind === 'boundary' ? 'bg-red-500/10 text-red-400 border-red-500/25'
-                        : err.kind === 'server' ? 'bg-amber-500/10 text-amber-300 border-amber-500/25'
-                        : 'bg-white/[0.05] text-stone-400 border-white/10'
+                      err.kind === 'boundary' ? 'bg-red-500/10 text-red-600 border-red-500/25'
+                        : err.kind === 'server' ? 'bg-amber-500/10 text-amber-700 border-amber-500/25'
+                        : 'bg-white text-stone-400 border-[#d7e5e1]'
                     )}>
                       {err.kind}
                     </span>
@@ -326,11 +326,11 @@ export function InsightsDashboard() {
                       {format(new Date(err.created_at), 'MMM d HH:mm:ss')} • {formatDistanceToNowStrict(new Date(err.created_at))} ago • {err.session_id.slice(0, 12)}
                     </span>
                   </div>
-                  <p className="text-xs font-semibold text-[#f4f2ec] break-words">{err.message}</p>
+                  <p className="text-xs font-semibold text-[#12211d] break-words">{err.message}</p>
                   {err.stack && (
                     <details className="text-[10px] text-stone-400">
-                      <summary className="cursor-pointer font-bold hover:text-[#f4f2ec] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded">Stack trace</summary>
-                      <pre className="mt-1 whitespace-pre-wrap break-words max-h-40 overflow-y-auto bg-white/[0.06] border border-white/10 rounded-lg p-2">{err.stack}</pre>
+                      <summary className="cursor-pointer font-bold hover:text-[#12211d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded">Stack trace</summary>
+                      <pre className="mt-1 whitespace-pre-wrap break-words max-h-40 overflow-y-auto bg-white border border-[#d7e5e1] rounded-lg p-2">{err.stack}</pre>
                     </details>
                   )}
                   <div className="flex items-center gap-2 flex-wrap">
@@ -339,18 +339,18 @@ export function InsightsDashboard() {
                       disabled={state?.loading}
                       className="btn-stone px-2.5 py-1 text-[10px] inline-flex items-center gap-1.5 disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                     >
-                      <Sparkles className="w-3 h-3 text-amber-300" aria-hidden="true" />
+                      <Sparkles className="w-3 h-3 text-amber-700" aria-hidden="true" />
                       {state?.loading ? 'Analyzing…' : 'Explain & suggest fix (AI)'}
                     </button>
                   </div>
                   {state?.text && (
-                    <div className="p-3 bg-orange-500/10 border border-orange-500/25 rounded-xl text-[11px] text-[#f4f2ec] leading-relaxed flex items-start gap-2">
+                    <div className="p-3 bg-orange-500/10 border border-orange-500/25 rounded-xl text-[11px] text-[#12211d] leading-relaxed flex items-start gap-2">
                       <Sparkles className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
                       <span className="whitespace-pre-wrap">{state.text}</span>
                     </div>
                   )}
                   {state?.error && (
-                    <p role="alert" className="text-[10px] text-red-400 font-bold">
+                    <p role="alert" className="text-[10px] text-red-600 font-bold">
                       AI explanation unavailable (service not configured or upstream error).
                     </p>
                   )}
@@ -362,9 +362,9 @@ export function InsightsDashboard() {
       </section>
 
       {/* Supplier fulfillment (Supliful) */}
-      <section aria-labelledby="supplier-heading" className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm space-y-3">
+      <section aria-labelledby="supplier-heading" className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm space-y-3">
         <div className="flex items-center justify-between gap-2 flex-wrap">
-          <h2 id="supplier-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2">
+          <h2 id="supplier-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2">
             <Boxes className="w-4 h-4 text-orange-400" aria-hidden="true" /> Supplier Fulfillment (Supliful)
           </h2>
           <button
@@ -390,23 +390,23 @@ export function InsightsDashboard() {
           <p role="status" className="text-[11px] font-bold text-orange-300 p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/25">{syncState}</p>
         )}
         {syncState?.startsWith('Sync failed') && (
-          <p role="alert" className="text-[11px] font-bold text-red-400 p-2.5 rounded-lg bg-red-500/10 border border-red-500/25">{syncState}</p>
+          <p role="alert" className="text-[11px] font-bold text-red-600 p-2.5 rounded-lg bg-red-500/10 border border-red-500/25">{syncState}</p>
         )}
       </section>
 
       {/* Feedback queue */}
-      <section aria-labelledby="feedback-heading" className="bg-white/[0.06] p-5 rounded-2xl border border-white/10 shadow-sm">
-        <h2 id="feedback-heading" className="text-sm font-bold text-[#f4f2ec] flex items-center gap-2 mb-3">
-          <MessageSquarePlus className="w-4 h-4 text-red-400" aria-hidden="true" /> Tester feedback queue
+      <section aria-labelledby="feedback-heading" className="bg-white p-5 rounded-2xl border border-[#d7e5e1] shadow-sm">
+        <h2 id="feedback-heading" className="text-sm font-bold text-[#12211d] flex items-center gap-2 mb-3">
+          <MessageSquarePlus className="w-4 h-4 text-red-600" aria-hidden="true" /> Tester feedback queue
         </h2>
         {feedback.length === 0 ? (
           <p className="text-xs text-stone-400">No feedback submitted yet. The red "Comments / Reviews" button (bottom-left) feeds this queue.</p>
         ) : (
           <ul className="space-y-2 max-h-96 overflow-y-auto pr-1">
             {feedback.map((f) => (
-              <li key={f.id} className="p-4 bg-white/[0.05] rounded-xl border border-white/10 space-y-1">
+              <li key={f.id} className="p-4 bg-white rounded-xl border border-[#d7e5e1] space-y-1">
                 <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <span className="text-xs font-bold text-[#f4f2ec]">{f.name}</span>
+                  <span className="text-xs font-bold text-[#12211d]">{f.name}</span>
                   <span className="text-[10px] text-stone-400">
                     {format(new Date(f.created_at), 'MMM d, HH:mm')} • {formatDistanceToNowStrict(new Date(f.created_at))} ago{f.page ? ` • on ${f.page}` : ''}
                   </span>
@@ -414,7 +414,7 @@ export function InsightsDashboard() {
                 {typeof f.rating === 'number' && (
                   <span className="inline-flex items-center gap-0.5" aria-label={`Rated ${f.rating} of 5`}>
                     {[1, 2, 3, 4, 5].map((v) => (
-                      <Star key={v} className={cn('w-3.5 h-3.5', v <= f.rating! ? 'fill-[#b8860b] text-[#b8860b]' : 'text-[#dedad0]')} aria-hidden="true" />
+                      <Star key={v} className={cn('w-3.5 h-3.5', v <= f.rating! ? 'fill-[#b8860b] text-[#b8860b]' : 'text-[#5f7772]')} aria-hidden="true" />
                     ))}
                   </span>
                 )}

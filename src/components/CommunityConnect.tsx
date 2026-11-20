@@ -49,7 +49,7 @@ export function CommunityConnect({ user, onEvaluateWithAi = () => {} }: Communit
       </div>
 
       {/* Primary Sub-Navigation Bar */}
-      <div className="bg-white/[0.06] p-2 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between gap-2">
+      <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 w-full">
           <button
             type="button"
@@ -82,12 +82,12 @@ export function CommunityConnect({ user, onEvaluateWithAi = () => {} }: Communit
       ) : (
         <div className="space-y-6">
           {/* Persona Context Card */}
-          <div className="bg-white/[0.06] p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <img src={user.avatar} alt={user.name} className="w-12 h-12 rounded-full border-2 border-orange-500/100" />
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-[#f4f2ec] text-sm">{user.name}</h3>
+                  <h3 className="font-bold text-[#12211d] text-sm">{user.name}</h3>
                   <span className="text-[10px] font-extrabold bg-orange-500/10 text-indigo-700 px-2 py-0.5 rounded-md border border-orange-500/25">
                     {user.lifestylePersona}
                   </span>
@@ -100,19 +100,19 @@ export function CommunityConnect({ user, onEvaluateWithAi = () => {} }: Communit
             <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-semibold w-full sm:w-auto">
               <button
                 onClick={() => setActiveFilter('all')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex-1 sm:flex-none ${activeFilter === 'all' ? 'bg-white/[0.06] text-[#f4f2ec] shadow-sm' : 'text-stone-400 hover:text-[#f4f2ec]'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all flex-1 sm:flex-none ${activeFilter === 'all' ? 'bg-white text-[#12211d] shadow-sm' : 'text-stone-400 hover:text-[#12211d]'}`}
               >
                 All Matches
               </button>
               <button
                 onClick={() => setActiveFilter('workout')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex-1 sm:flex-none ${activeFilter === 'workout' ? 'bg-white/[0.06] text-[#f4f2ec] shadow-sm' : 'text-stone-400 hover:text-[#f4f2ec]'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all flex-1 sm:flex-none ${activeFilter === 'workout' ? 'bg-white text-[#12211d] shadow-sm' : 'text-stone-400 hover:text-[#12211d]'}`}
               >
                 Workout Peers
               </button>
               <button
                 onClick={() => setActiveFilter('coworking')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex-1 sm:flex-none ${activeFilter === 'coworking' ? 'bg-white/[0.06] text-[#f4f2ec] shadow-sm' : 'text-stone-400 hover:text-[#f4f2ec]'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all flex-1 sm:flex-none ${activeFilter === 'coworking' ? 'bg-white text-[#12211d] shadow-sm' : 'text-stone-400 hover:text-[#12211d]'}`}
               >
                 Executive Co-Working
               </button>
@@ -134,7 +134,7 @@ export function CommunityConnect({ user, onEvaluateWithAi = () => {} }: Communit
           {/* Matches Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {filteredPeers.map((peer) => (
-              <div key={peer.id} className="bg-white/[0.06] p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+              <div key={peer.id} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
                 <div>
                   {/* Card Top */}
                   <div className="flex items-start justify-between mb-3">
@@ -144,7 +144,7 @@ export function CommunityConnect({ user, onEvaluateWithAi = () => {} }: Communit
                         <span className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-white ${peer.onlineStatus === 'active' ? 'bg-orange-500' : 'bg-amber-500'}`} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-[#f4f2ec] text-sm leading-tight">{peer.name}</h4>
+                        <h4 className="font-bold text-[#12211d] text-sm leading-tight">{peer.name}</h4>
                         <p className="text-[11px] text-slate-500">{peer.role}</p>
                       </div>
                     </div>
