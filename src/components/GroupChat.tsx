@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { HumanAvatar } from './HumanAvatar';
 import { UserProfile } from '../types';
 import { 
   MessageSquare, 
@@ -176,7 +177,7 @@ export function GroupChat({ user, onEvaluateWithAi }: GroupChatProps) {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <img src={msg.avatar} alt={msg.senderName} className="w-10 h-10 rounded-2xl bg-slate-100 object-cover border border-slate-200" />
+                  <HumanAvatar name={msg.senderName} size={40} className="w-10 h-10 rounded-2xl border border-slate-200" />
                   <div>
                     <div className="flex items-center gap-2">
                       <h4 className="font-bold text-[#12211d] text-xs sm:text-sm">{msg.senderName}</h4>
